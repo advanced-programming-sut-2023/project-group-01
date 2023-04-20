@@ -1,21 +1,22 @@
 package org.example.model.building;
 
 import org.example.model.People;
+import org.example.model.User;
 import org.example.model.building.enums.BuildingName;
 
 import java.util.ArrayList;
 
 public class Building {
-//    private final User currentUser;
+    private final User currentUser;
     protected Tile position;
     protected int beginX;
     protected int endX;
     protected int beginY;
     protected int endY;
-    private ArrayList<People> workers = new ArrayList<>();
     private final BuildingName buildingName;
 
-    public Building (Tile position, BuildingName buildingName) {
+    public Building (User currentUser, Tile position, BuildingName buildingName) {
+        this.currentUser = currentUser;
         this.position = position;
         this.buildingName = buildingName;
     }
@@ -48,11 +49,3 @@ public class Building {
         return endY;
     }
 }
-/*
-    protected int hp;
-    protected String name;
-    protected int numberOfWorkers;
-    protected int goldOfBuilding;
-    protected int stoneOfBuilding;
-    protected int woodOfBuilding;
- */
