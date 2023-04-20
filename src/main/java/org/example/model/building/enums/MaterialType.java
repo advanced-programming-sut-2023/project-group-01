@@ -1,4 +1,4 @@
-package org.example.model.building;
+package org.example.model.building.enums;
 
 public enum MaterialType {
     //Sources :

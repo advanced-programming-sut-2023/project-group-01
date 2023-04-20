@@ -1,11 +1,12 @@
 package org.example.model.enums;
 
 public enum HitPoint {
-    UNIT_HIGH(300),
-    UNIT_MIDDLE(120),
-    UNIT_LOW(60),
-    UNIT_SO_LOW(40),
-    UNIT_NOTHING(20);
+    LORD(500),
+    HIGH(300),
+    MIDDLE(120),
+    LOW(60),
+    SO_LOW(40),
+    NOTHING(20);
 
     private int hitPoint;
 

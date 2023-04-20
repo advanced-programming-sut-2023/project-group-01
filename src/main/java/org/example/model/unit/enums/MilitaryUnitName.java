@@ -5,25 +5,26 @@ import org.example.model.enums.HitPoint;
 import org.example.model.building.Material;
 
 public enum MilitaryUnitName {
-    ARCHER(Color.RED, GunShot.HIGH, "european", "Archer", Attack.LOW, HitPoint.UNIT_LOW, Speed.HIGH, 12, null, null, false),
-    CROSSBOW_MEN(Color.RED, GunShot.MIDDLE, "european", "Crossbowmen", Attack.LOW, HitPoint.UNIT_MIDDLE, Speed.LOW, 20, null, null, false),
-    SPEAR_MEN(Color.RED, GunShot.ZERO, "european", "Spearmen", Attack.MIDDLE, HitPoint.UNIT_SO_LOW, Speed.MIDDLE, 8, null, null, false),
-    PIKE_MEN(Color.RED, GunShot.ZERO, "european", "Pikemen", Attack.MIDDLE, HitPoint.UNIT_HIGH, Speed.LOW, 20, null, null, false),
-    MACE_MEN(Color.RED, GunShot.ZERO, "european", "Macemen", Attack.HIGH, HitPoint.UNIT_MIDDLE, Speed.MIDDLE, 20, null, null, false),
-    SWORDSMEN(Color.RED, GunShot.ZERO, "european", "Swordsmen", Attack.SO_HIGH, HitPoint.UNIT_SO_LOW, Speed.VERY_LOW, 40, null, null, false),
-    KNIGHT(Color.RED, GunShot.ZERO, "european", "Knight", Attack.SO_HIGH, HitPoint.UNIT_HIGH, Speed.SO_HIGH, 40, null, null, true),
-    TUNNELER(Color.RED, GunShot.ZERO, "european", "Tunneler", Attack.MIDDLE, HitPoint.UNIT_SO_LOW, Speed.SO_HIGH, 30, null, null, false),
-    LADDER_MEN(Color.RED, GunShot.ZERO, "european", "Laddermen", Attack.ZERO, HitPoint.UNIT_SO_LOW, Speed.SO_HIGH, 4, null, null, false),
-    ENGINEER(Color.RED, GunShot.ZERO, "european", "Engineer", Attack.ZERO, HitPoint.UNIT_SO_LOW, Speed.MIDDLE, 30, null, null, false),
-    BLACK_MONKEY(Color.RED, GunShot.ZERO, "european", "Black Monk", Attack.MIDDLE, HitPoint.UNIT_MIDDLE, Speed.LOW, 10, null, null, false),
+    LORD(Color.RED, GunShot.ZERO, "lord", "lord", Attack.LORD_ATTACK, HitPoint.LORD, Speed.MIDDLE, 0, null, null, false),
+    ARCHER(Color.RED, GunShot.HIGH, "european", "Archer", Attack.LOW, HitPoint.LOW, Speed.HIGH, 12, null, null, false),
+    CROSSBOW_MEN(Color.RED, GunShot.MIDDLE, "european", "Crossbowmen", Attack.LOW, HitPoint.MIDDLE, Speed.LOW, 20, null, null, false),
+    SPEAR_MEN(Color.RED, GunShot.ZERO, "european", "Spearmen", Attack.MIDDLE, HitPoint.SO_LOW, Speed.MIDDLE, 8, null, null, false),
+    PIKE_MEN(Color.RED, GunShot.ZERO, "european", "Pikemen", Attack.MIDDLE, HitPoint.HIGH, Speed.LOW, 20, null, null, false),
+    MACE_MEN(Color.RED, GunShot.ZERO, "european", "Macemen", Attack.HIGH, HitPoint.MIDDLE, Speed.MIDDLE, 20, null, null, false),
+    SWORDSMEN(Color.RED, GunShot.ZERO, "european", "Swordsmen", Attack.SO_HIGH, HitPoint.SO_LOW, Speed.VERY_LOW, 40, null, null, false),
+    KNIGHT(Color.RED, GunShot.ZERO, "european", "Knight", Attack.SO_HIGH, HitPoint.HIGH, Speed.SO_HIGH, 40, null, null, true),
+    TUNNELER(Color.RED, GunShot.ZERO, "european", "Tunneler", Attack.MIDDLE, HitPoint.SO_LOW, Speed.SO_HIGH, 30, null, null, false),
+    LADDER_MEN(Color.RED, GunShot.ZERO, "european", "Laddermen", Attack.ZERO, HitPoint.SO_LOW, Speed.SO_HIGH, 4, null, null, false),
+    ENGINEER(Color.RED, GunShot.ZERO, "european", "Engineer", Attack.ZERO, HitPoint.SO_LOW, Speed.MIDDLE, 30, null, null, false),
+    BLACK_MONKEY(Color.RED, GunShot.ZERO, "european", "Black Monk", Attack.MIDDLE, HitPoint.MIDDLE, Speed.LOW, 10, null, null, false),
     //Bow Units :
-    ARCHER_BOW(Color.RED, GunShot.HIGH, "bow", "Archer Bow", Attack.LOW, HitPoint.UNIT_LOW, Speed.HIGH, 75, null, null, false),
-    SLAVES(Color.RED, GunShot.ZERO, "bow", "Slaves", Attack.VERY_LOW, HitPoint.UNIT_NOTHING, Speed.HIGH, 5, null, null, false),
-    SLINGERS(Color.RED, GunShot.LOW, "bow", "Slingers", Attack.LOW, HitPoint.UNIT_SO_LOW, Speed.HIGH, 12, null, null, false),
-    ASSASSINS(Color.RED, GunShot.ZERO, "bow", "Assassins", Attack.MIDDLE, HitPoint.UNIT_MIDDLE, Speed.MIDDLE, 60, null, null, false),
-    HORSE_ARCHER(Color.RED, GunShot.HIGH, "bow", "Horse Archers", Attack.LOW, HitPoint.UNIT_MIDDLE, Speed.SO_HIGH, 80, null, null, true),
-    ARABIAN_SWORSMEN(Color.RED, GunShot.ZERO, "bow", "Arabian Swordsmen", Attack.HIGH, HitPoint.UNIT_HIGH, Speed.SO_HIGH, 80, null, null, false),
-    FIRE_THROWERS(Color.RED, GunShot.LOW, "bow", "Fire Throwers", Attack.HIGH, HitPoint.UNIT_LOW, Speed.SO_HIGH, 100, null, null, false);
+    ARCHER_BOW(Color.RED, GunShot.HIGH, "bow", "Archer Bow", Attack.LOW, HitPoint.LOW, Speed.HIGH, 75, null, null, false),
+    SLAVES(Color.RED, GunShot.ZERO, "bow", "Slaves", Attack.VERY_LOW, HitPoint.NOTHING, Speed.HIGH, 5, null, null, false),
+    SLINGERS(Color.RED, GunShot.LOW, "bow", "Slingers", Attack.LOW, HitPoint.SO_LOW, Speed.HIGH, 12, null, null, false),
+    ASSASSINS(Color.RED, GunShot.ZERO, "bow", "Assassins", Attack.MIDDLE, HitPoint.MIDDLE, Speed.MIDDLE, 60, null, null, false),
+    HORSE_ARCHER(Color.RED, GunShot.HIGH, "bow", "Horse Archers", Attack.LOW, HitPoint.MIDDLE, Speed.SO_HIGH, 80, null, null, true),
+    ARABIAN_SWORSMEN(Color.RED, GunShot.ZERO, "bow", "Arabian Swordsmen", Attack.HIGH, HitPoint.HIGH, Speed.SO_HIGH, 80, null, null, false),
+    FIRE_THROWERS(Color.RED, GunShot.LOW, "bow", "Fire Throwers", Attack.HIGH, HitPoint.LOW, Speed.SO_HIGH, 100, null, null, false);
 
 
     private final Color color;

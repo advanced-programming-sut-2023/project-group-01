@@ -8,29 +8,23 @@ import java.util.ArrayList;
 
 public class Building {
     private final User currentUser;
-    protected Tile position;
     protected int beginX;
     protected int endX;
     protected int beginY;
     protected int endY;
     private final BuildingName buildingName;
 
-    public Building (User currentUser, Tile position, BuildingName buildingName) {
-        this.currentUser = currentUser;
-        this.position = position;
+    public Building (User player, int x1, int x2, int y1, int y2, BuildingName buildingName) {
+        this.currentUser = player;
+        this.beginX = x1;
+        this.endX = x2;
+        this.beginY = y1;
+        this.endY = y2;
         this.buildingName = buildingName;
     }
 
     public BuildingName getBuildingName() {
         return buildingName;
-    }
-
-    public Tile getPosition() {
-        return position;
-    }
-
-    public void setPosition(Tile position) {
-        this.position = position;
     }
 
     public int getBeginX() {

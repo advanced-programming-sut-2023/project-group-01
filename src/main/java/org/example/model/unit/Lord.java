@@ -6,22 +6,14 @@ import org.example.model.building.Tile;
 import org.example.model.unit.enums.MilitaryUnitName;
 
 public class Lord extends MilitaryUnit {
-    private final int attack = 200;
-    private int hitPoint = 500;
 
-    public Lord(Tile position, User player, MilitaryUnitName militaryUnitName) {
-        super(position, player, militaryUnitName);
+    public Lord(Tile position, User player) {
+        super(position, player, MilitaryUnitName.LORD);
     }
 
-    public int getHitPoint() {
-        return hitPoint;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setHitPoint(int hitPoint) {
-        this.hitPoint = hitPoint;
-    }
+//    @Override
+//    protected void finalize() throws Throwable {
+//
+//        //TODO ending game
+//    }
 }

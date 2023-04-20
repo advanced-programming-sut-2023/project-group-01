@@ -1,9 +1,11 @@
 package org.example.model.building;
 
-public class Material {
-    private org.example.model.building.MaterialType materialType;
+import org.example.model.building.enums.MaterialType;
 
-    public Material(org.example.model.building.MaterialType materialType) {
+public class Material {
+    private MaterialType materialType;
+
+    public Material(MaterialType materialType) {
         this.materialType = materialType;
     }
 }
