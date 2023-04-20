@@ -30,10 +30,10 @@ public class Empire {
         this.foodRate = 0;
         this.taxRate = 0;
         this.fearRate = 0;
-        foods.put(FoodType.TYPE1,0);
-        foods.put(FoodType.TYPE2,0);
-        foods.put(FoodType.TYPE3,0);
-        foods.put(FoodType.TYPE4,0);
+        foods.put(FoodType.BREED,0);
+        foods.put(FoodType.APPLE,0);
+        foods.put(FoodType.MEET,0);
+        foods.put(FoodType.CHEESE,0);
     }
 
     public int getPopularity() {
