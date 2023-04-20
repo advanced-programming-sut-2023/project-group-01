@@ -3,15 +3,16 @@ package org.example.view.mainMenu.gameMenu;
 import org.example.model.building.Building;
 import org.example.model.Empire;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class BuildingMenu{
+public class BuildingMenu {
 
     private final Empire empire;
 
     private Building selectedBuilding;
 
-    public BuildingMenu(Empire empire){
+    public BuildingMenu(Empire empire) {
         this.empire = empire;
     }
 
@@ -19,7 +20,8 @@ public class BuildingMenu{
         this.selectedBuilding = selectedBuilding;
     }
 
-    public void run() {
+    public void run(Scanner scanner) {
+
 
     }
 

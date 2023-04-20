@@ -1,6 +1,5 @@
 package org.example.model.unit;
 
-import org.example.Main;
 import org.example.model.User;
 import org.example.model.building.Tile;
 import org.example.model.unit.enums.MilitaryUnitName;
