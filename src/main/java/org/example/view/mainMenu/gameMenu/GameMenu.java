@@ -1,9 +1,10 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.model.Empire;
+import org.example.model.Map;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Scanner;
 
 public class GameMenu {
     private final ArrayList<Empire> empires;
@@ -35,8 +36,8 @@ public class GameMenu {
         return turnNumber;
     }
 
-    public void run() {
-
+    public void run(Scanner scanner) {
+        map =  new CreateMapMenu().run(scanner);
     }
 
     public void nextTurn() {
