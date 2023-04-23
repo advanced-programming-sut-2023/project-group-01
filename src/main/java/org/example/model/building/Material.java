@@ -8,4 +8,8 @@ public class Material {
     public Material(MaterialType materialType) {
         this.materialType = materialType;
     }
+
+    public MaterialType getMaterialType() {
+        return materialType;
+    }
 }

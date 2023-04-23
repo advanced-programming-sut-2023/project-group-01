@@ -3,7 +3,7 @@ package org.example.model;
 import org.example.model.building.Tile;
 
 public class People {
-    private Tile position;
+    protected Tile position;
     protected User player;
     public People(Tile position, User player) {
         this.position = position;
@@ -12,5 +12,9 @@ public class People {
 
     public Tile getPosition() {
         return position;
+    }
+
+    public User getPlayer() {
+        return player;
     }
 }

@@ -12,7 +12,7 @@ public enum BuildingName {
     ARMOURY(280, 280, BuildingCategory.CASTLE_BUILDING, "Armoury", 0, 0, 5, 0),
     BARRACK(350, 350, BuildingCategory.CASTLE_BUILDING, "Barrack", 0, 15, 0, 0),
     MERCENARY_BARRACKS(350, 350, BuildingCategory.CASTLE_BUILDING, "Mercenary Barrack", 0, 0, 10, 0),
-    ENGINEER_GUILD(300, 300, BuildingCategory.CASTLE_BUILDING, "Engineer Guid", 100, 0, 10, 0),
+    ENGINEER_GUILD(300, 300, BuildingCategory.CASTLE_BUILDING, "Engineer Guild", 100, 0, 10, 0),
     KILLING_PIT(0, 0, BuildingCategory.CASTLE_BUILDING, "Killing Pit", 0, 0, 6, 0),
     INN(250, 250, BuildingCategory.FOOD_PROCESSING_BUILDING, "Inn", 100, 0, 20, 1),
     MILL(270, 270, BuildingCategory.FOOD_PROCESSING_BUILDING, "Mill", 0, 0, 20, 3),
@@ -97,5 +97,9 @@ public enum BuildingName {
 
     public void reduceHitPoint() {
         this.hitPoint -= hitPoint;
+    }
+
+    public String getName() {
+        return name;
     }
 }

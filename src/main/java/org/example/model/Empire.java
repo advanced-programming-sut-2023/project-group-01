@@ -7,6 +7,7 @@ import org.example.model.enums.FoodType;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.regex.Matcher;
 
 public class Empire {
     private int popularity;
@@ -14,9 +15,11 @@ public class Empire {
     private int taxRate;
     private int fearRate;
     private int religionRate;
+    private int population;
     private int MaxPopulation;
     private int gold;
     private final Color color;
+    private Map map;
     private LinkedHashMap<Material,Integer> materials = new LinkedHashMap<>();
     private LinkedHashMap<FoodType,Integer> foods = new LinkedHashMap<>(4);
     private ArrayList<Building> buildings = new ArrayList<>();
@@ -86,4 +89,29 @@ public class Empire {
 
     }
 
+    public int getGold() {
+        return gold;
+    }
+
+    public int getMaxPopulation() {
+        return MaxPopulation;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public boolean havingMaterial(Material material, int count) {
+
+        for (Material material1 : materials.keySet()) {
+            if (material1.getMaterialType().getName().equals(material.getMaterialType().getName())
+                    && materials.get(material) > count) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public Map getMap() {
+        return map;
+    }
 }

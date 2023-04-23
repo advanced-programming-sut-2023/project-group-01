@@ -16,7 +16,7 @@ public enum MilitaryUnitName {
     TUNNELER(Color.RED, GunShot.ZERO, "european", "Tunneler", Attack.MIDDLE, HitPoint.SO_LOW, Speed.SO_HIGH, 30, null, null, false),
     LADDER_MEN(Color.RED, GunShot.ZERO, "european", "Laddermen", Attack.ZERO, HitPoint.SO_LOW, Speed.SO_HIGH, 4, null, null, false),
     ENGINEER(Color.RED, GunShot.ZERO, "european", "Engineer", Attack.ZERO, HitPoint.SO_LOW, Speed.MIDDLE, 30, null, null, false),
-    BLACK_MONKEY(Color.RED, GunShot.ZERO, "european", "Black Monk", Attack.MIDDLE, HitPoint.MIDDLE, Speed.LOW, 10, null, null, false),
+    BLACK_MONK(Color.RED, GunShot.ZERO, "european", "Black Monk", Attack.MIDDLE, HitPoint.MIDDLE, Speed.LOW, 10, null, null, false),
     //Bow Units :
     ARCHER_BOW(Color.RED, GunShot.HIGH, "bow", "Archer Bow", Attack.LOW, HitPoint.LOW, Speed.HIGH, 75, null, null, false),
     SLAVES(Color.RED, GunShot.ZERO, "bow", "Slaves", Attack.VERY_LOW, HitPoint.NOTHING, Speed.HIGH, 5, null, null, false),
@@ -115,4 +115,5 @@ public enum MilitaryUnitName {
     public Color getColor() {
         return color;
     }
+
 }

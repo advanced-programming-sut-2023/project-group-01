@@ -42,4 +42,8 @@ public class Building {
     public int getEndY() {
         return endY;
     }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
 }
