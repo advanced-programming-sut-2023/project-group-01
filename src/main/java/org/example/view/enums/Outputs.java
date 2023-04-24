@@ -20,7 +20,9 @@ public enum Outputs {
     INVALID_COORDINATES("Invalid coordinates."),
     INVALID_TYPE_OF_TILE("The type of tile is invalid."),
     TILE_NOT_EMPTY("The tile have a building."),
-    SUCCESS("The command was executed successfully");
+    INVALID_DIRECTION("The entered direction is invalid"),
+    SUCCESS("The command was executed successfully"),
+    INVALID_TYPE_OF_TREE("The type of tree is invalid.");
 
     private String output;
 

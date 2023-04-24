@@ -87,6 +87,10 @@ public enum BuildingName {
         return hitPoint;
     }
 
+    public BuildingCategory getBuildingCategory(){
+        return buildingCategory;
+    }
+
     public void increaseHitPoint(int hitPoint) {
         this.hitPoint += hitPoint;
     }

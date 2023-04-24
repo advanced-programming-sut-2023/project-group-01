@@ -21,6 +21,9 @@ public class Tile {
     public void removeUnit(People person) {
         people.remove(person);
     }
+    public void removeAllUnit() {
+        people.clear();
+    }
 
     public void setBuilding(Building building) {
         this.building = building;

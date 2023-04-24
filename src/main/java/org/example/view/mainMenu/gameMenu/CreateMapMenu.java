@@ -79,15 +79,28 @@ public class CreateMapMenu {
     }
 
     public void clearChecker(Matcher matcher) {
-
+        int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
+        int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
+        Outputs outputs = new CreateMapMenuController().clear(gameMap.getTileWhitXAndY(xOfMap,yOfMap));
+        System.out.println(outputs.toString());
     }
 
     public void dropRockChecker(Matcher matcher) {
-
+        int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
+        int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
+        String direction = matcher.group("direction");
+        Outputs outputs = new CreateMapMenuController().dropRock
+                (gameMap.getTileWhitXAndY(xOfMap,yOfMap), direction);
+        System.out.println(outputs.toString());
     }
 
     public void dropTreeChecker(Matcher matcher) {
-
+        int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
+        int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
+        String type = matcher.group("type");
+        Outputs outputs = new CreateMapMenuController().dropTree
+                (gameMap.getTileWhitXAndY(xOfMap,yOfMap), type);
+        System.out.println(outputs.toString());
     }
 
     public void dropBuildingChecker(Matcher matcher) {
