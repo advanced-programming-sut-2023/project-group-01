@@ -36,4 +36,8 @@ public class Tile {
     public TypeOfTile getTypeOfTile() {
         return typeOfTile;
     }
+
+    public ArrayList<People> getPeople() {
+        return people;
+    }
 }

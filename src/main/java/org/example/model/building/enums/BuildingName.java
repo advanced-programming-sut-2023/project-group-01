@@ -4,7 +4,7 @@ import org.example.model.enums.HitPoint;
 import org.example.model.User;
 
 public enum BuildingName {
-    SMALL_STONE_GATEHOUSE(HitPoint.BUILDING_LOW, BuildingCategory.TYPES_AND_COMPONENTS_CASTLES, "", 0, 0, 0),
+    /*SMALL_STONE_GATEHOUSE(HitPoint.BUILDING_LOW, BuildingCategory.TYPES_AND_COMPONENTS_CASTLES, "", 0, 0, 0),
     BIG_STONE_GATEHOUSE(HitPoint.BUILDING_LOW, BuildingCategory.TYPES_AND_COMPONENTS_CASTLES, "", 0, 20, 0),
     DRAWBRIDGE(HitPoint.BUILDING_LOW, BuildingCategory.TYPES_AND_COMPONENTS_CASTLES, "", 0, 0, 10),
     LOOKOUT_TOWER(HitPoint.BUILDING_LOW, BuildingCategory.TYPES_AND_COMPONENTS_CASTLES, "", 0, 10, 0),
@@ -45,8 +45,8 @@ public enum BuildingName {
     DAIRY_PRODUCTS(HitPoint.BUILDING_LOW, BuildingCategory.FARMS_AND_HUNTING_GROUNDS, "", 0, 0, 10),
     BARLEY_FARM(HitPoint.BUILDING_LOW, BuildingCategory.FARMS_AND_HUNTING_GROUNDS, "", 0, 0, 15),
     BAKERY(HitPoint.BUILDING_LOW, BuildingCategory.FOOD_PROCESSING, "", 0, 0, 10),
-    ALE_PRODUCING(HitPoint.BUILDING_LOW, BuildingCategory.FOOD_PROCESSING, "", 0, 0, 10),
-    FOOD_STOCKPILE(HitPoint.BUILDING_LOW, BuildingCategory.FOOD_PROCESSING, "", 0, 0, 5);
+    ALE_PRODUCING(HitPoint.BUILDING_LOW, BuildingCategory.FOOD_PROCESSING, "", 0, 0, 10),*/
+    FOOD_STOCKPILE(HitPoint.BUILDING_LOW, BuildingCategory.FOOD_PROCESSING, "", 0, 0, 5, TypeOfTile.NORMAL);
 
     private final BuildingCategory buildingCategory;
     private final String name;
