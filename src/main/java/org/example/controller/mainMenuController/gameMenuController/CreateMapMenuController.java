@@ -1,16 +1,21 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
+import org.example.model.User;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.TypeOfTile;
+import org.example.model.unit.MilitaryUnit;
+import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
+import org.example.view.mainMenu.gameMenu.MilitaryMenu;
 
 import java.util.Random;
 import java.util.regex.Matcher;
 
 import static org.example.view.mainMenu.gameMenu.CreateMapMenu.gameMap;
+import static org.example.view.mainMenu.gameMenu.GameMenu.thisEmpire;
 
 public class CreateMapMenuController {
 
@@ -83,6 +88,8 @@ public class CreateMapMenuController {
                 return Outputs.INVALID_TYPE_OF_TREE;
             if(tile.getBuilding() != null)
                 return Outputs.TILE_NOT_EMPTY;
+            if(BuildingName.valueOf(type).getTypeCanBuildBuilding() != tile.getTypeOfTile())
+                return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
             tile.setBuilding(new Building(tile, BuildingName.valueOf(type)));
         }
         catch (IllegalArgumentException e){
@@ -92,11 +99,37 @@ public class CreateMapMenuController {
     }
 
     public Outputs dropBuilding(int xOfBuilding, int yOfBuilding, String type) {
-        return null;
+        if(gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding) == null)
+            return Outputs.INVALID_COORDINATES;
+        try{
+            if(BuildingName.valueOf(type).getBuildingCategory().equals(BuildingCategory.TREES))
+                return Outputs.INVALID_TYPE_OF_BUILDING;
+            if(gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).getBuilding() != null)
+                return Outputs.TILE_NOT_EMPTY;
+            if(BuildingName.valueOf(type).getTypeCanBuildBuilding() !=
+                    gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).getTypeOfTile())
+                return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
+            gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).setBuilding
+                    (new Building(gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding), BuildingName.valueOf(type)));
+        }
+        catch (IllegalArgumentException e){
+            return Outputs.INVALID_TYPE_OF_BUILDING;
+        }
+        return Outputs.SUCCESS;
     }
 
     public Outputs dropUnit(Tile tile, String type, int count) {
-        return null;
+        if(tile == null) return Outputs.INVALID_COORDINATES;
+        if(count <=0) return Outputs.INVALID_COUNT;
+        //TODO check type of tile
+        try {
+            for(int i = 0 ; i< count; i++)
+                tile.addUnit(new MilitaryUnit(thisEmpire,MilitaryUnitName.valueOf(type)));
+        }
+        catch (IllegalArgumentException e) {
+            return Outputs.INVALID_TYPE_OF_UNIT;
+        }
+        return Outputs.SUCCESS;
     }
 
 

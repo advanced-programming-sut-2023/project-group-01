@@ -11,7 +11,7 @@ public class GameMenu {
 
     private Map map;
 
-    private Empire thisEmpire;
+    public static Empire thisEmpire;
 
     private int turnNumber = 1;
 

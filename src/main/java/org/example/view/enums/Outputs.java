@@ -21,8 +21,13 @@ public enum Outputs {
     INVALID_TYPE_OF_TILE("The type of tile is invalid."),
     TILE_NOT_EMPTY("The tile have a building."),
     INVALID_DIRECTION("The entered direction is invalid"),
+    INAPPROPRIATE_TYPE_OF_TILE("The type of tile not appropriate for this building or tree"),
     SUCCESS("The command was executed successfully"),
-    INVALID_TYPE_OF_TREE("The type of tree is invalid.");
+    INVALID_TYPE_OF_TREE("The type of tree is invalid."),
+    INVALID_TYPE_OF_BUILDING("The type of building is invalid."),
+    INVALID_COUNT("The entered count for unit is invalid please enter a number greater than 0"),
+    INVALID_TYPE_OF_UNIT("The type of unit is invalid.");
+
 
     private String output;
 

@@ -91,6 +91,10 @@ public enum BuildingName {
         return buildingCategory;
     }
 
+    public TypeOfTile getTypeCanBuildBuilding() {
+        return typeCanBuildBuilding;
+    }
+
     public void increaseHitPoint(int hitPoint) {
         this.hitPoint += hitPoint;
     }

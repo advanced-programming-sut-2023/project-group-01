@@ -104,11 +104,22 @@ public class CreateMapMenu {
     }
 
     public void dropBuildingChecker(Matcher matcher) {
-
+        int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
+        int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
+        String type = matcher.group("type");
+        Outputs outputs = new CreateMapMenuController().dropBuilding
+                (xOfMap, yOfMap, type);
+        System.out.println(outputs.toString());
     }
 
     public void dropUnitChecker(Matcher matcher) {
-
+        int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
+        int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
+        String type = matcher.group("type");
+        int count = Integer.parseInt(matcher.group("count"));
+        Outputs outputs = new CreateMapMenuController().dropUnit
+                (gameMap.getTileWhitXAndY(xOfMap, yOfMap), type, count);
+        System.out.println(outputs.toString());
     }
 
 }

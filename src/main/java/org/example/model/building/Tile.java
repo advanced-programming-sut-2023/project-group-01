@@ -32,4 +32,8 @@ public class Tile {
     public Building getBuilding() {
         return building;
     }
+
+    public TypeOfTile getTypeOfTile() {
+        return typeOfTile;
+    }
 }
