@@ -1,5 +1,7 @@
 package org.example.view.enums;
 
+import com.sun.net.httpserver.Authenticator;
+
 public enum Outputs {
 
     NOT_ENOUGH_DATA("Your entered data is not enough for registering new user."),
@@ -14,7 +16,12 @@ public enum Outputs {
     WRONG_PASSWORD_CONFIRM("Your password confirmation does not match with password."),
     EMAIL_EXISTS("There is a user existing with your entered email."),
     INVALID_EMAIL("Your entered email is invalid."),
-    VALID_REGISTRATION_INPUT("valid");
+    VALID_REGISTRATION_INPUT("valid"),
+    INVALID_COORDINATES("Invalid coordinates."),
+    INVALID_TYPE_OF_TILE("The type of tile is invalid."),
+    TILE_NOT_EMPTY("The tile have a building."),
+    SUCCESS("The command was executed successfully");
+
     private String output;
 
     Outputs(String output) {
