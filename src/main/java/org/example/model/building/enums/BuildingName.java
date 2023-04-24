@@ -91,12 +91,12 @@ public enum BuildingName {
         return hitPoint;
     }
 
-    public void increaseHitPoint(int hitPoint) {
-        this.hitPoint += hitPoint;
+    public void setHitPoint() {
+        this.hitPoint = this.maxHitPoint;
     }
 
-    public void reduceHitPoint() {
-        this.hitPoint -= hitPoint;
+    public int getMaxHitPoint() {
+        return maxHitPoint;
     }
 
     public String getName() {

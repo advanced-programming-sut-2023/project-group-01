@@ -93,6 +93,14 @@ public class Empire {
         return gold;
     }
 
+    public void addMaterial(String materialName, int count) {
+        for (Material material : materials.keySet()) {
+            if (material.getMaterialType().getName().equals(materialName)) {
+                int newCount = materials.get(material) - count;
+                materials.replace(material, newCount);
+            }
+        }
+    }
     public int getMaxPopulation() {
         return MaxPopulation;
     }

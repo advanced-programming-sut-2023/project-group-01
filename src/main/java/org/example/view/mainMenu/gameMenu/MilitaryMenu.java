@@ -20,7 +20,7 @@ public class MilitaryMenu {
         this.empire = empire;
         this.player = player;
         this.militaryMenuController = new MilitaryMenuController(empire, player);
-
+        this.militaryMenuController.setMilitaryMenu(this);
     }
 
 
@@ -67,86 +67,44 @@ public class MilitaryMenu {
         System.out.println(militaryMenuController.selectUnit(x, y).toString());
     }
 
-//    public MilitaryUnit findMilitary(int x, int y) {
-//        for (People people : empire.getMap().getTile(x, y).getPeople()) {
-//            if (people instanceof MilitaryUnit && player.equals(people.getPlayer())) {
-//                return (MilitaryUnit) people;
-//            }
-//        }
-//        return null;
-//    }
-
     public void moveUnitChecker(Matcher matcher) {
-        String x = matcher.group("x");
-        String y = matcher.group("y");
-//        String result = commonCheck(x, y);
-//
-//        if (result != null) {
-//            System.out.println(result);
-//        } else if (selectedUnit == null) {
-//            System.out.println(Outputs.EMPTY_SELECTED_UNIT.toString());
-//            //TODO complete this when type of tiles finished
-//        } else if (empire.getMap().getTile(Integer.parseInt(x),Integer.parseInt(y)).equals("") ||
-//                empire.getMap().getTile(Integer.parseInt(x),Integer.parseInt(y)).equals("")) {
-//            System.out.println(Outputs.WRONG_PLACE.toString());
-//        } else {
-//            MilitaryMenuController controller = new MilitaryMenuController(empire, player);
-//            int xPos = Integer.parseInt(x);
-//            int yPos = Integer.parseInt(y);
-//            controller.moveUnit(xPos, yPos, findMilitary(xPos,yPos));
-//        }
+        String x;
+        String y;
+        if (matcher.group("x") == null && matcher.group("y") == null) {
+            x = matcher.group("x1");
+            y = matcher.group("y1");
+        } else {
+            x = matcher.group("x");
+            y = matcher.group("y");
+        }
+        System.out.println(militaryMenuController.moveUnit(x, y));
     }
 
     public void patrolUnitChecker(Matcher matcher) {
         //TODO COMPLETE
         //TODO selected
-//        String x1 = matcher.group("x1");
-//        String y1 = matcher.group("y1");
-//        String result1 = commonCheck(x1, y1);
-//
-//        String x2 = matcher.group("x2");
-//        String y2 = matcher.group("y2");
-//        String result2 = commonCheck(x2, y2);
-//
-//        //TODO
-//        if (result1 != null) {
-//            System.out.println(result1);
-//        } else if (result2 != null) {
-//            System.out.println(result2);
-//        } else {
-//         //TODO
-//         findMilitary(Integer.parseInt(x1), Integer.parseInt(y1)).setPatrolXY(Integer.parseInt(x2), Integer.parseInt(y2));
-//        }
+        String x1 = matcher.group("x1");
+        String y1 = matcher.group("y1");
+        String x2 = matcher.group("x2");
+        String y2 = matcher.group("y2");
+
+        System.out.println(militaryMenuController.patrolUnit(x1, y1, x2, y2).toString());
     }
 
-    public void cancelPatrolUnitChecker(Matcher matcher) {
+    public void cancelPatrolUnitChecker() {
         //TODO COMPLETE
         //TODO selected
-        String x = matcher.group("x");
-        String y = matcher.group("y");
-        //String result = commonCheck(x, y);
-
-//        if (result != null) {
-//            System.out.println(result);
-//        } else {
-//            //TODO
-//
-//        }
+        System.out.println(militaryMenuController.cancelPatrol());
     }
 
     public void setUnitChecker(Matcher matcher) {
+        //TODO complete this things
         String x = matcher.group("x");
         String y = matcher.group("y");
-        //  String result = commonCheck(x, y);
-        String s = matcher.group("s");
-
-//        if (result != null) {
-//            System.out.println(result);
-//        }  else if (selectedUnit == null) {
-//            System.out.println(Outputs.EMPTY_SELECTED_UNIT.toString());
-//        } else {
-//            if ()
-//        }
+        String s = matcher.group("state");
+        //TODO complete this
+        System.out.println(militaryMenuController.setUnit(null, null,
+                new MilitaryUnit(null, null, null), s).toString());
     }
 
     public void attackChecker(Matcher matcher) {
@@ -169,8 +127,13 @@ public class MilitaryMenu {
 
     }
 
+
     public void setSelectedUnit(People selectedUnit) {
         this.selectedUnit = selectedUnit;
+    }
+
+    public People getSelectedUnit() {
+        return selectedUnit;
     }
 
     public void setPlayer(User player) {
@@ -181,3 +144,12 @@ public class MilitaryMenu {
         this.selectedUnit = militaryUnit;
     }
 }
+
+//    public MilitaryUnit findMilitary(int x, int y) {
+//        for (People people : empire.getMap().getTile(x, y).getPeople()) {
+//            if (people instanceof MilitaryUnit && player.equals(people.getPlayer())) {
+//                return (MilitaryUnit) people;
+//            }
+//        }
+//        return null;
+//    }

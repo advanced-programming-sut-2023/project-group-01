@@ -36,7 +36,21 @@ public enum Outputs {
     NOT_ENOUGH_POPULATION("Not enough population"),
     NOT_ENOUGH_MONEY("Not Enough money"),
     NOT_ENOUGH_EQUIPMENT("Not enough equipment"),
+    NOT_ENOUGH_STONE("Not enough stone"),
+    SUCCESSFUL_REPAIR("Successful repair"),
     SUCCESSFUL_CREATE("Successful create"),
+    INVALID_UNIT_STATE("Invalid unit state"),
+    SUCCESSFUL_SET_STATE("Successful set unit state"),
+    EMPTY_X1("Invalid X1"),
+    EMPTY_X2("Invalid X2"),
+    EMPTY_Y1("Invalid Y1"),
+    EMPTY_Y2("Invalid Y2"),
+    INVALID_X1("Invalid X1"),
+    INVALID_X2("Invalid X2"),
+    INVALID_Y1("Invalid Y1"),
+    INVALID_Y2("Invalid Y2"),
+    SUCCESSFUL_PATROL("Successful patrol"),
+    SUCCESSFUL_CANCEL_PATROL("Successful cancel patrol"),
     ;
     private String output;
 

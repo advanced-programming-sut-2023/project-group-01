@@ -2,6 +2,7 @@ package org.example.controller.mainMenuController.gameMenuController;
 
 import org.example.model.Empire;
 import org.example.model.building.Material;
+import org.example.model.building.enums.MaterialType;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
@@ -31,7 +32,8 @@ public class BuildingMenuController {
         }
     }
 
-    public Outputs dropBuilding(int xOfBuilding, int yOfBuilding, String type) {
+    public Outputs dropBuilding(int x, int y, String type) {
+        //TODO this
         return null;
     }
 
@@ -137,8 +139,29 @@ public class BuildingMenuController {
     }
 
     public Outputs repair() {
-        return null;
+        //TODO وقتی سربازا نزدیک یا رئی قلعه هستن
+        if (buildingMenu.getSelectedBuilding() == null) {
+            return Outputs.EMPTY_SELECTED_BUILDING;
+        } else if (!empire.havingMaterial(new Material(MaterialType.STONE), checkRepair())) {
+            return Outputs.NOT_ENOUGH_STONE;
+        }// else if () {
+//
+//        }
+        else {
+           buildingMenu.getSelectedBuilding().getBuildingName().setHitPoint();
+           empire.addMaterial(buildingMenu.getSelectedBuilding().getBuildingName().getName(), checkRepair());
+            return Outputs.SUCCESSFUL_REPAIR;
+        }
     }
+
+    public int checkRepair() {
+        int maxHitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getMaxHitPoint();
+        int hitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getHitPoint();
+        int cost = (maxHitPoint - hitPoint) * buildingMenu.getSelectedBuilding().getBuildingName().getStoneCost();
+
+        return Math.abs(cost/maxHitPoint);
+    }
+
 
     public void setEmpire(Empire empire) {
         this.empire = empire;

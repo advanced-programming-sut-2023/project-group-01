@@ -57,6 +57,11 @@ public class BuildingMenu {
     }
 
     public void dropBuildingChecker(Matcher matcher) {
+        //TODO switching x, y, type
+        String x = matcher.group("x");
+        String y = matcher.group("y");
+        String type = matcher.group("type");
+
 
     }
 
@@ -74,7 +79,7 @@ public class BuildingMenu {
     }
 
     public void repairChecker() {
-
+        System.out.println(buildingMenuController.repair().toString());
     }
 
     public void setBuilding(Building selectedBuilding) {
