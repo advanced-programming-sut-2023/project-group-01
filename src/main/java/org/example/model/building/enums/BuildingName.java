@@ -50,7 +50,6 @@ public enum BuildingName {
     ALE_PRODUCING(300, 300, BuildingCategory.FOOD_PROCESSING_BUILDING, "Ale Producing", 0, 0, 10, 1),
     FOOD_STOCKPILE(330, 330, BuildingCategory.FOOD_PROCESSING_BUILDING, "Food Stockpile", 0, 0, 5, 0);
 
-
     private int hitPoint;
     private final int maxHitPoint;
     private final BuildingCategory buildingCategory;
@@ -91,6 +90,16 @@ public enum BuildingName {
         return hitPoint;
     }
 
+    public BuildingCategory getBuildingCategory(){
+        return buildingCategory;
+    }
+
+    public TypeOfTile getTypeCanBuildBuilding() {
+        return typeCanBuildBuilding;
+    }
+
+    public void increaseHitPoint(int hitPoint) {
+        this.hitPoint += hitPoint;
     public void setHitPoint() {
         this.hitPoint = this.maxHitPoint;
     }

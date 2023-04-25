@@ -1,5 +1,6 @@
 package org.example.model.unit;
 
+import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.User;
 import org.example.model.building.Tile;

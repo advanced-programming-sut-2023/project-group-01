@@ -4,7 +4,8 @@ import java.util.regex.Matcher;
 
 public enum MapMenuCommands {
 
-    Temp("das");
+    MOVE_MAP(""),
+    SHOW_DETAIL("");
     private final String regex;
 
     MapMenuCommands(String regex) {

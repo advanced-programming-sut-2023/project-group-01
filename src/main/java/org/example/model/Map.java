@@ -18,15 +18,17 @@ public class Map {
     public void removePeople(int x, int y, People person) {
         map[x][y].removeUnit(person);
     }
+
     public Tile[][] getMap() {
         return map;
     }
 
-    public int getSize() {
-        return size;
+    public Tile getTileWhitXAndY(int xOfMap, int yOfMap) {
+        try {
+            return map[xOfMap-1][yOfMap-1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
-    public Tile getTile(int x, int y) {
-        return map[x][y];
-    }
 }
