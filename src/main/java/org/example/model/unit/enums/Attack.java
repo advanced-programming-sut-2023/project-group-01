@@ -1,6 +1,7 @@
 package org.example.model.unit.enums;
 
 public enum Attack {
+    LORD_ATTACK(200),
     SO_HIGH(100),
     HIGH(75),
     MIDDLE(50),

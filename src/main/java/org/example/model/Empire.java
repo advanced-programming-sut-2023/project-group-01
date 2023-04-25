@@ -7,6 +7,7 @@ import org.example.model.enums.FoodType;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.regex.Matcher;
 
 public class Empire {
     private int popularity;
@@ -14,9 +15,11 @@ public class Empire {
     private int taxRate;
     private int fearRate;
     private int religionRate;
+    private int population;
     private int MaxPopulation;
     private int gold;
     private final Color color;
+    private Map map;
     private LinkedHashMap<Material,Integer> materials = new LinkedHashMap<>();
     private LinkedHashMap<FoodType,Integer> foods = new LinkedHashMap<>(4);
     private ArrayList<Building> buildings = new ArrayList<>();
@@ -30,10 +33,10 @@ public class Empire {
         this.foodRate = 0;
         this.taxRate = 0;
         this.fearRate = 0;
-        foods.put(FoodType.TYPE1,0);
-        foods.put(FoodType.TYPE2,0);
-        foods.put(FoodType.TYPE3,0);
-        foods.put(FoodType.TYPE4,0);
+        foods.put(FoodType.BREED,0);
+        foods.put(FoodType.APPLE,0);
+        foods.put(FoodType.MEET,0);
+        foods.put(FoodType.CHEESE,0);
     }
 
     public int getPopularity() {
@@ -86,4 +89,37 @@ public class Empire {
 
     }
 
+    public int getGold() {
+        return gold;
+    }
+
+    public void addMaterial(String materialName, int count) {
+        for (Material material : materials.keySet()) {
+            if (material.getMaterialType().getName().equals(materialName)) {
+                int newCount = materials.get(material) - count;
+                materials.replace(material, newCount);
+            }
+        }
+    }
+    public int getMaxPopulation() {
+        return MaxPopulation;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public boolean havingMaterial(Material material, int count) {
+
+        for (Material material1 : materials.keySet()) {
+            if (material1.getMaterialType().getName().equals(material.getMaterialType().getName())
+                    && materials.get(material) > count) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public Map getMap() {
+        return map;
+    }
 }

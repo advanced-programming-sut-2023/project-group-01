@@ -21,4 +21,12 @@ public class Tile {
     public void removeUnit(People person) {
         people.remove(person);
     }
+
+    public ArrayList<People> getPeople() {
+        return people;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
 }
