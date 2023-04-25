@@ -9,13 +9,15 @@ public class User {
     private String nickname;
     private String email;
     private String slogan;
-    private SecurityQuestion securityQuestion;
+    private String securityQuestion;
     private String securityAnswer;
+    private int highScore;
+    private int rank;
     private byte[] salt;
 
 
     public User(String username, String passwordHash, String nickname, String email, String slogan,
-                SecurityQuestion securityQuestion, String securityAnswer, byte[] salt) {
+                String securityQuestion, String securityAnswer, byte[] salt) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.nickname = nickname;
@@ -24,6 +26,8 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.salt = salt;
+        this.highScore=0;
+        this.rank=0;
     }
 
     public String getUsername() {
@@ -46,7 +50,7 @@ public class User {
         return slogan;
     }
 
-    public SecurityQuestion getSecurityQuestion() {
+    public String getSecurityQuestion() {
         return securityQuestion;
     }
 
@@ -56,6 +60,14 @@ public class User {
 
     public byte[] getSalt() {
         return salt;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public int getRank() {
+        return rank;
     }
 
     public void setUsername(String username) {
@@ -78,7 +90,7 @@ public class User {
         this.slogan = slogan;
     }
 
-    public void setSecurityQuestion(SecurityQuestion securityQuestion) {
+    public void setSecurityQuestion(String securityQuestion) {
         this.securityQuestion = securityQuestion;
     }
 
@@ -86,7 +98,11 @@ public class User {
         this.securityAnswer = securityAnswer;
     }
 
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

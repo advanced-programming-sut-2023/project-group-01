@@ -1,6 +1,9 @@
 package org.example.controller;
 
 import org.example.model.Data;
+import org.example.model.User;
+import org.example.view.LoginMenu;
+import org.example.view.RegisterMenu;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.SecurityQuestion;
 import org.example.view.enums.commands.RegisterMenuCommands;
@@ -16,33 +19,55 @@ import java.util.regex.Matcher;
 
 public class RegisterMenuController {
 
+    public static User temporaryCreatedUser;
+    private boolean randomPassword;
     public Outputs registerUser(String username , String password , String email , String nickname ,
                                 String passwordConfirm , String slogan , String sloganSwitch) throws NoSuchAlgorithmException {
 
-        boolean randomPassword=false,randomSlogan=false;
-        Outputs outputs;
+        randomPassword=false;
+        boolean randomSlogan=false;
+        Outputs output;
 
-        if (!((outputs =registerValidationCheck(username,password,email,nickname,passwordConfirm,slogan,sloganSwitch)).
+        if (!((output =registerValidationCheck(username,password,email,nickname,passwordConfirm,slogan,sloganSwitch)).
                 equals(Outputs.VALID_REGISTRATION_INPUT)))
-            return outputs;
+            return output;
 
-        if (password.equals("random"))
+        if (password.equals("random")){
             randomPassword=true;
-
-        if (randomPassword){
             password = createRandomPassword();
+            RegisterMenu.randomPass=password;
         }
 
-        System.out.println(password);
-
         byte[] salt = createNewSalt();
-        String passwordHash = getPasswordHash(password,salt);
-        System.out.println(passwordHash);
+        String passwordHash = PasswordHash.getPasswordHash(password,salt);
 
-        return outputs;
+        temporaryCreatedUser = new User(username,passwordHash,nickname,email,slogan,null,null,salt);
+        if (slogan!=null&&slogan.equals("random"))
+            return Outputs.RANDOM_SLOGAN;
+
+
+        if (randomPassword)
+            return Outputs.RANDOM_PASSWORD_CONFIRMATION;
+
+        return Outputs.SUCCESS;
 
     }
 
+    public Outputs randomPasswordConfirmation(String passwordConfirm){
+        if (passwordConfirm.equals(RegisterMenu.randomPass))
+            return null;
+        return Outputs.WRONG_PASSWORD_CONFIRM;
+    }
+
+    public Outputs securityQuestion(int number,String answer,String answerConfirm){
+        if (number>3)
+            return Outputs.INVALID_QUESTION_NUMBER;
+        if (!answer.equals(answerConfirm))
+            return Outputs.WRONG_ANSWER_CONFIRM;
+        temporaryCreatedUser.setSecurityQuestion(SecurityQuestion.getQuestion(number-1));
+        temporaryCreatedUser.setSecurityAnswer(answer);
+        return Outputs.SUCCESS;
+    }
     public Outputs registerValidationCheck(String username , String password , String email , String nickname ,
                                            String passwordConfirm , String slogan , String sloganSwitch){
 
@@ -65,12 +90,9 @@ public class RegisterMenuController {
             Outputs passwordStatus=checkPasswordIsSecure(password);
             if (!passwordStatus.equals(Outputs.SECURE_PASSWORD))
                 return passwordStatus;
-        }
-
-
-        if (!randomPassword)
             if (!password.equals(passwordConfirm))
                 return Outputs.WRONG_PASSWORD_CONFIRM;
+        }
 
         if (Data.findUserWithEmail(email)!=null)
             return Outputs.EMAIL_EXISTS;
@@ -85,7 +107,7 @@ public class RegisterMenuController {
         return Outputs.VALID_REGISTRATION_INPUT;
     }
 
-    private Outputs checkPasswordIsSecure(String password){
+    public static Outputs checkPasswordIsSecure(String password){
         Matcher matcher = RegisterMenuCommands.getMatcher(password,RegisterMenuCommands.SECURE_PASSWORD);
         if (!matcher.find())
             return Outputs.SHORT_PASSWORD;
@@ -115,23 +137,6 @@ public class RegisterMenuController {
         byte[] salt = new byte[16];
         random.nextBytes(salt);
         return salt;
-    }
-    private String getPasswordHash(String password, byte[] salt) {
-
-        String generatedPassword = null;
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(salt);
-            byte[] bytes = messageDigest.digest(password.getBytes());
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                stringBuilder.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = stringBuilder.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
     }
 
 }

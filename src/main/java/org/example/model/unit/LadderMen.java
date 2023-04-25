@@ -7,8 +7,9 @@ import org.example.model.unit.enums.MilitaryUnitName;
 
 public class LadderMen extends MilitaryUnit {
     private boolean havingLadder = true;
-    public LadderMen(Tile position, Empire player, MilitaryUnitName militaryUnitName) {
-        super(player, militaryUnitName);
+    
+    public LadderMen(Tile position, User player, MilitaryUnitName militaryUnitName) {
+        super(position, player, militaryUnitName);
     }
 
     public void setHavingLadder(boolean havingLadder) {

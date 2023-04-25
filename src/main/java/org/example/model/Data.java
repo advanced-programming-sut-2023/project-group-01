@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Data {
 
     private static ArrayList<User> users = new ArrayList<>();
+    private static User stayedLoggedIn;
 
     public static ArrayList<User> getUsers() {
         return users;
@@ -12,6 +13,14 @@ public class Data {
 
     public static void setUsers(ArrayList<User> users) {
         Data.users = users;
+    }
+
+    public static User getStayedLoggedIn() {
+        return stayedLoggedIn;
+    }
+
+    public static void setStayedLoggedIn(User stayedLoggedIn) {
+        Data.stayedLoggedIn = stayedLoggedIn;
     }
 
     public static User findUserWithUsername(String username){
@@ -26,6 +35,10 @@ public class Data {
             if (user.getEmail().equalsIgnoreCase(email))
                 return user;
         return null;
+    }
+
+    public static void addUser(User user){
+        users.add(user);
     }
 
 }
