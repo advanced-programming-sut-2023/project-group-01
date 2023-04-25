@@ -22,4 +22,11 @@ public class Map {
         return map;
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public Tile getTile(int x, int y) {
+        return map[x][y];
+    }
 }
