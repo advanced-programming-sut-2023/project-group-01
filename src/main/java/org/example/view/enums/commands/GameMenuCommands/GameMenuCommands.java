@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 
 public enum GameMenuCommands {
 
-    Temp("das");
+    SHOW_MAP("");
     private final String regex;
 
     GameMenuCommands(String regex) {

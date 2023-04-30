@@ -1,3 +1,4 @@
+
 package org.example.model;
 
 import org.example.model.building.Building;

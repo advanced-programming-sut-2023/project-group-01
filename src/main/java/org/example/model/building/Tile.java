@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Tile {
     private ArrayList<People> people = new ArrayList<>();
-    private Building building;
+    private Building building = null;
     private TypeOfTile typeOfTile = TypeOfTile.NORMAL;
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
@@ -21,6 +21,13 @@ public class Tile {
     public void removeUnit(People person) {
         people.remove(person);
     }
+    
+    public void removeAllUnit() {
+        people.clear();
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
 
     public ArrayList<People> getPeople() {
         return people;
@@ -28,5 +35,13 @@ public class Tile {
 
     public Building getBuilding() {
         return building;
+    }
+
+    public TypeOfTile getTypeOfTile() {
+        return typeOfTile;
+    }
+
+    public ArrayList<People> getPeople() {
+        return people;
     }
 }

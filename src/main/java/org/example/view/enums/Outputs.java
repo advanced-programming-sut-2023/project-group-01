@@ -1,5 +1,7 @@
 package org.example.view.enums;
 
+import com.sun.net.httpserver.Authenticator;
+
 public enum Outputs {
 
     NOT_ENOUGH_DATA("Your entered data is not enough for this command."),
@@ -15,6 +17,16 @@ public enum Outputs {
     EMAIL_EXISTS("There is a user existing with your entered email."),
     INVALID_EMAIL("Your entered email is invalid."),
     VALID_REGISTRATION_INPUT("valid"),
+    INVALID_COORDINATES("Invalid coordinates."),
+    INVALID_TYPE_OF_TILE("The type of tile is invalid."),
+    TILE_NOT_EMPTY("The tile have a building."),
+    INVALID_DIRECTION("The entered direction is invalid"),
+    INAPPROPRIATE_TYPE_OF_TILE("The type of tile not appropriate for this building or tree"),
+    SUCCESS("The command was executed successfully"),
+    INVALID_TYPE_OF_TREE("The type of tree is invalid."),
+    INVALID_TYPE_OF_BUILDING("The type of building is invalid."),
+    INVALID_COUNT("The entered count for unit is invalid please enter a number greater than 0"),
+    INVALID_TYPE_OF_UNIT("The type of unit is invalid.");
     EMPTY_X("Your entered X is empty"),
     EMPTY_Y("Your entered Y is empty"),
     INVALID_X("Your entered X is invalid"),
@@ -55,7 +67,6 @@ public enum Outputs {
     RANDOM_PASSWORD_CONFIRMATION("Your random password is : "),
     INVALID_QUESTION_NUMBER("Your entered question number is invalid."),
     WRONG_ANSWER_CONFIRM("Your entered answer doesn't match with answer confirm."),
-    SUCCESS("success"),
     RANDOM_SLOGAN("Your random slogan is : "),
     VALID_LOGIN_INPUT("valid"),
     INVALID_LOGIN_INPUT("Invalid input for login."),
