@@ -65,6 +65,10 @@ public class Empire {
         return foods;
     }
 
+    public User getPlayer() {
+        return player;
+    }
+
     public void setPopularity(int popularity) {
         this.popularity = popularity;
     }

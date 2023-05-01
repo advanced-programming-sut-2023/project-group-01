@@ -74,7 +74,11 @@ public enum Outputs {
     WRONG_PASSWORD("Your entered password is wrong."),
     WRONG_ANSWER("Your security answer is wrong."),
     INVALID_FORGET_PASSWORD_INPUT("invalid input for password forget menu."),
-    PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully.");
+    PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully."),
+    INVALID_RATE_FOR_FOOD("Your entered rate not valid please enter a number between -2 and 2"),
+    INVALID_RATE_FOR_TAX("Your entered rate not valid please enter a number between -3 and 8"),
+    INVALID_RATE_FOR_FEAR("Your entered rate not valid please enter a number between -5 and 5");
+
     private String output;
 
     Outputs(String output) {

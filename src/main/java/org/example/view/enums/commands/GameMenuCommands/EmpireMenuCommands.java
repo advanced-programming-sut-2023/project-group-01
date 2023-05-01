@@ -5,7 +5,14 @@ import org.example.model.Empire;
 import java.util.regex.Matcher;
 
 public enum EmpireMenuCommands {
-    Temp("das");
+    SHOW_POPULARITY_FACTORS(""),
+    SHOW_POPULARITY(""),
+    SHOW_FOOD_LIST(""),
+    CHANGE_FOOD_RATE(""),
+    SHOW_FOOD_RATE(""),
+    CHANGE_TAX_RATE(""),
+    SHOW_TAX_RATE(""),
+    CHANGE_FEAR_RATE("");
     private final String regex;
 
 
