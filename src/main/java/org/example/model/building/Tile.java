@@ -28,11 +28,7 @@ public class Tile {
 
     public void setBuilding(Building building) {
         this.building = building;
-
-    public ArrayList<People> getPeople() {
-        return people;
     }
-
     public Building getBuilding() {
         return building;
     }

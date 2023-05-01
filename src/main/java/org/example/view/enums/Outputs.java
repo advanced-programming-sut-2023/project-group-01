@@ -26,7 +26,7 @@ public enum Outputs {
     INVALID_TYPE_OF_TREE("The type of tree is invalid."),
     INVALID_TYPE_OF_BUILDING("The type of building is invalid."),
     INVALID_COUNT("The entered count for unit is invalid please enter a number greater than 0"),
-    INVALID_TYPE_OF_UNIT("The type of unit is invalid.");
+    INVALID_TYPE_OF_UNIT("The type of unit is invalid."),
     EMPTY_X("Your entered X is empty"),
     EMPTY_Y("Your entered Y is empty"),
     INVALID_X("Your entered X is invalid"),
@@ -42,7 +42,7 @@ public enum Outputs {
     NOT_HAVING_BUILDING("You don't have any building in this position"),
     EMPTY_TYPE("Your entered Type is empty"),
     EMPTY_COUNT("Your entered Count is empty"),
-    INVALID_COUNT("Your entered Count is invalid"),
+//    INVALID_COUNT("Your entered Count is invalid"),
     EMPTY_SELECTED_BUILDING("Your don't select any building"),
     INVALID_MILITARY_TYPE("Invalid militaryUnit type"),
     NOT_ENOUGH_POPULATION("Not enough population"),

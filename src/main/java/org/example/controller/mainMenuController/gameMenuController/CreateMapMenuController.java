@@ -15,7 +15,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 
 import static org.example.view.mainMenu.gameMenu.CreateMapMenu.gameMap;
-import static org.example.view.mainMenu.gameMenu.GameMenu.thisEmpire;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class CreateMapMenuController {
 
@@ -124,7 +124,7 @@ public class CreateMapMenuController {
         //TODO check type of tile
         try {
             for(int i = 0 ; i< count; i++)
-                tile.addUnit(new MilitaryUnit(thisEmpire,MilitaryUnitName.valueOf(type)));
+                tile.addUnit(new MilitaryUnit(getThisEmpire(),MilitaryUnitName.valueOf(type)));
         }
         catch (IllegalArgumentException e) {
             return Outputs.INVALID_TYPE_OF_UNIT;

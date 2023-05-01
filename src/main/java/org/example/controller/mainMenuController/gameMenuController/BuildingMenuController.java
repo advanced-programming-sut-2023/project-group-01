@@ -23,11 +23,11 @@ public class BuildingMenuController {
             return Outputs.INVALID_Y;
         } else if (Integer.parseInt(x) > empire.getMap().getSize() || Integer.parseInt(y) > empire.getMap().getSize()) {
             return Outputs.OUT_OF_RANGE;
-        } else if (!empire.getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding()
+        } else if (!empire.getMap().getTileWhitXAndY(Integer.parseInt(x), Integer.parseInt(y)).getBuilding()
                 .getCurrentUser().equals(buildingMenu.getPlayer())) {
             return Outputs.NOT_HAVING_BUILDING;
         } else {
-            this.buildingMenu.setBuilding(empire.getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding());
+            this.buildingMenu.setBuilding(empire.getMap().getTileWhitXAndY(Integer.parseInt(x), Integer.parseInt(y)).getBuilding());
             return Outputs.VALID_SELECT_BUILDING;
         }
     }

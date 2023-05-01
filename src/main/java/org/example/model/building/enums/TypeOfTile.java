@@ -6,6 +6,7 @@ public enum TypeOfTile {
     IRON,
     GRASS,
     MEADOW,
+    //Todo علفزار پرتراکم بک گراند علفزار عادی معنی
     STONE,
 
 }
