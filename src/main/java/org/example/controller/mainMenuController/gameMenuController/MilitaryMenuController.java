@@ -124,7 +124,7 @@ public class MilitaryMenuController {
     }
 
     public MilitaryUnit findMilitary(int x, int y) {
-        for (People people : empire.getMap().getTile(x, y).getPeople()) {
+        for (People people : empire.getMap().getTileWhitXAndY(x, y).getPeople()) {
             if (people instanceof MilitaryUnit && player.equals(people.getPlayer())) {
                 return (MilitaryUnit) people;
             }

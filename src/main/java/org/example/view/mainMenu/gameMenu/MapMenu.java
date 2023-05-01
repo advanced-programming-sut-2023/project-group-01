@@ -54,7 +54,7 @@ public class MapMenu {
                             System.out.print(ShowMapAsciiArt.valueOf("S" + line));
                         else if (tile.getBuilding() != null) {
                             BuildingCategory buildingCategory = tile.getBuilding().getBuildingName().getBuildingCategory();
-                            if (buildingCategory.equals(BuildingCategory.TOWERS_AND_GATES))
+                            if (buildingCategory.equals(BuildingCategory.CASTLE_BUILDING))
                                 System.out.print(ShowMapAsciiArt.valueOf("W" + line));
                             else if (buildingCategory.equals(BuildingCategory.TREES))
                                 System.out.print(ShowMapAsciiArt.valueOf("T" + line));

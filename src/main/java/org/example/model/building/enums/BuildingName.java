@@ -22,9 +22,11 @@ public enum BuildingName {
     PITCH_RIG(240, 240, BuildingCategory.INDUSTRIAL_BUILDING, "Pitch Rig", 0, 0, 20, 1),
     QUARRY(300, 300, BuildingCategory.INDUSTRIAL_BUILDING, "Quarry", 0, 0, 20, 3),
     STOCKPILE(0, 0, BuildingCategory.INDUSTRIAL_BUILDING, "Stockpile", 0, 0, 0, 0),
-    WOODCUTTER(180, 180, BuildingCategory.INDUSTRIAL_BUILDING, "Woodcutter", 0, 0, 3, 1),
+    WOODCUTTER(180, 180, BuildingCategory.INDUSTRIAL_BUILDING, "Woodcutter",
+            0, 0, 3, 1),
     //TODO
-    APOTHECARY(300, 300, BuildingCategory.TOWN_BUILDING, "Apothecary", 150, 0, 20, 0),
+    APOTHECARY(300, 300, BuildingCategory.TOWN_BUILDING, "Apothecary",
+            150, 0, 20, 0),
     HOVEL(280, 280, BuildingCategory.TOWN_BUILDING, "Hovel", 0, 0, 6, 0),
     CHURCH(800, 800, BuildingCategory.TOWN_BUILDING, "Church", 250, 0, 0, 0),
     CATHEDRAL(1000, 1000, BuildingCategory.TOWN_BUILDING, "Cathedral", 1000, 0, 0, 0),
