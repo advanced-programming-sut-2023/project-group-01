@@ -2,7 +2,7 @@ package org.example.view.enums;
 
 public enum Outputs {
 
-    NOT_ENOUGH_DATA("Your entered data is not enough for registering new user."),
+    NOT_ENOUGH_DATA("Your entered data is not enough for this command."),
     INVALID_USERNAME("Your entered username is invalid."),
     USER_EXISTS("There is a user existing with your entered username."),
     SHORT_PASSWORD("Your entered password is short."),
@@ -51,17 +51,19 @@ public enum Outputs {
     INVALID_Y2("Invalid Y2"),
     SUCCESSFUL_PATROL("Successful patrol"),
     SUCCESSFUL_CANCEL_PATROL("Successful cancel patrol"),
-    NEAR_ENEMY("Enemy is near your castle"),
-    SUCCESSFUL_DESTROY_BUILDING("Building destroyed"),
-    FULL_POSITION("There is already exist a building"),
-    INVALID_BUILDING_TYPE("Invalid Building Type"),
-    SUCCESSFUL_DROP_BUILDING("Successful Drop Building"),
-    NOT_SUITABLE_GROUND("Not suitable Ground"),
-    POUR_OIL_DIRECTION("Wrong Direction"),
-    NO_ONE_TO_POUR_OIL("No One To Pour Oil"),
-    SUCCESSFUL_POUR_OIL("Successful Pour Oil"),
-
-    ;
+    INVALID_REGISTRATION_INPUT("Invalid input for registration."),
+    RANDOM_PASSWORD_CONFIRMATION("Your random password is : "),
+    INVALID_QUESTION_NUMBER("Your entered question number is invalid."),
+    WRONG_ANSWER_CONFIRM("Your entered answer doesn't match with answer confirm."),
+    SUCCESS("success"),
+    RANDOM_SLOGAN("Your random slogan is : "),
+    VALID_LOGIN_INPUT("valid"),
+    INVALID_LOGIN_INPUT("Invalid input for login."),
+    NOT_EXISTING_USERNAME("Your entered username doesn't exist."),
+    WRONG_PASSWORD("Your entered password is wrong."),
+    WRONG_ANSWER("Your security answer is wrong."),
+    INVALID_FORGET_PASSWORD_INPUT("invalid input for password forget menu."),
+    PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully.");
     private String output;
 
     Outputs(String output) {
