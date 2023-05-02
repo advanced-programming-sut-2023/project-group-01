@@ -42,7 +42,7 @@ public enum Outputs {
     NOT_HAVING_BUILDING("You don't have any building in this position"),
     EMPTY_TYPE("Your entered Type is empty"),
     EMPTY_COUNT("Your entered Count is empty"),
-//    INVALID_COUNT("Your entered Count is invalid"),
+    //    INVALID_COUNT("Your entered Count is invalid"),
     EMPTY_SELECTED_BUILDING("Your don't select any building"),
     INVALID_MILITARY_TYPE("Invalid militaryUnit type"),
     NOT_ENOUGH_POPULATION("Not enough population"),
@@ -74,7 +74,18 @@ public enum Outputs {
     WRONG_PASSWORD("Your entered password is wrong."),
     WRONG_ANSWER("Your security answer is wrong."),
     INVALID_FORGET_PASSWORD_INPUT("invalid input for password forget menu."),
-    PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully.");
+    PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully."),
+    NEAR_ENEMY("Enemy is near your castle"),
+    SUCCESSFUL_DESTROY_BUILDING("Building destroyed"),
+    FULL_POSITION("There is already exist a building"),
+    INVALID_BUILDING_TYPE("Invalid Building Type"),
+    SUCCESSFUL_DROP_BUILDING("Successful Drop Building"),
+    NOT_SUITABLE_GROUND("Not suitable Ground"),
+    POUR_OIL_DIRECTION("Wrong Direction"),
+    NO_ONE_TO_POUR_OIL("No One To Pour Oil"),
+    SUCCESSFUL_POUR_OIL("Successful Pour Oil"),
+
+    ;
     private String output;
 
     Outputs(String output) {
