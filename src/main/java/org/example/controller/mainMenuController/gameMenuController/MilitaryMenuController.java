@@ -2,27 +2,27 @@ package org.example.controller.mainMenuController.gameMenuController;
 
 import org.example.model.Empire;
 import org.example.model.People;
-import org.example.model.User;
 import org.example.model.building.Tile;
+import org.example.model.unit.Engineer;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitState;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.MilitaryMenu;
 
+import java.util.ArrayList;
+
 public class MilitaryMenuController {
     private MilitaryMenu militaryMenu;
     private final Empire empire;
-    private User player;
 
-    public MilitaryMenuController(Empire empire, User player) {
+    public MilitaryMenuController(Empire empire) {
         this.empire = empire;
-        this.player = player;
     }
 
     public Outputs selectUnit(String x, String y) {
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) {
-            militaryMenu.setSelectPeople(findMilitary(Integer.parseInt(x), Integer.parseInt(y)));
+            //militaryMenu.setSelectPeople(findMilitary(Integer.parseInt(x), Integer.parseInt(y)));
         }
         return outputs;
     }
@@ -52,8 +52,7 @@ public class MilitaryMenuController {
         } else if (!y2.matches("\\d+")) {
             return Outputs.INVALID_Y2;
         } else {
-            ((MilitaryUnit)(militaryMenu.getSelectedUnit())).setPatrolXY(Integer.parseInt(x1),Integer.parseInt(y1)
-                    ,Integer.parseInt(x2),Integer.parseInt(y2));
+            //(militaryMenu.getSelectedUnit()).setPatrolXY(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2), Integer.parseInt(y2));
             return Outputs.SUCCESSFUL_PATROL;
         }
     }
@@ -91,8 +90,46 @@ public class MilitaryMenuController {
     }
 
     public Outputs pourOil(String direction) {
+        //اگه بیرون مپ افتاد
+        if (direction.equals("left") || direction.equals("right") || direction.equals("up") || direction.equals("down")) {
+            return Outputs.POUR_OIL_DIRECTION;
+        } else if (findPourOilers().size() == 0) {
+            return Outputs.NO_ONE_TO_POUR_OIL;
+        } else {
+            doPourOil(direction);
+            return Outputs.SUCCESSFUL_POUR_OIL;
+        }
+    }
 
-        return null;
+    private void doPourOil(String direction) {
+
+        for (MilitaryUnit militaryUnit : findPourOilers()) {
+            //خالی کردن مخزن اب داغشون
+        }
+
+        //Set the position for each troop
+        if (direction.equals("left")) {
+
+        } else if (direction.equals("right")) {
+
+        } else if (direction.equals("up")) {
+
+        } else {
+
+        }
+
+    }
+
+    public ArrayList<MilitaryUnit> findPourOilers() {
+        ArrayList<MilitaryUnit> pourOilers = new ArrayList<>();
+
+        for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
+            //TODO this having oil
+            if (militaryUnit instanceof Engineer) {
+                pourOilers.add(militaryUnit);
+            }
+        }
+        return pourOilers;
     }
 
     public Outputs digTunnel(Tile tile) {
@@ -101,6 +138,7 @@ public class MilitaryMenuController {
     }
 
     public Outputs build(String equipmentName) {
+
 
         return null;
     }
@@ -123,13 +161,15 @@ public class MilitaryMenuController {
         }
     }
 
-    public MilitaryUnit findMilitary(int x, int y) {
-        for (People people : empire.getMap().getTileWhitXAndY(x, y).getPeople()) {
-            if (people instanceof MilitaryUnit && player.equals(people.getPlayer())) {
-                return (MilitaryUnit) people;
+    public ArrayList<MilitaryUnit> findMilitary(int x, int y) {
+        ArrayList<MilitaryUnit> militaryUnits = new ArrayList<>();
+        for (People people : empire.getMap().getTile(x, y).getPeople()) {
+            if (people instanceof MilitaryUnit && empire.equals(people.getEmpire())) {
+                militaryUnits.add((MilitaryUnit) people);
+
             }
         }
-        return null;
+        return militaryUnits;
     }
 
     public void setMilitaryMenu(MilitaryMenu militaryMenu) {

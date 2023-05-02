@@ -38,6 +38,8 @@ public class RegisterMenuController {
             RegisterMenu.randomPass=password;
         }
 
+        System.out.println(password);
+
         byte[] salt = createNewSalt();
         String passwordHash = PasswordHash.getPasswordHash(password,salt);
 
@@ -90,6 +92,10 @@ public class RegisterMenuController {
             Outputs passwordStatus=checkPasswordIsSecure(password);
             if (!passwordStatus.equals(Outputs.SECURE_PASSWORD))
                 return passwordStatus;
+        }
+
+
+        if (!randomPassword)
             if (!password.equals(passwordConfirm))
                 return Outputs.WRONG_PASSWORD_CONFIRM;
         }
@@ -137,6 +143,23 @@ public class RegisterMenuController {
         byte[] salt = new byte[16];
         random.nextBytes(salt);
         return salt;
+    }
+    private String getPasswordHash(String password, byte[] salt) {
+
+        String generatedPassword = null;
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(salt);
+            byte[] bytes = messageDigest.digest(password.getBytes());
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                stringBuilder.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = stringBuilder.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 
 }
