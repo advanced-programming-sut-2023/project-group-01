@@ -1,10 +1,8 @@
 package org.example.model.building.castleBuilding;
 
 import org.example.model.Empire;
-import org.example.model.User;
 import org.example.model.building.castleBuilding.enums.TowerType;
 import org.example.model.building.enums.BuildingName;
-import org.example.model.building.Tile;
 
 public class Tower extends CastleBuilding {
 
