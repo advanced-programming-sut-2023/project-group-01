@@ -2,7 +2,6 @@ package org.example.view.mainMenu;
 
 import org.example.model.Data;
 import org.example.model.User;
-import org.example.model.UsersDatabaseJSON;
 import org.example.view.RegisterMenu;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.MainMenuCommands;
