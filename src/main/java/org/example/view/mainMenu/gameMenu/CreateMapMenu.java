@@ -1,14 +1,14 @@
 package org.example.view.mainMenu.gameMenu;
 
-import org.example..GameMap;
+
 
 import java.util.regex.Matcher;
 
 public class CreateMapMenu {
-
-    public GameMap run() {
-        return null;
-    }
+//
+//    public GameMap run() {
+//        return null;
+//    }
 
     public void setTextureForATileChecker(Matcher matcher) {
 

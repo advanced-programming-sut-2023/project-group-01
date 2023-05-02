@@ -4,17 +4,18 @@ import org.example.model.building.Tile;
 
 public class People {
     protected Tile position;
-    protected User player;
-    public People(Tile position, User player) {
+    protected Empire empire;
+    public People(Tile position, Empire empire) {
         this.position = position;
-        this.player = player;
+        this.empire = empire;
     }
 
     public Tile getPosition() {
         return position;
     }
 
-    public User getPlayer() {
-        return player;
+    public Empire getEmpire() {
+        return empire;
     }
+
 }

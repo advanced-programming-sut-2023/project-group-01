@@ -1,5 +1,6 @@
 package org.example.model.unit;
 
+import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.User;
 import org.example.model.building.Tile;
@@ -13,8 +14,9 @@ public class MilitaryUnit extends People {
     protected int patrolY1;
     protected int patrolX2;
     protected int patrolY2;
-    public MilitaryUnit(Tile position, User player, MilitaryUnitName militaryUnitName) {
-        super(position, player);
+
+    public MilitaryUnit(Tile position, Empire empire, MilitaryUnitName militaryUnitName) {
+        super(position, empire);
         this.militaryUnitName = militaryUnitName;
     }
 

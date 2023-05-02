@@ -51,6 +51,16 @@ public enum Outputs {
     INVALID_Y2("Invalid Y2"),
     SUCCESSFUL_PATROL("Successful patrol"),
     SUCCESSFUL_CANCEL_PATROL("Successful cancel patrol"),
+    NEAR_ENEMY("Enemy is near your castle"),
+    SUCCESSFUL_DESTROY_BUILDING("Building destroyed"),
+    FULL_POSITION("There is already exist a building"),
+    INVALID_BUILDING_TYPE("Invalid Building Type"),
+    SUCCESSFUL_DROP_BUILDING("Successful Drop Building"),
+    NOT_SUITABLE_GROUND("Not suitable Ground"),
+    POUR_OIL_DIRECTION("Wrong Direction"),
+    NO_ONE_TO_POUR_OIL("No One To Pour Oil"),
+    SUCCESSFUL_POUR_OIL("Successful Pour Oil"),
+
     ;
     private String output;
 

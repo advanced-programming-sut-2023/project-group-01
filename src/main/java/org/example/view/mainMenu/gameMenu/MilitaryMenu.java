@@ -7,6 +7,7 @@ import org.example.model.User;
 import org.example.model.unit.MilitaryUnit;
 import org.example.view.enums.Outputs;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -14,12 +15,12 @@ public class MilitaryMenu {
     private final MilitaryMenuController militaryMenuController;
     private final Empire empire;
     private User player;
-    private People selectedUnit;
+    private ArrayList<MilitaryUnit> selectedUnit;
 
     public MilitaryMenu(Empire empire, User player) {
         this.empire = empire;
         this.player = player;
-        this.militaryMenuController = new MilitaryMenuController(empire, player);
+        this.militaryMenuController = new MilitaryMenuController(empire);
         this.militaryMenuController.setMilitaryMenu(this);
     }
 
@@ -128,11 +129,11 @@ public class MilitaryMenu {
     }
 
 
-    public void setSelectedUnit(People selectedUnit) {
+    public void setSelectedUnit(ArrayList<MilitaryUnit> selectedUnit) {
         this.selectedUnit = selectedUnit;
     }
 
-    public People getSelectedUnit() {
+    public ArrayList<MilitaryUnit> getSelectedUnit() {
         return selectedUnit;
     }
 
@@ -140,9 +141,6 @@ public class MilitaryMenu {
         this.player = player;
     }
 
-    public void setSelectPeople(MilitaryUnit militaryUnit) {
-        this.selectedUnit = militaryUnit;
-    }
 }
 
 //    public MilitaryUnit findMilitary(int x, int y) {

@@ -1,29 +1,29 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
-import org.example.model.User;
 import org.example.model.building.Building;
 import org.example.model.Empire;
 import org.example.view.enums.Outputs;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class BuildingMenu {
     private BuildingMenuController buildingMenuController;
     private final Empire empire;
-    private final User player;
     private Building selectedBuilding;
 
-    public BuildingMenu(Empire empire, User player) {
+    public BuildingMenu(Empire empire) {
         this.empire = empire;
-        this.player = player;
         this.buildingMenuController = new BuildingMenuController();
         buildingMenuController.setEmpire(empire);
         buildingMenuController.setBuildingMenu(this);
     }
 
-    public void run(Scanner scanner) {
+    public void run(Scanner scanner) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         String input;
 
         while (true) {
@@ -62,10 +62,13 @@ public class BuildingMenu {
         String y = matcher.group("y");
         String type = matcher.group("type");
 
-
+        buildingMenuController.dropBuilding(x, y, type);
+    }
+    public void destroyBuilding() {
+        System.out.println(buildingMenuController.destroyBuilding());
     }
 
-    public void createUnitChecker(Matcher matcher) {
+    public void createUnitChecker(Matcher matcher) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         String type;
         String count;
         if (matcher.group("type") == null && matcher.group("type") == null) {
@@ -86,8 +89,9 @@ public class BuildingMenu {
         this.selectedBuilding = selectedBuilding;
     }
 
-    public User getPlayer() {
-        return player;
+
+    public Empire getEmpire() {
+        return empire;
     }
 
     public Building getSelectedBuilding() {
