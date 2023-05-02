@@ -59,7 +59,7 @@ public class CreateMapMenuController {
         if (tile == null) return Outputs.INVALID_COORDINATES;
         tile.removeAllUnit();
         tile.setBuilding(null);
-        tile.setTypeOfTile(TypeOfTile.NORMAL);
+        tile.setTypeOfTile(TypeOfTile.NORMAL_GROUND);
         return Outputs.SUCCESS;
     }
 
@@ -90,7 +90,7 @@ public class CreateMapMenuController {
                 return Outputs.TILE_NOT_EMPTY;
             if(BuildingName.valueOf(type).getTypeCanBuildBuilding() != tile.getTypeOfTile())
                 return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
-            tile.setBuilding(new Building(tile, BuildingName.valueOf(type)));
+            //tile.setBuilding(new Building(tile, BuildingName.valueOf(type)));
         }
         catch (IllegalArgumentException e){
             return Outputs.INVALID_TYPE_OF_TREE;
@@ -109,8 +109,8 @@ public class CreateMapMenuController {
             if(BuildingName.valueOf(type).getTypeCanBuildBuilding() !=
                     gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).getTypeOfTile())
                 return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
-            gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).setBuilding
-                    (new Building(gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding), BuildingName.valueOf(type)));
+            //gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).setBuilding
+                    //(new Building(gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding), BuildingName.valueOf(type)));
         }
         catch (IllegalArgumentException e){
             return Outputs.INVALID_TYPE_OF_BUILDING;
@@ -123,8 +123,10 @@ public class CreateMapMenuController {
         if(count <=0) return Outputs.INVALID_COUNT;
         //TODO check type of tile
         try {
-            for(int i = 0 ; i< count; i++)
-                tile.addUnit(new MilitaryUnit(getThisEmpire(),MilitaryUnitName.valueOf(type)));
+            for(int i = 0 ; i< count; i++){
+
+            }
+                //tile.addUnit(new MilitaryUnit(getThisEmpire(),MilitaryUnitName.valueOf(type)));
         }
         catch (IllegalArgumentException e) {
             return Outputs.INVALID_TYPE_OF_UNIT;

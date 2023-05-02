@@ -73,17 +73,17 @@ public class MapMenu {
 
     public void setColorInTerminal(Tile tile){
         if (tile == null) BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
-        else if (tile.getTypeOfTile().equals(TypeOfTile.NORMAL))
+        else if (tile.getTypeOfTile().equals(TypeOfTile.NORMAL_GROUND))
             BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
-        else if(tile.getTypeOfTile().equals(TypeOfTile.GRASS))
+        else if(tile.getTypeOfTile().equals(TypeOfTile.GRASSLAND))
             BackgroundColor.changeColor(BackgroundColor.ANSI_GREEN_BACKGROUND);
-        else if(tile.getTypeOfTile().equals(TypeOfTile.IRON))
+        else if(tile.getTypeOfTile().equals(TypeOfTile.IRON_MINE))
             BackgroundColor.changeColor(BackgroundColor.ANSI_WHITE_BACKGROUND);
         else if(tile.getTypeOfTile().equals(TypeOfTile.MEADOW))
             BackgroundColor.changeColor(BackgroundColor.ANSI_YELLOW_BACKGROUND);
         else if(tile.getTypeOfTile().equals(TypeOfTile.SEA))
             BackgroundColor.changeColor(BackgroundColor.ANSI_BLUE_BACKGROUND);
-        else if(tile.getTypeOfTile().equals(TypeOfTile.STONE))
+        else if(tile.getTypeOfTile().equals(TypeOfTile.STONE_MINE))
             BackgroundColor.changeColor(BackgroundColor.ANSI_PURPLE_BACKGROUND);
     }
 

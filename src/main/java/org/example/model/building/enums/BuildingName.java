@@ -35,36 +35,6 @@ public enum BuildingName {
     CHURCH(800, 800, BuildingCategory.TOWN_BUILDING, "Church", 250, 0, 0, 0, 9, TypeOfTile.NORMAL_GROUND),
     CATHEDRAL(1000, 1000, BuildingCategory.TOWN_BUILDING, "Cathedral", 1000, 0, 0, 0, 13, TypeOfTile.NORMAL_GROUND),
     WELL(500, 500, BuildingCategory.TOWN_BUILDING, "Well", 30, 0, 0, 0, 3, TypeOfTile.NORMAL_GROUND),
-    SMALL_STONE_GATEHOUSE(1000, 1000, BuildingCategory.CASTLE_BUILDING, "Small Stone Gatehouse", 0, 10, 0, 0),
-    BIG_STONE_GATEHOUSE(2000, 2000, BuildingCategory.CASTLE_BUILDING, "Big Stone Gatehouse", 0, 20, 0, 0),
-    DRAWBRIDGE(0, 0, BuildingCategory.CASTLE_BUILDING, "Drawbridge", 0, 0, 10, 0),
-    LOOKOUT_TOWER(250, 250, BuildingCategory.CASTLE_BUILDING, "Lookout Tower", 0, 10, 0, 0),
-    PERIMETER_TURRET(1000, 1000, BuildingCategory.CASTLE_BUILDING, "Perimeter Tower", 0, 10, 0, 0),
-    DEFENSE_TURRET(1200, 1200, BuildingCategory.CASTLE_BUILDING, "Defence Tower", 0, 15, 0, 0),
-    ROUND_TOWER(2000, 2000, BuildingCategory.CASTLE_BUILDING, "Round Tower", 0, 40, 0, 0),
-    SQUARE_TOWER(1600, 1600, BuildingCategory.CASTLE_BUILDING, "Square Tower", 0, 35, 0, 0),
-    ARMOURY(280, 280, BuildingCategory.CASTLE_BUILDING, "Armoury", 0, 0, 5, 0),
-    BARRACK(350, 350, BuildingCategory.CASTLE_BUILDING, "Barrack", 0, 15, 0, 0),
-    MERCENARY_BARRACKS(350, 350, BuildingCategory.CASTLE_BUILDING, "Mercenary Barrack", 0, 0, 10, 0),
-    ENGINEER_GUILD(300, 300, BuildingCategory.CASTLE_BUILDING, "Engineer Guild", 100, 0, 10, 0),
-    KILLING_PIT(0, 0, BuildingCategory.CASTLE_BUILDING, "Killing Pit", 0, 0, 6, 0),
-    INN(250, 250, BuildingCategory.FOOD_PROCESSING_BUILDING, "Inn", 100, 0, 20, 1),
-    MILL(270, 270, BuildingCategory.FOOD_PROCESSING_BUILDING, "Mill", 0, 0, 20, 3),
-    IRON_MINE(320, 320, BuildingCategory.INDUSTRIAL_BUILDING, "Iron Mine", 0, 0, 20, 2),
-    MARKET(330, 330, BuildingCategory.INDUSTRIAL_BUILDING, "Market", 0, 0, 5, 1),
-    OX_TETHER(100, 100, BuildingCategory.INDUSTRIAL_BUILDING, "Ox Tether", 0, 0, 5, 1),
-    PITCH_RIG(240, 240, BuildingCategory.INDUSTRIAL_BUILDING, "Pitch Rig", 0, 0, 20, 1),
-    QUARRY(300, 300, BuildingCategory.INDUSTRIAL_BUILDING, "Quarry", 0, 0, 20, 3),
-    STOCKPILE(0, 0, BuildingCategory.INDUSTRIAL_BUILDING, "Stockpile", 0, 0, 0, 0),
-    WOODCUTTER(180, 180, BuildingCategory.INDUSTRIAL_BUILDING, "Woodcutter",
-            0, 0, 3, 1),
-    //TODO
-    APOTHECARY(300, 300, BuildingCategory.TOWN_BUILDING, "Apothecary",
-            150, 0, 20, 0),
-    HOVEL(280, 280, BuildingCategory.TOWN_BUILDING, "Hovel", 0, 0, 6, 0),
-    CHURCH(800, 800, BuildingCategory.TOWN_BUILDING, "Church", 250, 0, 0, 0),
-    CATHEDRAL(1000, 1000, BuildingCategory.TOWN_BUILDING, "Cathedral", 1000, 0, 0, 0),
-    WELL(500, 500, BuildingCategory.TOWN_BUILDING, "Well", 30, 0, 0, 0),
     //TODO
     WATER_POT(200, 200, BuildingCategory.TOWN_BUILDING, "Water Pot", 60, 0, 0, 3, 4, TypeOfTile.NORMAL_GROUND),
     ARMOURER(340, 340, BuildingCategory.WEAPON_BUILDING, "Armourer Workshop", 100, 0, 20, 1, 4, TypeOfTile.NORMAL_GROUND),
@@ -135,12 +105,9 @@ public enum BuildingName {
         return buildingCategory;
     }
 
-    public TypeOfTile getTypeCanBuildBuilding() {
-        return typeCanBuildBuilding;
-    }
-
     public void increaseHitPoint(int hitPoint) {
         this.hitPoint += hitPoint;
+    }
     public void setHitPoint() {
         this.hitPoint = this.maxHitPoint;
     }

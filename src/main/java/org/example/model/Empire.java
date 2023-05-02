@@ -4,6 +4,7 @@ package org.example.model;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 import org.example.model.building.castleBuilding.EmpireBuilding;
+import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
 
@@ -43,6 +44,13 @@ public class Empire {
         foods.put(FoodType.APPLE,0);
         foods.put(FoodType.MEET,0);
         foods.put(FoodType.CHEESE,0);
+        initializeMaterials();
+    }
+
+    private void initializeMaterials(){
+        for (MaterialType materialType: MaterialType.values()){
+            this.materials.put(new Material(materialType),0);
+        }
     }
 
     public int getPopularity() {
@@ -99,6 +107,13 @@ public class Empire {
         return gold;
     }
 
+    public void increaseGold(int count) {
+        this.gold+=count;
+    }
+
+    public void decreaseGold(int count) {
+        this.gold-=count;
+    }
     public void addMaterial(String materialName, int count) {
         for (Material material : materials.keySet()) {
             if (material.getMaterialType().getName().equals(materialName)) {
@@ -127,5 +142,9 @@ public class Empire {
     }
     public Map getMap() {
         return map;
+    }
+
+    public LinkedHashMap<Material, Integer> getMaterials() {
+        return materials;
     }
 }

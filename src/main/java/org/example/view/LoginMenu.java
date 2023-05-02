@@ -52,11 +52,10 @@ public class LoginMenu {
 
             } else if ((matcher = LoginMenuCommands.getMatcher(inputLine, LoginMenuCommands.FORGET_PASSWORD)).find()) {
                 System.out.println(forgetPasswordRun(matcher, scanner).toString());
-            } else if (LoginMenuCommands.getMatcher(inputLine, LoginMenuCommands.ENTER_REGISTER_MENU).find()){
+            } else if (LoginMenuCommands.getMatcher(inputLine, LoginMenuCommands.ENTER_REGISTER_MENU).find()) {
                 registerMenu.run(scanner);
                 break;
-            }else if (RegisterMenuCommands.getMatcher(inputLine,RegisterMenuCommands.EXIT).find())
-                break;
+            } else if (RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.EXIT).find()) break;
             else System.out.println("Invalid command in login menu !");
         }
     }
@@ -65,11 +64,10 @@ public class LoginMenu {
         String username = matcher.group("username");
         String password = matcher.group("password");
         String stayLoggedIn = matcher.group("stayLoggedIn");
-        if (!line.equals(line.replaceAll("--stay-logged-in$", "")))
-            stayLoggedIn="yes";
+        if (!line.equals(line.replaceAll("--stay-logged-in$", ""))) stayLoggedIn = "yes";
         if (checkNoAdditionalInLogin(username, password, line).equals(Outputs.INVALID_LOGIN_INPUT))
             return Outputs.INVALID_LOGIN_INPUT;
-        return loginMenuController.login(username, password,stayLoggedIn);
+        return loginMenuController.login(username, password, stayLoggedIn);
     }
 
     private Outputs checkNoAdditionalInLogin(String username, String password, String line) {
@@ -78,8 +76,7 @@ public class LoginMenu {
         line = line.replaceAll("-p " + password, "");
         line = line.replaceAll("--stay-logged-in", "");
         line = line.replaceAll("\\s", "");
-        if (line.equals(""))
-            return Outputs.VALID_LOGIN_INPUT;
+        if (line.equals("")) return Outputs.VALID_LOGIN_INPUT;
         return Outputs.INVALID_LOGIN_INPUT;
     }
 
@@ -101,10 +98,8 @@ public class LoginMenu {
                 isValid = false;
             }
             if (isValid) {
-                if (number == 0)
-                    continue;
-                if (number != CaptchaAsciiArt.captchaValue)
-                    System.out.println("Your didn't enter captcha correctly.");
+                if (number == 0) continue;
+                if (number != CaptchaAsciiArt.captchaValue) System.out.println("Your didn't enter captcha correctly.");
                 else {
                     System.out.println("login successful !");
                     MainMenu mainMenu = new MainMenu(Data.findUserWithUsername(username));
@@ -122,12 +117,10 @@ public class LoginMenu {
 
     public Outputs forgetPasswordRun(Matcher matcher, Scanner scanner) {
         String username = matcher.group("username");
-        if (username == null)
-            return Outputs.INVALID_FORGET_PASSWORD_INPUT;
+        if (username == null) return Outputs.INVALID_FORGET_PASSWORD_INPUT;
 
         User user = Data.findUserWithUsername(username);
-        if (user == null)
-            return Outputs.NOT_EXISTING_USERNAME;
+        if (user == null) return Outputs.NOT_EXISTING_USERNAME;
 
         System.out.println("Answer your security question below :");
         System.out.println(user.getSecurityQuestion());

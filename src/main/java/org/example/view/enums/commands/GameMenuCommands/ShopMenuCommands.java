@@ -1,9 +1,12 @@
 package org.example.view.enums.commands.GameMenuCommands;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public enum ShopMenuCommands {
-    Temp("das");
+    SHOW_PRICE_LIST("^show price list$"),
+    BUY("buy (?=.*-i (?<name>\\S+))(?=.*-a (?<count>\\d+))"),
+    SELL("sell (?=.*-i (?<name>\\S+))(?=.*-a (?<count>\\d+))");
     private final String regex;
 
     ShopMenuCommands(String regex) {
@@ -11,6 +14,7 @@ public enum ShopMenuCommands {
     }
 
     public static Matcher getMatcher(String input, ShopMenuCommands shopMenuCommands){
-        return null;
+        Pattern pattern = Pattern.compile(shopMenuCommands.regex);
+        return pattern.matcher(input);
     }
 }

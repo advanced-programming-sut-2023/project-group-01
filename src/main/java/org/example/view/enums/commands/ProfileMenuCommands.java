@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public enum ProfileMenuCommands {
     CHANGE_USERNAME("^profile change -u (?<username>.+)"),
     CHANGE_NICKNAME("^profile change -n (?<nickname>.+)"),
-    CHANGE_PASSWORD("^profile change " +
+    CHANGE_PASSWORD("^profile change password " +
             "(?=.*\\-o (?<oldPassword>(\\\"[^\\\"]+\\\"|[^\\s\\\"]+(?=(?:[^'\\\"]*(?:'|\\\")[^'\\\"]*(?:'|\\\"))*[^'\\\"]*$))))?" +
             "(?=.*\\-n (?<newPassword>(\\\"[^\\\"]+\\\"|[^\\s\\\"]+(?=(?:[^'\\\"]*(?:'|\\\")[^'\\\"]*(?:'|\\\"))*[^'\\\"]*$))))?"),
     CHANGE_EMAIL("^profile change -e (?<email>.+)"),

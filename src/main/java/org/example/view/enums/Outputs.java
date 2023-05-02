@@ -42,7 +42,7 @@ public enum Outputs {
     NOT_HAVING_BUILDING("You don't have any building in this position"),
     EMPTY_TYPE("Your entered Type is empty"),
     EMPTY_COUNT("Your entered Count is empty"),
-    //    INVALID_COUNT("Your entered Count is invalid"),
+//    INVALID_COUNT("Your entered Count is invalid"),
     EMPTY_SELECTED_BUILDING("Your don't select any building"),
     INVALID_MILITARY_TYPE("Invalid militaryUnit type"),
     NOT_ENOUGH_POPULATION("Not enough population"),
@@ -84,8 +84,18 @@ public enum Outputs {
     POUR_OIL_DIRECTION("Wrong Direction"),
     NO_ONE_TO_POUR_OIL("No One To Pour Oil"),
     SUCCESSFUL_POUR_OIL("Successful Pour Oil"),
-
-    ;
+    //PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully."),
+    USERNAME_CHANGE_SUCCESSFUL("Your username changed successfully."),
+    NICKNAME_CHANGE_SUCCESSFUL("Your nickname changed successfully."),
+    SLOGAN_CHANGE_SUCCESSFUL("Your slogan changed successfully."),
+    EMAIL_CHANGE_SUCCESSFUL("Your email changed successfully."),
+    SAME_NEW_PASSWORD("Your old password and new password are same.Re enter command with different new password."),
+    WRONG_OLD_PASSWORD("Your old password doesn't equal current password."),
+    NOT_ENOUGH_MATERIAL("Your entered count for selling this material is more than you inventory! "),
+    NOT_ENOUGH_GOLD("You don't have enough gold to buy this material!"),
+    SUCCESS_BUY("You successfully bought the material."),
+    SUCCESS_SELL("You successfully sell the material."),
+    INVALID_MATERIAL_NAME("Your entered material name is invalid.");
     private String output;
 
     Outputs(String output) {

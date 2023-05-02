@@ -2,6 +2,7 @@ package org.example.view.mainMenu;
 
 import org.example.model.Data;
 import org.example.model.User;
+import org.example.model.UsersDatabaseJSON;
 import org.example.view.RegisterMenu;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.MainMenuCommands;
@@ -15,7 +16,7 @@ public class MainMenu {
 
     private final User currentUser;
 
-    public MainMenu(User currentUser){
+    public MainMenu(User currentUser) {
         this.currentUser = currentUser;
     }
 
@@ -26,15 +27,16 @@ public class MainMenu {
         Matcher matcher;
         Outputs output;
 
-        while (true){
-            inputLine=scanner.nextLine();
+        while (true) {
+            inputLine = scanner.nextLine();
 
-            if (MainMenuCommands.getMatcher(inputLine,MainMenuCommands.USER_LOGOUT).find()){
+            if (MainMenuCommands.getMatcher(inputLine, MainMenuCommands.USER_LOGOUT).find()) {
                 Data.setStayedLoggedIn(null);
+                UsersDatabaseJSON.saveStayedLoggedInUser();
                 RegisterMenu registerMenu = new RegisterMenu();
                 registerMenu.run(scanner);
                 break;
-            }else if (MainMenuCommands.getMatcher(inputLine,MainMenuCommands.ENTER_PROFILE_MENU).find()){
+            } else if (MainMenuCommands.getMatcher(inputLine, MainMenuCommands.ENTER_PROFILE_MENU).find()) {
                 ProfileMenu profileMenu = new ProfileMenu(currentUser);
                 profileMenu.run(scanner);
                 break;
@@ -43,7 +45,7 @@ public class MainMenu {
     }
 
 
-    public void startGameChecker(Matcher matcher){
+    public void startGameChecker(Matcher matcher) {
 
     }
 }

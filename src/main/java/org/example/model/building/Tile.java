@@ -32,22 +32,11 @@ public class Tile {
         return false;
     }
 
-    public TypeOfTile getTypeOfTile() {
-        return typeOfTile;
-    }
-
     public void setBuilding(Building building) {
         this.building = building;
     }
 
-    public ArrayList<People> getPeople() {
-        return people;
 
-    }
-
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
     public Building getBuilding() {
         return building;
     }
@@ -59,4 +48,9 @@ public class Tile {
     public ArrayList<People> getPeople() {
         return people;
     }
+
+    public void removeAllUnit() {
+        people.clear();
+    }
 }
+
