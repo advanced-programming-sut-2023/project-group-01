@@ -11,6 +11,7 @@ public class Tile {
     private Building building;
     private TypeOfTile typeOfTile = TypeOfTile.NORMAL_GROUND;
 
+
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
     }
@@ -41,9 +42,21 @@ public class Tile {
 
     public ArrayList<People> getPeople() {
         return people;
+
     }
 
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
     public Building getBuilding() {
         return building;
+    }
+
+    public TypeOfTile getTypeOfTile() {
+        return typeOfTile;
+    }
+
+    public ArrayList<People> getPeople() {
+        return people;
     }
 }

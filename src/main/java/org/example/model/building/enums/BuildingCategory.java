@@ -6,5 +6,6 @@ public enum BuildingCategory {
     FOOD_PROCESSING_BUILDING,
     INDUSTRIAL_BUILDING,
     TOWN_BUILDING,
-    WEAPON_BUILDING;
+    WEAPON_BUILDING,
+    TREES;
 }

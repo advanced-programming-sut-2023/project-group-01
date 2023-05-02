@@ -166,6 +166,7 @@ public class MilitaryMenuController {
         for (People people : empire.getMap().getTile(x, y).getPeople()) {
             if (people instanceof MilitaryUnit && empire.equals(people.getEmpire())) {
                 militaryUnits.add((MilitaryUnit) people);
+
             }
         }
         return militaryUnits;

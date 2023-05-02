@@ -1,7 +1,9 @@
+
 package org.example.model;
 
 import org.example.model.building.Building;
 import org.example.model.building.Material;
+import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
 
@@ -10,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 
 public class Empire {
+    private EmpireBuilding empireBuilding;
+    private final User player;
     private int popularity;
     private int foodRate;
     private int taxRate;
@@ -27,8 +31,10 @@ public class Empire {
     //TODO: should be set
     private LinkedHashMap<String , Boolean> CanBuildOrProduceSomething = new LinkedHashMap<>();
 
-    public Empire() {
-        this.color = Color.RED;
+    public Empire(EmpireBuilding empireBuilding, User player) {
+        this.empireBuilding = empireBuilding;
+        this.color = empireBuilding.getColor();
+        this.player = player;
         this.popularity = 0;
         this.foodRate = 0;
         this.taxRate = 0;

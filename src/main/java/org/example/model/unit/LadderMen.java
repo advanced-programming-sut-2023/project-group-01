@@ -10,6 +10,7 @@ public class LadderMen extends MilitaryUnit {
 
     public LadderMen(Tile position, Empire empire, MilitaryUnitName militaryUnitName) {
         super(position, empire, militaryUnitName);
+
     }
 
 

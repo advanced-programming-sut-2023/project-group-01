@@ -13,6 +13,8 @@ public class User {
     private String securityAnswer;
     private int highScore;
     private int rank;
+
+    private Boolean inGame = false;
     private byte[] salt;
 
 
@@ -70,6 +72,10 @@ public class User {
         return rank;
     }
 
+    public Boolean getInGame() {
+        return inGame;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -104,5 +110,9 @@ public class User {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public void setInGame(Boolean inGame) {
+        this.inGame = inGame;
     }
 }

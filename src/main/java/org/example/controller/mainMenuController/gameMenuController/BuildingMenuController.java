@@ -33,9 +33,10 @@ public class BuildingMenuController {
             return Outputs.OUT_OF_RANGE;
         } else if (!empire.getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding()
                 .getEmpire().equals(buildingMenu.getEmpire())) {
+
             return Outputs.NOT_HAVING_BUILDING;
         } else {
-            this.buildingMenu.setBuilding(empire.getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding());
+            this.buildingMenu.setBuilding(empire.getMap().getTileWhitXAndY(Integer.parseInt(x), Integer.parseInt(y)).getBuilding());
             return Outputs.VALID_SELECT_BUILDING;
         }
     }
