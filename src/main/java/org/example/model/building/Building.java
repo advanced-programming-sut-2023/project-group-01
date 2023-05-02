@@ -15,12 +15,12 @@ public class Building {
     protected int endY;
     private final BuildingName buildingName;
 
-    public Building (Empire empire, int x1, int x2, int y1, int y2, BuildingName buildingName) {
+    public Building (Empire empire, int x1, int y1, BuildingName buildingName) {
         this.empire = empire;
         this.beginX = x1;
-        this.endX = x2;
         this.beginY = y1;
-        this.endY = y2;
+        this.endX = x1 + buildingName.getSize();
+        this.endY = y1 + buildingName.getSize();
         this.buildingName = buildingName;
     }
 

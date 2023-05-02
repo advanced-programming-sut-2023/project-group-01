@@ -11,8 +11,8 @@ public class Tower extends CastleBuilding {
     private final TowerType towerType;
 
 
-    public Tower(Empire empire, int x1, int x2, int y1, int y2, BuildingName buildingName, TowerType towerType) {
-        super(empire, x1, x2, y1, y2, buildingName);
+    public Tower(Empire empire, int x1, int y1, BuildingName buildingName, TowerType towerType) {
+        super(empire, x1, y1, buildingName);
         this.towerType = towerType;
     }
 }

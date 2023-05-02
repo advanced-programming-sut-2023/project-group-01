@@ -12,17 +12,21 @@ import org.example.view.mainMenu.gameMenu.MilitaryMenu;
 import java.util.ArrayList;
 
 public class MilitaryMenuController {
+
+    //
+
     private MilitaryMenu militaryMenu;
     private final Empire empire;
 
-    public MilitaryMenuController(Empire empire) {
+    public MilitaryMenuController(Empire empire, MilitaryMenu militaryMenu) {
         this.empire = empire;
+        this.militaryMenu = militaryMenu;
     }
 
     public Outputs selectUnit(String x, String y) {
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) {
-            //militaryMenu.setSelectPeople(findMilitary(Integer.parseInt(x), Integer.parseInt(y)));
+            militaryMenu.setSelectedUnit(findMilitary(Integer.parseInt(x), Integer.parseInt(y)));
         }
         return outputs;
     }
@@ -144,6 +148,7 @@ public class MilitaryMenuController {
     }
 
     public Outputs commonOutPuts(String x, String y) {
+
         if (x == null) {
             return Outputs.EMPTY_X;
         } else if (y == null) {
@@ -172,7 +177,4 @@ public class MilitaryMenuController {
         return militaryUnits;
     }
 
-    public void setMilitaryMenu(MilitaryMenu militaryMenu) {
-        this.militaryMenu = militaryMenu;
-    }
 }

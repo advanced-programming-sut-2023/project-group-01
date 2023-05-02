@@ -14,14 +14,11 @@ import java.util.regex.Matcher;
 public class MilitaryMenu {
     private final MilitaryMenuController militaryMenuController;
     private final Empire empire;
-    private User player;
     private ArrayList<MilitaryUnit> selectedUnit;
 
-    public MilitaryMenu(Empire empire, User player) {
+    public MilitaryMenu(Empire empire) {
         this.empire = empire;
-        this.player = player;
-        this.militaryMenuController = new MilitaryMenuController(empire);
-        this.militaryMenuController.setMilitaryMenu(this);
+        this.militaryMenuController = new MilitaryMenuController(empire, this);
     }
 
 
@@ -135,10 +132,6 @@ public class MilitaryMenu {
 
     public ArrayList<MilitaryUnit> getSelectedUnit() {
         return selectedUnit;
-    }
-
-    public void setPlayer(User player) {
-        this.player = player;
     }
 
 }

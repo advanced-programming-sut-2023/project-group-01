@@ -18,9 +18,7 @@ public class BuildingMenu {
 
     public BuildingMenu(Empire empire) {
         this.empire = empire;
-        this.buildingMenuController = new BuildingMenuController();
-        buildingMenuController.setEmpire(empire);
-        buildingMenuController.setBuildingMenu(this);
+        this.buildingMenuController = new BuildingMenuController(empire, this);
     }
 
     public void run(Scanner scanner) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
