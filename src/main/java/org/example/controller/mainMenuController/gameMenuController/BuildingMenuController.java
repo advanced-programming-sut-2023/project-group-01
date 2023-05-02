@@ -1,7 +1,5 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
-import org.example.Main;
-import org.example.Voice;
 import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.Material;

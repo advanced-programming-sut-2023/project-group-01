@@ -1,21 +1,14 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
-import org.example.model.User;
-import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.TypeOfTile;
-import org.example.model.unit.MilitaryUnit;
-import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
-import org.example.view.mainMenu.gameMenu.MilitaryMenu;
 
 import java.util.Random;
-import java.util.regex.Matcher;
 
 import static org.example.view.mainMenu.gameMenu.CreateMapMenu.gameMap;
-import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class CreateMapMenuController {
 

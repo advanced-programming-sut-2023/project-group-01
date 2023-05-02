@@ -1,7 +1,6 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.model.Map;
-import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.TypeOfTile;

@@ -1,11 +1,7 @@
 package org.example.model.building;
 
 import org.example.model.Empire;
-import org.example.model.People;
-import org.example.model.User;
 import org.example.model.building.enums.BuildingName;
-
-import java.util.ArrayList;
 
 public class Building {
     protected Empire empire;
