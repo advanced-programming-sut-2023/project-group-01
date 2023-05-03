@@ -1,7 +1,5 @@
 package org.example.view.enums;
 
-import com.sun.net.httpserver.Authenticator;
-
 public enum Outputs {
 
     NOT_ENOUGH_DATA("Your entered data is not enough for this command."),
@@ -81,7 +79,7 @@ public enum Outputs {
     INVALID_BUILDING_TYPE("Invalid Building Type"),
     SUCCESSFUL_DROP_BUILDING("Successful Drop Building"),
     NOT_SUITABLE_GROUND("Not suitable Ground"),
-    POUR_OIL_DIRECTION("Wrong Direction"),
+    WRONG_POUR_OIL_DIRECTION("Wrong Direction"),
     NO_ONE_TO_POUR_OIL("No One To Pour Oil"),
     SUCCESSFUL_POUR_OIL("Successful Pour Oil"),
     //PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully."),
@@ -95,7 +93,11 @@ public enum Outputs {
     NOT_ENOUGH_GOLD("You don't have enough gold to buy this material!"),
     SUCCESS_BUY("You successfully bought the material."),
     SUCCESS_SELL("You successfully sell the material."),
-    INVALID_MATERIAL_NAME("Your entered material name is invalid.");
+    INVALID_MATERIAL_NAME("Your entered material name is invalid."),
+    NO_WAY_FOR_PATROL("No Way for Patrol"),
+    NO_WAY_TO_MOVE("No Way to Move"),
+    OUT_OF_RANGE_POUR_OIL("Out Of range Pour Oil"),
+    ;
     private String output;
 
     Outputs(String output) {

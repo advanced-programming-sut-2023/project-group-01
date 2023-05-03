@@ -6,8 +6,8 @@ import org.example.model.building.Tile;
 import org.example.model.unit.enums.MilitaryUnitName;
 
 public class Lord extends MilitaryUnit {
-    public Lord(Tile position, Empire empire, MilitaryUnitName militaryUnitName) {
-        super(position, empire, militaryUnitName);
+    public Lord(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
+        super(position, empire, militaryUnitName, xPos, yPos);
     }
 
 

@@ -297,37 +297,37 @@ public class BuildingMenuController {
 
         if (militaryUnitName.equals("Archer")) {
             for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
             }
             MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
         } else if (militaryUnitName.equals("Crossbowmen")) {
             for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
             }
             MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
         } else if (militaryUnitName.equals("Spearmen")) {
             for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
             }
             MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
         } else if (militaryUnitName.equals("Pikemen")) {
             for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
             }
             MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
         } else if (militaryUnitName.equals("Macemen")) {
             for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
             }
             MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
         } else if (militaryUnitName.equals("Swordsmen")) {
             for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
             }
             MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
         } else if (militaryUnitName.equals("Knight")) {
             for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
             }
             MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
         }
@@ -340,27 +340,27 @@ public class BuildingMenuController {
 
         if (militaryUnitName.equals("Archer Bow")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW, x, y);
             MilitaryUnitName.ARCHER_BOW.getVoice().playVoice(MilitaryUnitName.ARCHER_BOW.getVoice());
         } else if (militaryUnitName.equals("Slingers")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS, x, y);
             MilitaryUnitName.SLINGERS.getVoice().playVoice(MilitaryUnitName.SLINGERS.getVoice());
         } else if (militaryUnitName.equals("Assassins")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS, x, y);
             MilitaryUnitName.ASSASSINS.getVoice().playVoice(MilitaryUnitName.ASSASSINS.getVoice());
         } else if (militaryUnitName.equals("Horse Archers")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER, x, y);
             MilitaryUnitName.HORSE_ARCHER.getVoice().playVoice(MilitaryUnitName.HORSE_ARCHER.getVoice());
         } else if (militaryUnitName.equals("Arabian Swordsmen")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN, x, y);
             MilitaryUnitName.ARABIAN_SWORSMEN.getVoice().playVoice(MilitaryUnitName.ARABIAN_SWORSMEN.getVoice());
         } else if (militaryUnitName.equals("Fire Throwers")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS, x, y);
             MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
         }
     }
@@ -371,11 +371,11 @@ public class BuildingMenuController {
 
         if (militaryUnitName.equals("Engineer")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ENGINEER);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ENGINEER, x, y);
             MilitaryUnitName.ENGINEER.getVoice().playVoice(MilitaryUnitName.ENGINEER.getVoice());
         } else if (militaryUnitName.equals("Laddermen")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN, x, y);
             MilitaryUnitName.LADDER_MEN.getVoice().playVoice(MilitaryUnitName.LADDER_MEN.getVoice());
         }
     }
@@ -386,7 +386,7 @@ public class BuildingMenuController {
 
         if (militaryName.equals("tunneler")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.TUNNELER);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.TUNNELER, x, y);
             MilitaryUnitName.TUNNELER.getVoice().playVoice(MilitaryUnitName.TUNNELER.getVoice());
         }
     }
@@ -397,7 +397,7 @@ public class BuildingMenuController {
 
         if (militaryUnitName.equals("Black Monk")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.BLACK_MONK);
+                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.BLACK_MONK, x, y);
             MilitaryUnitName.BLACK_MONK.getVoice().playVoice(MilitaryUnitName.BLACK_MONK.getVoice());
         }
     }

@@ -8,8 +8,8 @@ import org.example.model.unit.enums.MilitaryUnitName;
 public class Engineer extends MilitaryUnit {
     private boolean isWorking = false;
 
-    public Engineer(Tile position, Empire empire, MilitaryUnitName militaryUnitName) {
-        super(position, empire, militaryUnitName);
+    public Engineer(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
+        super(position, empire, militaryUnitName, xPos, yPos);
     }
 
 
