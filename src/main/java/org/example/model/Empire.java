@@ -6,6 +6,7 @@ import org.example.model.building.Material;
 import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
+import org.example.view.mainMenu.gameMenu.TradeMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -21,6 +22,7 @@ public class Empire {
     private int religionRate;
     private int population;
     private int MaxPopulation;
+    //Todo handel
     private int gold;
     private final Color color;
     private Map map;
@@ -30,6 +32,9 @@ public class Empire {
     private ArrayList<People> people = new ArrayList<>();
     //TODO: should be set
     private LinkedHashMap<String , Boolean> CanBuildOrProduceSomething = new LinkedHashMap<>();
+    private ArrayList<Trade> newTrade = new ArrayList<>();
+    private ArrayList<Trade> tradeHistory = new ArrayList<>();
+    private ArrayList<Trade> trades= new ArrayList<>();
 
     public Empire(EmpireBuilding empireBuilding, User player) {
         this.empireBuilding = empireBuilding;
@@ -63,6 +68,18 @@ public class Empire {
 
     public LinkedHashMap<FoodType, Integer> getFoods() {
         return foods;
+    }
+
+    public ArrayList<Trade> getTrades() {
+        return trades;
+    }
+
+    public ArrayList<Trade> getNewTrade() {
+        return newTrade;
+    }
+
+    public ArrayList<Trade> getTradeHistory() {
+        return tradeHistory;
     }
 
     public User getPlayer() {
@@ -111,6 +128,22 @@ public class Empire {
             }
         }
     }
+
+    public void addToNewTrade(Trade trade){
+        newTrade.add(trade);
+    }
+
+    public void addToTradeHistory(Trade trade){
+        tradeHistory.add(trade);
+    }
+
+    public void addToTrades(Trade trade){
+        trades.add(trade);
+    }
+
+    public void clearNewTrades(){
+        newTrade.clear();
+    }
     public int getMaxPopulation() {
         return MaxPopulation;
     }
@@ -132,4 +165,28 @@ public class Empire {
     public Map getMap() {
         return map;
     }
+
+    public Trade getTradeWhitId(int id){
+        for (int i = 0; i < trades.size(); i++)
+            if(trades.get(i).getId() == id)
+                return trades.get(i);
+        return null ;
+    }
+
+    public void reduceGold(int amount){
+        this.gold -= amount;
+    }
+
+    public void addGold(int amount){
+        this.gold += amount;
+    }
+
+    public void addMaterial(Material material, int amount){
+        this.materials.replace(material, this.materials.get(material) + amount);
+    }
+
+    public void reduceMaterial(Material material, int amount){
+        this.materials.replace(material, this.materials.get(material) - amount);
+    }
+
 }

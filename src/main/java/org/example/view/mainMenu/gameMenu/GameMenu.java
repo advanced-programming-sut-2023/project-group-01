@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import static org.example.model.Data.findUserWithUsername;
 
 public class GameMenu {
-    private ArrayList<Empire> empires;
+    private static ArrayList<Empire> empires;
 
     private final User player;
 
@@ -73,6 +73,10 @@ public class GameMenu {
         return map;
     }
 
+    public static ArrayList<Empire> getEmpires() {
+        return empires;
+    }
+
     public void run(Scanner scanner) {
         map = new CreateMapMenu().run(scanner);
         if (setEmpires(setNumberOfEmpires(scanner), scanner))
@@ -123,5 +127,12 @@ public class GameMenu {
     public void setUsersGameFinished(){
         for (int i = 0; i< empires.size(); i++)
             empires.get(i).getPlayer().setInGame(false);
+    }
+
+    public static Empire getEmpireWhitUsername(String username){
+        for (int i = 0 ; i < empires.size(); i++)
+            if(empires.get(i).getPlayer().getUsername().equals(username))
+                return empires.get(i);
+        return null;
     }
 }

@@ -1,7 +1,5 @@
 package org.example.view.enums;
 
-import com.sun.net.httpserver.Authenticator;
-
 public enum Outputs {
 
     NOT_ENOUGH_DATA("Your entered data is not enough for this command."),
@@ -77,7 +75,13 @@ public enum Outputs {
     PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully."),
     INVALID_RATE_FOR_FOOD("Your entered rate not valid please enter a number between -2 and 2"),
     INVALID_RATE_FOR_TAX("Your entered rate not valid please enter a number between -3 and 8"),
-    INVALID_RATE_FOR_FEAR("Your entered rate not valid please enter a number between -5 and 5");
+    INVALID_RATE_FOR_FEAR("Your entered rate not valid please enter a number between -5 and 5"),
+    INVALID_ID("You don't have request whit this id"),
+    NOT_ENOUGH_MATERIAL("You don't have enough material of this type"),
+    TRADE_NOT_ENOUGH_GOLD("Player gonde gozi karde pool nadareh"),
+    INVALID_MATERIAL_TYPE("Your entered type of material is invalid"),
+    INVALID_PRICE_TRADE("Your entered price is invalid please entered a price greater than -1"),
+    INVALID_RESOURCE_AMOUNT_TRADE("Your entered price is invalid please entered a price greater than 0");
 
     private String output;
 
