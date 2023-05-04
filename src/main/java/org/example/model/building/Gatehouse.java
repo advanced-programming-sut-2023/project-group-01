@@ -24,4 +24,6 @@ public class Gatehouse extends CastleBuilding {
     public boolean getClosed() {
         return isClosed;
     }
+
+
 }

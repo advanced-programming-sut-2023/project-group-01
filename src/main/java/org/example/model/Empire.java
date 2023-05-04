@@ -52,6 +52,9 @@ public class Empire {
         }
     }
 
+    public EmpireBuilding getEmpireBuilding() {
+        return empireBuilding;
+    }
     public int getPopularity() {
         return popularity;
     }

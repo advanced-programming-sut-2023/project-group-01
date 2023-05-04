@@ -1,8 +1,11 @@
 package org.example.model.building;
 
+import org.example.Main;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.enums.TypeOfTile;
+import org.example.model.unit.MilitaryUnit;
+import org.example.model.unit.enums.MilitaryUnitState;
 
 import java.util.ArrayList;
 
@@ -23,9 +26,19 @@ public class Tile {
     public void removeUnit(People person) {
         people.remove(person);
     }
-    public boolean findUnit(Empire empire) {
+    public ArrayList<MilitaryUnit> findUnit(Empire empire) {
+        ArrayList<MilitaryUnit> militaryUnits = new ArrayList<MilitaryUnit>();
         for (People person : people) {
-            if (!person.getEmpire().equals(empire)) {
+            if (person.getEmpire().equals(empire) && person instanceof MilitaryUnit) {
+                militaryUnits.add((MilitaryUnit) person);
+            }
+        }
+        return militaryUnits;
+    }
+
+    public boolean findNearEnemiesMilitaryUnit(Empire empire) {
+        for (People person : people) {
+            if (!person.getEmpire().equals(empire) && person instanceof MilitaryUnit) {
                 return true;
             }
         }

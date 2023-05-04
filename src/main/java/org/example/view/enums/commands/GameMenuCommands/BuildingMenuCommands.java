@@ -4,9 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum BuildingMenuCommands {
-    DROP_BUILDING("dropbuilding (?=.*-x (?<x>\\S*))(?=.*-y (?<y>\\S*))(?=.*-type (?<type>\\S*))"),
-    SELECT_BUILDING("select building (?=.*-x (?<x>\\S*))(?=.*-x (?<y>\\S*))"),
-    CREATE_UNIT("createunit (?=.*-t (?<type>\\S*))(?=.*-c (?<count>\\S*))"),
+    DROP_BUILDING("drop building(?: -x (?<x>\\S*)()| -y (?<y>\\S*)()| -t (?<type>\\S*)()){3}\\2\\4\\6"),
+    SELECT_BUILDING("select building(?: -x (?<x>\\S*)()| -y (?<y>\\S*)()){2}\\2\\4"),
+    CREATE_UNIT("create unit(?: -t (?<t>\\S*)()| -c (?<count>\\S*)()){2}\\2\\4"),
     REPAIR("repair"),
 
     ;

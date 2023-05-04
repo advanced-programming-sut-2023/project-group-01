@@ -1,5 +1,9 @@
 package org.example.model.unit;
 
+import org.example.model.Empire;
+
+import java.util.ArrayList;
+
 public enum CatapultName {
     CARAPULT(150, "carapult", 50, 2, 400, 0, false, true),
     TREBUCHER(150, "trebucher", 100, 3, 600, 0, false, false),
@@ -15,6 +19,7 @@ public enum CatapultName {
     private final int capacity;
     private final boolean canAttackUnit;
     private final boolean canMove;
+    private ArrayList<Engineer> engineers = new ArrayList<Engineer>();
 
     CatapultName(int hitPoint, String name, int fireRange, int numberOfEngineers, int damage, int capacity, boolean canAttackUnit, boolean canMove) {
         this.hitPoint = hitPoint;
@@ -27,6 +32,9 @@ public enum CatapultName {
         this.canMove = canMove;
     }
 
+    public void addEngineer(Engineer engineer) {
+        this.engineers.add(engineer);
+    }
     public int getHitPoint() {
         return hitPoint;
     }
@@ -63,12 +71,12 @@ public enum CatapultName {
         this.hitPoint -= hitPoint;
     }
 
-    public Catapult getCatapultByName(String name) {
-        for (CatapultName catapultName : CatapultName.values()) {
-            if (catapultName.getName().equals(name)) {
-                return new Catapult(catapultName);
-            }
-        }
-        return null;
-    }
+//    public Catapult getCatapultByName(String name) {
+//        for (CatapultName catapultName : CatapultName.values()) {
+//            if (catapultName.getName().equals(name)) {
+//                return new Catapult(catapultName);
+//            }
+//        }
+//        return null;
+//    }
 }

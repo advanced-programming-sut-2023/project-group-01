@@ -107,53 +107,27 @@ public class BuildingMenuController {
                 }
             }
             return true;
+        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.OIL_GROUND)) {
+            suitability(TypeOfTile.OIL_GROUND, x, y, size);
+        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.IRON_MINE)) {
+            suitability(TypeOfTile.IRON_MINE, x, y, size);
+        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.STONE_MINE)) {
+            suitability(TypeOfTile.STONE_MINE, x, y, size);
+        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.MEADOW)) {
+            suitability(TypeOfTile.MEADOW, x, y, size);
         }
-
-        if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.OIL_GROUND)) {
-            for (int i = x; i < x + size; i++) {
-                for (int j = y; j < y + size; j++) {
-                    if (!empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.OIL_GROUND)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.IRON_MINE)) {
-            for (int i = x; i < x + size; i++) {
-                for (int j = y; j < y + size; j++) {
-                    if (!empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.IRON_MINE)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.STONE_MINE)) {
-            for (int i = x; i < x + size; i++) {
-                for (int j = y; j < y + size; j++) {
-                    if (!empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.STONE_MINE)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.MEADOW)) {
-            for (int i = x; i < x + size; i++) {
-                for (int j = y; j < y + size; j++) {
-                    if (!empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.MEADOW)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
         return false;
+    }
+
+    private boolean suitability(TypeOfTile typeOfTile, int x, int y, int size) {
+        for (int i = x; i < x + size; i++) {
+            for (int j = y; j < y + size; j++) {
+                if (!empire.getMap().getTile(i, j).getTypeOfTile().equals(typeOfTile)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public boolean isPositionFull(Building building, int x, int y) {
@@ -176,7 +150,6 @@ public class BuildingMenuController {
             }
         }
     }
-
 
     public Outputs destroyBuilding() {
         if (buildingMenu.getSelectedBuilding() == null) {
@@ -410,8 +383,7 @@ public class BuildingMenuController {
         }
         int x = buildingMenu.getSelectedBuilding().getBeginX();
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (empire.getMap().getTile(x, y).findUnit(this.empire) || empire.getMap().getTile(x, y).findUnit(this.empire) ||
-                empire.getMap().getTile(x, y).findUnit(this.empire) || empire.getMap().getTile(x, y).findUnit(this.empire)) {
+        if (findNearEnemy(x, y)) {
             return Outputs.NEAR_ENEMY;
         } else {
             int size = buildingMenu.getSelectedBuilding().getBuildingName().getSize();
@@ -426,6 +398,16 @@ public class BuildingMenuController {
         }
     }
 
+    private boolean findNearEnemy(int x, int y) {
+        for (int i = x - 5; i < x + 5; i++) {
+            for (int j = y - 5; j < y + 5; y++) {
+                if (empire.getMap().getTile(x, y) != null && empire.getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public int checkRepair() {
         int maxHitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getMaxHitPoint();
         int hitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getHitPoint();

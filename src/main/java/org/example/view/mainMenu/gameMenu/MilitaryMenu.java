@@ -14,11 +14,13 @@ import java.util.regex.Matcher;
 
 public class MilitaryMenu {
     private final MilitaryMenuController militaryMenuController;
+    private final GameMenu gameMenu;
     private final Empire empire;
     private ArrayList<MilitaryUnit> selectedUnit;
 
-    public MilitaryMenu(Empire empire) {
+    public MilitaryMenu(Empire empire, GameMenu gameMenu) {
         this.empire = empire;
+        this.gameMenu = gameMenu;
         this.militaryMenuController = new MilitaryMenuController(empire, this);
     }
 
@@ -30,25 +32,27 @@ public class MilitaryMenu {
             input = scanner.nextLine();
             Matcher matcher;
 
-            if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SELECT_UNIT)).find()) {
+            if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SELECT_UNIT)).matches()) {
                 selectUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.MOVE_UNIT_TO)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.MOVE_UNIT_TO)).matches()) {
                 moveUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.PATROL_UNIT)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.PATROL_UNIT)).matches()) {
                 patrolUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SET_STATE)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SET_STATE)).matches()) {
                 setUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK)).matches()) {
                 attackChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.POUR_OIL)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK_E)).matches()) {
+                attackChecker(matcher);
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.POUR_OIL)).matches()) {
                 pourOilChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DIG_TUNNEL)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DIG_TUNNEL)).matches()) {
                 digTunnelChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.BUILD_Q)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.BUILD_Q)).matches()) {
                 buildChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT)).matches()) {
                 disbandUnit();
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).find()) {
+            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).matches()) {
                 cancelPatrolUnitChecker();
             } else {
                 System.out.println(Outputs.INVALID_COMMAND);
@@ -65,7 +69,7 @@ public class MilitaryMenu {
     public void moveUnitChecker(Matcher matcher) {
         String x = matcher.group("x");
         String y = matcher.group("y");
-        System.out.println(militaryMenuController.moveUnit(x, y));
+        System.out.println(militaryMenuController.moveUnit(x, y).toString());
     }
 
     public void patrolUnitChecker(Matcher matcher) {
@@ -88,27 +92,38 @@ public class MilitaryMenu {
     }
 
     public void attackChecker(Matcher matcher) {
+        String x = matcher.group("x");
+        String y = matcher.group("y");
 
     }
 
     public void pourOilChecker(Matcher matcher) {
-        System.out.println(militaryMenuController.pourOil(matcher.group("direction")));
+        System.out.println(militaryMenuController.pourOil(matcher.group("direction")).toString());
     }
 
     public void digTunnelChecker(Matcher matcher) {
         String x = matcher.group("x");
         String y = matcher.group("y");
-        System.out.println(militaryMenuController.digTunnel(x, y));
+        System.out.println(militaryMenuController.digTunnel(x, y).toString());
     }
 
     public void buildChecker(Matcher matcher) {
-
+        String equipment = matcher.group("equipment");
+        System.out.println(militaryMenuController.build(equipment).toString());
     }
 
     public void disbandUnit() {
+        int x = empire.getEmpireBuilding().getX();
+        int y = empire.getEmpireBuilding().getY();
 
+        Outputs outputs = militaryMenuController.disbandUnit(x ,y);
+        if (outputs != null)
+            System.out.println(outputs.toString());
     }
 
+    public GameMenu getGameMenu() {
+        return gameMenu;
+    }
 
     public void setSelectedUnit(ArrayList<MilitaryUnit> selectedUnit) {
         this.selectedUnit = selectedUnit;

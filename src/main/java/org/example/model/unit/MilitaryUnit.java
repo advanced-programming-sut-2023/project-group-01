@@ -46,16 +46,28 @@ public class MilitaryUnit extends People {
         return patrol;
     }
 
-    public void setXPos(int xPos, int yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public void goToDestination(int xDestination, int yDestination) {
+        goToPos(xDestination, yDestination);
+        this.xDestination = MAX_VALUE;
+        this.yDestination = MAX_VALUE;
     }
 
-    public void setDestination(int xDestination, int yDestination, LinkedList<Integer> destination) {
+    public void setDestination(int xDestination, int yDestination, int xPos, int yPos) {
         this.xDestination = xDestination;
         this.yDestination = yDestination;
-        this.destination.addAll(destination);
+        goToPos(xPos, yPos);
+    }
+    public void goToPos(int xPos, int yPos) {
+        //TODO check
+        empire.getMap().getTile(xPos + 1, yPos + 1).removeUnit(this);
+        this.xPos = xPos;
+        this.yPos = yPos;
+        empire.getMap().getTile(xPos + 1, yPos + 1).addUnit(this);
         this.patrol.clear();
+        this.patrolX1 = MAX_VALUE;
+        this.patrolX2 = MAX_VALUE;
+        this.patrolY1 = MAX_VALUE;
+        this.patrolY2 = MAX_VALUE;
     }
 
     public void cancelPatrol() {

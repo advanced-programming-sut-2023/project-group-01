@@ -97,6 +97,13 @@ public enum Outputs {
     NO_WAY_FOR_PATROL("No Way for Patrol"),
     NO_WAY_TO_MOVE("No Way to Move"),
     OUT_OF_RANGE_POUR_OIL("Out Of range Pour Oil"),
+    SUCCESSFUL_MOVE("Successful Move"),
+    NOT_HAVING_TUNNELER("Not Having Tunneler"),
+    INVALID_CATAPULT_NAME("Invalid CatapultName"),
+    NOT_ENOUGH_ENGINEER("Not Enough Engineer"),
+    SUCCESSFUL_CATAPULT("Sucessful Catapult"),
+
+
     ;
     private String output;
 

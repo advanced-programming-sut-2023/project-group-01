@@ -2,30 +2,34 @@ package org.example.model.building.enums;
 
 public enum TypeOfTile {
     //TODO check this items
-    NORMAL_GROUND(true),
-    GRAVEL_GROUND(true),
-    STONE_MINE(true),
-    IRON_MINE(true),
-    GRASSLAND(true),
-    MEADOW(true),
-    FULL_MEADOW(true),
-    OIL_GROUND(true),
-    PLAIN(true),
-    SHALLOW_WATER(true),
-    RIVER(false),
-    SMALL_POND(false),
-    BIG_POND(false),
-    BEACH(true),
-    SEA(false);
+    NORMAL_GROUND(true, false),
+    GRAVEL_GROUND(true, false),
+    STONE_MINE(true, false),
+    IRON_MINE(true, false),
+    GRASSLAND(true, false),
+    MEADOW(true, false),
+    FULL_MEADOW(true, false),
+    OIL_GROUND(true, false),
+    PLAIN(true, false),
+    SHALLOW_WATER(true, true),
+    RIVER(false, true),
+    SMALL_POND(false, true),
+    BIG_POND(false, true),
+    BEACH(true, false),
+    SEA(false, true);
     private final boolean canCross;
+    private final boolean isWater;
 
-    TypeOfTile(boolean canCross) {
+    TypeOfTile(boolean canCross, boolean isWater) {
         this.canCross = canCross;
+        this.isWater = isWater;
     }
 
     public boolean getCanCross() {
         return canCross;
     }
 
-
+    public boolean isWater() {
+        return isWater;
+    }
 }

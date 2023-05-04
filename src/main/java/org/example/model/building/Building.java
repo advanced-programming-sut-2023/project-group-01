@@ -24,6 +24,7 @@ public class Building {
         return buildingName;
     }
 
+
     public int getBeginX() {
         return beginX;
     }
@@ -42,5 +43,9 @@ public class Building {
 
     public Empire getEmpire() {
         return empire;
+    }
+
+    public void setEmpire(Empire empire) {
+        this.empire = empire;
     }
 }
