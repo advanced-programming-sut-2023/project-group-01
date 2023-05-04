@@ -108,6 +108,11 @@ public enum BuildingName {
     public void reduceHitPoint(int hitPoint) {
         this.hitPoint -= hitPoint;
     }
+
+    public void increaseHitPoint(int hitPoint) {
+        this.hitPoint += hitPoint;
+    }
+
     public void setHitPoint() {
         this.hitPoint = this.maxHitPoint;
     }

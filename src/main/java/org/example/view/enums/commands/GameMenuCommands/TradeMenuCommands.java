@@ -3,7 +3,10 @@ package org.example.view.enums.commands.GameMenuCommands;
 import java.util.regex.Matcher;
 
 public enum TradeMenuCommands {
-    Temp("das");
+    TRADE(""),
+    TRADE_ACCEPT(""),
+    TRADE_LIST(""),
+    TRADE_HISTORY("");
     private final String regex;
 
     TradeMenuCommands(String regex) {
