@@ -1,13 +1,17 @@
 package org.example.controller;
 
+import org.example.BestPath;
 import org.example.model.Empire;
 import org.example.model.building.Tile;
+import org.example.model.building.castleBuilding.CagedDogs;
 import org.example.model.unit.MilitaryUnit;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
+import static java.lang.Integer.MAX_VALUE;
 import static org.example.controller.mainMenuController.gameMenuController.MilitaryMenuController.findMilitary;
 
 public class NextTurn {
@@ -41,24 +45,104 @@ public class NextTurn {
 
     public void nextTurn() {
         //TODO بعد هر دست بازم اتک ها باقی می مونه یا نه؟
-        doScoreMove();
 
+        //TODO تغییر بازی کننده
+    }
 
+    public void doOnAllTiles() {
+        //TODO check i , j in getTile
+        for (int i = 0; i < currentEmpire.getMap().getSize(); i++) {
+            for (int j = 0; j < currentEmpire.getMap().getSize(); j++) {
+                doOnAllMilitaryUnit(currentEmpire.getMap().getTile(i, j));
+                doCageDogs(i, j);
+            }
+        }
+    }
+
+    public void doOnAllMilitaryUnit(Tile tile) {
+        for (MilitaryUnit militaryUnit : tile.findUnit(currentEmpire)) {
+            //do Rate
+            doScoreMove(tile, militaryUnit);
+            //do Attack
+            doPatrol(tile, militaryUnit);
+            //do archerAttack
+            //do offensiveAttack
+            //do dogCaged
+            checkEmpireExist();
+        }
     }
 
     public void doRates() {
 
     }
+
+    public void doCageDogs(int x, int y) {
+        if (currentEmpire.getMap().getTile(x, y).getBuilding() instanceof CagedDogs) {
+            //TODO check the out of range
+            for (int i = x - 10; i < x + 10; i++) {
+                for (int j = y - 10; j < y + 10; j++) {
+                    //TODO with attack
+                }
+            }
+        }
+    }
+
     public void checkEmpireExist() {
-
+        ArrayList<Empire> removingEmpires = new ArrayList<Empire>();
+        for (Empire empire : empires) {
+            if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
+                //TODO have finalize method
+                removingEmpires.add(empire);
+            }
+        }
+        if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
     }
 
-    public void doScoreMove() {
+    public void doScoreMove(Tile tile, MilitaryUnit militaryUnit) {
+        if (militaryUnit.getXPos() < currentEmpire.getMap().getSize() && militaryUnit.getYPos() < currentEmpire.getMap().getSize()) {
+            BestPath bestPath = new BestPath(currentEmpire);
 
+            LinkedList<Integer> path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
+                    militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), false);
+
+            if (path != null && path.size() > 0) {
+                movingProcess(path, militaryUnit);
+            }
+        }
     }
 
-    public void doPatrol() {
+    public void movingProcess(LinkedList<Integer> move, MilitaryUnit unit) {
+        if (move.size() <= unit.getMilitaryUnitName().getSpeed()) {
+            unit.goToDestination(unit.getXDestination(), unit.getYDestination());
+        } else {
+            //TODO set the number that delete elements of path for each unit
+            int xDest = move.get(unit.getMilitaryUnitName().getSpeed()) / currentEmpire.getMap().getSize();
+            int yDest = move.get(unit.getMilitaryUnitName().getSpeed()) % currentEmpire.getMap().getSize();
+            unit.setDestination(unit.getXDestination(), unit.getYDestination(), xDest, yDest);
+        }
+    }
 
+    public void doPatrol(Tile tile, MilitaryUnit militaryUnit) {
+        //TODO reverse the xPos and yPos with xDestination and yDestination
+        if (militaryUnit.getXPos() < currentEmpire.getMap().getSize() && militaryUnit.getYPos() < currentEmpire.getMap().getSize()) {
+            BestPath bestPath = new BestPath(currentEmpire);
+            LinkedList<Integer> path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
+                    militaryUnit.getYPos(), militaryUnit.getXPos(), militaryUnit.getYPos(), false);
+            if (path != null && path.size() > 0) {
+                movePatrol(path, militaryUnit);
+            }
+        }
+    }
+
+    private void movePatrol(LinkedList<Integer> move, MilitaryUnit militaryUnit) {
+        if (move.size() <= militaryUnit.getMilitaryUnitName().getSpeed()) {
+            militaryUnit.goToDestination(militaryUnit.getXDestination(), militaryUnit.getYDestination());
+            militaryUnit.changePatrol();
+        } else {
+            int xDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) / currentEmpire.getMap().getSize();
+            int yDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) % currentEmpire.getMap().getSize();
+            militaryUnit.movePatrol(xDest, yDest);
+        }
     }
 
     public void offensiveAttack() {
@@ -68,8 +152,10 @@ public class NextTurn {
     public void doArcherAttack() {
         //TODO روی تایل ها اتک میزنیم
         //TODO سربازای داخل یه خونه میجنگن
+        //TODO راندمان گزاشتن برای سربازها
 
     }
+
     public void doAttack(String x, String y) {
         //TODO check some error
         //TODO check two type of attack

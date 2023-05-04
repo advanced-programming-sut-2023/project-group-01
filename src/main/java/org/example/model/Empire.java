@@ -7,12 +7,15 @@ import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
+import org.example.model.unit.Lord;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class Empire {
     private EmpireBuilding empireBuilding;
+    //TODO set
+    private Lord lord;
     private final User player;
     private int popularity;
     private int foodRate;
@@ -126,6 +129,10 @@ public class Empire {
     }
     public int getMaxPopulation() {
         return MaxPopulation;
+    }
+
+    public Lord getLord() {
+        return lord;
     }
 
     public int getPopulation() {

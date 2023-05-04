@@ -13,8 +13,6 @@ public class MilitaryUnit extends People {
 
     protected MilitaryUnitName militaryUnitName;
     //TODO اگه پاترول ها یکسان بودن جابه جا نشه
-    protected LinkedList<Integer> patrol = null;
-    protected  LinkedList<Integer> destination = null;
 
     //TODO set xPos & yPOS
     protected int xPos;
@@ -33,23 +31,24 @@ public class MilitaryUnit extends People {
         this.militaryUnitName = militaryUnitName;
     }
 
-    public void setPatrolXY(int patrolX1, int patrolY1, int patrolX2, int patrolY2, LinkedList<Integer> patrol) {
+    public void setPatrolXY(int patrolX1, int patrolY1, int patrolX2, int patrolY2) {
         this.patrolX1 = patrolX1;
         this.patrolY1 = patrolY1;
         this.patrolX2 = patrolX2;
         this.patrolY2 = patrolY2;
-        this.patrol = patrol;
-        this.destination.clear();
-    }
-
-    public LinkedList<Integer> getPatrol() {
-        return patrol;
     }
 
     public void goToDestination(int xDestination, int yDestination) {
         goToPos(xDestination, yDestination);
         this.xDestination = MAX_VALUE;
         this.yDestination = MAX_VALUE;
+    }
+
+    public void movePatrol(int x, int y) {
+       this.xPos = x;
+       this.yPos = y;
+       this.xDestination = MAX_VALUE;
+       this.yDestination = MAX_VALUE;
     }
 
     public void setDestination(int xDestination, int yDestination, int xPos, int yPos) {
@@ -63,11 +62,19 @@ public class MilitaryUnit extends People {
         this.xPos = xPos;
         this.yPos = yPos;
         empire.getMap().getTile(xPos + 1, yPos + 1).addUnit(this);
-        this.patrol.clear();
         this.patrolX1 = MAX_VALUE;
         this.patrolX2 = MAX_VALUE;
         this.patrolY1 = MAX_VALUE;
         this.patrolY2 = MAX_VALUE;
+    }
+
+    public void changePatrol() {
+        int x = patrolX1;
+        int y = patrolY1;
+        patrolX1 = patrolX2;
+        patrolY1 = patrolY2;
+        patrolX2 = x;
+        patrolY2 = y;
     }
 
     public void cancelPatrol() {
@@ -75,8 +82,6 @@ public class MilitaryUnit extends People {
         this.patrolY1 = MAX_VALUE;
         this.patrolY1 = MAX_VALUE;
         this.patrolY2 = MAX_VALUE;
-        this.patrol.clear();
-        this.destination.clear();
     }
 
     public int getXPos() {
@@ -85,6 +90,14 @@ public class MilitaryUnit extends People {
 
     public int getYPos() {
         return yPos;
+    }
+
+    public int getXDestination() {
+        return xDestination;
+    }
+
+    public int getYDestination() {
+        return yDestination;
     }
 
     public MilitaryUnitName getMilitaryUnitName() {

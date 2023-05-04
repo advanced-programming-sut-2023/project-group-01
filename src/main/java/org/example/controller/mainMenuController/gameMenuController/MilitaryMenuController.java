@@ -40,9 +40,7 @@ public class MilitaryMenuController {
     }
 
     public Outputs moveUnit(String x, String y) {
-
         //TODO روی خونه ی تله برود
-
         Outputs outputs = commonOutPuts(x, y);
         if (outputs.equals(Outputs.VALID_X_Y)) {
             int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
@@ -66,7 +64,6 @@ public class MilitaryMenuController {
                     int xDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) / empire.getMap().getSize();
                     int yDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) % empire.getMap().getSize();
                     militaryUnit.setDestination(xDestination, yDestination, xDest, yDest);
-
                 }
                 if (militaryUnit.getMilitaryUnitName().getSpeed() > length)
                     length = militaryUnit.getMilitaryUnitName().getSpeed();
@@ -123,8 +120,11 @@ public class MilitaryMenuController {
             }
 
             for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
-                if (militaryUnit.getEmpire().equals(empire))
-                    militaryUnit.setPatrolXY(x1Patrol, y1Patrol, x2Patrol, y2Patrol, patrol);
+                if (militaryUnit.getEmpire().equals(empire)){
+                    //TODO check for out of range
+                    militaryUnit.goToPos(x1Patrol, y1Patrol);
+                    militaryUnit.setPatrolXY(x1Patrol, y1Patrol, x2Patrol, y2Patrol);
+                }
             }
             return Outputs.SUCCESSFUL_PATROL;
         }
