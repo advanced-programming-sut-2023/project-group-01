@@ -17,7 +17,8 @@ import java.util.regex.Matcher;
 import static org.example.model.Data.findUserWithUsername;
 
 public class GameMenu {
-    private ArrayList<Empire> empires;
+    private static ArrayList<Empire> empires;
+
     private NextTurn nextTurn;
     private final User player;
 
@@ -27,7 +28,7 @@ public class GameMenu {
 
     private int turnNumber = 1;
 
-    public GameMenu(User player){
+    public GameMenu(User player) {
         this.player = player;
         this.nextTurn = new NextTurn(this);
     }
@@ -41,23 +42,26 @@ public class GameMenu {
         this.map = map;
     }
 
-    public void setEmpires(int numberOfEmpires, Scanner scanner) {
+    public boolean setEmpires(int numberOfEmpires, Scanner scanner) {
         player.setInGame(true);
         empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
         thisEmpire = empires.get(0);
         for (int i = 2; i <= numberOfEmpires; i++)
             while (true) {
-                System.out.println("Please enter username of player");
+                System.out.println("Please enter username of player\n +" +
+                        "for cancel game enter exit");
                 String username = scanner.nextLine();
                 User user = findUserWithUsername(username);
-                if(user != null) {
+                if (user != null) {
                     if (!user.getInGame()) {
                         user.setInGame(true);
                         empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + i), user));
                         break;
                     } else System.out.println("User in a game now and can't play");
-                } else System.out.println("The user not found");
+                } else if (username.equals("enter exit")) return false;
+                else System.out.println("The user not found");
             }
+        return true;
     }
 
     public static Empire getThisEmpire() {
@@ -72,14 +76,31 @@ public class GameMenu {
         return map;
     }
 
+    public static ArrayList<Empire> getEmpires() {
+        return empires;
+    }
+
     public void run(Scanner scanner) {
         map = new CreateMapMenu().run(scanner);
-        setEmpires(setNumberOfEmpires(scanner), scanner);
-        while (true) {
-            String command = scanner.nextLine();
-            Matcher matcher;
-            if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_MAP)) != null)
-                showMapChecker(matcher, scanner);
+        if (setEmpires(setNumberOfEmpires(scanner), scanner))
+            while (true) {
+                String command = scanner.nextLine();
+                Matcher matcher;
+                if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_MAP)) != null)
+                    showMapChecker(matcher, scanner);
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GO_TO_EMPIRE_MENU)) != null)
+                    new EmpireMenu(thisEmpire).run(scanner);
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GET_TURN_NUMBER)) != null)
+                    System.out.println("The turn number is " + getTurnNumber());
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GET_PLAYER)) != null)
+                    System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null)
+                    nextTurn();
+                else System.out.println("Invalid command");
+            }
+        else {
+            setUsersGameFinished();
+            System.out.println("Game canceled");
         }
     }
 
@@ -108,5 +129,17 @@ public class GameMenu {
             } catch (NumberFormatException e) {
                 System.out.println("Your input not a number please try again");
             }
+    }
+
+    public void setUsersGameFinished(){
+        for (int i = 0; i< empires.size(); i++)
+            empires.get(i).getPlayer().setInGame(false);
+    }
+
+    public static Empire getEmpireWhitUsername(String username){
+        for (int i = 0 ; i < empires.size(); i++)
+            if(empires.get(i).getPlayer().getUsername().equals(username))
+                return empires.get(i);
+        return null;
     }
 }

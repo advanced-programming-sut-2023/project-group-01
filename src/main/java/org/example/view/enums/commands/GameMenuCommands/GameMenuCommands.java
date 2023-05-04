@@ -4,7 +4,11 @@ import java.util.regex.Matcher;
 
 public enum GameMenuCommands {
 
-    SHOW_MAP("");
+    SHOW_MAP(""),
+    GO_TO_EMPIRE_MENU(""),
+    GET_TURN_NUMBER(""),
+    GET_PLAYER(""),
+    NEXT_TURN("");
     private final String regex;
 
     GameMenuCommands(String regex) {
