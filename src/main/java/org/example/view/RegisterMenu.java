@@ -53,8 +53,7 @@ public class RegisterMenu {
             else if ((matcher = RegisterMenuCommands.getMatcher(inputLine,RegisterMenuCommands.ENTER_LOGIN_MENU)).find()){
                 loginmenu.run(scanner);
                 break;
-            }else if (RegisterMenuCommands.getMatcher(inputLine,RegisterMenuCommands.EXIT).find())
-                break;
+            } else if (RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.EXIT).find()) break;
             else System.out.println("Invalid command in register menu!");
         }
     }
@@ -159,7 +158,7 @@ public class RegisterMenu {
         return slogan;
     }
 
-    private Outputs register(Matcher matcher, String line) throws NoSuchAlgorithmException {
+    public Outputs register(Matcher matcher, String line) throws NoSuchAlgorithmException {
 
         String username = matcher.group("username");
         String password = matcher.group("password");

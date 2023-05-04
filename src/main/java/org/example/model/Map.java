@@ -15,7 +15,6 @@ public class Map {
 
     public Map(int size) {
         this.map = new Tile[size][size];
-
     }
 
     public void addPeople(int x, int y, People person) {
@@ -38,4 +37,11 @@ public class Map {
         }
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public Tile getTile(int x, int y) {
+        return getTileWhitXAndY(x,y);
+    }
 }

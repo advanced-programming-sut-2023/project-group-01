@@ -1,12 +1,35 @@
 package org.example.model.building.enums;
 
 public enum TypeOfTile {
-    NORMAL,
-    SEA,
-    IRON,
-    GRASS,
-    MEADOW,
-    //Todo علفزار پرتراکم بک گراند علفزار عادی معنی
-    STONE,
+    //TODO check this items
+    NORMAL_GROUND(true, false),
+    GRAVEL_GROUND(true, false),
+    STONE_MINE(true, false),
+    IRON_MINE(true, false),
+    GRASSLAND(true, false),
+    MEADOW(true, false),
+    FULL_MEADOW(true, false),
+    OIL_GROUND(true, false),
+    PLAIN(true, false),
+    SHALLOW_WATER(true, true),
+    RIVER(false, true),
+    SMALL_POND(false, true),
+    BIG_POND(false, true),
+    BEACH(true, false),
+    SEA(false, true);
+    private final boolean canCross;
+    private final boolean isWater;
 
+    TypeOfTile(boolean canCross, boolean isWater) {
+        this.canCross = canCross;
+        this.isWater = isWater;
+    }
+
+    public boolean getCanCross() {
+        return canCross;
+    }
+
+    public boolean isWater() {
+        return isWater;
+    }
 }

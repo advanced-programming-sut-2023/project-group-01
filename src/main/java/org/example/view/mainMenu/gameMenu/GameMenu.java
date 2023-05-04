@@ -1,5 +1,6 @@
 package org.example.view.mainMenu.gameMenu;
 
+import org.example.controller.NextTurn;
 import org.example.controller.mainMenuController.gameMenuController.GameMenuController;
 import org.example.model.Empire;
 import org.example.model.Map;
@@ -18,6 +19,7 @@ import static org.example.model.Data.findUserWithUsername;
 public class GameMenu {
     private static ArrayList<Empire> empires;
 
+    private NextTurn nextTurn;
     private final User player;
 
     private static Map map;
@@ -28,6 +30,7 @@ public class GameMenu {
 
     public GameMenu(User player) {
         this.player = player;
+        this.nextTurn = new NextTurn(this);
     }
 
 
@@ -101,8 +104,12 @@ public class GameMenu {
         }
     }
 
-    public void nextTurn() {
-        turnNumber++;
+    public NextTurn getNextTurn() {
+        return nextTurn;
+    }
+
+    public ArrayList<Empire> getEmpires() {
+        return empires;
     }
 
     public void showMapChecker(Matcher matcher, Scanner scanner) {

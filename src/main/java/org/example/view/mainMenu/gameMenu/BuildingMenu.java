@@ -1,41 +1,41 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
-import org.example.model.User;
 import org.example.model.building.Building;
 import org.example.model.Empire;
 import org.example.view.enums.Outputs;
+import org.example.view.enums.commands.GameMenuCommands.BuildingMenuCommands;
+import org.example.view.enums.commands.GameMenuCommands.MilitaryMenuCommands;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class BuildingMenu {
     private BuildingMenuController buildingMenuController;
     private final Empire empire;
-    private final User player;
     private Building selectedBuilding;
 
-    public BuildingMenu(Empire empire, User player) {
+    public BuildingMenu(Empire empire) {
         this.empire = empire;
-        this.player = player;
-        this.buildingMenuController = new BuildingMenuController();
-        buildingMenuController.setEmpire(empire);
-        buildingMenuController.setBuildingMenu(this);
+        this.buildingMenuController = new BuildingMenuController(empire, this);
     }
 
-    public void run(Scanner scanner) {
+    public void run(Scanner scanner) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         String input;
 
         while (true) {
             input = scanner.nextLine();
-
-            if (GameCommands.getMatcher(input, GameCommands.SELECT_BUILDING) != null) {
-                selectBuildingChecker(GameCommands.getMatcher(input, GameCommands.SELECT_BUILDING));
-            } else if (GameCommands.getMatcher(input, GameCommands.DROP_BUILDING) != null) {
-                dropBuildingChecker(GameCommands.getMatcher(input, GameCommands.DROP_BUILDING));
-            } else if (GameCommands.getMatcher(input, GameCommands.CREATE_UNIT) != null) {
-                createUnitChecker(GameCommands.getMatcher(input, GameCommands.CREATE_UNIT));
-            } else if (GameCommands.getMatcher(input, GameCommands.REPAIR) != null) {
+            Matcher matcher;
+            if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.SELECT_BUILDING)).find()) {
+                selectBuildingChecker(matcher);
+            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DROP_BUILDING)).find()) {
+                dropBuildingChecker(matcher);
+            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.CREATE_UNIT)).find()) {
+                createUnitChecker(matcher);
+            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.REPAIR)).find()) {
                 repairChecker();
             } else {
                 System.out.println(Outputs.INVALID_COMMAND);
@@ -44,15 +44,8 @@ public class BuildingMenu {
     }
 
     public void selectBuildingChecker(Matcher matcher) {
-        String x;
-        String y;
-        if (matcher.group("x") == null && matcher.group("y") == null) {
-            x = matcher.group("x1");
-            y = matcher.group("y1");
-        } else {
-            x = matcher.group("x");
-            y = matcher.group("y");
-        }
+        String x = matcher.group("x");
+        String y = matcher.group("y");
         System.out.println(buildingMenuController.selectBuilding(x, y).toString());
     }
 
@@ -61,20 +54,16 @@ public class BuildingMenu {
         String x = matcher.group("x");
         String y = matcher.group("y");
         String type = matcher.group("type");
-
-
+        buildingMenuController.dropBuilding(x, y, type);
     }
 
-    public void createUnitChecker(Matcher matcher) {
-        String type;
-        String count;
-        if (matcher.group("type") == null && matcher.group("type") == null) {
-            type = matcher.group("type1");
-            count = matcher.group("count1");
-        } else {
-            type = matcher.group("type");
-            count = matcher.group("count");
-        }
+    public void destroyBuilding() {
+        System.out.println(buildingMenuController.destroyBuilding());
+    }
+
+    public void createUnitChecker(Matcher matcher) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        String type = matcher.group("type");
+        String count = matcher.group("count");
         System.out.println(buildingMenuController.createUnit(type, count).toString());
     }
 
@@ -86,8 +75,9 @@ public class BuildingMenu {
         this.selectedBuilding = selectedBuilding;
     }
 
-    public User getPlayer() {
-        return player;
+
+    public Empire getEmpire() {
+        return empire;
     }
 
     public Building getSelectedBuilding() {

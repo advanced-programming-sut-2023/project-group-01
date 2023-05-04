@@ -1,31 +1,29 @@
 package org.example.model.building;
 
-import org.example.model.People;
-import org.example.model.User;
+import org.example.model.Empire;
 import org.example.model.building.enums.BuildingName;
 
-import java.util.ArrayList;
-
 public class Building {
-    private final User currentUser;
+    protected Empire empire;
     protected int beginX;
     protected int endX;
     protected int beginY;
     protected int endY;
     private final BuildingName buildingName;
 
-    public Building (User player, int x1, int x2, int y1, int y2, BuildingName buildingName) {
-        this.currentUser = player;
+    public Building (Empire empire, int x1, int y1, BuildingName buildingName) {
+        this.empire = empire;
         this.beginX = x1;
-        this.endX = x2;
         this.beginY = y1;
-        this.endY = y2;
+        this.endX = x1 + buildingName.getSize();
+        this.endY = y1 + buildingName.getSize();
         this.buildingName = buildingName;
     }
 
     public BuildingName getBuildingName() {
         return buildingName;
     }
+
 
     public int getBeginX() {
         return beginX;
@@ -43,7 +41,11 @@ public class Building {
         return endY;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
+    public Empire getEmpire() {
+        return empire;
+    }
+
+    public void setEmpire(Empire empire) {
+        this.empire = empire;
     }
 }

@@ -4,13 +4,13 @@ package org.example.model;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 import org.example.model.building.castleBuilding.EmpireBuilding;
+import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
 import org.example.view.mainMenu.gameMenu.TradeMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.regex.Matcher;
 
 public class Empire {
     private EmpireBuilding empireBuilding;
@@ -48,8 +48,18 @@ public class Empire {
         foods.put(FoodType.APPLE,0);
         foods.put(FoodType.MEET,0);
         foods.put(FoodType.CHEESE,0);
+        initializeMaterials();
     }
 
+    private void initializeMaterials(){
+        for (MaterialType materialType: MaterialType.values()){
+            this.materials.put(new Material(materialType),0);
+        }
+    }
+
+    public EmpireBuilding getEmpireBuilding() {
+        return empireBuilding;
+    }
     public int getPopularity() {
         return popularity;
     }
@@ -120,6 +130,13 @@ public class Empire {
         return gold;
     }
 
+    public void increaseGold(int count) {
+        this.gold+=count;
+    }
+
+    public void decreaseGold(int count) {
+        this.gold-=count;
+    }
     public void addMaterial(String materialName, int count) {
         for (Material material : materials.keySet()) {
             if (material.getMaterialType().getName().equals(materialName)) {
@@ -189,4 +206,7 @@ public class Empire {
         this.materials.replace(material, this.materials.get(material) - amount);
     }
 
+    public LinkedHashMap<Material, Integer> getMaterials() {
+        return materials;
+    }
 }

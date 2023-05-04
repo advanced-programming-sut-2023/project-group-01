@@ -81,8 +81,39 @@ public enum Outputs {
     TRADE_NOT_ENOUGH_GOLD("Player gonde gozi karde pool nadareh"),
     INVALID_MATERIAL_TYPE("Your entered type of material is invalid"),
     INVALID_PRICE_TRADE("Your entered price is invalid please entered a price greater than -1"),
-    INVALID_RESOURCE_AMOUNT_TRADE("Your entered price is invalid please entered a price greater than 0");
+    INVALID_RESOURCE_AMOUNT_TRADE("Your entered price is invalid please entered a price greater than 0"),
+    NEAR_ENEMY("Enemy is near your castle"),
+    SUCCESSFUL_DESTROY_BUILDING("Building destroyed"),
+    FULL_POSITION("There is already exist a building"),
+    INVALID_BUILDING_TYPE("Invalid Building Type"),
+    SUCCESSFUL_DROP_BUILDING("Successful Drop Building"),
+    NOT_SUITABLE_GROUND("Not suitable Ground"),
+    WRONG_POUR_OIL_DIRECTION("Wrong Direction"),
+    NO_ONE_TO_POUR_OIL("No One To Pour Oil"),
+    SUCCESSFUL_POUR_OIL("Successful Pour Oil"),
+    //PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully."),
+    USERNAME_CHANGE_SUCCESSFUL("Your username changed successfully."),
+    NICKNAME_CHANGE_SUCCESSFUL("Your nickname changed successfully."),
+    SLOGAN_CHANGE_SUCCESSFUL("Your slogan changed successfully."),
+    EMAIL_CHANGE_SUCCESSFUL("Your email changed successfully."),
+    SAME_NEW_PASSWORD("Your old password and new password are same.Re enter command with different new password."),
+    WRONG_OLD_PASSWORD("Your old password doesn't equal current password."),
+    NOT_ENOUGH_MATERIAL("Your entered count for selling this material is more than you inventory! "),
+    NOT_ENOUGH_GOLD("You don't have enough gold to buy this material!"),
+    SUCCESS_BUY("You successfully bought the material."),
+    SUCCESS_SELL("You successfully sell the material."),
+    INVALID_MATERIAL_NAME("Your entered material name is invalid."),
+    NO_WAY_FOR_PATROL("No Way for Patrol"),
+    NO_WAY_TO_MOVE("No Way to Move"),
+    OUT_OF_RANGE_POUR_OIL("Out Of range Pour Oil"),
+    SUCCESSFUL_MOVE("Successful Move"),
+    NOT_HAVING_TUNNELER("Not Having Tunneler"),
+    INVALID_CATAPULT_NAME("Invalid CatapultName"),
+    NOT_ENOUGH_ENGINEER("Not Enough Engineer"),
+    SUCCESSFUL_CATAPULT("Sucessful Catapult"),
 
+
+    ;
     private String output;
 
     Outputs(String output) {
