@@ -21,7 +21,7 @@ public class MilitaryMenu {
     public MilitaryMenu(Empire empire, GameMenu gameMenu) {
         this.empire = empire;
         this.gameMenu = gameMenu;
-        this.militaryMenuController = new MilitaryMenuController(empire, this);
+        this.militaryMenuController = new MilitaryMenuController(empire, this, gameMenu);
     }
 
 

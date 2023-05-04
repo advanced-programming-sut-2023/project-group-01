@@ -29,7 +29,7 @@ public class GameMenu {
 
     public GameMenu(User player){
         this.player = player;
-        this.nextTurn = new NextTurn();
+        this.nextTurn = new NextTurn(this);
     }
 
 
@@ -83,8 +83,8 @@ public class GameMenu {
         }
     }
 
-    public void nextTurn() {
-
+    public NextTurn getNextTurn() {
+        return nextTurn;
     }
 
     public ArrayList<Empire> getEmpires() {

@@ -21,12 +21,14 @@ import java.util.LinkedList;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class MilitaryMenuController {
+    private final GameMenu gameMenu;
     private MilitaryMenu militaryMenu;
     private final Empire empire;
 
-    public MilitaryMenuController(Empire empire, MilitaryMenu militaryMenu) {
+    public MilitaryMenuController(Empire empire, MilitaryMenu militaryMenu, GameMenu gameMenu) {
         this.empire = empire;
         this.militaryMenu = militaryMenu;
+        this.gameMenu = gameMenu;
     }
 
     public Outputs selectUnit(String x, String y) {
@@ -170,62 +172,6 @@ public class MilitaryMenuController {
             return Outputs.SUCCESSFUL_SET_STATE;
         }
     }
-
-    public Outputs attack(String x, String y) {
-        //TODO check some error
-        //TODO check two type of attack
-
-        ArrayList<Empire> empires = militaryMenu.getGameMenu().getEmpires();
-
-        boolean[] fire = new boolean[empires.size()];
-        ArrayList<MilitaryUnit> empire1;
-        ArrayList<MilitaryUnit> empire2;
-
-        for (int i = 0; i < empires.size(); i++) {
-            empire1 = findMilitary(Integer.parseInt(x), Integer.parseInt(y), empires.get(i));
-            if (empire1.size() > 0) {
-                for (int j = 0; j < empires.size(); j++) {
-                    empire2 = findMilitary(Integer.parseInt(x), Integer.parseInt(y), empires.get(j));
-                    if (empire2.size() > 0 && !fire[j]) {
-                        attackTwoTroop(empire1, empire2);
-                    }
-                }
-            }
-
-            fire[i] = true;
-        }
-
-        return null;
-    }
-
-    private void attackTwoTroop(ArrayList<MilitaryUnit> militaryUnitEmpire1, ArrayList<MilitaryUnit> militaryUnitEmpire2) {
-        int damageEmpire1 = 0;
-        int damageEmpire2 = 0;
-
-        for (MilitaryUnit militaryUnit : militaryUnitEmpire1)
-            damageEmpire1 += militaryUnit.getMilitaryUnitName().getAttack();
-        for (MilitaryUnit militaryUnit : militaryUnitEmpire2)
-            damageEmpire2 += militaryUnit.getMilitaryUnitName().getAttack();
-
-        damageEmpire1 /= militaryUnitEmpire2.size();
-        damageEmpire2 /= militaryUnitEmpire1.size();
-
-        for (MilitaryUnit militaryUnit : militaryUnitEmpire1) {
-            if (militaryUnit.getMilitaryUnitName().getHitPoint() > damageEmpire2) {
-                militaryUnit.getMilitaryUnitName().reduceHitPoint(damageEmpire2);
-            } else {
-                //TODO remove the troop
-            }
-        }
-        for (MilitaryUnit militaryUnit : militaryUnitEmpire2) {
-            if (militaryUnit.getMilitaryUnitName().getHitPoint() > damageEmpire1) {
-                militaryUnit.getMilitaryUnitName().reduceHitPoint(damageEmpire1);
-            } else {
-                //TODO remove the troop
-            }
-        }
-    }
-
 
     public Outputs pourOil(String direction) {
         if (!(direction.equals("left") || direction.equals("right") || direction.equals("up") || direction.equals("down"))) {
@@ -376,7 +322,13 @@ public class MilitaryMenuController {
         }
     }
 
-    public ArrayList<MilitaryUnit> findMilitary(int x, int y, Empire empire) {
+    public Outputs attack(String x, String y) {
+        //TODO errors
+
+        return null;
+    }
+
+    public static ArrayList<MilitaryUnit> findMilitary(int x, int y, Empire empire) {
         ArrayList<MilitaryUnit> militaryUnits = new ArrayList<>();
         for (People people : empire.getMap().getTile(x, y).getPeople()) {
             if (people instanceof MilitaryUnit && empire.equals(people.getEmpire())) {

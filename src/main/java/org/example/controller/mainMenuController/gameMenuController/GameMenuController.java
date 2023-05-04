@@ -12,7 +12,4 @@ public class GameMenuController {
         return Outputs.SUCCESS;
     }
 
-    public void nextTurn(){
-
-    }
 }
