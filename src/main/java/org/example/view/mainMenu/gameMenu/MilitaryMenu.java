@@ -94,7 +94,7 @@ public class MilitaryMenu {
     public void attackChecker(Matcher matcher) {
         String x = matcher.group("x");
         String y = matcher.group("y");
-
+        System.out.println(militaryMenuController.attack(x, y));
     }
 
     public void pourOilChecker(Matcher matcher) {

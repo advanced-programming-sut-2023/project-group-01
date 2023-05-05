@@ -98,7 +98,7 @@ public enum Outputs {
     EMAIL_CHANGE_SUCCESSFUL("Your email changed successfully."),
     SAME_NEW_PASSWORD("Your old password and new password are same.Re enter command with different new password."),
     WRONG_OLD_PASSWORD("Your old password doesn't equal current password."),
-    NOT_ENOUGH_MATERIAL("Your entered count for selling this material is more than you inventory! "),
+    //NOT_ENOUGH_MATERIAL("Your entered count for selling this material is more than you inventory! "),
     NOT_ENOUGH_GOLD("You don't have enough gold to buy this material!"),
     SUCCESS_BUY("You successfully bought the material."),
     SUCCESS_SELL("You successfully sell the material."),
@@ -111,8 +111,8 @@ public enum Outputs {
     INVALID_CATAPULT_NAME("Invalid CatapultName"),
     NOT_ENOUGH_ENGINEER("Not Enough Engineer"),
     SUCCESSFUL_CATAPULT("Sucessful Catapult"),
-
-
+    NO_EXISTANCE_FOR_ENEMY("No enemy exist"),
+    SUCCESSFUL_ATTACK("Successful Attack")
     ;
     private String output;
 

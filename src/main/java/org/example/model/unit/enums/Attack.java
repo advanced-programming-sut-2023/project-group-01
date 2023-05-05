@@ -7,7 +7,12 @@ public enum Attack {
     MIDDLE(50),
     LOW(25),
     VERY_LOW(5),
-    ZERO(0);
+    ZERO(0),
+    WILD_SO_HIGH_ATTACK(150),
+    WILD_HIGH_ATTACK(110),
+    WILD_MIDDLE_ATTACK(80),
+    WILD_LOW_ATTACK(40),
+    WILD_VREY_LOW_ATTACK(10);
     private int attack;
 
     Attack(int attack) {
