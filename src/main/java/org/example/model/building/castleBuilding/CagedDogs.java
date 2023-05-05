@@ -5,14 +5,13 @@ import org.example.model.building.enums.BuildingName;
 
 public class CagedDogs extends CastleBuilding {
     //TODO
-    private int dogsNumber = 4;
+    private int damage = 50;
 
     public CagedDogs(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1, y1,buildingName);
     }
 
-
-    public void releaseDogs() {
-        this.dogsNumber = 0;
+    public int getDamage() {
+        return damage;
     }
 }

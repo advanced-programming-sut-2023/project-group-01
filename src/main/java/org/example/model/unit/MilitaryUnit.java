@@ -92,6 +92,14 @@ public class MilitaryUnit extends People {
         return yPos;
     }
 
+    public int getPatrolX2() {
+        return patrolX2;
+    }
+
+    public int getPatrolY2() {
+        return patrolY2;
+    }
+
     public int getXDestination() {
         return xDestination;
     }

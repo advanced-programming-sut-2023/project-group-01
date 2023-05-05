@@ -13,4 +13,8 @@ public class Tower extends CastleBuilding {
         super(empire, x1, y1, buildingName);
         this.towerType = towerType;
     }
+
+    public TowerType getTowerType() {
+        return towerType;
+    }
 }

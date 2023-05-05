@@ -401,7 +401,7 @@ public class BuildingMenuController {
     private boolean findNearEnemy(int x, int y) {
         for (int i = x - 5; i < x + 5; i++) {
             for (int j = y - 5; j < y + 5; y++) {
-                if (empire.getMap().getTile(x, y) != null && empire.getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire)) {
+                if (empire.getMap().getTile(x, y) != null && empire.getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire).size() != 0) {
                     return false;
                 }
             }

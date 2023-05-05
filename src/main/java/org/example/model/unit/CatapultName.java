@@ -55,11 +55,11 @@ public enum CatapultName {
         return capacity;
     }
 
-    public boolean isCanAttackUnit() {
+    public boolean getCanAttackUnit() {
         return canAttackUnit;
     }
 
-    public boolean isCanMove() {
+    public boolean getCanMove() {
         return canMove;
     }
 

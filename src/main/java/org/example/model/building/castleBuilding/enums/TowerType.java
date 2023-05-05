@@ -20,4 +20,16 @@ public enum TowerType {
         this.defendRange = defendRange;
         this.height = height;
     }
+
+    public int getFireRang() {
+        return fireRang;
+    }
+
+    public int getDefendRange() {
+        return defendRange;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }

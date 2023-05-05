@@ -58,18 +58,29 @@ public class MilitaryMenuController {
 
     public static void moving(int xStart, int yStart, int xDestination, int yDestination, Empire empire) {
         //TODO تله را هندل کن
+        //TODO نینجا ها را هندل کن
+        //TODO نردبان دار را هندل کن
         BestPath bestPath = new BestPath(empire);
         LinkedList<Integer> move = bestPath.input(empire.getMap().getMap(), xStart, yStart, xDestination, yDestination, false);
         int maxLength = 0;
         if (move == null || move.size() == 0) return;
+        int dx = xDestination - xStart;
+        int dy = yDestination - yStart;
+        int distance = (int) Math.floor(Math.sqrt(dx * dx + dy * dy));
 
         for (MilitaryUnit militaryUnit : empire.getMap().getTile(xStart, yStart).findUnit(empire)) {
             if (move.size() <= militaryUnit.getMilitaryUnitName().getSpeed()) {
-                militaryUnit.goToDestination(xDestination, yDestination);
+                if (militaryUnit.getMilitaryUnitName().getGunshot() > 0) {     //TODO check
+                    if (distance > militaryUnit.getMilitaryUnitName().getGunshot())
+                        militaryUnit.goToDestination(xDestination, yDestination);
+                } else militaryUnit.goToDestination(xDestination, yDestination);
             } else {
                 int xDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) / empire.getMap().getSize();
                 int yDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) / empire.getMap().getSize();
-                militaryUnit.setDestination(xDestination, yDestination, xDest, yDest);
+                if (militaryUnit.getMilitaryUnitName().getGunshot() > 0) {
+                    if (distance > militaryUnit.getMilitaryUnitName().getGunshot())
+                        militaryUnit.setDestination(xDestination, yDestination, xDest, yDest);
+                } else militaryUnit.setDestination(xDestination, yDestination, xDest, yDest);
             }
             if (militaryUnit.getMilitaryUnitName().getSpeed() > maxLength && militaryUnit.getMilitaryUnitName().getSpeed() <= move.size())
                 maxLength = militaryUnit.getMilitaryUnitName().getSpeed();

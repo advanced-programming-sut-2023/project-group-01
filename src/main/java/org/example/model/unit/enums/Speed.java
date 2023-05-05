@@ -5,7 +5,13 @@ public enum Speed {
     HIGH(9),
     MIDDLE(8),
     LOW(7),
-    VERY_LOW(6);
+    VERY_LOW(6),
+
+    WILD_SO_HIGH(16),
+    WILD_HIGH(14),
+    WILD_MIDDLE(12),
+    WILD_LOW(10),
+    WILD_VERY_LOW(8);
     private int speed;
 
     Speed(int speed) {

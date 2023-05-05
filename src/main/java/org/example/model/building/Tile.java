@@ -26,6 +26,7 @@ public class Tile {
     public void removeUnit(People person) {
         people.remove(person);
     }
+
     public ArrayList<MilitaryUnit> findUnit(Empire empire) {
         ArrayList<MilitaryUnit> militaryUnits = new ArrayList<MilitaryUnit>();
         for (People person : people) {
@@ -36,13 +37,22 @@ public class Tile {
         return militaryUnits;
     }
 
-    public boolean findNearEnemiesMilitaryUnit(Empire empire) {
+    public ArrayList<MilitaryUnit> findNearEnemiesMilitaryUnit(Empire empire) {
+        ArrayList<MilitaryUnit> enemies = new ArrayList<MilitaryUnit>();
+
         for (People person : people) {
             if (!person.getEmpire().equals(empire) && person instanceof MilitaryUnit) {
-                return true;
+                enemies.add((MilitaryUnit) person);
             }
         }
-        return false;
+        return enemies;
+    }
+
+    public MilitaryUnit findEnemyMilitaryUnit(Empire empire) {
+        for (People person : people)
+            if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire))
+                return (MilitaryUnit) person;
+        return null;
     }
 
     public void setBuilding(Building building) {
