@@ -10,6 +10,7 @@ import org.example.model.building.castleBuilding.CagedDogs;
 import org.example.model.building.castleBuilding.Tower;
 import org.example.model.unit.Catapult;
 import org.example.model.unit.MilitaryUnit;
+import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
@@ -117,13 +118,16 @@ public class NextTurn {
     public void doScoreMove(Tile tile, MilitaryUnit militaryUnit, int x, int y) {
         if (x < currentEmpire.getMap().getSize() && y < currentEmpire.getMap().getSize()) {
             BestPath bestPath = new BestPath(currentEmpire);
+            boolean bool = false;
+            LinkedList<Integer> path;
 
-            LinkedList<Integer> path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
-                    militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), false);
+            if (militaryUnit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)) bool = true;
 
-            if (path != null && path.size() > 0) {
+            path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
+                    militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), bool);
+
+            if (path != null && path.size() > 0)
                 movingProcess(path, militaryUnit);
-            }
         }
     }
 
@@ -203,7 +207,7 @@ public class NextTurn {
 
         for (int i = x; i < x + gunShot; i++) {
             for (int j = y; j < y + gunShot; j++) {
-                unit = getMap().getTile(i, j).findEnemyMilitaryUnit(currentEmpire);
+                unit = getMap().getTile(i, j).findEnemyMilitaryUnitForArcher(currentEmpire);
                 if (unit != null) {
                     unit.getMilitaryUnitName().reduceHitPoint(damage);
                     return;
