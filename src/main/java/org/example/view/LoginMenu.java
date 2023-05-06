@@ -4,6 +4,7 @@ import org.example.controller.LoginMenuController;
 import org.example.controller.RegisterMenuController;
 import org.example.model.Data;
 import org.example.model.User;
+import org.example.view.enums.BackgroundColor;
 import org.example.view.enums.CaptchaAsciiArt;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.LoginMenuCommands;
@@ -35,6 +36,7 @@ public class LoginMenu {
                 if ((output = login(matcher, inputLine)).equals(Outputs.INVALID_LOGIN_INPUT)) {
                     System.out.println(Outputs.INVALID_LOGIN_INPUT.toString());
                 } else if (!output.equals(Outputs.SUCCESS)) {
+                    errorColorChange();
                     System.out.println(output);
                     if (output.equals(Outputs.WRONG_PASSWORD)) {
                         forbiddenTime += 5;
@@ -44,8 +46,10 @@ public class LoginMenu {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
+                        resetBackgroundColor();
                         System.out.println("Now you can login again.");
                     }
+                    resetBackgroundColor();
                 } else {
                     captchaRun(scanner, matcher.group("username"));
                 }
@@ -56,8 +60,21 @@ public class LoginMenu {
                 registerMenu.run(scanner);
                 break;
             } else if (RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.EXIT).find()) break;
-            else System.out.println("Invalid command in login menu !");
+            else {
+                errorColorChange();
+                System.out.println("Invalid command in login menu !");
+                resetBackgroundColor();
+            }
         }
+    }
+
+    private static void resetBackgroundColor() {
+        BackgroundColor.changeColor(BackgroundColor.ANSI_RESET);
+    }
+
+    private static void errorColorChange() {
+        BackgroundColor.changeColor(BackgroundColor.ANSI_RED_COLOR);
+        BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_TEXT);
     }
 
     public Outputs login(Matcher matcher, String line) {

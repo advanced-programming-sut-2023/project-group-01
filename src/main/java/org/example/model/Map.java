@@ -15,6 +15,12 @@ public class Map {
 
     public Map(int size) {
         this.map = new Tile[size][size];
+        for (int i=0;i<size;i++){
+            map[i]=new Tile[size];
+            for (int j=0 ; j<size;j++){
+                map[i][j]=new Tile();
+            }
+        }
     }
 
     public void addPeople(int x, int y, People person) {
@@ -31,7 +37,7 @@ public class Map {
 
     public Tile getTileWhitXAndY(int xOfMap, int yOfMap) {
         try {
-            return map[xOfMap - 1][yOfMap - 1];
+            return map[xOfMap][yOfMap];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }

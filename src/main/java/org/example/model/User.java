@@ -14,7 +14,7 @@ public class User {
     private int highScore;
     private int rank;
 
-    private Boolean inGame = false;
+    private boolean inGame = false;
     private byte[] salt;
 
 
@@ -72,7 +72,7 @@ public class User {
         return rank;
     }
 
-    public Boolean getInGame() {
+    public boolean getInGame() {
         return inGame;
     }
 

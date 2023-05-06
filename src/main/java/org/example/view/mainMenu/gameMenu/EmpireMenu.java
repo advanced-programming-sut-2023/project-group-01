@@ -48,7 +48,7 @@ public class EmpireMenu {
             Outputs outputs = new EmpireMenuController().foodRate(foodRate);
             System.out.println(outputs.toString());
         } catch (NumberFormatException e) {
-            System.out.println("Your food rate not number please try again.");
+            System.out.println("Your food rate is not a valid number please try again.");
         }
     }
 

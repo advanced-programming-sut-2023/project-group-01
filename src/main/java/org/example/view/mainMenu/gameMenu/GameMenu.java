@@ -5,7 +5,9 @@ import org.example.controller.mainMenuController.gameMenuController.GameMenuCont
 import org.example.model.Empire;
 import org.example.model.Map;
 import org.example.model.User;
+import org.example.model.building.Building;
 import org.example.model.building.castleBuilding.EmpireBuilding;
+import org.example.model.building.enums.BuildingName;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.GameMenuCommands;
 
@@ -17,7 +19,7 @@ import java.util.regex.Matcher;
 import static org.example.model.Data.findUserWithUsername;
 
 public class GameMenu {
-    private static ArrayList<Empire> empires;
+    private static ArrayList<Empire> empires = new ArrayList<Empire>();
 
     private NextTurn nextTurn;
     private final User player;
@@ -49,18 +51,21 @@ public class GameMenu {
         for (int i = 2; i <= numberOfEmpires; i++)
             while (true) {
                 System.out.println("Please enter username of player\n +" +
-                        "for cancel game enter exit");
+                        "for cancel game enter \"exit game\"");
                 String username = scanner.nextLine();
                 User user = findUserWithUsername(username);
                 if (user != null) {
                     if (!user.getInGame()) {
                         user.setInGame(true);
                         empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + i), user));
+                        System.out.println("User added successfully!");
                         break;
-                    } else System.out.println("User in a game now and can't play");
-                } else if (username.equals("enter exit")) return false;
-                else System.out.println("The user not found");
+                    } else System.out.println("You have already added this player to the game.");
+                } else if (username.equals("exit game")) return false;
+                else System.out.println("User not found");
             }
+        System.out.println("All of the players added to the game.");
+        addEmpireBuildingsToMap();
         return true;
     }
 
@@ -95,8 +100,8 @@ public class GameMenu {
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GET_PLAYER)) != null)
                     System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null)
-                    nextTurn();
-                else System.out.println("Invalid command");
+                    nextTurn.nextTurn();
+                else System.out.println("Invalid command in Game Menu !");
             }
         else {
             setUsersGameFinished();
@@ -108,11 +113,9 @@ public class GameMenu {
         return nextTurn;
     }
 
-    public ArrayList<Empire> getEmpires() {
-        return empires;
-    }
 
     public void showMapChecker(Matcher matcher, Scanner scanner) {
+        matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         Outputs outputs = new GameMenuController().showMap(map.getTileWhitXAndY(xOfMap, yOfMap));
@@ -120,7 +123,17 @@ public class GameMenu {
         if (outputs.equals(Outputs.SUCCESS)) new MapMenu(map, xOfMap, yOfMap).run(scanner);
     }
 
+    private void addEmpireBuildingsToMap() {
+        for (int i = 1; i<= empires.size(); i++)
+            map.getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
+                    EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(
+                    new Building(empires.get(i-1), EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
+                            EmpireBuilding.valueOf("EMPIRE_" + i).getY(),
+                            BuildingName.EMPIRE_CASTLE));
+    }
+
     public int setNumberOfEmpires(Scanner scanner) {
+        System.out.println("Please enter the number of players between 2,8 :");
         while (true)
             try {
                 int numberOfEmpire = Integer.parseInt(scanner.nextLine());

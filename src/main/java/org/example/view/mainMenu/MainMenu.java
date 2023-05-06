@@ -7,6 +7,7 @@ import org.example.model.UsersDatabaseJSON;
 import org.example.view.RegisterMenu;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.MainMenuCommands;
+import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -41,12 +42,13 @@ public class MainMenu {
                 ProfileMenu profileMenu = new ProfileMenu(currentUser);
                 profileMenu.run(scanner);
                 break;
-            }
+            } else if (inputLine.equals("start game")){
+                GameMenu gameMenu = new GameMenu(currentUser);
+                gameMenu.run(scanner);
+            }else if (inputLine.equals("exit project"))
+                break;
+            else System.out.println("Invalid command in Main Menu!");
         }
     }
 
-
-    public void startGameChecker(Matcher matcher) {
-
-    }
 }

@@ -1,10 +1,12 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
+import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.TypeOfTile;
 import org.example.view.enums.Outputs;
+import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.Random;
 
@@ -102,8 +104,8 @@ public class CreateMapMenuController {
             if(BuildingName.valueOf(type).getTypeCanBuildBuilding() !=
                     gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).getTypeOfTile())
                 return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
-            //gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).setBuilding
-                    //(new Building(gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding), BuildingName.valueOf(type)));
+            gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding).setBuilding
+                    (new Building(GameMenu.getThisEmpire(),xOfBuilding, yOfBuilding, BuildingName.valueOf(type)));
         }
         catch (IllegalArgumentException e){
             return Outputs.INVALID_TYPE_OF_BUILDING;
