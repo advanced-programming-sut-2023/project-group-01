@@ -45,7 +45,6 @@ public class BuildingMenuController {
     }
 
     public Outputs dropBuilding(String x, String y, String type) {
-        //TODO اگر ساختمون ساخته نشد باید پاک شود
         if (x == null) {
             return Outputs.EMPTY_X;
         } else if (y == null) {
@@ -61,22 +60,20 @@ public class BuildingMenuController {
         int buildingSize = building.getBuildingName().getSize();
         int mapSize = empire.getMap().getSize();
 
-        if (building == null) {
+        if (building == null)
             return Outputs.INVALID_BUILDING_TYPE;
-        } else if (x0 > mapSize || y0 > mapSize || x0 + buildingSize > mapSize || y0 + buildingSize > mapSize) {
+        else if (x0 > mapSize || y0 > mapSize || x0 + buildingSize > mapSize || y0 + buildingSize > mapSize)
             return Outputs.OUT_OF_RANGE;
-        } else if (isPositionFull(building, x0, y0)) {
+        else if (isPositionFull(building, x0, y0))
             return Outputs.FULL_POSITION;
-        } else if (isGroundSuitable(building, x0, y0)) {
+        else if (isGroundSuitable(building, x0, y0))
             return Outputs.NOT_SUITABLE_GROUND;
-        } else {
-            putBuilding(building, x0, y0);
-            return Outputs.SUCCESSFUL_DROP_BUILDING;
-        }
+
+        putBuilding(building, x0, y0);
+        return Outputs.SUCCESSFUL_DROP_BUILDING;
     }
 
     public Building findBuildingByName(String name, int x1, int y1) {
-        //TODO set the position of units
         for (BuildingName buildingName : BuildingName.values()) {
             if (buildingName.getName().equals(name)) {
                 return new Building(empire, x1, y1, buildingName);
@@ -170,7 +167,7 @@ public class BuildingMenuController {
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 
-    public Outputs createUnit(String type, String count) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public Outputs createUnit(String type, String count) {
 
         boolean barrackBoolean = false;
         boolean mercenaryBoolean = false;
@@ -180,167 +177,168 @@ public class BuildingMenuController {
         Material material1 = null;
         Material material2 = null;
 
-        if (type == null) {
+        if (type == null)
             return Outputs.EMPTY_TYPE;
-        } else if (buildingMenu.getSelectedBuilding() == null) {
+        else if (buildingMenu.getSelectedBuilding() == null)
             return Outputs.EMPTY_SELECTED_BUILDING;
-        } else if (count == null) {
+        else if (count == null)
             return Outputs.EMPTY_COUNT;
-        } else if (!count.matches("\\d+")) {
+        else if (!count.matches("\\d+"))
             return Outputs.INVALID_COUNT;
-        } else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Barrack")) {
+        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Barrack"))
             barrackBoolean = true;
-        } else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Mercenary Barrack")) {
+        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Mercenary Barrack"))
             mercenaryBoolean = true;
-        } else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Engineer Guild")) {
+        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Engineer Guild"))
             engineerGuildBoolean = true;
-        } else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Cathedral")) {
+        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Cathedral"))
             cathedralBoolean = true;
-        } else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Tunneler")) {
+        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Tunneler"))
             tunnelerBoolean = true;
-        } else if (empire.getPopulation() < Integer.parseInt(count)) {
+        else if (empire.getPopulation() < Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_POPULATION;
-        }
 
-        if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean) {
+        if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
             return Outputs.INVALID_MILITARY_TYPE;
-        } else if (empire.getGold() > getPriceByName(type) * Integer.parseInt(count)) {
+        else if (empire.getGold() > getPriceByName(type) * Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_MONEY;
-        } else if (barrackBoolean) {
+        else if (barrackBoolean) {
             material1 = getArmouryByName(type);
             material2 = getArmamentByName(type);
             if ((material1 != null && !empire.havingMaterial(material1, Integer.parseInt(count))) &&
-                    (material2 != null && !empire.havingMaterial(material2, Integer.parseInt(count)))) {
+                    (material2 != null && !empire.havingMaterial(material2, Integer.parseInt(count))))
                 return Outputs.NOT_ENOUGH_EQUIPMENT;
-            }
         }
+
         doCreateUnit(type, barrackBoolean, mercenaryBoolean, engineerGuildBoolean, cathedralBoolean, tunnelerBoolean, Integer.parseInt(count));
         return Outputs.SUCCESSFUL_CREATE;
     }
 
     private void doCreateUnit(String type, boolean barrackBoolean, boolean mercenaryBoolean,
-                              boolean engineerGuildBoolean, boolean cathedralBoolean, boolean tunnelerBoolean, int count) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-
-        //TODO پاک کردن مردم عادی و چک کردن اندازه جمعیت
-        if (barrackBoolean) {
-            BarrackMilitary(type, count);
-        } else if (mercenaryBoolean) {
-            MercenaryBarrack(type, count);
-        } else if (engineerGuildBoolean) {
-            Engineer(type, count);
-        } else if (cathedralBoolean) {
-            BlackMonk(type, count);
-        } else if (tunnelerBoolean) {
-            Tunneler(type, count);
-        }
+                              boolean engineerGuildBoolean, boolean cathedralBoolean, boolean tunnelerBoolean, int count) {
+        if (barrackBoolean) BarrackMilitary(type, count);
+        else if (mercenaryBoolean) MercenaryBarrack(type, count);
+        else if (engineerGuildBoolean) Engineer(type, count);
+        else if (cathedralBoolean) BlackMonk(type, count);
+        else if (tunnelerBoolean) Tunneler(type, count);
     }
 
     public int getPriceByName(String name) {
-        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values()) {
-            if (militaryUnitName.getName().equals(name)) {
+        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
+            if (militaryUnitName.getName().equals(name))
                 return militaryUnitName.getCost();
-            }
-        }
-
         return -1;
     }
 
     public Material getArmouryByName(String name) {
-        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values()) {
-            if (militaryUnitName.getName().equals(name)) {
+        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
+            if (militaryUnitName.getName().equals(name))
                 return militaryUnitName.getArmour();
-            }
-        }
         return null;
     }
 
     public Material getArmamentByName(String name) {
-        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values()) {
-            if (militaryUnitName.getName().equals(name)) {
+        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
+            if (militaryUnitName.getName().equals(name))
                 return militaryUnitName.getArmament();
-            }
-        }
         return null;
     }
 
-    private void BarrackMilitary(String militaryUnitName, int count) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    private void BarrackMilitary(String militaryUnitName, int count) {
 
-        int x = buildingMenu.getSelectedBuilding().getBeginX();
+        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
+        if (x == empire.getMap().getSize() - 1) x -= 8;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
 
-        if (militaryUnitName.equals("Archer")) {
-            for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
+        switch (militaryUnitName) {
+            case "Archer" -> {
+                for (int i = 0; i < count; i++) {
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
+                }
+                MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
             }
-            MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
-        } else if (militaryUnitName.equals("Crossbowmen")) {
-            for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
+            case "Crossbowmen" -> {
+                for (int i = 0; i < count; i++) {
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
+                }
+                MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
             }
-            MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
-        } else if (militaryUnitName.equals("Spearmen")) {
-            for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
+            case "Spearmen" -> {
+                for (int i = 0; i < count; i++) {
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
+                }
+                MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
             }
-            MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
-        } else if (militaryUnitName.equals("Pikemen")) {
-            for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
+            case "Pikemen" -> {
+                for (int i = 0; i < count; i++) {
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
+                }
+                MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
             }
-            MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
-        } else if (militaryUnitName.equals("Macemen")) {
-            for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
+            case "Macemen" -> {
+                for (int i = 0; i < count; i++) {
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
+                }
+                MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
             }
-            MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
-        } else if (militaryUnitName.equals("Swordsmen")) {
-            for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
+            case "Swordsmen" -> {
+                for (int i = 0; i < count; i++) {
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
+                }
+                MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
             }
-            MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
-        } else if (militaryUnitName.equals("Knight")) {
-            for (int i = 0; i < count; i++) {
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
+            case "Knight" -> {
+                for (int i = 0; i < count; i++) {
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
+                }
+                MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
             }
-            MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
         }
     }
 
-    private void MercenaryBarrack(String militaryUnitName, int count) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        //TODO about assassins
-        int x = buildingMenu.getSelectedBuilding().getBeginX();
+    private void MercenaryBarrack(String militaryUnitName, int count) {
+        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
+        if (x == empire.getMap().getSize() - 1) x -= 8;
 
-        if (militaryUnitName.equals("Archer Bow")) {
-            for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW, x, y);
-            MilitaryUnitName.ARCHER_BOW.getVoice().playVoice(MilitaryUnitName.ARCHER_BOW.getVoice());
-        } else if (militaryUnitName.equals("Slingers")) {
-            for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS, x, y);
-            MilitaryUnitName.SLINGERS.getVoice().playVoice(MilitaryUnitName.SLINGERS.getVoice());
-        } else if (militaryUnitName.equals("Assassins")) {
-            for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS, x, y);
-            MilitaryUnitName.ASSASSINS.getVoice().playVoice(MilitaryUnitName.ASSASSINS.getVoice());
-        } else if (militaryUnitName.equals("Horse Archers")) {
-            for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER, x, y);
-            MilitaryUnitName.HORSE_ARCHER.getVoice().playVoice(MilitaryUnitName.HORSE_ARCHER.getVoice());
-        } else if (militaryUnitName.equals("Arabian Swordsmen")) {
-            for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN, x, y);
-            MilitaryUnitName.ARABIAN_SWORSMEN.getVoice().playVoice(MilitaryUnitName.ARABIAN_SWORSMEN.getVoice());
-        } else if (militaryUnitName.equals("Fire Throwers")) {
-            for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS, x, y);
-            MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
+        switch (militaryUnitName) {
+            case "Archer Bow" -> {
+                for (int i = 0; i < count; i++)
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW, x, y);
+                MilitaryUnitName.ARCHER_BOW.getVoice().playVoice(MilitaryUnitName.ARCHER_BOW.getVoice());
+            }
+            case "Slingers" -> {
+                for (int i = 0; i < count; i++)
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS, x, y);
+                MilitaryUnitName.SLINGERS.getVoice().playVoice(MilitaryUnitName.SLINGERS.getVoice());
+            }
+            case "Assassins" -> {
+                for (int i = 0; i < count; i++)
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS, x, y);
+                MilitaryUnitName.ASSASSINS.getVoice().playVoice(MilitaryUnitName.ASSASSINS.getVoice());
+            }
+            case "Horse Archers" -> {
+                for (int i = 0; i < count; i++)
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER, x, y);
+                MilitaryUnitName.HORSE_ARCHER.getVoice().playVoice(MilitaryUnitName.HORSE_ARCHER.getVoice());
+            }
+            case "Arabian Swordsmen" -> {
+                for (int i = 0; i < count; i++)
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN, x, y);
+                MilitaryUnitName.ARABIAN_SWORSMEN.getVoice().playVoice(MilitaryUnitName.ARABIAN_SWORSMEN.getVoice());
+            }
+            case "Fire Throwers" -> {
+                for (int i = 0; i < count; i++)
+                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS, x, y);
+                MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
+            }
         }
     }
 
-    private void Engineer(String militaryUnitName, int count) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        int x = buildingMenu.getSelectedBuilding().getBeginX();
+    private void Engineer(String militaryUnitName, int count) {
+        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
+        if (x == empire.getMap().getSize() - 1) x -= 6;
 
         if (militaryUnitName.equals("Engineer")) {
             for (int i = 0; i < count; i++)
@@ -353,9 +351,10 @@ public class BuildingMenuController {
         }
     }
 
-    private void Tunneler(String militaryName, int count) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        int x = buildingMenu.getSelectedBuilding().getBeginX();
+    private void Tunneler(String militaryName, int count) {
+        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
+        if (x == empire.getMap().getSize() - 1) x -= 5;
 
         if (militaryName.equals("tunneler")) {
             for (int i = 0; i < count; i++)
@@ -364,10 +363,11 @@ public class BuildingMenuController {
         }
     }
 
-    private void BlackMonk(String militaryUnitName, int count) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        int x = buildingMenu.getSelectedBuilding().getBeginX();
+    private void BlackMonk(String militaryUnitName, int count) {
+        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-
+        if (x == empire.getMap().getSize() - 1)
+            x -= 14;
         if (militaryUnitName.equals("Black Monk")) {
             for (int i = 0; i < count; i++)
                 new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.BLACK_MONK, x, y);
@@ -408,6 +408,7 @@ public class BuildingMenuController {
         }
         return true;
     }
+
     public int checkRepair() {
         int maxHitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getMaxHitPoint();
         int hitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getHitPoint();
