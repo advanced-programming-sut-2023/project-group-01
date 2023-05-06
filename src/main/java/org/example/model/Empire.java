@@ -25,7 +25,7 @@ public class Empire {
     private int population;
     private int MaxPopulation;
     private int gold;
-    private final Color color;
+    private Color color;
     private Map map;
     private LinkedHashMap<Material,Integer> materials = new LinkedHashMap<>();
     private LinkedHashMap<FoodType,Integer> foods = new LinkedHashMap<>(4);
@@ -36,7 +36,7 @@ public class Empire {
 
     public Empire(EmpireBuilding empireBuilding, User player) {
         this.empireBuilding = empireBuilding;
-        this.color = empireBuilding.getColor();
+        //this.color = empireBuilding.getColor();
         this.player = player;
         this.popularity = 0;
         this.foodRate = 0;
@@ -155,5 +155,9 @@ public class Empire {
 
     public LinkedHashMap<Material, Integer> getMaterials() {
         return materials;
+    }
+
+    public User getPlayer() {
+        return this.player;
     }
 }

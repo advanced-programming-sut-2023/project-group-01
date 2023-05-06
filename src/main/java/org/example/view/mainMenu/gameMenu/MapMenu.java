@@ -66,7 +66,7 @@ public class MapMenu {
                 }
                 System.out.println();
             }
-            System.out.println("-------------------------");
+            System.out.println("------------------------------");
         }
     }
 
@@ -87,6 +87,7 @@ public class MapMenu {
     }
 
     public void moveMapChecker(Matcher matcher) {
+        matcher.find();
         int up = 0;
         int down = 0;
         int left = 0;
@@ -94,7 +95,8 @@ public class MapMenu {
         if (matcher.group("up") != null)
             if (matcher.group("upCount") != null)
                 up = Integer.parseInt(matcher.group("upCount"));
-        else up = 1;
+            else up = 1;
+
         if (matcher.group("down") != null)
             if (matcher.group("downCount") != null)
                 down = Integer.parseInt(matcher.group("downCount"));
@@ -118,6 +120,7 @@ public class MapMenu {
     }
 
     public void showDetailOfMapChecker(Matcher matcher) {
+        matcher.find();
         int newX = Integer.parseInt(matcher.group("xOfMap"));
         int newY = Integer.parseInt(matcher.group("yOfMap"));
         Tile tile;

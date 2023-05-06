@@ -2,6 +2,10 @@ package org.example.model.building.enums;
 
 public enum TypeOfTile {
     //TODO check this items
+    W_ROCK(false,false),
+    E_ROCK(false,false),
+    N_ROCK(false,false),
+    S_ROCK(false,false),
     NORMAL_GROUND(true, false),
     GRAVEL_GROUND(true, false),
     STONE_MINE(true, false),

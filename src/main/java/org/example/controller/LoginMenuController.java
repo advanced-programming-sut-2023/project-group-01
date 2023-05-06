@@ -16,7 +16,6 @@ public class LoginMenuController {
             return Outputs.WRONG_PASSWORD;
 
         if (stayLoggedIn != null) Data.setStayedLoggedIn(user);
-        System.out.println(stayLoggedIn);
 
         return Outputs.SUCCESS;
     }

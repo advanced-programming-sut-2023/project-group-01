@@ -1,14 +1,19 @@
 package org.example.view.enums.commands.GameMenuCommands;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public enum GameMenuCommands {
 
-    SHOW_MAP(""),
-    GO_TO_EMPIRE_MENU(""),
-    GET_TURN_NUMBER(""),
-    GET_PLAYER(""),
-    NEXT_TURN("");
+    SHOW_MAP("show map(?: -x (?<xOfMap>\\d+)()| -y (?<yOfMap>\\d+)()){2}\\2\\4"),
+    GO_TO_EMPIRE_MENU("^go to empire menu$"),
+    GET_TURN_NUMBER("^show turn number$"),
+    GET_PLAYER("^show player$"),
+    TRADE_MENU("^enter trade menu$"),
+    SHOP_MENU("^enter shop menu$"),
+    BUILDING_MENU("^enter building menu$"),
+    MILITARY_MENU("^enter military menu$"),
+    NEXT_TURN("^next turn$");
     private final String regex;
 
     GameMenuCommands(String regex) {
@@ -16,6 +21,9 @@ public enum GameMenuCommands {
     }
 
     public static Matcher getMatcher(String input, GameMenuCommands gameMenuCommands){
+        Pattern pattern = Pattern.compile(gameMenuCommands.regex);
+        if (pattern.matcher(input).find())
+            return pattern.matcher(input);
         return null;
     }
 }
