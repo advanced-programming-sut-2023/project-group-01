@@ -86,19 +86,16 @@ public class NextTurn {
         if (currentEmpire.getMap().getTile(x, y).getBuilding() != null &&
                 currentEmpire.getMap().getTile(x, y).getBuilding() instanceof CagedDogs) {
             //TODO check the out of range
-            boolean isAttacked = false;
             for (int i = x; i > x - 10; i--) {
                 for (int j = y; j > y - 10; j--) {
                     //TODO with attack
-                    isAttacked = doDogAttack(getMap().getTile(x, y), getMap().getTile(i, j));
-                    if (isAttacked) return;
+                    if (doDogAttack(getMap().getTile(x, y), getMap().getTile(i, j))) return;
                 }
             }
             for (int i = x; i < x + 10; i++) {
                 for (int j = y; j < y + 10; j++) {
                     //TODO with attack
-                    isAttacked = doDogAttack(getMap().getTile(x, y), getMap().getTile(i, j));
-                    if (isAttacked) return;
+                    if (doDogAttack(getMap().getTile(x, y), getMap().getTile(i, j))) return;
                 }
             }
         }
