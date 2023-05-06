@@ -14,6 +14,7 @@ public class Map {
     private int size;
 
     public Map(int size) {
+        this.size=size;
         this.map = new Tile[size][size];
         for (int i=0;i<size;i++){
             map[i]=new Tile[size];

@@ -15,6 +15,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
+import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
+
 public class BuildingMenuController {
     private Empire empire;
     private BuildingMenu buildingMenu;
@@ -33,13 +35,13 @@ public class BuildingMenuController {
             return Outputs.INVALID_X;
         } else if (!y.matches("\\d+")) {
             return Outputs.INVALID_Y;
-        } else if (Integer.parseInt(x) > empire.getMap().getSize() || Integer.parseInt(y) > empire.getMap().getSize()) {
+        } else if (Integer.parseInt(x) > getMap().getSize() || Integer.parseInt(y) > getMap().getSize()) {
             return Outputs.OUT_OF_RANGE;
-        } else if (!empire.getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding().getEmpire()
+        } else if (!getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding().getEmpire()
                 .equals(buildingMenu.getEmpire())) {
             return Outputs.NOT_HAVING_BUILDING;
         } else {
-            this.buildingMenu.setBuilding(empire.getMap().getTileWhitXAndY(Integer.parseInt(x), Integer.parseInt(y)).getBuilding());
+            this.buildingMenu.setBuilding(getMap().getTileWhitXAndY(Integer.parseInt(x), Integer.parseInt(y)).getBuilding());
             return Outputs.VALID_SELECT_BUILDING;
         }
     }
@@ -55,18 +57,20 @@ public class BuildingMenuController {
             return Outputs.INVALID_Y;
         }
         Building building = findBuildingByName(type, Integer.parseInt(x), Integer.parseInt(y));
+        if (building == null)
+            return Outputs.INVALID_BUILDING_TYPE;
         int x0 = Integer.parseInt(x);
         int y0 = Integer.parseInt(y);
         int buildingSize = building.getBuildingName().getSize();
-        int mapSize = empire.getMap().getSize();
+        int mapSize = getMap().getSize();
 
-        if (building == null)
-            return Outputs.INVALID_BUILDING_TYPE;
-        else if (x0 > mapSize || y0 > mapSize || x0 + buildingSize > mapSize || y0 + buildingSize > mapSize)
+
+
+        if (x0 > mapSize || y0 > mapSize || x0 + buildingSize > mapSize || y0 + buildingSize > mapSize)
             return Outputs.OUT_OF_RANGE;
         else if (isPositionFull(building, x0, y0))
             return Outputs.FULL_POSITION;
-        else if (isGroundSuitable(building, x0, y0))
+        else if (!isGroundSuitable(building, x0, y0))
             return Outputs.NOT_SUITABLE_GROUND;
 
         putBuilding(building, x0, y0);
@@ -90,15 +94,15 @@ public class BuildingMenuController {
         if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.NORMAL_GROUND)) {
             for (int i = x; i < x + size; i++) {
                 for (int j = y; j < y + size; j++) {
-                    if (empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SEA) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.STONE_MINE) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.IRON_MINE) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.BEACH) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.OIL_GROUND) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.RIVER) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SHALLOW_WATER) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SMALL_POND) ||
-                            empire.getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.BIG_POND)) {
+                    if (getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SEA) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.STONE_MINE) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.IRON_MINE) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.BEACH) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.OIL_GROUND) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.RIVER) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SHALLOW_WATER) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SMALL_POND) ||
+                            getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.BIG_POND)) {
                         return false;
                     }
                 }
@@ -119,7 +123,7 @@ public class BuildingMenuController {
     private boolean suitability(TypeOfTile typeOfTile, int x, int y, int size) {
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
-                if (!empire.getMap().getTile(i, j).getTypeOfTile().equals(typeOfTile)) {
+                if (!getMap().getTile(i, j).getTypeOfTile().equals(typeOfTile)) {
                     return false;
                 }
             }
@@ -131,7 +135,7 @@ public class BuildingMenuController {
         int size = building.getBuildingName().getSize();
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
-                if (empire.getMap().getTile(i, j).getBuilding() != null) {
+                if (getMap().getTile(i, j).getBuilding() != null) {
                     return true;
                 }
             }
@@ -143,7 +147,7 @@ public class BuildingMenuController {
         int size = building.getBuildingName().getSize();
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
-                empire.getMap().getTile(i, j).setBuilding(building);
+                getMap().getTile(i, j).setBuilding(building);
             }
         }
     }
@@ -247,49 +251,49 @@ public class BuildingMenuController {
     private void BarrackMilitary(String militaryUnitName, int count) {
 
         int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
-        if (x == empire.getMap().getSize() - 1) x -= 8;
+        if (x == getMap().getSize() - 1) x -= 8;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
 
         switch (militaryUnitName) {
             case "Archer" -> {
                 for (int i = 0; i < count; i++) {
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
                 }
                 MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
             }
             case "Crossbowmen" -> {
                 for (int i = 0; i < count; i++) {
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
                 }
                 MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
             }
             case "Spearmen" -> {
                 for (int i = 0; i < count; i++) {
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
                 }
                 MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
             }
             case "Pikemen" -> {
                 for (int i = 0; i < count; i++) {
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
                 }
                 MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
             }
             case "Macemen" -> {
                 for (int i = 0; i < count; i++) {
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
                 }
                 MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
             }
             case "Swordsmen" -> {
                 for (int i = 0; i < count; i++) {
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
                 }
                 MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
             }
             case "Knight" -> {
                 for (int i = 0; i < count; i++) {
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
                 }
                 MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
             }
@@ -299,37 +303,37 @@ public class BuildingMenuController {
     private void MercenaryBarrack(String militaryUnitName, int count) {
         int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == empire.getMap().getSize() - 1) x -= 8;
+        if (x == getMap().getSize() - 1) x -= 8;
 
         switch (militaryUnitName) {
             case "Archer Bow" -> {
                 for (int i = 0; i < count; i++)
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW, x, y);
                 MilitaryUnitName.ARCHER_BOW.getVoice().playVoice(MilitaryUnitName.ARCHER_BOW.getVoice());
             }
             case "Slingers" -> {
                 for (int i = 0; i < count; i++)
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS, x, y);
                 MilitaryUnitName.SLINGERS.getVoice().playVoice(MilitaryUnitName.SLINGERS.getVoice());
             }
             case "Assassins" -> {
                 for (int i = 0; i < count; i++)
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS, x, y);
                 MilitaryUnitName.ASSASSINS.getVoice().playVoice(MilitaryUnitName.ASSASSINS.getVoice());
             }
             case "Horse Archers" -> {
                 for (int i = 0; i < count; i++)
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER, x, y);
                 MilitaryUnitName.HORSE_ARCHER.getVoice().playVoice(MilitaryUnitName.HORSE_ARCHER.getVoice());
             }
             case "Arabian Swordsmen" -> {
                 for (int i = 0; i < count; i++)
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN, x, y);
                 MilitaryUnitName.ARABIAN_SWORSMEN.getVoice().playVoice(MilitaryUnitName.ARABIAN_SWORSMEN.getVoice());
             }
             case "Fire Throwers" -> {
                 for (int i = 0; i < count; i++)
-                    new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS, x, y);
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS, x, y);
                 MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
             }
         }
@@ -338,15 +342,15 @@ public class BuildingMenuController {
     private void Engineer(String militaryUnitName, int count) {
         int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == empire.getMap().getSize() - 1) x -= 6;
+        if (x == getMap().getSize() - 1) x -= 6;
 
         if (militaryUnitName.equals("Engineer")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ENGINEER, x, y);
+                new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ENGINEER, x, y);
             MilitaryUnitName.ENGINEER.getVoice().playVoice(MilitaryUnitName.ENGINEER.getVoice());
         } else if (militaryUnitName.equals("Laddermen")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN, x, y);
+                new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN, x, y);
             MilitaryUnitName.LADDER_MEN.getVoice().playVoice(MilitaryUnitName.LADDER_MEN.getVoice());
         }
     }
@@ -354,11 +358,11 @@ public class BuildingMenuController {
     private void Tunneler(String militaryName, int count) {
         int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == empire.getMap().getSize() - 1) x -= 5;
+        if (x == getMap().getSize() - 1) x -= 5;
 
         if (militaryName.equals("tunneler")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.TUNNELER, x, y);
+                new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.TUNNELER, x, y);
             MilitaryUnitName.TUNNELER.getVoice().playVoice(MilitaryUnitName.TUNNELER.getVoice());
         }
     }
@@ -366,11 +370,11 @@ public class BuildingMenuController {
     private void BlackMonk(String militaryUnitName, int count) {
         int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == empire.getMap().getSize() - 1)
+        if (x == getMap().getSize() - 1)
             x -= 14;
         if (militaryUnitName.equals("Black Monk")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(empire.getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.BLACK_MONK, x, y);
+                new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.BLACK_MONK, x, y);
             MilitaryUnitName.BLACK_MONK.getVoice().playVoice(MilitaryUnitName.BLACK_MONK.getVoice());
         }
     }
@@ -401,7 +405,7 @@ public class BuildingMenuController {
     private boolean findNearEnemy(int x, int y) {
         for (int i = x - 5; i < x + 5; i++) {
             for (int j = y - 5; j < y + 5; y++) {
-                if (empire.getMap().getTile(x, y) != null && empire.getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire).size() != 0) {
+                if (getMap().getTile(x, y) != null && getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire).size() != 0) {
                     return false;
                 }
             }

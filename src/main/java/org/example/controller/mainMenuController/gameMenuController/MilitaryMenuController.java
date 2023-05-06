@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class MilitaryMenuController {
+
     private final GameMenu gameMenu;
     private MilitaryMenu militaryMenu;
     private final Empire empire;
@@ -320,9 +321,9 @@ public class MilitaryMenuController {
             return Outputs.INVALID_X;
         } else if (!y.matches("\\d+")) {
             return Outputs.INVALID_Y;
-        } else if (Integer.parseInt(x) > empire.getMap().getSize() || Integer.parseInt(y) > empire.getMap().getSize()) {
+        } else if (Integer.parseInt(x) > getMap().getSize() || Integer.parseInt(y) > getMap().getSize()) {
             return Outputs.OUT_OF_RANGE;
-        } else if (findMilitary(Integer.parseInt(x), Integer.parseInt(y), empire) == null) {
+        } else if (findMilitary(Integer.parseInt(x), Integer.parseInt(y), empire).size()==0) {
             return Outputs.NOT_HAVING_TROOP;
         } else {
             return Outputs.VALID_X_Y;
@@ -360,7 +361,6 @@ public class MilitaryMenuController {
         for (People people : empire.getMap().getTile(x, y).getPeople()) {
             if (people instanceof MilitaryUnit && empire.equals(people.getEmpire())) {
                 militaryUnits.add((MilitaryUnit) people);
-
             }
         }
         return militaryUnits;

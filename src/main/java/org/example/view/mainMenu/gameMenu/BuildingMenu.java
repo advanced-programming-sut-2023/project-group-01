@@ -29,15 +29,17 @@ public class BuildingMenu {
         while (true) {
             input = scanner.nextLine();
             Matcher matcher;
-            if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.SELECT_BUILDING)).find()) {
+            if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.SELECT_BUILDING)).matches()) {
                 selectBuildingChecker(matcher);
-            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DROP_BUILDING)).find()) {
+            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DROP_BUILDING)).matches()) {
                 dropBuildingChecker(matcher);
-            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.CREATE_UNIT)).find()) {
+            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.CREATE_UNIT)).matches()) {
                 createUnitChecker(matcher);
-            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.REPAIR)).find()) {
+            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.REPAIR)).matches()) {
                 repairChecker();
-            } else {
+            } else if (input.equals("exit"))
+                return;
+            else {
                 System.out.println(Outputs.INVALID_COMMAND);
             }
         }
@@ -54,7 +56,7 @@ public class BuildingMenu {
         String x = matcher.group("x");
         String y = matcher.group("y");
         String type = matcher.group("type");
-        buildingMenuController.dropBuilding(x, y, type);
+        System.out.println(buildingMenuController.dropBuilding(x, y, type).toString());
     }
 
     public void destroyBuilding() {

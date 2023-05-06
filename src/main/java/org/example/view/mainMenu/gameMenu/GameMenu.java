@@ -11,6 +11,9 @@ import org.example.model.building.enums.BuildingName;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.GameMenuCommands;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -101,6 +104,23 @@ public class GameMenu {
                     System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null)
                     nextTurn.nextTurn();
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null){
+                    MilitaryMenu militaryMenu = new MilitaryMenu(thisEmpire,this);
+                    militaryMenu.run(scanner);
+                }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.BUILDING_MENU)) != null){
+                    BuildingMenu buildingMenu = new BuildingMenu(thisEmpire);
+                    try {
+                        buildingMenu.run(scanner);
+                    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOP_MENU)) != null){
+                    ShopMenu shopMenu = new ShopMenu();
+                    shopMenu.run(scanner);
+                }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.TRADE_MENU)) != null){
+                    TradeMenu tradeMenu = new TradeMenu();
+                    tradeMenu.run(scanner);
+                }
                 else System.out.println("Invalid command in Game Menu !");
             }
         else {

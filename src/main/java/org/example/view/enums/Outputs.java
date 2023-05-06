@@ -40,7 +40,7 @@ public enum Outputs {
     NOT_HAVING_BUILDING("You don't have any building in this position"),
     EMPTY_TYPE("Your entered Type is empty"),
     EMPTY_COUNT("Your entered Count is empty"),
-//    INVALID_COUNT("Your entered Count is invalid"),
+    //    INVALID_COUNT("Your entered Count is invalid"),
     EMPTY_SELECTED_BUILDING("Your don't select any building"),
     INVALID_MILITARY_TYPE("Invalid militaryUnit type"),
     NOT_ENOUGH_POPULATION("Not enough population"),

@@ -54,7 +54,9 @@ public class MilitaryMenu {
                 disbandUnit();
             } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).matches()) {
                 cancelPatrolUnitChecker();
-            } else {
+            } else if (input.equals("exit"))
+                return;
+            else {
                 System.out.println(Outputs.INVALID_COMMAND);
             }
         }
@@ -94,7 +96,7 @@ public class MilitaryMenu {
     public void attackChecker(Matcher matcher) {
         String x = matcher.group("x");
         String y = matcher.group("y");
-        System.out.println(militaryMenuController.attack(x, y));
+        System.out.println(militaryMenuController.attack(x, y).toString());
     }
 
     public void pourOilChecker(Matcher matcher) {

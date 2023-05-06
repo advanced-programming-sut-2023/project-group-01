@@ -18,8 +18,6 @@ public enum BuildingMenuCommands {
 
     public static Matcher getMatcher(String input, BuildingMenuCommands command) {
         Pattern pattern = Pattern.compile(command.regex);
-        Matcher matcher = pattern.matcher(input);
-        if (matcher.matches()) return matcher;
-        return null;
+        return pattern.matcher(input);
     }
 }

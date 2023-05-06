@@ -27,7 +27,6 @@ public class ShopMenu {
             else if ((matcher=ShopMenuCommands.getMatcher(inputLine,ShopMenuCommands.SELL)).find())
                 System.out.println(sell(matcher).toString());
             else if (inputLine.equals("exit shop menu")){
-                //TODO:back
                 return;
             }
             else System.out.println("Invalid command in Shop Menu");
