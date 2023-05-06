@@ -35,7 +35,7 @@ public class CreateMapMenu {
             else if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.DROP_UNIT)) != null)
                 dropUnitChecker(matcher);
             else if (command.equals("finish")) return gameMap;
-            else System.out.println("invalid command!");
+            else System.out.println("invalid command in Create Map Menu!");
         }
     }
 
@@ -60,6 +60,7 @@ public class CreateMapMenu {
     }
 
     public void setTextureForATileChecker(Matcher matcher) {
+        matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
@@ -69,6 +70,7 @@ public class CreateMapMenu {
     }
 
     public void setTextureForARectangleChecker(Matcher matcher) {
+        matcher.find();
         int x1OfMap = Integer.parseInt(matcher.group("x1OfMap"));
         int y1OfMap = Integer.parseInt(matcher.group("y1OfMap"));
         int x2OfMap = Integer.parseInt(matcher.group("x2OfMap"));
@@ -80,6 +82,7 @@ public class CreateMapMenu {
     }
 
     public void clearChecker(Matcher matcher) {
+        matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         Outputs outputs = new CreateMapMenuController().clear(gameMap.getTileWhitXAndY(xOfMap,yOfMap));
@@ -87,6 +90,7 @@ public class CreateMapMenu {
     }
 
     public void dropRockChecker(Matcher matcher) {
+        matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String direction = matcher.group("direction");
@@ -96,6 +100,7 @@ public class CreateMapMenu {
     }
 
     public void dropTreeChecker(Matcher matcher) {
+        matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
@@ -105,6 +110,7 @@ public class CreateMapMenu {
     }
 
     public void dropBuildingChecker(Matcher matcher) {
+        matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
@@ -114,6 +120,7 @@ public class CreateMapMenu {
     }
 
     public void dropUnitChecker(Matcher matcher) {
+        matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
