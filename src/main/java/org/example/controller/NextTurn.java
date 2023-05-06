@@ -119,11 +119,12 @@ public class NextTurn {
         if (militaryUnit.getXPos() > getMap().getSize()) return;
 
         BestPath bestPath = new BestPath(currentEmpire);
-        boolean bool = false;
+        boolean assassinsBool = false;
         LinkedList<Integer> path;
-        if (militaryUnit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)) bool = true;
+        if (militaryUnit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)) assassinsBool = true;
+
         path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
-                militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), bool);
+                militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), false, assassinsBool);
         if (path != null && path.size() > 0) movingProcess(path, militaryUnit);
     }
 
@@ -142,10 +143,12 @@ public class NextTurn {
         //TODO reverse the xPos and yPos with xDestination and yDestination // TODO check
         int size = getMap().getSize();
         if (militaryUnit.getXPos() > size || militaryUnit.getPatrolX2() > size) return;
+        boolean assassinsBool = false;
+        if (militaryUnit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)) assassinsBool = true;
 
         BestPath bestPath = new BestPath(currentEmpire);
         LinkedList<Integer> path = bestPath.input(currentEmpire.getMap().getMap(), x, y,
-                militaryUnit.getPatrolX2(), militaryUnit.getPatrolY2(), false);
+                militaryUnit.getPatrolX2(), militaryUnit.getPatrolY2(), false, assassinsBool);
 
         if (path != null && path.size() > 0) movePatrol(path, militaryUnit);
     }
@@ -286,15 +289,16 @@ public class NextTurn {
         BestPath bestPath = new BestPath(empire);
         int size = getMap().getSize();
 
+
         for (int i = x; i < x + k; i++) {
             if (getMap().getTile(i, y + x + k - i).findEnemyMilitaryUnit(empire) != null) {
-                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k - i, false);
+                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k - i, false, false);
                 if (path.size() <= size) return path;
             }
         }
         for (int i = x; i > x - k; i--) {
             if (getMap().getTile(i, y + k + i - x).findEnemyMilitaryUnit(empire) != null) {
-                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k + i - x, false);
+                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k + i - x, false, false);
                 if (path.size() <= size) return path;
             }
         }

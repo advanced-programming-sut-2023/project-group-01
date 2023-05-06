@@ -31,6 +31,7 @@ public class MilitaryUnit extends People {
         this.xPos = xPos;
         this.yPos = yPos;
         this.militaryUnitName = militaryUnitName;
+
         getMap().getTile(xPos, yPos).addUnit(this);
     }
 

@@ -50,28 +50,20 @@ public class MilitaryMenuController {
         int xDestination = Integer.parseInt(x);
         int yDestination = Integer.parseInt(y);
 
-//        System.out.println("xStart : " + xStart);
-//        System.out.println("yStart : " + yStart);
-//        System.out.println("xDestination : " + xDestination);
-//        System.out.println("yDestination : " + yDestination);
-//        System.out.println();
-
         BestPath bestPath = new BestPath(empire);
-
-        LinkedList<Integer> move = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false);
+        //TODO check
+        LinkedList<Integer> move = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false, false);
         if ((move == null || move.size() == 0) && !(xStart == xDestination && yStart == yDestination)) return Outputs.NO_WAY_TO_MOVE;
-
         moving(xStart, yStart, xDestination, yDestination, empire);
         //TODO
-//        System.out.println("x : " + militaryMenu.getSelectedUnit().get(0).getXPos());
-//        System.out.println("y : " + militaryMenu.getSelectedUnit().get(0).getYPos());
-//        System.out.println();
+
         return Outputs.SUCCESSFUL_MOVE;
     }
 
     public static void moving(int xStart, int yStart, int xDestination, int yDestination, Empire empire) {
         BestPath bestPath = new BestPath(empire);
-        LinkedList<Integer> move = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false);
+        //TODO check
+        LinkedList<Integer> move = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false, false);
         int maxLength = 0;
         if (move == null || move.size() == 0) return;
         int dx = xDestination - xStart;
@@ -130,7 +122,8 @@ public class MilitaryMenuController {
         int y2Patrol = Integer.parseInt(y2);
 
         BestPath bestPath = new BestPath(empire);
-        LinkedList<Integer> patrol = bestPath.input(getMap().getMap(), x1Patrol, y1Patrol, x2Patrol, y2Patrol, false);
+        //TODO check
+        LinkedList<Integer> patrol = bestPath.input(getMap().getMap(), x1Patrol, y1Patrol, x2Patrol, y2Patrol, false, false);
         if (patrol.size() == 0) return Outputs.NO_WAY_FOR_PATROL;
 
         for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit())
@@ -138,14 +131,18 @@ public class MilitaryMenuController {
                 militaryUnit.goToPos(x1Patrol, y1Patrol);
                 militaryUnit.setPatrolXY(x1Patrol, y1Patrol, x2Patrol, y2Patrol);
             }
+        militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_PATROL;
     }
 
     public Outputs cancelPatrol() {
-        if (militaryMenu.getSelectedUnit() == null)
+        if (militaryMenu.getSelectedUnit() == null) {
+            militaryMenu.getSelectedUnit().clear();
             return Outputs.EMPTY_SELECTED_UNIT;
+        }
         for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit())
             militaryUnit.cancelPatrol();
+        militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_CANCEL_PATROL;
 
     }
@@ -183,10 +180,13 @@ public class MilitaryMenuController {
 
     public Outputs pourOil(String direction) {
         if (!(direction.equals("left") || direction.equals("right") || direction.equals("up") || direction.equals("down"))) {
+            militaryMenu.getSelectedUnit().clear();
             return Outputs.WRONG_POUR_OIL_DIRECTION;
         } else if (findPourOilers().size() == 0) {
+            militaryMenu.getSelectedUnit().clear();
             return Outputs.NO_ONE_TO_POUR_OIL;
         } else {
+            militaryMenu.getSelectedUnit().clear();
             return doPourOil(direction);
         }
     }
@@ -238,7 +238,10 @@ public class MilitaryMenuController {
 
         ArrayList<MilitaryUnit> Tunneler = tunneler();
 
-        if (Tunneler.size() == 0) return Outputs.NOT_HAVING_TUNNELER;
+        if (Tunneler.size() == 0){
+            militaryMenu.getSelectedUnit().clear();
+            return Outputs.NOT_HAVING_TUNNELER;
+        }
 
         int damage = Tunneler.size() * MilitaryUnitName.TUNNELER.getAttack();
 
@@ -246,7 +249,8 @@ public class MilitaryMenuController {
             building.getBuildingName().reduceHitPoint(damage);
         else getMap().getTile(xPos, yPos).setBuilding(null);
 
-        return null;
+        militaryMenu.getSelectedUnit().clear();
+        return Outputs.DIGED_TUNNEL;
     }
 
     public ArrayList<MilitaryUnit> tunneler() {
@@ -276,8 +280,8 @@ public class MilitaryMenuController {
         Catapult catapult = new Catapult(getMap().getTile(x, y), empire, x, y, catapultName);
         getMap().getTile(x, y).addUnit(catapult);
 
+        militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_CATAPULT;
-
     }
 
 
@@ -317,6 +321,7 @@ public class MilitaryMenuController {
         int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
         int yStart = militaryMenu.getSelectedUnit().get(0).getYPos();
         moving(xStart, yStart, xAttack, yAttack, empire);
+        militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_ATTACK;
     }
 
@@ -342,7 +347,8 @@ public class MilitaryMenuController {
         BestPath bestPath = new BestPath(empire);
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
         int y = militaryMenu.getSelectedUnit().get(0).getYPos();
-        LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, destX, destY, false);
+        //TODO check
+        LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, destX, destY, false, false);
         doDisband(x, y, path);
 
         return null;

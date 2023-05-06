@@ -112,7 +112,8 @@ public enum Outputs {
     NOT_ENOUGH_ENGINEER("Not Enough Engineer"),
     SUCCESSFUL_CATAPULT("Sucessful Catapult"),
     NO_EXISTANCE_FOR_ENEMY("No enemy exist"),
-    SUCCESSFUL_ATTACK("Successful Attack")
+    SUCCESSFUL_ATTACK("Successful Attack"),
+    DIGED_TUNNEL("Diged tunnel"),
     ;
     private String output;
 
