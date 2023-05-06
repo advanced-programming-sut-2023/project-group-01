@@ -50,7 +50,7 @@ public class MilitaryMenuController {
 
         BestPath bestPath = new BestPath(empire);
         LinkedList<Integer> move = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false);
-        if (move.size() == 0) return Outputs.NO_WAY_TO_MOVE;
+        if (move == null || move.size() == 0) return Outputs.NO_WAY_TO_MOVE;
 
         moving(xStart, yStart, xDestination, yDestination, empire);
         return Outputs.SUCCESSFUL_MOVE;
@@ -323,9 +323,11 @@ public class MilitaryMenuController {
             return Outputs.INVALID_Y;
         } else if (Integer.parseInt(x) > getMap().getSize() || Integer.parseInt(y) > getMap().getSize()) {
             return Outputs.OUT_OF_RANGE;
-        } else if (findMilitary(Integer.parseInt(x), Integer.parseInt(y), empire).size()==0) {
-            return Outputs.NOT_HAVING_TROOP;
-        } else {
+        }
+//        else if (findMilitary(Integer.parseInt(x), Integer.parseInt(y), empire).size()==0) {
+//            return Outputs.NOT_HAVING_TROOP;
+//        }
+        else {
             return Outputs.VALID_X_Y;
         }
     }

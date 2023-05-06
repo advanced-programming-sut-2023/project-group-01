@@ -206,7 +206,6 @@ public class BuildingMenuController {
                     (material2 != null && !empire.havingMaterial(material2, Integer.parseInt(count))))
                 return Outputs.NOT_ENOUGH_EQUIPMENT;
         }
-
         doCreateUnit(type, barrackBoolean, mercenaryBoolean, engineerGuildBoolean, cathedralBoolean, tunnelerBoolean, Integer.parseInt(count));
         return Outputs.SUCCESSFUL_CREATE;
     }
@@ -246,6 +245,7 @@ public class BuildingMenuController {
         int size = getMap().getSize();
         int x = XY / size;
         int y = XY % size;
+        System.out.println("x :  " + x + "| y : " + y);
         switch (militaryUnitName) {
             case "Archer" -> {
                 for (int i = 0; i < count; i++) {

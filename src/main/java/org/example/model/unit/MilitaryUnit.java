@@ -8,6 +8,7 @@ import org.example.model.unit.enums.MilitaryUnitName;
 import java.util.LinkedList;
 
 import static java.lang.Integer.MAX_VALUE;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class MilitaryUnit extends People {
 
@@ -29,6 +30,7 @@ public class MilitaryUnit extends People {
         this.xPos = xPos;
         this.yPos = yPos;
         this.militaryUnitName = militaryUnitName;
+        getMap().getTile(xPos, yPos).addUnit(this);
     }
 
     public void setPatrolXY(int patrolX1, int patrolY1, int patrolX2, int patrolY2) {
@@ -58,10 +60,10 @@ public class MilitaryUnit extends People {
     }
     public void goToPos(int xPos, int yPos) {
         //TODO check
-        empire.getMap().getTile(xPos + 1, yPos + 1).removeUnit(this);
+        getMap().getTile(xPos + 1, yPos + 1).removeUnit(this);
         this.xPos = xPos;
         this.yPos = yPos;
-        empire.getMap().getTile(xPos + 1, yPos + 1).addUnit(this);
+        getMap().getTile(xPos + 1, yPos + 1).addUnit(this);
         this.patrolX1 = MAX_VALUE;
         this.patrolX2 = MAX_VALUE;
         this.patrolY1 = MAX_VALUE;
