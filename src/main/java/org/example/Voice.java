@@ -32,11 +32,25 @@ public enum Voice {
         this.file = new File(file);
     }
 
-    public void playVoice(Voice voice) throws LineUnavailableException, UnsupportedAudioFileException, IOException {
+    public void playVoice(Voice voice) {
 
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(voice.getFile());
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioStream);
+        AudioInputStream audioStream = null;
+        try {
+            audioStream = AudioSystem.getAudioInputStream(voice.getFile());
+        } catch (UnsupportedAudioFileException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        Clip clip = null;
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            clip.open(audioStream);
+        } catch (LineUnavailableException | IOException e) {
+            throw new RuntimeException(e);
+        }
         clip.start();
 
         String response = Main.getScanner().next();
