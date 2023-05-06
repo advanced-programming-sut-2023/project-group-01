@@ -63,7 +63,7 @@ public class BuildingMenu {
         System.out.println(buildingMenuController.destroyBuilding());
     }
 
-    public void createUnitChecker(Matcher matcher) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public void createUnitChecker(Matcher matcher) {
         String type = matcher.group("type");
         String count = matcher.group("count");
         System.out.println(buildingMenuController.createUnit(type, count).toString());

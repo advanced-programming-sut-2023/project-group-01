@@ -11,10 +11,6 @@ import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
-
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class BuildingMenuController {
@@ -56,42 +52,39 @@ public class BuildingMenuController {
         } else if (!y.matches("\\d+")) {
             return Outputs.INVALID_Y;
         }
-        Building building = findBuildingByName(type, Integer.parseInt(x), Integer.parseInt(y));
-        if (building == null)
+        BuildingName buildingName = findBuildingNameByName(type, Integer.parseInt(x), Integer.parseInt(y));
+        if (buildingName == null)
             return Outputs.INVALID_BUILDING_TYPE;
         int x0 = Integer.parseInt(x);
         int y0 = Integer.parseInt(y);
-        int buildingSize = building.getBuildingName().getSize();
+        int buildingSize = buildingName.getSize();
         int mapSize = getMap().getSize();
-
-
 
         if (x0 > mapSize || y0 > mapSize || x0 + buildingSize > mapSize || y0 + buildingSize > mapSize)
             return Outputs.OUT_OF_RANGE;
-        else if (isPositionFull(building, x0, y0))
+        else if (isPositionFull(buildingName, x0, y0))
             return Outputs.FULL_POSITION;
-        else if (!isGroundSuitable(building, x0, y0))
+        else if (isGroundSuitable(buildingName, x0, y0))
             return Outputs.NOT_SUITABLE_GROUND;
-
-        putBuilding(building, x0, y0);
+        putBuilding(buildingName, x0, y0);
         return Outputs.SUCCESSFUL_DROP_BUILDING;
     }
 
-    public Building findBuildingByName(String name, int x1, int y1) {
+    public BuildingName findBuildingNameByName(String name, int x1, int y1) {
         for (BuildingName buildingName : BuildingName.values()) {
             if (buildingName.getName().equals(name)) {
-                return new Building(empire, x1, y1, buildingName);
+                return buildingName;
             }
         }
         return null;
     }
 
-    public boolean isGroundSuitable(Building building, int x, int y) {
-        int size = building.getBuildingName().getSize();
+    public boolean isGroundSuitable(BuildingName buildingName, int x, int y) {
+        int size = buildingName.getSize();
 
         TypeOfTile typeOfTile;
 
-        if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.NORMAL_GROUND)) {
+        if (buildingName.getTypeCanBuildBuilding().equals(TypeOfTile.NORMAL_GROUND)) {
             for (int i = x; i < x + size; i++) {
                 for (int j = y; j < y + size; j++) {
                     if (getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SEA) ||
@@ -103,27 +96,26 @@ public class BuildingMenuController {
                             getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SHALLOW_WATER) ||
                             getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.SMALL_POND) ||
                             getMap().getTile(i, j).getTypeOfTile().equals(TypeOfTile.BIG_POND)) {
-                        return false;
+                        return true;
                     }
                 }
             }
-            return true;
-        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.OIL_GROUND)) {
-            suitability(TypeOfTile.OIL_GROUND, x, y, size);
-        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.IRON_MINE)) {
-            suitability(TypeOfTile.IRON_MINE, x, y, size);
-        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.STONE_MINE)) {
-            suitability(TypeOfTile.STONE_MINE, x, y, size);
-        } else if ((typeOfTile = building.getBuildingName().getTypeCanBuildBuilding()).equals(TypeOfTile.MEADOW)) {
-            suitability(TypeOfTile.MEADOW, x, y, size);
-        }
-        return false;
+            return false;
+        } else if (buildingName.getTypeCanBuildBuilding().equals(TypeOfTile.OIL_GROUND))
+            return suitability(TypeOfTile.OIL_GROUND, x, y, size);
+        else if (buildingName.getTypeCanBuildBuilding().equals(TypeOfTile.IRON_MINE))
+            return suitability(TypeOfTile.IRON_MINE, x, y, size);
+        else if (buildingName.getTypeCanBuildBuilding().equals(TypeOfTile.STONE_MINE))
+            return suitability(TypeOfTile.STONE_MINE, x, y, size);
+        else if (buildingName.getTypeCanBuildBuilding().equals(TypeOfTile.MEADOW))
+            return suitability(TypeOfTile.MEADOW, x, y, size);
+        return true;
     }
 
     private boolean suitability(TypeOfTile typeOfTile, int x, int y, int size) {
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
-                if (!getMap().getTile(i, j).getTypeOfTile().equals(typeOfTile)) {
+                if (getMap().getTile(i, j).getTypeOfTile().equals(typeOfTile)) {
                     return false;
                 }
             }
@@ -131,8 +123,8 @@ public class BuildingMenuController {
         return true;
     }
 
-    public boolean isPositionFull(Building building, int x, int y) {
-        int size = building.getBuildingName().getSize();
+    public boolean isPositionFull(BuildingName buildingName, int x, int y) {
+        int size = buildingName.getSize();
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
                 if (getMap().getTile(i, j).getBuilding() != null) {
@@ -143,8 +135,9 @@ public class BuildingMenuController {
         return false;
     }
 
-    public void putBuilding(Building building, int x, int y) {
-        int size = building.getBuildingName().getSize();
+    public void putBuilding(BuildingName buildingName, int x, int y) {
+        int size = buildingName.getSize();
+        Building building = new Building(empire, x, y, buildingName);
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
                 getMap().getTile(i, j).setBuilding(building);
@@ -249,11 +242,10 @@ public class BuildingMenuController {
     }
 
     private void BarrackMilitary(String militaryUnitName, int count) {
-
-        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
-        if (x == getMap().getSize() - 1) x -= 8;
-        int y = buildingMenu.getSelectedBuilding().getBeginY();
-
+        int XY = findXY(BuildingName.BARRACK);
+        int size = getMap().getSize();
+        int x = XY / size;
+        int y = XY % size;
         switch (militaryUnitName) {
             case "Archer" -> {
                 for (int i = 0; i < count; i++) {
@@ -300,10 +292,32 @@ public class BuildingMenuController {
         }
     }
 
-    private void MercenaryBarrack(String militaryUnitName, int count) {
-        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
+    public int findXY(BuildingName buildingName) {
+        int buildingSize = buildingName.getSize();
+        int x = buildingMenu.getSelectedBuilding().getBeginX();
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == getMap().getSize() - 1) x -= 8;
+        int size = getMap().getSize();
+        //TODO check
+        for (int i = x; i < x + buildingSize; i++)
+            if (y > 1 && i < size)
+                return i * size + y - 1;
+        for (int j = y; j < y + buildingSize; j++)
+            if (x > 1 && j < size)
+                return (x - 1) * size + j;
+        for (int i = x; i < x + buildingSize; i++)
+            if (y + buildingSize < size && i < size)
+                return i * size + y + buildingSize;
+        for (int j = y; j < y + buildingSize; j++)
+            if (x + buildingSize < size && j < size)
+                return (x + buildingSize) * size + j;
+        return -1;
+    }
+
+    private void MercenaryBarrack(String militaryUnitName, int count) {
+        int XY = findXY(BuildingName.MERCENARY_BARRACKS);
+        int size = getMap().getSize();
+        int x = XY / size;
+        int y = XY % size;
 
         switch (militaryUnitName) {
             case "Archer Bow" -> {
@@ -340,9 +354,10 @@ public class BuildingMenuController {
     }
 
     private void Engineer(String militaryUnitName, int count) {
-        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
-        int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == getMap().getSize() - 1) x -= 6;
+        int XY = findXY(BuildingName.ENGINEER_GUILD);
+        int size = getMap().getSize();
+        int x = XY / size;
+        int y = XY % size;
 
         if (militaryUnitName.equals("Engineer")) {
             for (int i = 0; i < count; i++)
@@ -356,9 +371,10 @@ public class BuildingMenuController {
     }
 
     private void Tunneler(String militaryName, int count) {
-        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
-        int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == getMap().getSize() - 1) x -= 5;
+        int XY = findXY(BuildingName.TUNNELER_GUILD);
+        int size = getMap().getSize();
+        int x = XY / size;
+        int y = XY % size;
 
         if (militaryName.equals("tunneler")) {
             for (int i = 0; i < count; i++)
@@ -368,10 +384,10 @@ public class BuildingMenuController {
     }
 
     private void BlackMonk(String militaryUnitName, int count) {
-        int x = buildingMenu.getSelectedBuilding().getBeginX() + 1;
-        int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (x == getMap().getSize() - 1)
-            x -= 14;
+        int XY = findXY(BuildingName.CATHEDRAL);
+        int size = getMap().getSize();
+        int x = XY / size;
+        int y = XY % size;
         if (militaryUnitName.equals("Black Monk")) {
             for (int i = 0; i < count; i++)
                 new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.BLACK_MONK, x, y);

@@ -1,27 +1,12 @@
 package org.example;
 
 import org.example.model.Data;
-import org.example.model.Empire;
-import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
-import org.example.model.building.Building;
-import org.example.model.building.Tile;
-import org.example.model.building.castleBuilding.Stairs;
-import org.example.model.building.castleBuilding.Tower;
-import org.example.model.building.castleBuilding.enums.TowerType;
-import org.example.model.building.enums.BuildingName;
-import org.example.model.unit.MilitaryUnit;
-import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.RegisterMenu;
-import org.example.view.enums.BackgroundColor;
 import org.example.view.mainMenu.MainMenu;
-import org.example.view.mainMenu.gameMenu.GameMenu;
-import org.example.view.mainMenu.gameMenu.MilitaryMenu;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
@@ -36,6 +21,8 @@ public class Main {
 //                map[i][j] = new Tile();
 //            }
 //        }
+
+
 //
 //        User user = new User(null, null,null, null,null, null,null, null);
 //        Empire empire = new Empire(null, user);
@@ -64,7 +51,7 @@ public class Main {
 //        MilitaryMenu militaryMenu = new MilitaryMenu(null, new GameMenu(user));
 //        militaryMenu.run();
 //
-//
+
         UsersDatabaseJSON.initializeUsers();
         UsersDatabaseJSON.loadStayedLoggedInUser();
         Scanner scanner = new Scanner(System.in);
