@@ -5,20 +5,14 @@ import org.example.controller.mainMenuController.gameMenuController.MilitaryMenu
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
-import org.example.model.building.Material;
 import org.example.model.building.Tile;
 import org.example.model.building.castleBuilding.CagedDogs;
-import org.example.model.building.castleBuilding.CastleBuilding;
 import org.example.model.building.castleBuilding.Tower;
-import org.example.model.building.enums.MaterialType;
 import org.example.model.unit.Catapult;
-import org.example.model.unit.CatapultName;
 import org.example.model.unit.MilitaryUnit;
-import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
@@ -54,7 +48,6 @@ public class NextTurn {
     }
 
     public void doOnAllTiles() {
-        //TODO check i , j in getTile
         for (int i = 0; i < currentEmpire.getMap().getSize(); i++) {
             for (int j = 0; j < currentEmpire.getMap().getSize(); j++) {
                 doOnAllMilitaryUnit(currentEmpire.getMap().getTile(i, j), i, j);
@@ -85,7 +78,6 @@ public class NextTurn {
     public void doCageDogs(int x, int y) {
         if (currentEmpire.getMap().getTile(x, y).getBuilding() != null &&
                 currentEmpire.getMap().getTile(x, y).getBuilding() instanceof CagedDogs) {
-            //TODO check the out of range
             for (int i = x; i > x - 10; i--) {
                 for (int j = y; j > y - 10; j--) {
                     //TODO with attack
@@ -105,7 +97,6 @@ public class NextTurn {
         ArrayList<MilitaryUnit> enemies = attackTile.findNearEnemiesMilitaryUnit(currentEmpire);
         if (enemies.size() != 0) {
             for (MilitaryUnit unit : enemies) {
-                //TODO هندل کردن اینکه سرباز وقتی جونش کمتر از حد عادی شد دیلیت شود
                 unit.getMilitaryUnitName().reduceHitPoint(((CagedDogs) startTile.getBuilding()).getDamage());
             }
             return true;
@@ -117,7 +108,6 @@ public class NextTurn {
         ArrayList<Empire> removingEmpires = new ArrayList<Empire>();
         for (Empire empire : empires) {
             if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
-                //TODO have finalize method
                 removingEmpires.add(empire);
             }
         }
@@ -170,17 +160,6 @@ public class NextTurn {
             militaryUnit.movePatrol(xDest, yDest);
         }
     }
-
-    //TODO روی تایل ها اتک میزنیم
-    //TODO سربازای داخل یه خونه میجنگن
-    //TODO راندمان گزاشتن برای سربازها
-    //TODO افزایش راندمان اتک
-    //TODO سربازای کماندار موقع حرکت چقدر برن جلو؟
-    //TODO some checks
-    //TODO set the position of the building attack
-    //TODO outOf range in map شیلد
-    //TODO اگه چمدتا نینجا و چندتا سرباز باشن راه به قلعه چطوریه نردبان دار
-    //TODO ساختمون ها وقتی جونشون کم میشه خودکار پاک بشن
 
     public void doAttack(int x, int y) {
         boolean[] fire = new boolean[empires.size()];
@@ -285,7 +264,6 @@ public class NextTurn {
     }
 
     public void doOffensiveAttack(MilitaryUnit militaryUnit, int x, int y) {
-        //TODO در اتک عادی اینا باید هندل کنی
         LinkedList<Integer> enemyPosition;
         int xEnemyPosition;
         int yEnemyPosition;
@@ -300,6 +278,10 @@ public class NextTurn {
         }
     }
 
+    private void laddermenAttack() {
+
+    }
+
     private LinkedList<Integer> wildEnemy(int x, int y, int k, Empire empire) {
         BestPath bestPath = new BestPath(empire);
         int size = getMap().getSize();
@@ -311,7 +293,6 @@ public class NextTurn {
             }
         }
         for (int i = x; i > x - k; i--) {
-            //x - i -> k - (x - i) = k + i - x
             if (getMap().getTile(i, y + k + i - x).findEnemyMilitaryUnit(empire) != null) {
                 LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k + i - x, false);
                 if (path.size() <= size) return path;
@@ -324,8 +305,6 @@ public class NextTurn {
     private void attackTwoTroop(ArrayList<MilitaryUnit> militaryUnitEmpire1, ArrayList<MilitaryUnit> militaryUnitEmpire2) {
         int damageEmpire1 = 0;
         int damageEmpire2 = 0;
-
-        //TODO سربازای وحشی ladderMen
 
         damageEmpire1 = getDamageOfEmpire(militaryUnitEmpire1, damageEmpire1);
         damageEmpire2 = getDamageOfEmpire(militaryUnitEmpire2, damageEmpire2);
@@ -344,8 +323,8 @@ public class NextTurn {
                 //else
                 //TODO remove troop
             } else if (militaryUnit instanceof Catapult) {
-                if (((Catapult)militaryUnit).getCatapultName().getHitPoint() > damageEmpire1)
-                    ((Catapult)militaryUnit).getCatapultName().reduceHitPoint(damageEmpire1);
+                if (((Catapult) militaryUnit).getCatapultName().getHitPoint() > damageEmpire1)
+                    ((Catapult) militaryUnit).getCatapultName().reduceHitPoint(damageEmpire1);
                 //else
                 //TODO remove the troop
             }
@@ -364,9 +343,7 @@ public class NextTurn {
     }
 
 //        public void doAttack(String x, String y) {
-//        //TODO check some error
-//        //TODO check two type of attack
-//        //TODO catapult attack
+
 //        ArrayList<Empire> empires = gameMenu.getEmpires();
 //
 //        boolean[] fire = new boolean[empires.size()];
@@ -396,7 +373,6 @@ public class NextTurn {
                 catapults.add((Catapult) person);
         for (Catapult catapult : catapults)  shootStone(catapult);
     }
-        //TODO منجنیق عادی
     public void shootStone(Catapult catapult) {
 
     }

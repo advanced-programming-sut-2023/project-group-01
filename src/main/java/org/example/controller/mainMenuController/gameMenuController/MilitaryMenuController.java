@@ -39,7 +39,6 @@ public class MilitaryMenuController {
     }
 
     public Outputs moveUnit(String x, String y) {
-        //TODO روی خونه ی تله برود
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
 
@@ -57,9 +56,6 @@ public class MilitaryMenuController {
     }
 
     public static void moving(int xStart, int yStart, int xDestination, int yDestination, Empire empire) {
-        //TODO تله را هندل کن
-        //TODO نینجا ها را هندل کن
-        //TODO نردبان دار را هندل کن
         BestPath bestPath = new BestPath(empire);
         LinkedList<Integer> move = bestPath.input(empire.getMap().getMap(), xStart, yStart, xDestination, yDestination, false);
         int maxLength = 0;
@@ -135,7 +131,6 @@ public class MilitaryMenuController {
 
             for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
                 if (militaryUnit.getEmpire().equals(empire)) {
-                    //TODO check for out of range
                     militaryUnit.goToPos(x1Patrol, y1Patrol);
                     militaryUnit.setPatrolXY(x1Patrol, y1Patrol, x2Patrol, y2Patrol);
                 }
@@ -200,7 +195,7 @@ public class MilitaryMenuController {
     private Outputs doPourOil(String direction) {
 
         for (MilitaryUnit militaryUnit : findPourOilers()) {
-            //خالی کردن مخزن اب داغشون
+
         }
 
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
@@ -230,7 +225,6 @@ public class MilitaryMenuController {
         ArrayList<MilitaryUnit> pourOilers = new ArrayList<>();
 
         for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
-            //TODO this having oil
             if (militaryUnit instanceof Engineer) {
                 pourOilers.add(militaryUnit);
             }
@@ -253,12 +247,11 @@ public class MilitaryMenuController {
         }
 
         int damage = Tunneler.size() * MilitaryUnitName.TUNNELER.getAttack();
-        //TODO زنده ماندن تونلر ها
 
         if (building.getBuildingName().getHitPoint() > damage) {
             building.getBuildingName().reduceHitPoint(damage);
         } else {
-            //TODO checks
+
             empire.getMap().getTile(xPos, yPos).setBuilding(null);
         }
 
