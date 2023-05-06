@@ -15,6 +15,8 @@ public enum BuildingName {
     DEFENSE_TURRET(1200, 1200, BuildingCategory.CASTLE_BUILDING, "Defence Turret", 0, 15, 0, 0, 5, TypeOfTile.NORMAL_GROUND),
     ROUND_TOWER(2000, 2000, BuildingCategory.CASTLE_BUILDING, "Round Tower", 0, 40, 0, 0, 6, TypeOfTile.NORMAL_GROUND),
     SQUARE_TOWER(1600, 1600, BuildingCategory.CASTLE_BUILDING, "Square Tower", 0, 35, 0, 0, 6, TypeOfTile.NORMAL_GROUND),
+    WALL(700, 700 , BuildingCategory.CASTLE_BUILDING, "Wall", 0,1, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    STAIRS(400, 400, BuildingCategory.CASTLE_BUILDING, "Stairs", 0, 4, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
     ARMOURY(280, 280, BuildingCategory.CASTLE_BUILDING, "Armoury", 0, 0, 5, 0, 4, TypeOfTile.NORMAL_GROUND),
     BARRACK(350, 350, BuildingCategory.CASTLE_BUILDING, "Barrack", 0, 15, 0, 0, 7, TypeOfTile.NORMAL_GROUND),
     MERCENARY_BARRACKS(350, 350, BuildingCategory.CASTLE_BUILDING, "Mercenary Barrack", 0, 0, 10, 0, 7, TypeOfTile.NORMAL_GROUND),
