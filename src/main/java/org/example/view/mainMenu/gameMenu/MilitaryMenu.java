@@ -26,6 +26,7 @@ public class MilitaryMenu {
 
 
     public void run(Scanner scanner) {
+        System.out.println("You are in military menu");
         String input;
 
         while (true) {
@@ -50,9 +51,9 @@ public class MilitaryMenu {
                 digTunnelChecker(matcher);
             else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.BUILD_Q)).matches())
                 buildChecker(matcher);
-            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT)).matches())
+            else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT).matches())
                 disbandUnit();
-            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).matches())
+            else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT).matches())
                 cancelPatrolUnitChecker();
             else if (input.equals("exit"))
                 return;

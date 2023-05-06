@@ -24,24 +24,26 @@ public class BuildingMenu {
     }
 
     public void run(Scanner scanner) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        System.out.println("You are in building menu");
         String input;
 
         while (true) {
             input = scanner.nextLine();
             Matcher matcher;
-            if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.SELECT_BUILDING)).matches()) {
+            if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.SELECT_BUILDING)).matches())
                 selectBuildingChecker(matcher);
-            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DROP_BUILDING)).matches()) {
+            else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DROP_BUILDING)).matches())
                 dropBuildingChecker(matcher);
-            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.CREATE_UNIT)).matches()) {
+            else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.CREATE_UNIT)).matches())
                 createUnitChecker(matcher);
-            } else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.REPAIR)).matches()) {
+            else if (BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.REPAIR).matches())
                 repairChecker();
-            } else if (input.equals("exit"))
+            else if (BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DESTROY_BUILDING).matches())
+                destroyBuilding();
+            else if (input.equals("exit"))
                 return;
-            else {
+            else
                 System.out.println(Outputs.INVALID_COMMAND);
-            }
         }
     }
 

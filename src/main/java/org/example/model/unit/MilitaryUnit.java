@@ -27,6 +27,7 @@ public class MilitaryUnit extends People {
 
     public MilitaryUnit(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
         super(position, empire);
+        //System.out.println("in military unit :: x : " + xPos + " | yPos :" + yPos + "\n");
         this.xPos = xPos;
         this.yPos = yPos;
         this.militaryUnitName = militaryUnitName;
@@ -53,17 +54,17 @@ public class MilitaryUnit extends People {
        this.yDestination = MAX_VALUE;
     }
 
-    public void setDestination(int xDestination, int yDestination, int xPos, int yPos) {
+    public void setDestination(int xPos, int yPos, int xDestination, int yDestination) {
         this.xDestination = xDestination;
         this.yDestination = yDestination;
         goToPos(xPos, yPos);
     }
     public void goToPos(int xPos, int yPos) {
         //TODO check
-        getMap().getTile(xPos + 1, yPos + 1).removeUnit(this);
+        getMap().getTile(xPos, yPos).removeUnit(this);
         this.xPos = xPos;
         this.yPos = yPos;
-        getMap().getTile(xPos + 1, yPos + 1).addUnit(this);
+        getMap().getTile(xPos, yPos).addUnit(this);
         this.patrolX1 = MAX_VALUE;
         this.patrolX2 = MAX_VALUE;
         this.patrolY1 = MAX_VALUE;
