@@ -59,6 +59,7 @@ public class MapMenu {
                                 System.out.print(ShowMapAsciiArt.valueOf("T" + line));
                             else System.out.print(ShowMapAsciiArt.valueOf("B" + line));
                         } else System.out.print("#####");
+                        BackgroundColor.changeColor(BackgroundColor.ANSI_RESET);
                         System.out.print("|");
                     } catch (IllegalArgumentException e) {
                         System.out.println("Please try again");
@@ -74,14 +75,18 @@ public class MapMenu {
         if (tile == null) BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
         else if (tile.getTypeOfTile().equals(TypeOfTile.NORMAL_GROUND))
             BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
-        else if(tile.getTypeOfTile().equals(TypeOfTile.GRASSLAND))
+        else if(tile.getTypeOfTile().equals(TypeOfTile.GRASSLAND)){
             BackgroundColor.changeColor(BackgroundColor.ANSI_GREEN_BACKGROUND);
+            BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_TEXT);
+        }
         else if(tile.getTypeOfTile().equals(TypeOfTile.IRON_MINE))
             BackgroundColor.changeColor(BackgroundColor.ANSI_WHITE_BACKGROUND);
         else if(tile.getTypeOfTile().equals(TypeOfTile.MEADOW))
             BackgroundColor.changeColor(BackgroundColor.ANSI_YELLOW_BACKGROUND);
-        else if(tile.getTypeOfTile().equals(TypeOfTile.SEA))
+        else if(tile.getTypeOfTile().isWater()){
+            BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_TEXT);
             BackgroundColor.changeColor(BackgroundColor.ANSI_BLUE_BACKGROUND);
+        }
         else if(tile.getTypeOfTile().equals(TypeOfTile.STONE_MINE))
             BackgroundColor.changeColor(BackgroundColor.ANSI_PURPLE_BACKGROUND);
     }

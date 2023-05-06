@@ -36,4 +36,5 @@ public enum TypeOfTile {
     public boolean isWater() {
         return isWater;
     }
+
 }

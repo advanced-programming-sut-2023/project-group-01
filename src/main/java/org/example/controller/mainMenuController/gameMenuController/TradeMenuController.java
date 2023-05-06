@@ -16,7 +16,7 @@ public class TradeMenuController {
         this.tradeMenu = tradeMenu;
     }
 
-    public Outputs trad(String resourceType, int resourceAmount, int price, String message) {
+    public Outputs trade(String resourceType, int resourceAmount, int price, String message) {
         try {
            MaterialType materialType = MaterialType.valueOf(resourceType);
            if(materialType.getTypeOfProduct().equals("different")) return Outputs.INVALID_MATERIAL_TYPE;
@@ -48,4 +48,6 @@ public class TradeMenuController {
         getThisEmpire().addToTradeHistory(trade);
         return Outputs.SUCCESS;
     }
+
+
 }
