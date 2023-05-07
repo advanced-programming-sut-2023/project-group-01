@@ -4,6 +4,7 @@ package org.example.model;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 import org.example.model.building.castleBuilding.EmpireBuilding;
+import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
@@ -24,19 +25,19 @@ public class Empire {
     private int fearRate;
     private int religionRate;
     private int population;
-    private int MaxPopulation;
+    private int maxPopulation;
     private int gold;
     private Color color;
     private Map map;
-    private LinkedHashMap<Material,Integer> materials = new LinkedHashMap<>();
-    private LinkedHashMap<FoodType,Integer> foods = new LinkedHashMap<>(4);
+    private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
+    private LinkedHashMap<FoodType, Integer> foods = new LinkedHashMap<>(4);
     private ArrayList<Building> buildings = new ArrayList<>();
     private ArrayList<People> people = new ArrayList<>();
     //TODO: should be set
-    private LinkedHashMap<String , Boolean> CanBuildOrProduceSomething = new LinkedHashMap<>();
+    private LinkedHashMap<String, Boolean> CanBuildOrProduceSomething = new LinkedHashMap<>();
     private ArrayList<Trade> newTrade = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
-    private ArrayList<Trade> trades= new ArrayList<>();
+    private ArrayList<Trade> trades = new ArrayList<>();
 
     public Empire(EmpireBuilding empireBuilding, User player) {
         this.empireBuilding = empireBuilding;
@@ -46,22 +47,23 @@ public class Empire {
         this.foodRate = 0;
         this.taxRate = 0;
         this.fearRate = 0;
-        foods.put(FoodType.BREED,0);
-        foods.put(FoodType.APPLE,0);
-        foods.put(FoodType.MEET,0);
-        foods.put(FoodType.CHEESE,0);
+        foods.put(FoodType.BREED, 0);
+        foods.put(FoodType.APPLE, 0);
+        foods.put(FoodType.MEET, 0);
+        foods.put(FoodType.CHEESE, 0);
         initializeMaterials();
     }
 
-    private void initializeMaterials(){
-        for (MaterialType materialType: MaterialType.values()){
-            this.materials.put(new Material(materialType),0);
+    private void initializeMaterials() {
+        for (MaterialType materialType : MaterialType.values()) {
+            this.materials.put(new Material(materialType), 0);
         }
     }
 
     public EmpireBuilding getEmpireBuilding() {
         return empireBuilding;
     }
+
     public int getPopularity() {
         return popularity;
     }
@@ -94,22 +96,28 @@ public class Empire {
         this.taxRate = taxRate;
     }
 
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
     public void setFearRate(int fearRate) {
         this.fearRate = fearRate;
     }
 
-    public void increaseFoods(FoodType foodType ,int foodNumber) {
+    public void increaseFoods(FoodType foodType, int foodNumber) {
         foods.replace(foodType, foods.get(foodType) + foodNumber);
     }
+
     public void reduceFoods(int foodNumber) {
 
     }
 
-    public void increasePopulation() {
-
-
+    public void increasePopulation(int amount) {
+        if (this.population + amount <= this.maxPopulation)
+            this.population += amount;
     }
-    public void reducePopulation(){
+
+    public void reducePopulation() {
 
     }
 
@@ -121,6 +129,7 @@ public class Empire {
             }
         }
     }
+
     public void addUnit(MilitaryUnit militaryUnit) {
         people.add(militaryUnit);
     }
@@ -131,12 +140,13 @@ public class Empire {
     }
 
     public void increaseGold(int count) {
-        this.gold+=count;
+        this.gold += count;
     }
 
     public void decreaseGold(int count) {
-        this.gold-=count;
+        this.gold -= count;
     }
+
     public void addMaterial(String materialName, int count) {
         for (Material material : materials.keySet()) {
             if (material.getMaterialType().getName().equals(materialName)) {
@@ -145,8 +155,9 @@ public class Empire {
             }
         }
     }
+
     public int getMaxPopulation() {
-        return MaxPopulation;
+        return maxPopulation;
     }
 
     public Lord getLord() {
@@ -167,6 +178,7 @@ public class Empire {
         }
         return false;
     }
+
     public Map getMap() {
         return map;
     }
@@ -179,15 +191,15 @@ public class Empire {
         return this.player;
     }
 
-    public void addToNewTrade(Trade trade){
+    public void addToNewTrade(Trade trade) {
         newTrade.add(trade);
     }
 
-    public void addToTradeHistory(Trade trade){
+    public void addToTradeHistory(Trade trade) {
         tradeHistory.add(trade);
     }
 
-    public void addToTrades(Trade trade){
+    public void addToTrades(Trade trade) {
         trades.add(trade);
     }
 
@@ -202,31 +214,46 @@ public class Empire {
     public ArrayList<Trade> getNewTrade() {
         return newTrade;
     }
-    public void clearNewTrades(){
+
+    public void clearNewTrades() {
         newTrade.clear();
     }
 
-    public Trade getTradeWhitId(int id){
+    public Trade getTradeWhitId(int id) {
         for (int i = 0; i < trades.size(); i++)
-            if(trades.get(i).getId() == id)
+            if (trades.get(i).getId() == id)
                 return trades.get(i);
-        return null ;
+        return null;
     }
 
-    public void reduceGold(int amount){
+    public void reduceGold(int amount) {
         this.gold -= amount;
     }
 
-    public void addGold(int amount){
+    public void addGold(int amount) {
         this.gold += amount;
     }
 
-    public void addMaterial(Material material, int amount){
+    public void addMaterial(Material material, int amount) {
         this.materials.replace(material, this.materials.get(material) + amount);
     }
 
-    public void reduceMaterial(Material material, int amount){
+    public void reduceMaterial(Material material, int amount) {
         this.materials.replace(material, this.materials.get(material) - amount);
+    }
+
+    public void addToBuildings(Building building) {
+        buildings.add(building);
+        if (building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE)) increasePopulation(8);
+        if (building.getBuildingName().equals(BuildingName.BIG_STONE_GATEHOUSE)) increasePopulation(10);
+        if (building.getBuildingName().equals(BuildingName.CHURCH) ||
+                building.getBuildingName().equals(BuildingName.CATHEDRAL)) this.religionRate += 2;
+        if (building.getBuildingName().equals(BuildingName.HOVEL)) this.population += this.maxPopulation += 8;
+        //TODO check this whit ali
+    }
+
+    public void removeFromBuildings(Building building) {
+        buildings.remove(building);
     }
 
 }

@@ -2,6 +2,8 @@ package org.example.view.enums;
 
 public enum BackgroundColor {
     ANSI_RESET ("\u001B[0m"),
+    ANSI_YELLOW ("\u001B[33m"),
+    ANSI_BLUE("\u001B[34m"),
     ANSI_YELLOW_BACKGROUND("\u001B[43m"),
     ANSI_BLUE_BACKGROUND("\u001B[44m"),
     ANSI_BLACK_BACKGROUND("\u001B[40m"),

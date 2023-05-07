@@ -134,4 +134,11 @@ public enum BuildingName {
     public TypeOfTile getTypeCanBuildBuilding() {
         return typeCanBuildBuilding;
     }
+
+    public static BuildingName getBuildingNameWithName(String name){
+        for (int i = 0; i < BuildingName.values().length; i++)
+            if(BuildingName.values()[i].name.equals(name))
+                return BuildingName.values()[i];
+        return null;
+    }
 }

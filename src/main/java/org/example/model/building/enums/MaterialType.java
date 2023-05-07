@@ -46,6 +46,13 @@ public enum MaterialType {
         this.typeOfProduct = typeOfProduct;
     }
 
+    public static MaterialType getMaterialTypeWithName(String resourceType) {
+        for (MaterialType materialType: MaterialType.values())
+            if(materialType.getName().equals(resourceType))
+                return materialType;
+        return null;
+    }
+
     public String getName() {
         return name;
     }
