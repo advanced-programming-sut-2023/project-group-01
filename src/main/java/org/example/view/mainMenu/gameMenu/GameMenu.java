@@ -104,11 +104,7 @@ public class GameMenu {
                     militaryMenu.run(scanner);
                 }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.BUILDING_MENU)) != null){
                     BuildingMenu buildingMenu = new BuildingMenu(thisEmpire);
-                    try {
-                        buildingMenu.run(scanner);
-                    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    buildingMenu.run(scanner);
                 }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOP_MENU)) != null){
                     ShopMenu shopMenu = new ShopMenu();
                     shopMenu.run(scanner);

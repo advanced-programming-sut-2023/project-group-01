@@ -147,18 +147,7 @@ public class BuildingMenuController {
         if (buildingMenu.getSelectedBuilding() == null) {
             return Outputs.EMPTY_SELECTED_BUILDING;
         }
-
-        int x1 = buildingMenu.getSelectedBuilding().getBeginX();
-        int y1 = buildingMenu.getSelectedBuilding().getBeginY();
-        int x2 = buildingMenu.getSelectedBuilding().getEndX();
-        int y2 = buildingMenu.getSelectedBuilding().getEndY();
-
-        for (int i = x1; i < x2; i++) {
-            for (int j = y1; j < y2; j++) {
-                //TODO check
-                buildingMenu.getEmpire().getMap().getTile(x1, y1).setBuilding(null);
-            }
-        }
+        buildingMenu.getSelectedBuilding().removeBuilding();
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 

@@ -49,13 +49,6 @@ public class Tile {
         return enemies;
     }
 
-    public MilitaryUnit findEnemyMilitaryUnit(Empire empire) {
-        for (People person : people)
-            if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire))
-                return (MilitaryUnit) person;
-        return null;
-    }
-
     public void setBuilding(Building building) {
         this.building = building;
     }
@@ -84,5 +77,7 @@ public class Tile {
                 return (MilitaryUnit) person;
         return null;
     }
+
+
 }
 

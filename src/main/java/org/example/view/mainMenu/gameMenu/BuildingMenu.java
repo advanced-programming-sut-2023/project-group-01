@@ -23,8 +23,8 @@ public class BuildingMenu {
         this.buildingMenuController = new BuildingMenuController(empire, this);
     }
 
-    public void run(Scanner scanner) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        System.out.println("You are in building menu");
+    public void run(Scanner scanner) {
+        System.out.println("You are in building menu!");
         String input;
 
         while (true) {
@@ -43,7 +43,7 @@ public class BuildingMenu {
             else if (input.equals("exit"))
                 return;
             else
-                System.out.println(Outputs.INVALID_COMMAND);
+                System.out.println("Invalid Command in Military menu!");
         }
     }
 
@@ -62,7 +62,7 @@ public class BuildingMenu {
     }
 
     public void destroyBuilding() {
-        System.out.println(buildingMenuController.destroyBuilding());
+        System.out.println(buildingMenuController.destroyBuilding().toString());
     }
 
     public void createUnitChecker(Matcher matcher) {

@@ -14,14 +14,12 @@ import java.util.regex.Matcher;
 
 public class MilitaryMenu {
     private final MilitaryMenuController militaryMenuController;
-    private final GameMenu gameMenu;
     private final Empire empire;
     private ArrayList<MilitaryUnit> selectedUnit;
 
     public MilitaryMenu(Empire empire, GameMenu gameMenu) {
         this.empire = empire;
-        this.gameMenu = gameMenu;
-        this.militaryMenuController = new MilitaryMenuController(empire, this, gameMenu);
+        this.militaryMenuController = new MilitaryMenuController(empire, this);
     }
 
 
@@ -53,12 +51,12 @@ public class MilitaryMenu {
                 buildChecker(matcher);
             else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT).matches())
                 disbandUnit();
-            else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT).matches())
-                cancelPatrolUnitChecker();
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).matches())
+                cancelPatrolUnitChecker(matcher);
             else if (input.equals("exit"))
                 return;
             else
-                System.out.println(Outputs.INVALID_COMMAND);
+                System.out.println("Invalid command in Military menu!");
         }
     }
 
@@ -82,8 +80,10 @@ public class MilitaryMenu {
         System.out.println(militaryMenuController.patrolUnit(x1, y1, x2, y2).toString());
     }
 
-    public void cancelPatrolUnitChecker() {
-        System.out.println(militaryMenuController.cancelPatrol());
+    public void cancelPatrolUnitChecker(Matcher matcher) {
+        String x = matcher.group("x");
+        String y = matcher.group("y");
+        System.out.println(militaryMenuController.cancelPatrol(x, y).toString());
     }
 
     public void setUnitChecker(Matcher matcher) {
@@ -123,10 +123,6 @@ public class MilitaryMenu {
             System.out.println(outputs.toString());
     }
 
-    public GameMenu getGameMenu() {
-        return gameMenu;
-    }
-
     public void setSelectedUnit(ArrayList<MilitaryUnit> selectedUnit) {
         this.selectedUnit = selectedUnit;
     }
@@ -136,12 +132,3 @@ public class MilitaryMenu {
     }
 
 }
-
-//    public MilitaryUnit findMilitary(int x, int y) {
-//        for (People people : empire.getMap().getTile(x, y).getPeople()) {
-//            if (people instanceof MilitaryUnit && player.equals(people.getPlayer())) {
-//                return (MilitaryUnit) people;
-//            }
-//        }
-//        return null;
-//    }
