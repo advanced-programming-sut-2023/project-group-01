@@ -238,7 +238,6 @@ public class MilitaryMenuController {
         return Outputs.SUCCESSFUL_CATAPULT;
     }
 
-
     public CatapultName findCatapultName(String name) {
         for (CatapultName catapultName : CatapultName.values())
             if (catapultName.getName().equals(name))

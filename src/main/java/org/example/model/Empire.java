@@ -40,7 +40,7 @@ public class Empire {
 
     public Empire(EmpireBuilding empireBuilding, User player) {
         this.empireBuilding = empireBuilding;
-        //this.color = empireBuilding.getColor();
+        this.color = empireBuilding.getColor();
         this.player = player;
         this.popularity = 0;
         this.foodRate = 0;
@@ -105,11 +105,15 @@ public class Empire {
 
     }
 
-    public void increasePopulation(int numberOfPeople) {
+    public void increasePopulation() {
 
 
     }
     public void reducePopulation(){
+
+    }
+
+    public void removePeople() {
         for (People person : people) {
             if (!(person instanceof MilitaryUnit)) {
                 people.remove(person);
@@ -117,6 +121,10 @@ public class Empire {
             }
         }
     }
+    public void addUnit(MilitaryUnit militaryUnit) {
+        people.add(militaryUnit);
+    }
+
 
     public int getGold() {
         return gold;
