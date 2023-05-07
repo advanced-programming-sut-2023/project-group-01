@@ -34,7 +34,7 @@ public enum Outputs {
     NOT_ENOUGH_POS_DATA("You don't enter enough data for position"),
     EMPTY_SELECTED_UNIT("You don't select any unit"),
     WRONG_PLACE("moving to this position is impossible"),
-    VALID_X_Y("valid move"),
+    VALID_X_Y("valid X and Y"),
     INVALID_COMMAND("Invalid command"),
     VALID_SELECT_BUILDING("Building selected"),
     NOT_HAVING_BUILDING("You don't have any building in this position"),
@@ -112,7 +112,8 @@ public enum Outputs {
     NOT_ENOUGH_ENGINEER("Not Enough Engineer"),
     SUCCESSFUL_CATAPULT("Sucessful Catapult"),
     NO_EXISTANCE_FOR_ENEMY("No enemy exist"),
-    SUCCESSFUL_ATTACK("Successful Attack")
+    SUCCESSFUL_ATTACK("Successful Attack"),
+    DIGED_TUNNEL("Diged tunnel"),
     ;
     private String output;
 

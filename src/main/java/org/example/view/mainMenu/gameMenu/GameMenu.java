@@ -15,7 +15,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -35,7 +34,7 @@ public class GameMenu {
 
     public GameMenu(User player) {
         this.player = player;
-        this.nextTurn = new NextTurn(this);
+        nextTurn = new NextTurn(this);
     }
 
 
@@ -84,10 +83,6 @@ public class GameMenu {
         return map;
     }
 
-    public static ArrayList<Empire> getEmpires() {
-        return empires;
-    }
-
     public void run(Scanner scanner) {
         map = new CreateMapMenu().run(scanner);
         if (setEmpires(setNumberOfEmpires(scanner), scanner))
@@ -129,10 +124,10 @@ public class GameMenu {
         }
     }
 
-    public NextTurn getNextTurn() {
-        return nextTurn;
-    }
 
+    public ArrayList<Empire> getEmpires() {
+        return empires;
+    }
 
     public void showMapChecker(Matcher matcher, Scanner scanner) {
         matcher.find();

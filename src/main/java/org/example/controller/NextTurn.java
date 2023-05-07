@@ -116,19 +116,16 @@ public class NextTurn {
     }
 
     public void doScoreMove(Tile tile, MilitaryUnit militaryUnit, int x, int y) {
-        if (x < currentEmpire.getMap().getSize() && y < currentEmpire.getMap().getSize()) {
-            BestPath bestPath = new BestPath(currentEmpire);
-            boolean bool = false;
-            LinkedList<Integer> path;
+        if (militaryUnit.getXPos() > getMap().getSize()) return;
 
-            if (militaryUnit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)) bool = true;
+        BestPath bestPath = new BestPath(currentEmpire);
+        boolean assassinsBool = false;
+        LinkedList<Integer> path;
+        if (militaryUnit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)) assassinsBool = true;
 
-            path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
-                    militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), bool);
-
-            if (path != null && path.size() > 0)
-                movingProcess(path, militaryUnit);
-        }
+        path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
+                militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), false, assassinsBool);
+        if (path != null && path.size() > 0) movingProcess(path, militaryUnit);
     }
 
     public void movingProcess(LinkedList<Integer> move, MilitaryUnit unit) {
@@ -143,15 +140,17 @@ public class NextTurn {
     }
 
     public void doPatrol(Tile tile, MilitaryUnit militaryUnit, int x, int y) {
-        //TODO reverse the xPos and yPos with xDestination and yDestination
-        if (militaryUnit.getXPos() < currentEmpire.getMap().getSize() && militaryUnit.getYPos() < currentEmpire.getMap().getSize()) {
-            BestPath bestPath = new BestPath(currentEmpire);
-            LinkedList<Integer> path = bestPath.input(currentEmpire.getMap().getMap(), x, y,
-                    militaryUnit.getPatrolX2(), militaryUnit.getPatrolY2(), false);
-            if (path != null && path.size() > 0) {
-                movePatrol(path, militaryUnit);
-            }
-        }
+        //TODO reverse the xPos and yPos with xDestination and yDestination // TODO check
+        int size = getMap().getSize();
+        if (militaryUnit.getXPos() > size || militaryUnit.getPatrolX2() > size) return;
+        boolean assassinsBool = false;
+        if (militaryUnit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)) assassinsBool = true;
+
+        BestPath bestPath = new BestPath(currentEmpire);
+        LinkedList<Integer> path = bestPath.input(currentEmpire.getMap().getMap(), x, y,
+                militaryUnit.getPatrolX2(), militaryUnit.getPatrolY2(), false, assassinsBool);
+
+        if (path != null && path.size() > 0) movePatrol(path, militaryUnit);
     }
 
     private void movePatrol(LinkedList<Integer> move, MilitaryUnit militaryUnit) {
@@ -290,15 +289,16 @@ public class NextTurn {
         BestPath bestPath = new BestPath(empire);
         int size = getMap().getSize();
 
+
         for (int i = x; i < x + k; i++) {
             if (getMap().getTile(i, y + x + k - i).findEnemyMilitaryUnit(empire) != null) {
-                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k - i, false);
+                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k - i, false, false);
                 if (path.size() <= size) return path;
             }
         }
         for (int i = x; i > x - k; i--) {
             if (getMap().getTile(i, y + k + i - x).findEnemyMilitaryUnit(empire) != null) {
-                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k + i - x, false);
+                LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, i, y + k + i - x, false, false);
                 if (path.size() <= size) return path;
             }
         }

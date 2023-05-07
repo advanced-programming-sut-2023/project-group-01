@@ -12,7 +12,7 @@ public enum MilitaryMenuCommands {
     PATROL_UNIT("patrol unit(?: -x1 (?<x1>\\S*)()| -y1 (?<y1>\\S*)()| -y2 (?<y2>\\S*)()| -x2 (?<x2>\\S*)()){4}\\2\\4\\6\\8"),
     CANCEL_PATROL_UNIT("cancel patrol unit"),
     SET_STATE("set(?: -x (?<x>\\S*)()| -y (?<y>\\S*)()| -s (?<state>\\S*)()){3}\\2\\4\\6"),
-    ATTACK_E("(attack -e(?: (?<x>\\S*)()| (?<y>\\S*)()){2}\\2\\4"),
+    ATTACK_E("attack -e(?: (?<x>\\S*)()| (?<y>\\S*)()){2}\\2\\4"),
     ATTACK("attack(?: -x (?<x>\\S*)()| -y (?<y>\\S*)()){2}\\2\\4"),
     POUR_OIL("pour oil -d (?<direction>\\S*)"),
     DIG_TUNNEL("dig tunnel(?: -x (?<x>\\S*)()| -y (?<y>\\S*)()){2}\\2\\4"),

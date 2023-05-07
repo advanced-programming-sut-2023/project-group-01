@@ -26,39 +26,39 @@ public class MilitaryMenu {
 
 
     public void run(Scanner scanner) {
+        System.out.println("You are in military menu");
         String input;
 
         while (true) {
             input = scanner.nextLine();
             Matcher matcher;
 
-            if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SELECT_UNIT)).matches()) {
+            if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SELECT_UNIT)).matches())
                 selectUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.MOVE_UNIT_TO)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.MOVE_UNIT_TO)).matches())
                 moveUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.PATROL_UNIT)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.PATROL_UNIT)).matches())
                 patrolUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SET_STATE)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SET_STATE)).matches())
                 setUnitChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK)).matches())
                 attackChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK_E)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK_E)).matches())
                 attackChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.POUR_OIL)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.POUR_OIL)).matches())
                 pourOilChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DIG_TUNNEL)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DIG_TUNNEL)).matches())
                 digTunnelChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.BUILD_Q)).matches()) {
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.BUILD_Q)).matches())
                 buildChecker(matcher);
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT)).matches()) {
+            else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT).matches())
                 disbandUnit();
-            } else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).matches()) {
+            else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT).matches())
                 cancelPatrolUnitChecker();
-            } else if (input.equals("exit"))
+            else if (input.equals("exit"))
                 return;
-            else {
+            else
                 System.out.println(Outputs.INVALID_COMMAND);
-            }
         }
     }
 
