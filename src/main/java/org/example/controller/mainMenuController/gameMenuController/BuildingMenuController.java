@@ -413,7 +413,7 @@ public class BuildingMenuController {
                 }
             }
             //TODO check
-            empire.addMaterial(buildingMenu.getSelectedBuilding().getBuildingName().getName(), checkRepair());
+            empire.reduceMaterial(buildingMenu.getSelectedBuilding().getBuildingName().getName(), checkRepair());
             return Outputs.SUCCESSFUL_REPAIR;
         }
     }
