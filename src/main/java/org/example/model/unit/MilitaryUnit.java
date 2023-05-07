@@ -28,10 +28,11 @@ public class MilitaryUnit extends People {
     public MilitaryUnit(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
         super(position, empire);
         //System.out.println("in military unit :: x : " + xPos + " | yPos :" + yPos + "\n");
+        empire.removePeople();
+        empire.addUnit(this);
         this.xPos = xPos;
         this.yPos = yPos;
         this.militaryUnitName = militaryUnitName;
-
         getMap().getTile(xPos, yPos).addUnit(this);
     }
 
@@ -53,6 +54,11 @@ public class MilitaryUnit extends People {
        this.yPos = y;
        this.xDestination = MAX_VALUE;
        this.yDestination = MAX_VALUE;
+    }
+
+    public void setDest(int xDestination, int yDestination) {
+        this.xDestination = xDestination;
+        this.yDestination = yDestination;
     }
 
     public void setDestination(int xPos, int yPos, int xDestination, int yDestination) {

@@ -8,6 +8,7 @@ import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
 import org.example.model.unit.Lord;
+import org.example.model.unit.MilitaryUnit;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -39,7 +40,7 @@ public class Empire {
 
     public Empire(EmpireBuilding empireBuilding, User player) {
         this.empireBuilding = empireBuilding;
-        //this.color = empireBuilding.getColor();
+        this.color = empireBuilding.getColor();
         this.player = player;
         this.popularity = 0;
         this.foodRate = 0;
@@ -106,10 +107,24 @@ public class Empire {
 
     public void increasePopulation() {
 
+
     }
     public void reducePopulation(){
 
     }
+
+    public void removePeople() {
+        for (People person : people) {
+            if (!(person instanceof MilitaryUnit)) {
+                people.remove(person);
+                return;
+            }
+        }
+    }
+    public void addUnit(MilitaryUnit militaryUnit) {
+        people.add(militaryUnit);
+    }
+
 
     public int getGold() {
         return gold;
