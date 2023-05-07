@@ -8,6 +8,7 @@ import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
 import org.example.model.unit.Lord;
+import org.example.model.unit.MilitaryUnit;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -104,11 +105,17 @@ public class Empire {
 
     }
 
-    public void increasePopulation() {
+    public void increasePopulation(int numberOfPeople) {
+
 
     }
     public void reducePopulation(){
-
+        for (People person : people) {
+            if (!(person instanceof MilitaryUnit)) {
+                people.remove(person);
+                return;
+            }
+        }
     }
 
     public int getGold() {

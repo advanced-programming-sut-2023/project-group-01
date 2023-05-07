@@ -7,14 +7,25 @@ import org.example.model.unit.enums.MilitaryUnitName;
 
 public class Engineer extends MilitaryUnit {
     private boolean isWorking = false;
+    private boolean haveOIl = false;
 
     public Engineer(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
         super(position, empire, militaryUnitName, xPos, yPos);
     }
 
+    public void cancelOil() {
+        this.haveOIl = false;
+    }
+    public void addOil() {
+        this.haveOIl = true;
+    }
 
     public void setWorking(boolean working) {
         isWorking = working;
+    }
+
+    public boolean getHaveOil() {
+        return haveOIl;
     }
 
     public boolean getWorking() {

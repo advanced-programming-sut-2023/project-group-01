@@ -52,8 +52,7 @@ public enum Voice {
             throw new RuntimeException(e);
         }
         clip.start();
-
-        String response = Main.getScanner().next();
+        //String response = Main.getScanner().next();
     }
 
     public File getFile() {

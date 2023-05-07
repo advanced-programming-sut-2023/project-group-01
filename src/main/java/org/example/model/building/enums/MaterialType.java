@@ -25,12 +25,12 @@ public enum MaterialType {
     PIKE("axe", 180, 90, "warfare"),
     SWORD("sword", 290, 150, "warfare"),
     SPEAR("spear", 100, 50, "warfare"),
-    LEATHER_ARMOUR("leather armour", 125, 60, "warfare"),
-    METAL_ARMOUR("metal armour", 290, 150, "warfare"),
+    LEATHER_ARMOUR("leatherArmour", 125, 60, "warfare"),
+    METAL_ARMOUR("metalArmour", 290, 150, "warfare"),
 
     //Different :
     HORSE("horse", 0, 0, "different"),
-    MELTED_IRON("melted iron", 0, 0, "different"),
+    MELTED_IRON("meltedIron", 0, 0, "different"),
     COW("cow", 0, 0, "different")
     ;
     private final String name;

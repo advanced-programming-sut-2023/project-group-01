@@ -5,6 +5,7 @@ import org.example.controller.mainMenuController.gameMenuController.MilitaryMenu
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
+import org.example.model.building.Gatehouse;
 import org.example.model.building.Tile;
 import org.example.model.building.castleBuilding.CagedDogs;
 import org.example.model.building.castleBuilding.Tower;
@@ -116,6 +117,35 @@ public class NextTurn {
     }
 
     public void doScoreMove(Tile tile, MilitaryUnit militaryUnit, int x, int y) {
+//        BestPath bestPath = new BestPath(empire);
+//        //TODO check
+//        LinkedList<Integer> move = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false, false);
+//        int maxLength = 0;
+//        if (move == null || move.size() == 0) return;
+//        int dx = xDestination - xStart;
+//        int dy = yDestination - yStart;
+//        int distance = dx + dy;
+//        int maxLength = 0;
+        //(int) Math.floor(Math.sqrt(dx * dx + dy * dy))
+//                for (MilitaryUnit militaryUnit : getMap().getTile(xStart, yStart).findUnit(empire)) {
+//            if (move.size() <= militaryUnit.getMilitaryUnitName().getSpeed()) {
+//                if (militaryUnit.getMilitaryUnitName().getGunshot() > 0) {     //TODO check
+//                    if (distance > militaryUnit.getMilitaryUnitName().getGunshot())
+//                        militaryUnit.goToDestination(xDestination, yDestination);
+//                } else militaryUnit.goToDestination(xDestination, yDestination);
+//            } else {
+//                int xDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) / getMap().getSize();
+//                int yDest = move.get(militaryUnit.getMilitaryUnitName().getSpeed()) % getMap().getSize();
+//                if (militaryUnit.getMilitaryUnitName().getGunshot() > 0) {
+//                    if (distance > militaryUnit.getMilitaryUnitName().getGunshot())
+//                        militaryUnit.setDestination(xDest, yDest, xDestination, yDestination);
+//                } else militaryUnit.setDestination(xDest, yDest, xDestination, yDestination);
+//            }
+//            if (militaryUnit.getMilitaryUnitName().getSpeed() > maxLength && militaryUnit.getMilitaryUnitName().getSpeed() <= move.size())
+//                maxLength = militaryUnit.getMilitaryUnitName().getSpeed();
+//        }
+//        gateHouse(move, maxLength, empire);
+
         if (militaryUnit.getXPos() > getMap().getSize()) return;
 
         BestPath bestPath = new BestPath(currentEmpire);
@@ -126,6 +156,21 @@ public class NextTurn {
         path = bestPath.input(currentEmpire.getMap().getMap(), militaryUnit.getXPos(),
                 militaryUnit.getYPos(), militaryUnit.getXDestination(), militaryUnit.getYDestination(), false, assassinsBool);
         if (path != null && path.size() > 0) movingProcess(path, militaryUnit);
+    }
+
+    private static void gateHouse(LinkedList<Integer> move, int length, Empire empire) {
+        //TODO وقتی می خوای از اری لیست ادرس بگیری باید آی را را ضربدر سایز کنی
+        int x;
+        int y;
+        Building building;
+        for (int i = 0; i < length; i++) {
+            x = move.get(i) / getMap().getSize();
+            y = move.get(i) % getMap().getSize();
+            building = getMap().getTile(x, y).getBuilding();
+            if (getMap().getTile(x, y).getBuilding() != null && building instanceof Gatehouse) {
+                building.setEmpire(empire);
+            }
+        }
     }
 
     public void movingProcess(LinkedList<Integer> move, MilitaryUnit unit) {
