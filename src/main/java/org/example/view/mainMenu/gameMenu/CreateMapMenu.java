@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 public class CreateMapMenu {
 
     public static Map gameMap;
+
     public Map run(Scanner scanner) {
         setGameMapSize(scanner);
         while (true) {
@@ -39,12 +40,12 @@ public class CreateMapMenu {
         }
     }
 
-    public void setGameMapSize(Scanner scanner){
-        while (true){
+    public void setGameMapSize(Scanner scanner) {
+        while (true) {
             System.out.println("please enter size for map\n" +
                     "1. 200 * 200\n" +
                     "2. 400 * 400");
-            switch (scanner.nextLine()){
+            switch (scanner.nextLine()) {
                 case "1":
                     gameMap = new Map(200);
                     System.out.println("Size of map is 200 * 200");
@@ -65,7 +66,7 @@ public class CreateMapMenu {
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
         Outputs outputs = new CreateMapMenuController().setTextureForATile
-                (gameMap.getTileWhitXAndY(xOfMap,yOfMap), type);
+                (gameMap.getTileWhitXAndY(xOfMap, yOfMap), type);
         System.out.println(outputs.toString());
     }
 
@@ -85,7 +86,7 @@ public class CreateMapMenu {
         matcher.find();
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
-        Outputs outputs = new CreateMapMenuController().clear(gameMap.getTileWhitXAndY(xOfMap,yOfMap));
+        Outputs outputs = new CreateMapMenuController().clear(gameMap.getTileWhitXAndY(xOfMap, yOfMap));
         System.out.println(outputs.toString());
     }
 
@@ -95,7 +96,7 @@ public class CreateMapMenu {
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String direction = matcher.group("direction");
         Outputs outputs = new CreateMapMenuController().dropRock
-                (gameMap.getTileWhitXAndY(xOfMap,yOfMap), direction);
+                (gameMap.getTileWhitXAndY(xOfMap, yOfMap), direction);
         System.out.println(outputs.toString());
     }
 
@@ -105,7 +106,7 @@ public class CreateMapMenu {
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
         Outputs outputs = new CreateMapMenuController().dropTree
-                (gameMap.getTileWhitXAndY(xOfMap,yOfMap), type);
+                (xOfMap, yOfMap, type);
         System.out.println(outputs.toString());
     }
 
@@ -125,8 +126,7 @@ public class CreateMapMenu {
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
         int count = Integer.parseInt(matcher.group("count"));
-        Outputs outputs = new CreateMapMenuController().dropUnit
-                (gameMap.getTileWhitXAndY(xOfMap, yOfMap), type, count);
+        Outputs outputs = new CreateMapMenuController().dropUnit(xOfMap, yOfMap, type, count);
         System.out.println(outputs.toString());
     }
 

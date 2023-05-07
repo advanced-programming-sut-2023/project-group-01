@@ -1,8 +1,10 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.controller.NextTurn;
+import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
 import org.example.controller.mainMenuController.gameMenuController.GameMenuController;
 import org.example.model.Empire;
+import org.example.model.InitializeMaterial;
 import org.example.model.Map;
 import org.example.model.User;
 import org.example.model.building.Building;
@@ -46,7 +48,7 @@ public class GameMenu {
         this.map = map;
     }
 
-    public boolean setEmpires(int numberOfEmpires, Scanner scanner) {
+    public boolean setEmpires(int numberOfEmpires, Scanner scanner, InitializeMaterial initializeMaterial) {
         player.setInGame(true);
         empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
         thisEmpire = empires.get(0);
@@ -68,7 +70,13 @@ public class GameMenu {
             }
         System.out.println("All of the players added to the game.");
         addEmpireBuildingsToMap();
+        setMaterialForEmpires(initializeMaterial);
         return true;
+    }
+
+    private void setMaterialForEmpires(InitializeMaterial initializeMaterial) {
+        for (int i = 0; i < empires.size(); i++)
+            InitializeMaterial.setSources(empires.get(i), initializeMaterial);
     }
 
     public static Empire getThisEmpire() {
@@ -85,7 +93,7 @@ public class GameMenu {
 
     public void run(Scanner scanner) {
         map = new CreateMapMenu().run(scanner);
-        if (setEmpires(setNumberOfEmpires(scanner), scanner))
+        if (setEmpires(setNumberOfEmpires(scanner), scanner, setLevelOfGame(scanner)))
             while (true) {
                 String command = scanner.nextLine();
                 Matcher matcher;
@@ -98,21 +106,24 @@ public class GameMenu {
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GET_PLAYER)) != null)
                     System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null)
-                    nextTurn.nextTurn();
-                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null){
-                    MilitaryMenu militaryMenu = new MilitaryMenu(thisEmpire,this);
+                    nextTurn.nextTurn(); //TODO ask ali for increase turn;
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null) {
+                    MilitaryMenu militaryMenu = new MilitaryMenu(thisEmpire, this);
                     militaryMenu.run(scanner);
-                }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.BUILDING_MENU)) != null){
+                } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.BUILDING_MENU)) != null) {
                     BuildingMenu buildingMenu = new BuildingMenu(thisEmpire);
-                    buildingMenu.run(scanner);
-                }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOP_MENU)) != null){
+                    try {
+                        buildingMenu.run(scanner);
+                    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOP_MENU)) != null) {
                     ShopMenu shopMenu = new ShopMenu();
                     shopMenu.run(scanner);
-                }else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.TRADE_MENU)) != null){
+                } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.TRADE_MENU)) != null) {
                     TradeMenu tradeMenu = new TradeMenu();
                     tradeMenu.run(scanner);
-                }
-                else System.out.println("Invalid command in Game Menu !");
+                } else System.out.println("Invalid command in Game Menu !");
             }
         else {
             setUsersGameFinished();
@@ -120,8 +131,35 @@ public class GameMenu {
         }
     }
 
+    private InitializeMaterial setLevelOfGame(Scanner scanner) {
+        InitializeMaterial initializeMaterial;
+        outer:
+        while (true) {
+            System.out.println("please enter which level of source you want?");
+            System.out.println("1. low source");
+            System.out.println("2. middle source");
+            System.out.println("3. high source");
+            String level = scanner.nextLine();
+            switch (level) {
+                case "1":
+                    initializeMaterial = InitializeMaterial.LOW_SOURCE;
+                    break outer;
+                case "2":
+                    initializeMaterial = InitializeMaterial.MIDDLE_SOURCE;
+                    break outer;
+                case "3":
+                    initializeMaterial = InitializeMaterial.HIGH_SOURCE;
+                    break outer;
+                default:
+                    System.out.println("Invalid level please try again");
+                    break;
+            }
+        }
+        return initializeMaterial;
+    }
 
-    public ArrayList<Empire> getEmpires() {
+
+    public static ArrayList<Empire> getEmpires() {
         return empires;
     }
 
@@ -135,12 +173,16 @@ public class GameMenu {
     }
 
     private void addEmpireBuildingsToMap() {
-        for (int i = 1; i<= empires.size(); i++)
+        for (int i = 1; i <= empires.size(); i++) {
+            Building building = new Building(empires.get(i - 1), EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
+                    EmpireBuilding.valueOf("EMPIRE_" + i).getY(),
+                    BuildingName.EMPIRE_CASTLE);
             map.getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
-                    EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(
-                    new Building(empires.get(i-1), EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
-                            EmpireBuilding.valueOf("EMPIRE_" + i).getY(),
-                            BuildingName.EMPIRE_CASTLE));
+                    EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(building);
+            empires.get(i - 1).addToBuildings(building);
+            BuildingMenuController.putBuilding(BuildingName.STOCKPILE, EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
+                    EmpireBuilding.valueOf("EMPIRE_" + i).getY() + 1, empires.get(i - 1));
+        }
     }
 
     public int setNumberOfEmpires(Scanner scanner) {
@@ -155,14 +197,14 @@ public class GameMenu {
             }
     }
 
-    public void setUsersGameFinished(){
-        for (int i = 0; i< empires.size(); i++)
+    public void setUsersGameFinished() {
+        for (int i = 0; i < empires.size(); i++)
             empires.get(i).getPlayer().setInGame(false);
     }
 
-    public static Empire getEmpireWhitUsername(String username){
-        for (int i = 0 ; i < empires.size(); i++)
-            if(empires.get(i).getPlayer().getUsername().equals(username))
+    public static Empire getEmpireWhitUsername(String username) {
+        for (int i = 0; i < empires.size(); i++)
+            if (empires.get(i).getPlayer().getUsername().equals(username))
                 return empires.get(i);
         return null;
     }

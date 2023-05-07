@@ -135,6 +135,12 @@ public enum MilitaryUnitName {
 //        }
 //        return null;
 //    }
+    public static MilitaryUnitName getMilitaryUnitWhitName(String name){
+        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
+            if(militaryUnitName.getName().equals(name))
+                return militaryUnitName;
+        return null;
+    }
 
 
 }

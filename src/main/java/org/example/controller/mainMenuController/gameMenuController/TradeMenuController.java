@@ -17,21 +17,17 @@ public class TradeMenuController {
     }
 
     public Outputs trade(String resourceType, int resourceAmount, int price, String message) {
-        try {
-           MaterialType materialType = MaterialType.valueOf(resourceType);
-           if(materialType.getTypeOfProduct().equals("different")) return Outputs.INVALID_MATERIAL_TYPE;
-           if(resourceAmount <= 0) return Outputs.INVALID_RESOURCE_AMOUNT_TRADE;
-           if(price < 0) return Outputs.INVALID_PRICE_TRADE;
-           int id = tradeMenu.getEmpireForTrade().getTradeHistory().size() +
-                   tradeMenu.getEmpireForTrade().getTrades().size() + 1;
-           Trade trade = new Trade(id, new Material(materialType), resourceAmount, price, message, getThisEmpire());
-            tradeMenu.getEmpireForTrade().addToTrades(trade);
-            tradeMenu.getEmpireForTrade().addToNewTrade(trade);
-            getThisEmpire().addToTradeHistory(trade);
-        }
-        catch (IllegalArgumentException e){
-            return Outputs.INVALID_MATERIAL_TYPE;
-        }
+        MaterialType materialType = MaterialType.getMaterialTypeWithName(resourceType);
+        if (materialType == null) return Outputs.INVALID_MATERIAL_TYPE;
+        if (materialType.getTypeOfProduct().equals("different")) return Outputs.INVALID_MATERIAL_TYPE;
+        if (resourceAmount <= 0) return Outputs.INVALID_RESOURCE_AMOUNT_TRADE;
+        if (price < 0) return Outputs.INVALID_PRICE_TRADE;
+        int id = tradeMenu.getEmpireForTrade().getTradeHistory().size() +
+                tradeMenu.getEmpireForTrade().getTrades().size() + 1;
+        Trade trade = new Trade(id, new Material(materialType), resourceAmount, price, message, getThisEmpire());
+        tradeMenu.getEmpireForTrade().addToTrades(trade);
+        tradeMenu.getEmpireForTrade().addToNewTrade(trade);
+        getThisEmpire().addToTradeHistory(trade);
         return Outputs.SUCCESS;
     }
 
@@ -40,7 +36,7 @@ public class TradeMenuController {
         if (trade == null) return Outputs.INVALID_ID;
         if (!getThisEmpire().havingMaterial(trade.getMaterial(), trade.getAmountMaterial()))
             return Outputs.NOT_ENOUGH_MATERIAL;
-        if(tradeMenu.getEmpireForTrade().getGold() < trade.getPrice())
+        if (tradeMenu.getEmpireForTrade().getGold() < trade.getPrice())
             return Outputs.TRADE_NOT_ENOUGH_GOLD;
         tradeMenu.getEmpireForTrade().reduceGold(trade.getPrice());
         getThisEmpire().reduceMaterial(trade.getMaterial(), trade.getAmountMaterial());

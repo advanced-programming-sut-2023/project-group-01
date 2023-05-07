@@ -22,7 +22,7 @@ public class BuildingMenuController {
         this.buildingMenu = buildingMenu;
     }
 
-    public Outputs selectBuilding(String x, String y) {
+    public  Outputs selectBuilding(String x, String y) {
         if (x == null) {
             return Outputs.EMPTY_X;
         } else if (y == null) {
@@ -66,7 +66,7 @@ public class BuildingMenuController {
             return Outputs.FULL_POSITION;
         else if (isGroundSuitable(buildingName, x0, y0))
             return Outputs.NOT_SUITABLE_GROUND;
-        putBuilding(buildingName, x0, y0);
+        putBuilding(buildingName, x0, y0, empire);
         return Outputs.SUCCESSFUL_DROP_BUILDING;
     }
 
@@ -79,7 +79,7 @@ public class BuildingMenuController {
         return null;
     }
 
-    public boolean isGroundSuitable(BuildingName buildingName, int x, int y) {
+    public static boolean isGroundSuitable(BuildingName buildingName, int x, int y) {
         int size = buildingName.getSize();
 
         if (buildingName.getTypeCanBuildBuilding().equals(TypeOfTile.NORMAL_GROUND)) {
@@ -110,7 +110,7 @@ public class BuildingMenuController {
         return true;
     }
 
-    private boolean suitability(TypeOfTile typeOfTile, int x, int y, int size) {
+    public static boolean suitability(TypeOfTile typeOfTile, int x, int y, int size) {
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
                 if (getMap().getTile(i, j).getTypeOfTile().equals(typeOfTile)) {
@@ -121,7 +121,7 @@ public class BuildingMenuController {
         return true;
     }
 
-    public boolean isPositionFull(BuildingName buildingName, int x, int y) {
+    public static boolean isPositionFull(BuildingName buildingName, int x, int y) {
         int size = buildingName.getSize();
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
@@ -133,7 +133,7 @@ public class BuildingMenuController {
         return false;
     }
 
-    public void putBuilding(BuildingName buildingName, int x, int y) {
+    public static void putBuilding(BuildingName buildingName, int x, int y, Empire empire) {
         int size = buildingName.getSize();
         Building building = new Building(empire, x, y, buildingName);
         for (int i = x; i < x + size; i++) {
@@ -141,13 +141,26 @@ public class BuildingMenuController {
                 getMap().getTile(i, j).setBuilding(building);
             }
         }
+        empire.addToBuildings(building);
     }
 
     public Outputs destroyBuilding() {
         if (buildingMenu.getSelectedBuilding() == null) {
             return Outputs.EMPTY_SELECTED_BUILDING;
         }
-        buildingMenu.getSelectedBuilding().removeBuilding();
+
+        int x1 = buildingMenu.getSelectedBuilding().getBeginX();
+        int y1 = buildingMenu.getSelectedBuilding().getBeginY();
+        int x2 = buildingMenu.getSelectedBuilding().getEndX();
+        int y2 = buildingMenu.getSelectedBuilding().getEndY();
+
+        for (int i = x1; i < x2; i++) {
+            for (int j = y1; j < y2; j++) {
+                //TODO check
+                buildingMenu.getEmpire().getMap().getTile(x1, y1).setBuilding(null);
+            }
+        }
+        buildingMenu.getSelectedBuilding().getEmpire().removeFromBuildings(buildingMenu.getSelectedBuilding());
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 
@@ -400,7 +413,7 @@ public class BuildingMenuController {
                 }
             }
             //TODO check
-            empire.addMaterial(buildingMenu.getSelectedBuilding().getBuildingName().getName(), checkRepair());
+            empire.reduceMaterial(buildingMenu.getSelectedBuilding().getBuildingName().getName(), checkRepair());
             return Outputs.SUCCESSFUL_REPAIR;
         }
     }

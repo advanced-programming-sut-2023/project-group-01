@@ -1,9 +1,12 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.model.Map;
+import org.example.model.People;
 import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.TypeOfTile;
+import org.example.model.unit.MilitaryUnit;
+import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.BackgroundColor;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.ShowMapAsciiArt;
@@ -32,11 +35,11 @@ public class MapMenu {
         while (true) {
             String command = scanner.nextLine();
             Matcher matcher;
-            if((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.MOVE_MAP)) != null)
+            if ((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.MOVE_MAP)) != null)
                 moveMapChecker(matcher);
-            else if((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.SHOW_DETAIL)) != null)
+            else if ((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.SHOW_DETAIL)) != null)
                 showDetailOfMapChecker(matcher);
-            else if(command.equals("exit")) return;
+            else if (command.equals("exit")) return;
             else System.out.println("Invalid command!");
         }
     }
@@ -71,24 +74,32 @@ public class MapMenu {
         }
     }
 
-    public void setColorInTerminal(Tile tile){
+    public void setColorInTerminal(Tile tile) {
         if (tile == null) BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
-        else if (tile.getTypeOfTile().equals(TypeOfTile.NORMAL_GROUND))
-            BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
-        else if(tile.getTypeOfTile().equals(TypeOfTile.GRASSLAND)){
+        else if (tile.getTypeOfTile().equals(TypeOfTile.GRASSLAND)) {
             BackgroundColor.changeColor(BackgroundColor.ANSI_GREEN_BACKGROUND);
             BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_TEXT);
-        }
-        else if(tile.getTypeOfTile().equals(TypeOfTile.IRON_MINE))
+        } else if (tile.getTypeOfTile().equals(TypeOfTile.IRON_MINE))
             BackgroundColor.changeColor(BackgroundColor.ANSI_WHITE_BACKGROUND);
-        else if(tile.getTypeOfTile().equals(TypeOfTile.MEADOW))
+        else if (tile.getTypeOfTile().equals(TypeOfTile.FULL_MEADOW))
             BackgroundColor.changeColor(BackgroundColor.ANSI_YELLOW_BACKGROUND);
-        else if(tile.getTypeOfTile().isWater()){
+        else if (tile.getTypeOfTile().equals(TypeOfTile.MEADOW))
+            BackgroundColor.changeColor(BackgroundColor.ANSI_YELLOW);
+        else if (tile.getTypeOfTile().isWater()) {
             BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_TEXT);
             BackgroundColor.changeColor(BackgroundColor.ANSI_BLUE_BACKGROUND);
-        }
-        else if(tile.getTypeOfTile().equals(TypeOfTile.STONE_MINE))
+        } else if (tile.getTypeOfTile().equals(TypeOfTile.STONE_MINE))
             BackgroundColor.changeColor(BackgroundColor.ANSI_PURPLE_BACKGROUND);
+        else if (tile.getTypeOfTile().equals(TypeOfTile.OIL_GROUND)) {
+            BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
+            BackgroundColor.changeColor(BackgroundColor.ANSI_BLUE);
+        } else if (tile.getTypeOfTile().equals(TypeOfTile.PLAIN)) {
+            BackgroundColor.changeColor(BackgroundColor.ANSI_YELLOW);
+            BackgroundColor.changeColor(BackgroundColor.ANSI_GREEN_BACKGROUND);
+        } else if (tile.getTypeOfTile().equals(TypeOfTile.BEACH)) {
+            BackgroundColor.changeColor(BackgroundColor.ANSI_YELLOW_BACKGROUND);
+            BackgroundColor.changeColor(BackgroundColor.ANSI_BLUE);
+        } else BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_BACKGROUND);
     }
 
     public void moveMapChecker(Matcher matcher) {
@@ -116,12 +127,11 @@ public class MapMenu {
             else right = 1;
         int newX = xOfMap + right - left;
         int newY = yOfMap + up - down;
-        if(map.getTileWhitXAndY(newX, newY) != null) {
+        if (map.getTileWhitXAndY(newX, newY) != null) {
             xOfMap = newX;
             yOfMap = newY;
             showMap();
-        }
-        else System.out.println(Outputs.INVALID_COORDINATES);
+        } else System.out.println(Outputs.INVALID_COORDINATES);
     }
 
     public void showDetailOfMapChecker(Matcher matcher) {
@@ -129,12 +139,27 @@ public class MapMenu {
         int newX = Integer.parseInt(matcher.group("xOfMap"));
         int newY = Integer.parseInt(matcher.group("yOfMap"));
         Tile tile;
-        if((tile = map.getTileWhitXAndY(newX, newY)) != null){
+        if ((tile = map.getTileWhitXAndY(newX, newY)) != null) {
             System.out.println("The type of tile is " + tile.getTypeOfTile());
-            //TODO show units
-            if(tile.getBuilding() != null)
+            showUnits(tile);
+            if (tile.getBuilding() != null)
                 System.out.println("The building " + tile.getBuilding().getBuildingName().name());
-        }
-        else System.out.println(Outputs.INVALID_COORDINATES);
+        } else System.out.println(Outputs.INVALID_COORDINATES);
+    }
+
+    private void showUnits(Tile tile) {
+        int number = 0;
+        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
+            if ((number = findNumber(tile, militaryUnitName)) != 0)
+                System.out.println(militaryUnitName.getName() + ": " + number);
+    }
+
+    private int findNumber(Tile tile, MilitaryUnitName militaryUnitName) {
+        int number = 0;
+        for (People person : tile.getPeople())
+            if (person instanceof MilitaryUnit &&
+                    ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName))
+                number++;
+        return number;
     }
 }
