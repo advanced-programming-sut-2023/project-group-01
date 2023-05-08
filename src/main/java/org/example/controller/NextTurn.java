@@ -124,6 +124,8 @@ public class NextTurn {
         //TODO
     }
 
+
+
     public void doOnAllMilitaryUnit(Tile tile, int x, int y) {
         int xDest;
         int yDest;
@@ -141,12 +143,14 @@ public class NextTurn {
             }
         }
     }
+
     private void callMoveFunctions(MilitaryUnit unit, boolean bool) {
         if (unit instanceof Catapult)
             MoveToXYForCatapult((Catapult) unit, bool);
         else
             MoveToXY(unit, false);
     }
+
     private void MoveToXY(MilitaryUnit unit, boolean haveBuilding) {
         int xPos = unit.getXPos(), yPos = unit.getYPos();
         int xDest = unit.getXDestination(), yDest = unit.getYDestination();
@@ -187,6 +191,7 @@ public class NextTurn {
             ((Wall) building).setHaveLadder(true);
         unit.setMoved();
     }
+
     private boolean isMoveFinished(MilitaryUnit unit, int integer, int counter) {
         int mapSize = getMap().getSize();
         unit.goToPos(integer / mapSize, integer % mapSize);
@@ -221,6 +226,7 @@ public class NextTurn {
         }
         return false;
     }
+
     private ArrayList<MilitaryUnit> findEnemyInTheBoardOfArcher(MilitaryUnit unit) {
         //TODO check
         int gunShot = unit.getMilitaryUnitName().getGunshot();
@@ -239,10 +245,13 @@ public class NextTurn {
         }
         return enemy;
     }
+
     private void MoveToXYForCatapult(Catapult catapult, boolean haveBuilding) {
         if (!catapult.getCatapultName().getCanMove()) return;
-        if (catapult.getCatapultName().getCanAttackUnit() && findEnemyInTheBoardOfCatapult(catapult).size() != 0) return;
-        if (!catapult.getCatapultName().getCanAttackUnit() && findEnemyBuildingInTheBoardOfCatapult(catapult) != null) return;
+        if (catapult.getCatapultName().getCanAttackUnit() && findEnemyInTheBoardOfCatapult(catapult).size() != 0)
+            return;
+        if (!catapult.getCatapultName().getCanAttackUnit() && findEnemyBuildingInTheBoardOfCatapult(catapult) != null)
+            return;
 
         int xPos = catapult.getXPos(), yPos = catapult.getYPos();
         int xDest = catapult.getXDestination(), yDest = catapult.getYDestination();
@@ -277,6 +286,7 @@ public class NextTurn {
         //TODO check
         catapult.setMoved();
     }
+
     private boolean isCatapultMoveFinished(Catapult catapult, Integer integer, int counter) {
         int mapSize = getMap().getSize();
         catapult.goToPos(integer / mapSize, integer % mapSize);
@@ -313,6 +323,7 @@ public class NextTurn {
 
         return false;
     }
+
     private ArrayList<MilitaryUnit> findEnemyInTheBoardOfCatapult(Catapult catapult) {
         //TODO check
         int gunShot = catapult.getCatapultName().getFireRange();
@@ -339,6 +350,7 @@ public class NextTurn {
         }
         return enemy;
     }
+
     private Building findEnemyBuildingInTheBoardOfCatapult(Catapult catapult) {
         //TODO check
         int gunShot = catapult.getCatapultName().getFireRange();
@@ -367,6 +379,134 @@ public class NextTurn {
     }
 
     private void attack(Tile tile, int x, int y) {
+        ArrayList<MilitaryUnit> enenmy1 = new ArrayList<>();
+        ArrayList<MilitaryUnit> enemy2 = new ArrayList<>();
+        boolean[] isAttack = new boolean[empires.size()];
+
+        for (int i = 0; i < empires.size(); i++) {
+            enenmy1 = tile.findUnit(empires.get(i));
+            if (enenmy1.size() != 0) {
+                for (int j = 0; j < empires.size(); j++) {
+                    enemy2 = tile.findUnit(empires.get(j));
+                    if (!isAttack[i] && enemy2.size() != 0) {
+                        attackUnits(enenmy1, enemy2);
+                    }
+                }
+                isAttack[i] = true;
+            }
+        }
+
+        boolean bool = false;
+        for (boolean booll : isAttack)
+            if (booll) bool = true;
+
+        if (!bool && enenmy1.size() != 0)
+            for (MilitaryUnit unit : enenmy1)
+                doAttacking(unit);
+    }
+
+    private void attackUnits(ArrayList<MilitaryUnit> enemy1, ArrayList<MilitaryUnit> enemy2) {
+        int damage1 = 0;
+        int counter1 = 0;
+        int damage2 = 0;
+        int counetr2 = 0;
+        for (MilitaryUnit unit : enemy1) {
+            if (!(unit instanceof Catapult))
+                damage1 += unit.getMilitaryUnitName().getAttack();
+            if (unit instanceof Catapult && ((Catapult) unit).getCatapultName().equals(CatapultName.FIRE_BALLISTRA)) {
+                damage1 += ((Catapult) unit).getCatapultName().getDamage();
+                counter1++;
+            }
+        }
+        for (MilitaryUnit unit : enemy2) {
+            if (!(unit instanceof Catapult))
+                damage1 += unit.getMilitaryUnitName().getAttack();
+            if (unit instanceof Catapult && ((Catapult) unit).getCatapultName().equals(CatapultName.FIRE_BALLISTRA)) {
+                damage2 += ((Catapult) unit).getCatapultName().getDamage();
+                counetr2++;
+            }
+        }
+
+        damage1 /= counter1;
+        damage2 /= counetr2;
+
+        for (MilitaryUnit unit : enemy1) {
+            if (unit.getMilitaryUnitName().getHitPoint() > damage1)
+                unit.getMilitaryUnitName().reduceHitPoint(damage1);
+            else
+                unit.removeUnit();
+        }
+        for (MilitaryUnit unit : enemy2) {
+            if (unit.getMilitaryUnitName().getHitPoint() > damage2)
+                unit.getMilitaryUnitName().reduceHitPoint(damage2);
+            else
+                unit.removeUnit();
+        }
+
+    }
+
+    private void doAttacking(MilitaryUnit unit) {
+        if (unit instanceof Catapult && ((Catapult)unit).getCatapultName().getFireRange() > 0)
+            doCatapultAttack((Catapult) unit);
+        else if (!(unit instanceof Catapult) && unit.getMilitaryUnitName().getGunshot() > 0)
+            doArcherAttack(unit);
+        else if (unit.getMilitaryUnitName().getGunshot() == 0)
+            doAttack(unit);
+    }
+
+    private void doCatapultAttack(Catapult catapult) {
+        ArrayList<MilitaryUnit> enemy = new ArrayList<>();
+        if (catapult.getCatapultName().getCanAttackUnit()) {
+            if (catapult.getXAttack() > getMap().getSize() && catapult.getYAttack() > getMap().getSize())
+                enemy = findEnemyInTheBoardOfCatapult(catapult);
+            else
+                enemy = getMap().getTile(catapult.getXAttack(), catapult.getYAttack()).findNearEnemiesMilitaryUnit(catapult.getEmpire());
+            if (enemy.size() != 0) {
+                int damage = catapult.getCatapultName().getDamage() / enemy.size();
+                for (MilitaryUnit unit : enemy) {
+                    if (unit.getMilitaryUnitName().getHitPoint() > damage)
+                        unit.getMilitaryUnitName().reduceHitPoint(damage);
+                    else
+                        unit.removeUnit();
+                }
+            }
+        } else {
+            Building building;
+            if (catapult.getXAttack() < getMap().getSize() && catapult.getYAttack() < getMap().getSize())
+                building = getMap().getTile(catapult.getXAttack(), catapult.getYAttack()).getBuilding();
+            else
+                building = findEnemyBuildingInTheBoardOfCatapult(catapult);
+
+            int damage = catapult.getCatapultName().getDamage();
+            if (building != null) {
+                if (building.getBuildingName().getHitPoint() > damage)
+                    building.getBuildingName().reduceHitPoint(damage);
+                else
+                    building.removeBuilding();
+            }
+        }
+    }
+
+    private void doArcherAttack(MilitaryUnit unit) {
+        ArrayList<MilitaryUnit> enemy;
+        if (unit.getXAttack() > getMap().getSize() && unit.getYAttack() > getMap().getSize())
+            enemy = findEnemyInTheBoardOfArcher(unit);
+        else
+            enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
+
+        if (enemy.size() != 0) {
+            int damage = unit.getMilitaryUnitName().getAttack() / enemy.size();
+            for (MilitaryUnit militaryUnit : enemy) {
+                if (militaryUnit.getMilitaryUnitName().getHitPoint() > damage)
+                    militaryUnit.getMilitaryUnitName().reduceHitPoint(damage);
+                else
+                    militaryUnit.removeUnit();
+            }
+        }
+    }
+
+    private void doAttack(MilitaryUnit unit) {
+        //Attack be building
 
     }
 
