@@ -3,6 +3,8 @@ package org.example.model.building;
 import org.example.model.Empire;
 import org.example.model.building.enums.BuildingName;
 
+import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
+
 public class Building {
     protected Empire empire;
     protected int beginX;
@@ -24,7 +26,12 @@ public class Building {
         return buildingName;
     }
 
-
+    public void removeBuilding() {
+        for (int i = beginX; i < endX; i++)
+            for (int j = beginY; j < endY; j++)
+                getMap().getTile(i, j).setBuilding(null);
+        empire.getBuildings().remove(this);
+    }
     public int getBeginX() {
         return beginX;
     }

@@ -68,6 +68,14 @@ public class Empire {
         }
     }
 
+    public ArrayList<Building> getBuildings() {
+        return buildings;
+    }
+
+    public ArrayList<People> getPeople() {
+        return people;
+    }
+
     public EmpireBuilding getEmpireBuilding() {
         return empireBuilding;
     }
@@ -179,6 +187,10 @@ public class Empire {
 
     public void reducePopulation() {
 
+    }
+
+    public void removePeople(People people) {
+        this.people.remove(people);
     }
 
     public void removePeople() {

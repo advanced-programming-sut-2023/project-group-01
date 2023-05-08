@@ -91,7 +91,6 @@ public enum Outputs {
     WRONG_POUR_OIL_DIRECTION("Wrong Direction"),
     NO_ONE_TO_POUR_OIL("No One To Pour Oil"),
     SUCCESSFUL_POUR_OIL("Successful Pour Oil"),
-    //PASSWORD_CHANGE_SUCCESSFUL("Your password changed successfully."),
     USERNAME_CHANGE_SUCCESSFUL("Your username changed successfully."),
     NICKNAME_CHANGE_SUCCESSFUL("Your nickname changed successfully."),
     SLOGAN_CHANGE_SUCCESSFUL("Your slogan changed successfully."),
@@ -104,7 +103,7 @@ public enum Outputs {
     SUCCESS_SELL("You successfully sell the material."),
     INVALID_MATERIAL_NAME("Your entered material name is invalid."),
     NO_WAY_FOR_PATROL("No Way for Patrol"),
-    NO_WAY_TO_MOVE("No Way to Move"),
+    CAN_NOT_CROSS_FROM_DESTINATION("No Way to Move"),
     OUT_OF_RANGE_POUR_OIL("Out Of range Pour Oil"),
     SUCCESSFUL_MOVE("Successful Move"),
     NOT_HAVING_TUNNELER("Not Having Tunneler"),
@@ -114,7 +113,12 @@ public enum Outputs {
     NO_EXISTANCE_FOR_ENEMY("No enemy exist"),
     SUCCESSFUL_ATTACK("Successful Attack"),
     DIGED_TUNNEL("Diged tunnel"),
-    SET_POND_INVALID("you can't set pond whit this command please try again")
+    SET_POND_INVALID("you can't set pond whit this command please try again"),
+    VALID_SELECT_UNIT("Valid select unit"),
+    CAN_NOT_CROSS_FROM_PATROL1("Can not cross from Patrol1"),
+    CAN_NOT_CROSS_FROM_PATROL2("Can not cross from Patrol2"),
+    EMPTY_POSITION("EMPTY Position"),
+
     ;
     private String output;
 
