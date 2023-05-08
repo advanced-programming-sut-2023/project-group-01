@@ -9,6 +9,7 @@ import org.example.model.building.Gatehouse;
 import org.example.model.building.Tile;
 import org.example.model.building.castleBuilding.CagedDogs;
 import org.example.model.building.castleBuilding.Tower;
+import org.example.model.building.enums.BuildingName;
 import org.example.model.unit.Catapult;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
@@ -74,7 +75,21 @@ public class NextTurn {
     }
 
     public void doRates() {
-        //TODO
+        for(int i =0; i< empires.size(); i++){
+            for(Building building: empires.get(i).getBuildings()) {
+                if (building.getBuildingName().equals(BuildingName.CHURCH) ||
+                        building.getBuildingName().equals(BuildingName.CATHEDRAL))
+                    empires.get(i).addToReligionPopularity(2);
+                if(building.getBuildingName().equals(BuildingName.INN))
+                    empires.get(i).addToFoodPopularity(5);
+            }
+            if(empires.get(i).getGold() == 0) empires.get(i).setTaxRate(0); //TODO
+            //TODO check foods
+            empires.get(i).setFearPopularity();
+            empires.get(i).setTaxPopularity();
+            empires.get(i).setFoodPopularity();
+            empires.get(i).setPopularity();
+        }
     }
 
     public void doCageDogs(int x, int y) {

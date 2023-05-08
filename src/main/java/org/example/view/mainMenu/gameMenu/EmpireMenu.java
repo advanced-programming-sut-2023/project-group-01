@@ -73,11 +73,10 @@ public class EmpireMenu {
     }
 
     public void showPopularityFactors() {
-        //TODO check detail
-        System.out.println("food");
-        System.out.println("tax");
-        System.out.println("religion");
-        System.out.println("fear");
+        System.out.println("food: " + empire.getFoodPopularity());
+        System.out.println("tax: " + empire.getTaxPopularity());
+        System.out.println("religion: " + empire.getReligionPopularity());
+        System.out.println("fear: " + empire.getFearPopularity());
     }
 
     public void showPopularity() {

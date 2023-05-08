@@ -18,15 +18,56 @@ import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class CreateMapMenuController {
 
-    public Outputs setTextureForATile(Tile tile, String type) {
-        if (tile == null)
-            return Outputs.INVALID_COORDINATES;
-        if (tile.getBuilding() != null)
-            return Outputs.TILE_NOT_EMPTY;
-        if (TypeOfTile.getTypeOfTileWithName(type) != null) {
-            tile.setTypeOfTile(TypeOfTile.getTypeOfTileWithName(type));
-            return Outputs.SUCCESS;
+    public Outputs setTextureForATile(int x, int y, String type) {
+
+        TypeOfTile typeOfTile = TypeOfTile.getTypeOfTileWithName(type);
+        if (typeOfTile != null) {
+            if (typeOfTile.equals(TypeOfTile.SMALL_POND)) return setSmallPond(x, y);
+            else if (typeOfTile.equals(TypeOfTile.BIG_POND)) return setBigPond(x, y);
+            else {
+                Tile tile = gameMap.getTileWhitXAndY(x, y);
+                if (tile == null)
+                    return Outputs.INVALID_COORDINATES;
+                if (tile.getBuilding() != null)
+                    return Outputs.TILE_NOT_EMPTY;
+                tile.setTypeOfTile(typeOfTile);
+                return Outputs.SUCCESS;
+            }
         } else return Outputs.INVALID_TYPE_OF_TILE;
+    }
+
+    private Outputs setSmallPond(int x, int y) {
+        for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++) {
+                Tile tile = gameMap.getTileWhitXAndY(x+i, y+j);
+                if (tile == null)
+                    return Outputs.INVALID_COORDINATES;
+                if (tile.getBuilding() != null)
+                    return Outputs.TILE_NOT_EMPTY;
+            }
+        for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++) {
+                Tile tile = gameMap.getTileWhitXAndY(x+i, y+j);
+                tile.setTypeOfTile(TypeOfTile.SMALL_POND);
+            }
+        return Outputs.SUCCESS;
+    }
+
+    public Outputs setBigPond(int x, int y){
+        for (int i = -2; i <= 2; i++)
+            for (int j = -2; j <= 2; j++) {
+                Tile tile = gameMap.getTileWhitXAndY(x, y);
+                if (tile == null)
+                    return Outputs.INVALID_COORDINATES;
+                if (tile.getBuilding() != null)
+                    return Outputs.TILE_NOT_EMPTY;
+            }
+        for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++) {
+                Tile tile = gameMap.getTileWhitXAndY(x+i, y+j);
+                tile.setTypeOfTile(TypeOfTile.BIG_POND);
+            }
+        return Outputs.SUCCESS;
     }
 
     public Outputs setTextureForARectangle(int x1, int y1, int x2, int y2, String type) {
@@ -34,8 +75,10 @@ public class CreateMapMenuController {
                 gameMap.getTileWhitXAndY(x1, y1) == null ||
                 gameMap.getTileWhitXAndY(x2, y2) == null)
             return Outputs.INVALID_COORDINATES;
-        TypeOfTile typeOfTile = TypeOfTile.getTypeOfTileWithName("type");
+        TypeOfTile typeOfTile = TypeOfTile.getTypeOfTileWithName(type);
         if (typeOfTile == null) return Outputs.INVALID_TYPE_OF_TILE;
+        if (typeOfTile.equals(TypeOfTile.SMALL_POND) || typeOfTile.equals(TypeOfTile.BIG_POND))
+            return Outputs.SET_POND_INVALID;
         for (int i = x1; i <= x2; i++)
             for (int j = y2; j <= y1; j++)
                 if (gameMap.getTileWhitXAndY(i, j).getBuilding() != null)
@@ -50,7 +93,19 @@ public class CreateMapMenuController {
     public Outputs clear(Tile tile) {
         if (tile == null) return Outputs.INVALID_COORDINATES;
         tile.removeAllUnit();
-        tile.setBuilding(null);
+        if (tile.getBuilding() != null) {
+            tile.getBuilding().getEmpire().getBuildings().remove(tile.getBuilding());
+            int beginX = tile.getBuilding().getBeginX();
+            int beginY = tile.getBuilding().getBeginY();
+            int endX = tile.getBuilding().getEndX();
+            int endY = tile.getBuilding().getEndY();
+            for (int i = beginX; i < endX; i++) {
+                for (int j = beginY; j < endY; j++) {
+                    //TODO check
+                    GameMenu.getMap().getTile(i, j).setBuilding(null);
+                }
+            }
+        }
         tile.setTypeOfTile(TypeOfTile.NORMAL_GROUND);
         return Outputs.SUCCESS;
     }
@@ -113,7 +168,7 @@ public class CreateMapMenuController {
         MilitaryUnitName militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(type);
         if (militaryUnitName == null) return Outputs.INVALID_TYPE_OF_UNIT;
         for (int i = 0; i < count; i++) {
-            tile.addUnit(new MilitaryUnit(tile, getThisEmpire(),militaryUnitName, xOfBuilding, yOfBuilding));
+            tile.addUnit(new MilitaryUnit(tile, getThisEmpire(), militaryUnitName, xOfBuilding, yOfBuilding));
         }
 
         return Outputs.SUCCESS;

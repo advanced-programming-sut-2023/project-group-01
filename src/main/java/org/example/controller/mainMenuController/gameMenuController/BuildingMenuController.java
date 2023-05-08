@@ -10,6 +10,7 @@ import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
+import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
@@ -157,7 +158,7 @@ public class BuildingMenuController {
         for (int i = x1; i < x2; i++) {
             for (int j = y1; j < y2; j++) {
                 //TODO check
-                buildingMenu.getEmpire().getMap().getTile(x1, y1).setBuilding(null);
+                GameMenu.getMap().getTile(i, j).setBuilding(null);
             }
         }
         buildingMenu.getSelectedBuilding().getEmpire().removeFromBuildings(buildingMenu.getSelectedBuilding());
