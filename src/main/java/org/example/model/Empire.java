@@ -296,10 +296,6 @@ public class Empire {
         return newTrade;
     }
 
-    public ArrayList<Building> getBuildings() {
-        return buildings;
-    }
-
     public void clearNewTrades() {
         newTrade.clear();
     }
