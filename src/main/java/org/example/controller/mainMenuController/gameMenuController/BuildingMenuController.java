@@ -23,7 +23,7 @@ public class BuildingMenuController {
         this.buildingMenu = buildingMenu;
     }
 
-    public  Outputs selectBuilding(String x, String y) {
+    public Outputs selectBuilding(String x, String y) {
         if (x == null) {
             return Outputs.EMPTY_X;
         } else if (y == null) {
@@ -207,18 +207,21 @@ public class BuildingMenuController {
                     (material2 != null && !empire.havingMaterial(material2, Integer.parseInt(count))))
                 return Outputs.NOT_ENOUGH_EQUIPMENT;
         }
-        doCreateUnit(type, barrackBoolean, mercenaryBoolean, engineerGuildBoolean, cathedralBoolean
+        boolean bool = doCreateUnit(type, barrackBoolean, mercenaryBoolean, engineerGuildBoolean, cathedralBoolean
                 , tunnelerBoolean, Integer.parseInt(count));
+        if (!bool)
+            return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
         return Outputs.SUCCESSFUL_CREATE;
     }
 
-    private void doCreateUnit(String type, boolean barrackBoolean, boolean mercenaryBoolean,
-                              boolean engineerGuildBoolean, boolean cathedralBoolean, boolean tunnelerBoolean, int count) {
-        if (barrackBoolean) BarrackMilitary(type, count);
-        else if (mercenaryBoolean) MercenaryBarrack(type, count);
-        else if (engineerGuildBoolean) Engineer(type, count);
-        else if (cathedralBoolean) BlackMonk(type, count);
-        else if (tunnelerBoolean) Tunneler(type, count);
+    private boolean doCreateUnit(String type, boolean barrackBoolean, boolean mercenaryBoolean,
+                                 boolean engineerGuildBoolean, boolean cathedralBoolean, boolean tunnelerBoolean, int count) {
+        if (barrackBoolean) return BarrackMilitary(type, count);
+        else if (mercenaryBoolean) return MercenaryBarrack(type, count);
+        else if (engineerGuildBoolean) return Engineer(type, count);
+        else if (cathedralBoolean) return BlackMonk(type, count);
+        else if (tunnelerBoolean) return Tunneler(type, count);
+        return false;
     }
 
     public int getPriceByName(String name) {
@@ -242,7 +245,7 @@ public class BuildingMenuController {
         return null;
     }
 
-    private void BarrackMilitary(String militaryUnitName, int count) {
+    private boolean BarrackMilitary(String militaryUnitName, int count) {
         int XY = findXY(BuildingName.BARRACK);
         int size = getMap().getSize();
         int x = XY / size;
@@ -254,38 +257,46 @@ public class BuildingMenuController {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
                 MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
+                return true;
             }
             case "Crossbowmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
                 MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
+                return true;
             }
-            case "Spearmen" ->{
+            case "Spearmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
                 MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
+                return true;
             }
             case "Pikemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
                 MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
+                return true;
             }
             case "Macemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
                 MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
+                return true;
             }
             case "Swordsmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
                 MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
+                return true;
             }
             case "Knight" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
                 MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
+                return true;
             }
         }
+        return false;
     }
 
     public int findXY(BuildingName buildingName) {
@@ -314,7 +325,7 @@ public class BuildingMenuController {
         return -1;
     }
 
-    private void MercenaryBarrack(String militaryUnitName, int count) {
+    private boolean MercenaryBarrack(String militaryUnitName, int count) {
         int XY = findXY(BuildingName.MERCENARY_BARRACKS);
         int size = getMap().getSize();
         int x = XY / size;
@@ -325,36 +336,43 @@ public class BuildingMenuController {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW, x, y);
                 MilitaryUnitName.ARCHER_BOW.getVoice().playVoice(MilitaryUnitName.ARCHER_BOW.getVoice());
+                return true;
             }
             case "Slingers" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS, x, y);
                 MilitaryUnitName.SLINGERS.getVoice().playVoice(MilitaryUnitName.SLINGERS.getVoice());
+                return true;
             }
             case "Assassins" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS, x, y);
                 MilitaryUnitName.ASSASSINS.getVoice().playVoice(MilitaryUnitName.ASSASSINS.getVoice());
+                return true;
             }
             case "Horse Archers" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER, x, y);
                 MilitaryUnitName.HORSE_ARCHER.getVoice().playVoice(MilitaryUnitName.HORSE_ARCHER.getVoice());
+                return true;
             }
             case "Arabian Swordsmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN, x, y);
                 MilitaryUnitName.ARABIAN_SWORSMEN.getVoice().playVoice(MilitaryUnitName.ARABIAN_SWORSMEN.getVoice());
+                return true;
             }
             case "Fire Throwers" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS, x, y);
                 MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
+                return true;
             }
         }
+        return false;
     }
 
-    private void Engineer(String militaryUnitName, int count) {
+    private boolean Engineer(String militaryUnitName, int count) {
         int XY = findXY(BuildingName.ENGINEER_GUILD);
         int size = getMap().getSize();
         int x = XY / size;
@@ -364,14 +382,17 @@ public class BuildingMenuController {
             for (int i = 0; i < count; i++)
                 new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ENGINEER, x, y);
             MilitaryUnitName.ENGINEER.getVoice().playVoice(MilitaryUnitName.ENGINEER.getVoice());
+            return true;
         } else if (militaryUnitName.equals("Laddermen")) {
             for (int i = 0; i < count; i++)
                 new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN, x, y);
             MilitaryUnitName.LADDER_MEN.getVoice().playVoice(MilitaryUnitName.LADDER_MEN.getVoice());
+            return true;
         }
+        return false;
     }
 
-    private void Tunneler(String militaryName, int count) {
+    private boolean Tunneler(String militaryName, int count) {
         int XY = findXY(BuildingName.TUNNELER_GUILD);
         int size = getMap().getSize();
         int x = XY / size;
@@ -381,10 +402,12 @@ public class BuildingMenuController {
             for (int i = 0; i < count; i++)
                 new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.TUNNELER, x, y);
             MilitaryUnitName.TUNNELER.getVoice().playVoice(MilitaryUnitName.TUNNELER.getVoice());
+            return true;
         }
+        return false;
     }
 
-    private void BlackMonk(String militaryUnitName, int count) {
+    private boolean BlackMonk(String militaryUnitName, int count) {
         int XY = findXY(BuildingName.CATHEDRAL);
         int size = getMap().getSize();
         int x = XY / size;
@@ -393,7 +416,9 @@ public class BuildingMenuController {
             for (int i = 0; i < count; i++)
                 new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.BLACK_MONK, x, y);
             MilitaryUnitName.BLACK_MONK.getVoice().playVoice(MilitaryUnitName.BLACK_MONK.getVoice());
+            return true;
         }
+        return false;
     }
 
     public Outputs repair() {

@@ -118,6 +118,7 @@ public enum Outputs {
     CAN_NOT_CROSS_FROM_PATROL1("Can not cross from Patrol1"),
     CAN_NOT_CROSS_FROM_PATROL2("Can not cross from Patrol2"),
     EMPTY_POSITION("EMPTY Position"),
+    WRONG_UNIT_FOR_SELECTED_BUILDING("Wrong building for selected building"),
 
     ;
     private String output;
