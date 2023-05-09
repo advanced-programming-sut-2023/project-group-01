@@ -2,11 +2,9 @@ package org.example.controller;
 
 import org.example.BestPath;
 import org.example.model.Empire;
+import org.example.model.People;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
-import org.example.model.building.castleBuilding.CagedDogs;
-import org.example.model.building.castleBuilding.Tower;
-import org.example.model.building.enums.BuildingName;
 import org.example.model.building.castleBuilding.*;
 import org.example.model.unit.Catapult;
 import org.example.model.unit.CatapultName;
@@ -44,6 +42,7 @@ public class NextTurn {
             doRates();
             doOnAllTiles();
             checkEmpireExist();
+            doFornextTurn();
         } else {
             turnNumber++;
             currentEmpire = empires.get(turnNumber);
@@ -70,24 +69,6 @@ public class NextTurn {
             for (int k = 0; k < 5; k++) {
                 if (findEnemyInDogsRange(x, y, k)) return;
             }
-        }
-    }
-
-    public void doRates() {
-        for(int i =0; i< empires.size(); i++){
-            for(Building building: empires.get(i).getBuildings()) {
-                if (building.getBuildingName().equals(BuildingName.CHURCH) ||
-                        building.getBuildingName().equals(BuildingName.CATHEDRAL))
-                    empires.get(i).addToReligionPopularity(2);
-                if(building.getBuildingName().equals(BuildingName.INN))
-                    empires.get(i).addToFoodPopularity(5);
-            }
-            if(empires.get(i).getGold() == 0) empires.get(i).setTaxRate(0); //TODO
-            //TODO check foods
-            empires.get(i).setFearPopularity();
-            empires.get(i).setTaxPopularity();
-            empires.get(i).setFoodPopularity();
-            empires.get(i).setPopularity();
         }
     }
 
@@ -146,7 +127,6 @@ public class NextTurn {
     }
 
 
-
     public void doOnAllMilitaryUnit(Tile tile, int x, int y) {
         int xDest;
         int yDest;
@@ -166,23 +146,32 @@ public class NextTurn {
     }
 
     private void callMoveFunctions(MilitaryUnit unit, boolean bool) {
-        if (unit instanceof Catapult)
+        if (unit instanceof Catapult) {
             MoveToXYForCatapult((Catapult) unit, bool);
-        else
-            MoveToXY(unit, false);
+            return;
+        }
+
+        int xDest;
+        int yDest;
+        if (unit.getXDestination() < getMap().getSize() && unit.getYDestination() < getMap().getSize()) {
+            xDest = unit.getXDestination();
+            yDest = unit.getYDestination();
+        } else if (unit.getPatrolX1() < getMap().getSize() && unit.getPatrolY1() < getMap().getSize()) {
+            xDest = unit.getPatrolX2();
+            yDest = unit.getPatrolY2();
+        } else {
+            return;
+        }
+        MoveToXY(unit, false, xDest, yDest);
+
     }
 
-    private void MoveToXY(MilitaryUnit unit, boolean haveBuilding) {
+    private void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {
         int xPos = unit.getXPos(), yPos = unit.getYPos();
-        int xDest = unit.getXDestination(), yDest = unit.getYDestination();
-        boolean isAssassins = false;
+        boolean isAssassins = unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS);
         BestPath bestPath = new BestPath(unit.getEmpire());
         LinkedList<Integer> path;
-        if (unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
-            path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, true);
-        else
-            path = path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, true, false);
-
+        path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, isAssassins);
         int XY = 0;
         int size = path.size();
         int mapSize = getMap().getSize();
@@ -191,21 +180,16 @@ public class NextTurn {
             for (int i = size - 1; i > 0; i--)
                 if (getMap().getTile(path.get(i) / mapSize, path.get(i) % mapSize).getBuilding() != null)
                     XY = path.remove();
-
+        boolean havePatrol = unit.getPatrolX1() < mapSize;
         //TODO check
-        if (path == null || path.size() == 0)
-            return;
-
+        if (path == null || path.size() == 0) return;
         int counter = 0;
-
         for (Integer integer : path) {
-            if (isMoveFinished(unit, integer, counter)) return;
+            if (isMoveFinished(unit, integer, counter, havePatrol, xDest, yDest)) return;
             counter++;
         }
-        int xFinal = XY / mapSize;
-        int yFinal = XY % mapSize;
-        Building building = getMap().getTile(xFinal, yFinal).getBuilding();
 
+        Building building = getMap().getTile(XY / mapSize, XY % mapSize).getBuilding();
         //TODO check
         if (unit instanceof LadderMen && unit.getXDestination() < mapSize && unit.getYDestination() < mapSize &&
                 building != null && building instanceof Wall)
@@ -213,7 +197,7 @@ public class NextTurn {
         unit.setMoved();
     }
 
-    private boolean isMoveFinished(MilitaryUnit unit, int integer, int counter) {
+    private boolean isMoveFinished(MilitaryUnit unit, int integer, int counter, boolean havePatrol, int xDest, int yDest) {
         int mapSize = getMap().getSize();
         unit.goToPos(integer / mapSize, integer % mapSize);
         Building building = getMap().getTile(integer / mapSize, integer % mapSize).getBuilding();
@@ -229,20 +213,25 @@ public class NextTurn {
             }
         }
         if (getMap().getTile(unit.getXPos(), unit.getYPos()).findNearEnemiesMilitaryUnit(unit.getEmpire()).size() != 0) {
-            unit.goToDestination(unit.getXPos(), unit.getYPos());
+            unit.goToPos(unit.getXPos(), unit.getYPos());
             return true;
         }
-        if (unit.getXPos() == unit.getXDestination() && unit.getYPos() == unit.getYDestination()) {
-            unit.goToDestination(unit.getXDestination(), unit.getYDestination());
+        if (unit.getXPos() == xDest && unit.getYPos() == yDest) {
+            if (havePatrol) {
+                unit.goToPos(xDest, yDest);
+                unit.changePatrol();
+            } else {
+                unit.goToDestination(xDest, yDest);
+            }
             return true;
         }
         if (counter >= unit.getMilitaryUnitName().getSpeed()) {
-            unit.goToDestination(unit.getXPos(), unit.getYPos());
+            unit.goToPos(unit.getXPos(), unit.getYPos());
             return true;
         }
         if (unit.getMilitaryUnitName().getGunshot() > 0 &&
-                getMap().getTile(unit.getXPos(), unit.getYPos()).findNearEnemiesMilitaryUnit(unit.getEmpire()).size() != 0) {
-            unit.goToDestination(unit.getXPos(), unit.getYPos());
+                findEnemyInTheBoardOfArcher(unit).size() != 0) {
+            unit.goToPos(unit.getXPos(), unit.getYPos());
             return true;
         }
         return false;
@@ -467,11 +456,12 @@ public class NextTurn {
     }
 
     private void doAttacking(MilitaryUnit unit) {
-        if (unit instanceof Catapult && ((Catapult)unit).getCatapultName().getFireRange() > 0)
+        if (unit instanceof Catapult && ((Catapult) unit).getCatapultName().getFireRange() > 0)
             doCatapultAttack((Catapult) unit);
         else if (!(unit instanceof Catapult) && unit.getMilitaryUnitName().getGunshot() > 0)
             doArcherAttack(unit);
-        else if (unit.getMilitaryUnitName().getGunshot() == 0)
+        else if ((!(unit instanceof Catapult) && unit.getMilitaryUnitName().getGunshot() == 0) ||
+                (unit instanceof Catapult && ((Catapult) unit).getCatapultName().getFireRange() == 0))
             doAttack(unit);
     }
 
@@ -528,9 +518,111 @@ public class NextTurn {
 
     private void doAttack(MilitaryUnit unit) {
         //Attack be building
+        if (!(unit instanceof Catapult))
+            doNormalAttack(unit);
+        else if (unit instanceof Catapult && ((Catapult) unit).getCatapultName().getFireRange() == 0)
+            CatapultAttack((Catapult) unit);
+    }
+
+    private void CatapultAttack(Catapult catapult) {
+        int xPos = catapult.getXPos();
+        int yPos = catapult.getYPos();
+        int x = catapult.getXAttack();
+        int y = catapult.getYAttack();
+        int distance = Math.abs((x + y) - (xPos + yPos));
+        int damage = catapult.getCatapultName().getDamage();
+        Building building = getMap().getTile(x, y).getBuilding();
+        if (catapult.getCatapultName().equals(CatapultName.BATTERNING_RAM) && distance == 1 && building != null) {
+            if (building.getBuildingName().getHitPoint() > damage)
+                building.getBuildingName().reduceHitPoint(damage);
+            else
+                building.removeBuilding();
+        }
+    }
+
+    private void doNormalAttack(MilitaryUnit unit) {
+        int xPos = unit.getXPos();
+        int yPos = unit.getYPos();
+        int x = unit.getXAttack();
+        int y = unit.getYAttack();
+        int distance = Math.abs((x + y) - (xPos + yPos));
+        int damage = unit.getMilitaryUnitName().getAttack();
+        Building building = getMap().getTile(x, y).getBuilding();
+        if (distance == 1 && building != null) {
+            if (building.getBuildingName().getHitPoint() > damage)
+                building.getBuildingName().reduceHitPoint(damage);
+            else
+                building.removeBuilding();
+        }
 
     }
 
+    private void doNormalWildMove(MilitaryUnit unit) {
+        int xPos = unit.getXPos();
+        int yPos = unit.getYPos();
+        int mapSize = getMap().getSize();
+
+        if (!(unit instanceof Catapult)) {
+            if (getMap().getTile(xPos, yPos).findNearEnemiesMilitaryUnit(unit.getEmpire()).size() != 0 && !unit.isMoved() &&
+                    unit.getXPos() > mapSize && unit.getPatrolX1() > mapSize) {
+                ArrayList<MilitaryUnit> enemy = findEnemyForWildUnit(xPos, yPos, unit, unit.getMilitaryUnitName().getGunshot());
+                if (findEnemyForWildUnit(xPos, yPos, unit, unit.getMilitaryUnitName().getGunshot()).size() != 0) {
+                    int x = enemy.get(0).getXPos();
+                    int y = enemy.get(0).getYPos();
+                    if (unit.getMilitaryUnitName().getGunshot() == 0)
+                        unit.goToDestination(x, y);
+                    else
+                        unit.goToDestination(XYfinderForWildArcher(x, y, unit) / mapSize,
+                                XYfinderForWildArcher(x, y, unit) / mapSize);
+                }
+
+            }
+        }
+    }
+
+    private int XYfinderForWildArcher(int xDest, int yDest, MilitaryUnit unit) {
+        int xPos = unit.getXPos();
+        int yPos = unit.getYPos();
+
+        if (xDest >= xPos && yDest >= yPos) return (xDest - 1) * getMap().getSize() + yDest - 1;
+        else if (xDest >= xPos && yDest < yPos) return (xDest - 1) * getMap().getSize() + yDest + 1;
+        else if (xDest < xPos && yDest > yPos) return (xDest + 1) * getMap().getSize() + yDest - 1;
+        else return (xDest + 1) * getMap().getSize() + yDest + 1;
+
+    }
+
+    private ArrayList<MilitaryUnit> findEnemyForWildUnit(int x, int y, MilitaryUnit unit, int gunShot) {
+        boolean[][] visit = new boolean[20][20];
+        ArrayList<MilitaryUnit> enemy = new ArrayList<>();
+        for (int k = 0; k < gunShot + 10; k++) {
+            for (int i = x - k; i < x + k; i++) {
+                for (int j = y - k; j < y + k; j++) {
+                    if (!visit[i][j] && (enemy = getMap().getTile(i, j).findNearEnemiesMilitaryUnit(unit.getEmpire())).size() != 0) {
+                        return enemy;
+                    }
+                    visit[i][j] = true;
+                }
+            }
+        }
+        return enemy;
+    }
+
+    private void doFornextTurn() {
+        for (Empire empire : empires) {
+            for (People person : empire.getPeople()) {
+                if (person instanceof MilitaryUnit) {
+                    ((MilitaryUnit) person).setNotMoved();
+                    if (((MilitaryUnit) person).getMilitaryUnitName().getHitPoint() <= 0) {
+                        ((MilitaryUnit) person).removeUnit();
+                    }
+                }
+            }
+            for (Building building : empire.getBuildings()) {
+                if (building.getBuildingName().getHitPoint() <= 0 || (building instanceof KillingPits && ((KillingPits)building).isUsed()))
+                    building.removeBuilding();
+            }
+        }
+    }
 
 //    public void doOnCatapults(Catapult catapult) {
 //
