@@ -280,9 +280,19 @@ public class MilitaryMenuController {
         int yAttack = Integer.parseInt(y);
         int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
         int yStart = militaryMenu.getSelectedUnit().get(0).getYPos();
-        moving(xStart, yStart, xAttack, yAttack, empire);
+        for (People person : getMap().getTile(xAttack, yAttack).getPeople()) {
+            if (person instanceof MilitaryUnit && person.getEmpire().equals(empire)) {
+                ((MilitaryUnit) person).setXAttack(xAttack);
+                ((MilitaryUnit) person).setYAttack(yAttack);
+            }
+        }
         militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_ATTACK;
+    }
+
+    public Outputs attack_E(String x, String y) {
+
+        return null;
     }
 
     private boolean checkEnemyExistance(int x, int y) {

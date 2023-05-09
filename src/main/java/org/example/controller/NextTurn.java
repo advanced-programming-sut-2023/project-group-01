@@ -24,6 +24,7 @@ public class NextTurn {
     private Empire currentEmpire;
     private int numberOfEmpires;
     private int turnNumber;
+    private int score = 0;
 
     public NextTurn(GameMenu gameMenu) {
         this.gameMenu = gameMenu;
@@ -117,8 +118,11 @@ public class NextTurn {
     private void checkEmpireExist() {
         ArrayList<Empire> removingEmpires = new ArrayList<Empire>();
         for (Empire empire : empires)
-            if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0)
+            if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
                 removingEmpires.add(empire);
+                empire.getPlayer().setHighScore( empire.getPlayer().getHighScore() + score);
+                score += 200;
+            }
         if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
     }
 
