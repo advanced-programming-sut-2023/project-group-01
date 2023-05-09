@@ -24,7 +24,7 @@ public enum BuildingName {
     KILLING_PIT(0, 0, BuildingCategory.CASTLE_BUILDING, "KillingPit", 0, 0, 6, 0, 1, TypeOfTile.NORMAL_GROUND),
     INN(250, 250, BuildingCategory.FOOD_PROCESSING_BUILDING, "Inn", 100, 0, 20, 1, 3, TypeOfTile.NORMAL_GROUND),
     MILL(270, 270, BuildingCategory.FOOD_PROCESSING_BUILDING, "Mill", 0, 0, 20, 3, 2, TypeOfTile.NORMAL_GROUND),
-    IRON_MINE(320, 320, BuildingCategory.INDUSTRIAL_BUILDING, "IronMine", 0, 0, 20, 2, 3, TypeOfTile.NORMAL_GROUND),
+    IRON_MINE(320, 320, BuildingCategory.INDUSTRIAL_BUILDING, "IronMine", 0, 0, 20, 2, 3, TypeOfTile.IRON_MINE),
     MARKET(330, 330, BuildingCategory.INDUSTRIAL_BUILDING, "Market", 0, 0, 5, 1, 3, TypeOfTile.NORMAL_GROUND),
     OX_TETHER(100, 100, BuildingCategory.INDUSTRIAL_BUILDING, "OxTether", 0, 0, 5, 1, 1, TypeOfTile.NORMAL_GROUND),
     PITCH_RIG(240, 240, BuildingCategory.INDUSTRIAL_BUILDING, "PitchRig", 0, 0, 20, 1, 2, TypeOfTile.OIL_GROUND),
