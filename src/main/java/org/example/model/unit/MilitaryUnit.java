@@ -52,6 +52,10 @@ public class MilitaryUnit extends People {
         goToPos(xDestination, yDestination);
         this.xDestination = MAX_VALUE;
         this.yDestination = MAX_VALUE;
+        this.patrolX1 = MAX_VALUE;
+        this.patrolX2 = MAX_VALUE;
+        this.patrolY1 = MAX_VALUE;
+        this.patrolY2 = MAX_VALUE;
     }
 
     public void goToPos(int xPos, int yPos) {
@@ -60,10 +64,7 @@ public class MilitaryUnit extends People {
         this.xPos = xPos;
         this.yPos = yPos;
         getMap().getTile(xPos, yPos).addUnit(this);
-        this.patrolX1 = MAX_VALUE;
-        this.patrolX2 = MAX_VALUE;
-        this.patrolY1 = MAX_VALUE;
-        this.patrolY2 = MAX_VALUE;
+        this.isMoved = true;
     }
 
     public int getXAttack() {

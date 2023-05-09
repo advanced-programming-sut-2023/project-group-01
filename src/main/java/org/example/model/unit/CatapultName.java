@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public enum CatapultName {
     CARAPULT(150, "carapult", 30, 2, 400, 0, false, true, Speed.LOW.getSpeed()),
     TREBUCHER(150, "trebucher", 50, 3, 600, 0, false, false, 0),
-    SIEGE_TOWER(300, "siege tower", 0, 4, 0, 15, false, true, Speed.LOW.getSpeed()),
-    BATTERNING_RAM(500, "batterning ram", 0, 4, 600, 0, false, true, Speed.LOW.getSpeed()),
-    PORTABLE_SHIELD(50, "portable shield", 0, 1, 0, 0, false, true, Speed.LOW.getSpeed()),
-    FIRE_BALLISTRA(150, "fire ballistra", 30, 2, 400, 0, true, true, Speed.LOW.getSpeed());
+    SIEGE_TOWER(300, "siegeTower", 0, 4, 0, 15, false, true, Speed.LOW.getSpeed()),
+    BATTERNING_RAM(500, "batterningRam", 0, 4, 600, 0, false, true, Speed.LOW.getSpeed()),
+    PORTABLE_SHIELD(50, "portableShield", 0, 1, 0, 0, false, true, Speed.LOW.getSpeed()),
+    FIRE_BALLISTRA(150, "fireBallistra", 30, 2, 400, 0, true, true, Speed.LOW.getSpeed());
     private int hitPoint;
     private final int speed;
     private final String name;

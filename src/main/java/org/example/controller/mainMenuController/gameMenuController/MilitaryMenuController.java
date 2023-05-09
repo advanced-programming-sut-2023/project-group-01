@@ -301,7 +301,6 @@ public class MilitaryMenuController {
         return militaryUnits;
     }
 
-
     public Outputs disbandUnit(int destX, int destY) {
         if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
 
@@ -323,7 +322,4 @@ public class MilitaryMenuController {
             return null;
     }
 
-    public void doDisband(int destX, int destY, LinkedList<Integer> path) {
-
-    }
 }
