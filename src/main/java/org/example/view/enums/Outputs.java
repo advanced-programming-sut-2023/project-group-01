@@ -113,6 +113,7 @@ public enum Outputs {
     NO_EXISTANCE_FOR_ENEMY("No enemy exist"),
     SUCCESSFUL_ATTACK("Successful Attack"),
     DIGED_TUNNEL("Diged tunnel"),
+    SET_POND_INVALID("you can't set pond whit this command please try again"),
     VALID_SELECT_UNIT("Valid select unit"),
     CAN_NOT_CROSS_FROM_PATROL1("Can not cross from Patrol1"),
     CAN_NOT_CROSS_FROM_PATROL2("Can not cross from Patrol2"),

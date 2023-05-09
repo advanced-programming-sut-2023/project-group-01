@@ -66,7 +66,7 @@ public class CreateMapMenu {
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
         Outputs outputs = new CreateMapMenuController().setTextureForATile
-                (gameMap.getTileWhitXAndY(xOfMap, yOfMap), type);
+                (xOfMap, yOfMap, type);
         System.out.println(outputs.toString());
     }
 

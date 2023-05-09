@@ -23,11 +23,15 @@ public class Empire {
     private int foodRate;
     private int taxRate;
     private int fearRate;
-    private int religionRate;
+    private int foodPopularity;
+    private int taxPopularity;
+    private int religionPopularity;
+    private int fearPopularity;
     private int population;
     private int maxPopulation;
     private int gold;
     private Color color;
+
     private Map map;
     private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
     private LinkedHashMap<FoodType, Integer> foods = new LinkedHashMap<>(4);
@@ -47,6 +51,10 @@ public class Empire {
         this.foodRate = 0;
         this.taxRate = 0;
         this.fearRate = 0;
+        this.foodPopularity = 0;
+        this.taxPopularity = 0;
+        this.fearPopularity = 0;
+        this.religionPopularity = 0;
         foods.put(FoodType.BREED, 0);
         foods.put(FoodType.APPLE, 0);
         foods.put(FoodType.MEET, 0);
@@ -92,8 +100,60 @@ public class Empire {
         return foods;
     }
 
-    public void setPopularity(int popularity) {
-        this.popularity = popularity;
+    public int getFearPopularity() {
+        return fearPopularity;
+    }
+
+    public int getFoodPopularity() {
+        return foodPopularity;
+    }
+
+    public int getReligionPopularity() {
+        return religionPopularity;
+    }
+
+    public int getTaxPopularity() {
+        return taxPopularity;
+    }
+
+    public void setPopularity() {
+        popularity = (fearPopularity + foodPopularity + taxPopularity + religionPopularity);
+    }
+
+    public void setFearPopularity() {
+        fearPopularity += fearRate;
+    }
+
+    public void setFoodPopularity() {
+        foodPopularity += (4*foodRate);
+        int variety = -1;
+        for(FoodType foodType: FoodType.values()){
+            if(foods.get(foodType) > 0) variety++;
+        }
+        foodPopularity += variety;
+    }
+
+    public void setTaxPopularity() {
+        if(taxRate <= 0)
+            taxPopularity += ((taxRate*-2) + 1);
+        else if(taxRate <= 4)
+            taxPopularity -= taxRate*2;
+        else{
+            switch (taxRate){
+                case 5:
+                    taxPopularity -= 12;
+                    break;
+                case 6:
+                    taxPopularity -= 16;
+                    break;
+                case 7:
+                    taxPopularity -= 20;
+                    break;
+                case 8:
+                    taxPopularity -= 24;
+                    break;
+            }
+        }
     }
 
     public void setFoodRate(int foodRate) {
@@ -265,16 +325,22 @@ public class Empire {
 
     public void addToBuildings(Building building) {
         buildings.add(building);
-        if (building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE)) increasePopulation(8);
-        if (building.getBuildingName().equals(BuildingName.BIG_STONE_GATEHOUSE)) increasePopulation(10);
-        if (building.getBuildingName().equals(BuildingName.CHURCH) ||
-                building.getBuildingName().equals(BuildingName.CATHEDRAL)) this.religionRate += 2;
-        if (building.getBuildingName().equals(BuildingName.HOVEL)) this.population += this.maxPopulation += 8;
+        if (building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE)) this.maxPopulation += 8;
+        if (building.getBuildingName().equals(BuildingName.BIG_STONE_GATEHOUSE)) this.maxPopulation += 10;
+        if (building.getBuildingName().equals(BuildingName.HOVEL)) this.maxPopulation += 8;
         //TODO check this whit ali
     }
 
     public void removeFromBuildings(Building building) {
         buildings.remove(building);
+    }
+
+    public void addToReligionPopularity(int amount){
+        this.religionPopularity += amount;
+    }
+
+    public void addToFoodPopularity(int amount){
+        this.foodPopularity += amount;
     }
 
 }

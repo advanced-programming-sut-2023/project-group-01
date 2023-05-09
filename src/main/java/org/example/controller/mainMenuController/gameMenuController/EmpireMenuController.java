@@ -23,7 +23,7 @@ public class EmpireMenuController {
     }
 
     public Outputs fearRate(int fearNumber){
-        if(fearNumber <= 2 && fearNumber >= -2) getThisEmpire().setFoodRate(fearNumber);
+        if(fearNumber <= 2 && fearNumber >= -2) getThisEmpire().setFearRate(fearNumber);
         else return Outputs.INVALID_RATE_FOR_FOOD;
         return Outputs.SUCCESS;
     }
