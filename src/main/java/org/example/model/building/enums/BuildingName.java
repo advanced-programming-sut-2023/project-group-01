@@ -56,7 +56,12 @@ public enum BuildingName {
     BARLEY_FARM("", 310, 310, BuildingCategory.FARM_BUILDING, "BarleyFarm", 0, 0, 15, 1, 5, TypeOfTile.MEADOW),
     BAKERY("", 310, 310, BuildingCategory.FOOD_PROCESSING_BUILDING, "Bakery", 0, 0, 10, 1, 2, TypeOfTile.NORMAL_GROUND),
     ALE_PRODUCING("", 300, 300, BuildingCategory.FOOD_PROCESSING_BUILDING, "AleProducing", 0, 0, 10, 1, 2, TypeOfTile.NORMAL_GROUND),
-    GRANARY("", 330, 330, BuildingCategory.FOOD_PROCESSING_BUILDING, "FoodStockpile", 0, 0, 5, 0, 2, TypeOfTile.NORMAL_GROUND);
+    GRANARY("", 330, 330, BuildingCategory.FOOD_PROCESSING_BUILDING, "FoodStockpile", 0, 0, 5, 0, 2, TypeOfTile.NORMAL_GROUND),
+    desertShrub("", Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"desertShrub", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    CherryPalm("", Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"CherryPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    oliveTree("",Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"oliveTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    coconutPalm("",Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"coconutPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    palmTree("",Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"palmTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),;
 
     private final String type;
     private int hitPoint;
