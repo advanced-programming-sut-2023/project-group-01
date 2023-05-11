@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static org.example.model.Data.findUserWithUsername;
+
 public class UsersDatabaseJSON {
 
     public static void saveUsersInJSON() throws IOException {
@@ -19,13 +21,14 @@ public class UsersDatabaseJSON {
         System.out.println("Users data saved to file successfully !");
     }
 
-    public static void initializeUsers(){
+    public static void initializeUsers() {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("data.json")));
-            ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>(){}.getType());
-            if (users!=null)
-            Data.setUsers(users);
+            ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>() {
+            }.getType());
+            if (users != null)
+                Data.setUsers(users);
             System.out.println("Users data initialized successfully !");
         } catch (IOException e) {
             System.out.println("Unable to read from database");
@@ -39,11 +42,13 @@ public class UsersDatabaseJSON {
         fileWriter.close();
     }
 
-    public static void loadStayedLoggedInUser(){
+    public static void loadStayedLoggedInUser() {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("loggedIn.json")));
-            Data.setStayedLoggedIn(new Gson().fromJson(json, new TypeToken<User>(){}.getType()));
+            User user = (User) new Gson().fromJson(json, new TypeToken<User>() {
+            }.getType());
+            Data.setStayedLoggedIn(findUserWithUsername(user.getUsername()));
 
         } catch (IOException e) {
 

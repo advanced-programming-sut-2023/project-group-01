@@ -51,6 +51,7 @@ public class ShopMenu {
                 materials.put(material, materials.get(material) + count);
                 GameMenu.getThisEmpire().decreaseGold(material.getMaterialType().getBuyingPrice() * count);
                 return Outputs.SUCCESS_BUY;
+                //TODO check anbar
             }
         }
 

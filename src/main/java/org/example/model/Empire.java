@@ -32,12 +32,12 @@ public class Empire {
     private int fearPopularity;
     private int population;
     private int maxPopulation;
-    private int gold;
+    private float gold;
     private Color color;
 
     private Map map;
     private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
-    private LinkedHashMap<FoodType, Integer> foods = new LinkedHashMap<>(4);
+    private LinkedHashMap<FoodType, Float> foods = new LinkedHashMap<>(4);
     private ArrayList<Building> buildings = new ArrayList<>();
     private ArrayList<People> people = new ArrayList<>();
     //TODO: should be set
@@ -58,10 +58,10 @@ public class Empire {
         this.taxPopularity = 0;
         this.fearPopularity = 0;
         this.religionPopularity = 0;
-        foods.put(FoodType.BREED, 0);
-        foods.put(FoodType.APPLE, 0);
-        foods.put(FoodType.MEET, 0);
-        foods.put(FoodType.CHEESE, 0);
+        foods.put(FoodType.BREED, (float) 0);
+        foods.put(FoodType.APPLE, (float) 0);
+        foods.put(FoodType.MEET, (float) 0);
+        foods.put(FoodType.CHEESE, (float) 0);
         initializeMaterials();
     }
 
@@ -84,7 +84,7 @@ public class Empire {
     }
 
     public int getPopularity() {
-        return popularity;
+        return people.size();
     }
 
     public int getFoodRate() {
@@ -99,7 +99,7 @@ public class Empire {
         return fearRate;
     }
 
-    public LinkedHashMap<FoodType, Integer> getFoods() {
+    public LinkedHashMap<FoodType, Float> getFoods() {
         return foods;
     }
 
@@ -127,13 +127,17 @@ public class Empire {
         fearPopularity += fearRate;
     }
 
-    public void setFoodPopularity() {
+    public void setFoodPopularity(int variety) {
         foodPopularity += (4*foodRate);
+        foodPopularity += variety;
+    }
+
+    public int getVarietyFood(){
         int variety = -1;
         for(FoodType foodType: FoodType.values()){
             if(foods.get(foodType) > 0) variety++;
         }
-        foodPopularity += variety;
+        return variety;
     }
 
     public void setTaxPopularity() {
@@ -183,6 +187,21 @@ public class Empire {
 
     }
 
+   public int getTotalAmountOfFoods(){
+        int amount = 0;
+        for(FoodType foodType : FoodType.values())
+            amount += foods.get(foodType);
+        return amount;
+    }
+
+    public void increaseMaxPopulation(int amount) {
+        this.maxPopulation += amount;
+    }
+
+    public void reduceMaxPopulation(int amount) {
+        this.maxPopulation -= amount;
+    }
+
     public void increasePopulation(int amount) {
         if (this.population + amount <= this.maxPopulation)
             this.population += amount;
@@ -194,6 +213,9 @@ public class Empire {
 
     public void removePeople(People people) {
         this.people.remove(people);
+    }
+    public void addPeople(People people) {
+        this.people.add(people);
     }
 
     public void removePeople() {
@@ -215,7 +237,7 @@ public class Empire {
     }
 
 
-    public int getGold() {
+    public float getGold() {
         return gold;
     }
 
@@ -312,12 +334,7 @@ public class Empire {
                 return trades.get(i);
         return null;
     }
-
-    public void reduceGold(int amount) {
-        this.gold -= amount;
-    }
-
-    public void addGold(int amount) {
+    public void addGold(float amount) {
         this.gold += amount;
     }
 

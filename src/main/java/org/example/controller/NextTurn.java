@@ -6,6 +6,8 @@ import org.example.model.People;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.castleBuilding.*;
+import org.example.model.building.enums.BuildingName;
+import org.example.model.enums.FoodType;
 import org.example.model.unit.Catapult;
 import org.example.model.unit.CatapultName;
 import org.example.model.unit.LadderMen;
@@ -73,6 +75,54 @@ public class NextTurn {
         }
     }
 
+    public void doRates() {
+        for (int i = 0; i < empires.size(); i++) {
+            for (Building building : empires.get(i).getBuildings()) {
+                if (building.getBuildingName().equals(BuildingName.CHURCH) ||
+                        building.getBuildingName().equals(BuildingName.CATHEDRAL))
+                    empires.get(i).addToReligionPopularity(2);
+                if (building.getBuildingName().equals(BuildingName.INN))
+                    empires.get(i).addToFoodPopularity(5);
+            }
+            int variety = empires.get(i).getVarietyFood();
+            getTaxCheck(empires.get(i));
+            getFoodCheck(empires.get(i));
+            empires.get(i).setFearPopularity();
+            empires.get(i).setTaxPopularity();
+            empires.get(i).setFoodPopularity(variety);
+            empires.get(i).setPopularity();
+        }
+    }
+
+    private void getFoodCheck(Empire empire) {
+        float foodRatio = (float) ((empire.getFoodRate() + 2) * 0.5);
+        if(empire.getTotalAmountOfFoods() < foodRatio * empire.getPopularity())
+            empire.setFoodRate(-2);
+        else {
+            float amountOfFood = foodRatio * empire.getPopularity();
+            for(FoodType foodType: FoodType.values()){
+                if(empire.getFoods().get(foodType) >= amountOfFood){
+                    empire.getFoods().replace(foodType, empire.getFoods().get(foodType) - amountOfFood);
+                }
+                else{
+                    amountOfFood -= empire.getFoods().get(foodType);
+                    empire.getFoods().replace(foodType, (float) 0);
+                }
+            }
+        }
+    }
+
+    private void getTaxCheck(Empire empire) {
+        float taxRatio = 0;
+        if (empire.getTaxRate() > 0) taxRatio = (float) (0.6 + Math.abs(empire.getTaxRate() - 1) * 0.2000);
+        else if (empire.getTaxRate() < 0) taxRatio = (float) (-0.6 + Math.abs(empire.getTaxRate() - 1) * 0.2);
+        if (taxRatio < 0 && Math.abs(taxRatio) * empire.getPopulation() > empire.getGold()) {
+            empire.setTaxRate(0);
+            return;
+        }
+        empire.addGold(taxRatio * empire.getPopulation());
+    }
+
     private boolean findEnemyInDogsRange(int x, int y, int k) {
         ArrayList<MilitaryUnit> enemyMilitaryUnit;
 
@@ -126,11 +176,6 @@ public class NextTurn {
         if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
     }
 
-    public void doRates() {
-        //TODO
-    }
-
-
     public void doOnAllMilitaryUnit(Tile tile, int x, int y) {
         int xDest;
         int yDest;
@@ -176,6 +221,10 @@ public class NextTurn {
         BestPath bestPath = new BestPath(unit.getEmpire());
         LinkedList<Integer> path;
         path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, isAssassins);
+        if (unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
+            path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, true);
+        else
+            path = path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, true, false);
         int XY = 0;
         int size = path.size();
         int mapSize = getMap().getSize();
@@ -206,7 +255,7 @@ public class NextTurn {
         unit.goToPos(integer / mapSize, integer % mapSize);
         Building building = getMap().getTile(integer / mapSize, integer % mapSize).getBuilding();
 
-        if (building != null && building instanceof KillingPits && !building.getEmpire().equals(unit.getEmpire())) {
+        if (building != null && building instanceof KillingPits) {
             if (unit.getMilitaryUnitName().getHitPoint() > ((KillingPits) building).getDamage()) {
                 unit.getMilitaryUnitName().reduceHitPoint(((KillingPits) building).getDamage());
                 ((KillingPits) building).setUsed();
@@ -217,7 +266,7 @@ public class NextTurn {
             }
         }
         if (getMap().getTile(unit.getXPos(), unit.getYPos()).findNearEnemiesMilitaryUnit(unit.getEmpire()).size() != 0) {
-            unit.goToPos(unit.getXPos(), unit.getYPos());
+            unit.goToDestination(unit.getXPos(), unit.getYPos());
             return true;
         }
         if (unit.getXPos() == xDest && unit.getYPos() == yDest) {
