@@ -131,6 +131,10 @@ public enum BuildingName {
         return size;
     }
 
+    public int getNumberOfWorkers() {
+        return numberOfWorkers;
+    }
+
     public TypeOfTile getTypeCanBuildBuilding() {
         return typeCanBuildBuilding;
     }

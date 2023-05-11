@@ -84,7 +84,7 @@ public class EmpireMenu {
     }
 
     public void showFoodList() {
-        LinkedHashMap<FoodType, Integer> foodList = empire.getFoods();
+        LinkedHashMap<FoodType, Float> foodList = empire.getFoods();
         for (FoodType type : FoodType.values()) {
             System.out.println(type.toString() + ": " + foodList.get(type));
         }

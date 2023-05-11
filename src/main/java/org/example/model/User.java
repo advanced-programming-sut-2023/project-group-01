@@ -30,7 +30,7 @@ public class User {
         this.securityAnswer = securityAnswer;
         this.salt = salt;
         this.highScore=0;
-        this.rank=0;
+        this.rank= Data.getUsers().size() + 1;
     }
 
     public String getUsername() {

@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static org.example.model.Data.findUserWithUsername;
+
 public class UsersDatabaseJSON {
 
     public static void saveUsersInJSON() throws IOException {
@@ -20,7 +22,7 @@ public class UsersDatabaseJSON {
         System.out.println("Users data saved to file successfully !");
     }
 
-    public static void initializeUsers(){
+    public static void initializeUsers() {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("data.json")));

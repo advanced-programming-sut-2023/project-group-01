@@ -3,6 +3,7 @@ package org.example.controller.mainMenuController.gameMenuController;
 import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
+import org.example.model.building.Stable;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.building.enums.TypeOfTile;
@@ -12,6 +13,9 @@ import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
+import java.util.ArrayList;
+
+import static org.example.view.enums.Outputs.SUCCESSFUL_DROP_BUILDING;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class BuildingMenuController {
@@ -70,8 +74,27 @@ public class BuildingMenuController {
             return Outputs.FULL_POSITION;
         else if (isGroundSuitable(buildingName, x0, y0))
             return Outputs.NOT_SUITABLE_GROUND;
+        else if (empire.getNormalPopulation() < buildingName.getNumberOfWorkers())
+            return Outputs.NOT_ENOUGH_POPULATION;
+        else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY))
+            if (dropStorageBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
+                return Outputs.NOT_NEAR_BUILDING;
+        empire.changePeopleToWorker(buildingName.getNumberOfWorkers(), x0, y0);
         putBuilding(buildingName, x0, y0, empire);
-        return Outputs.SUCCESSFUL_DROP_BUILDING;
+        if (buildingName.equals(BuildingName.STABLE))
+            empire.addMaterial("horse", 4);
+        return SUCCESSFUL_DROP_BUILDING;
+    }
+
+    public Outputs dropStorageBuilding(int x, int y, BuildingName buildingName) {
+        //TODO امپراطوری انبار دارد یا ندارد
+        //equals ha jabeja shavand
+
+        for (int i = x - 1; i <= x + buildingName.getSize(); i++)
+            for (int j = y - 1; j <= y + buildingName.getSize(); j++)
+                if (buildingName.equals(getMap().getTile(i, j).getBuilding().getBuildingName()))
+                    return SUCCESSFUL_DROP_BUILDING;
+        return Outputs.NOT_NEAR_BUILDING;
     }
 
     public BuildingName findBuildingNameByName(String name) {
@@ -139,32 +162,32 @@ public class BuildingMenuController {
 
     public static void putBuilding(BuildingName buildingName, int x, int y, Empire empire) {
         int size = buildingName.getSize();
-        Building building = new Building(empire, x, y, buildingName);
-        for (int i = x; i < x + size; i++) {
-            for (int j = y; j < y + size; j++) {
+        Building building;
+        if (buildingName.equals(BuildingName.STABLE)) building = new Stable(empire, x, y, buildingName);
+        else building = new Building(empire, x, y, buildingName);
+
+        for (int i = x; i < x + size; i++)
+            for (int j = y; j < y + size; j++)
                 getMap().getTile(i, j).setBuilding(building);
-            }
-        }
         empire.addToBuildings(building);
     }
 
-    public Outputs destroyBuilding() {
-        if (buildingMenu.getSelectedBuilding() == null) {
-            return Outputs.EMPTY_SELECTED_BUILDING;
-        }
+    public static Outputs destroyBuilding(Building building) {
+        if (building == null) return Outputs.EMPTY_SELECTED_BUILDING;
 
-        int x1 = buildingMenu.getSelectedBuilding().getBeginX();
-        int y1 = buildingMenu.getSelectedBuilding().getBeginY();
-        int x2 = buildingMenu.getSelectedBuilding().getEndX();
-        int y2 = buildingMenu.getSelectedBuilding().getEndY();
+        int x1 = building.getBeginX();
+        int y1 = building.getBeginY();
+        int x2 = building.getEndX();
+        int y2 = building.getEndY();
 
-        for (int i = x1; i < x2; i++) {
-            for (int j = y1; j < y2; j++) {
-                //TODO check
+        //TODO check
+        for (int i = x1; i < x2; i++)
+            for (int j = y1; j < y2; j++)
                 GameMenu.getMap().getTile(i, j).setBuilding(null);
-            }
-        }
-        buildingMenu.getSelectedBuilding().getEmpire().removeFromBuildings(buildingMenu.getSelectedBuilding());
+
+        building.getEmpire().removeFromBuildings(building);
+        if (building.getBuildingName().equals(BuildingName.STABLE))
+            building.getEmpire().reduceHorseForDestroy((Stable) building);
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 
@@ -175,17 +198,13 @@ public class BuildingMenuController {
         boolean engineerGuildBoolean = false;
         boolean cathedralBoolean = false;
         boolean tunnelerBoolean = false;
-        Material material1;
-        Material material2;
+        MaterialType material1;
+        MaterialType material2;
 
-        if (type == null)
-            return Outputs.EMPTY_TYPE;
-        else if (buildingMenu.getSelectedBuilding() == null)
-            return Outputs.EMPTY_SELECTED_BUILDING;
-        else if (count == null)
-            return Outputs.EMPTY_COUNT;
-        else if (!count.matches("\\d+"))
-            return Outputs.INVALID_COUNT;
+        if (type == null) return Outputs.EMPTY_TYPE;
+        else if (buildingMenu.getSelectedBuilding() == null) return Outputs.EMPTY_SELECTED_BUILDING;
+        else if (count == null) return Outputs.EMPTY_COUNT;
+        else if (!count.matches("\\d+")) return Outputs.INVALID_COUNT;
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Barrack"))
             barrackBoolean = true;
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Mercenary Barrack"))
@@ -202,13 +221,15 @@ public class BuildingMenuController {
 
         if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
             return Outputs.INVALID_MILITARY_TYPE;
-        else if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count))
+        else if (empire.getGold() > getPriceByName(type) * Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_MONEY;
         else if (barrackBoolean) {
             material1 = getArmouryByName(type);
             material2 = getArmamentByName(type);
-            if ((material1 != null && !empire.havingMaterial(material1, Integer.parseInt(count))) &&
-                    (material2 != null && !empire.havingMaterial(material2, Integer.parseInt(count))))
+            //TODO about armament
+            if ((material1 != null && !empire.havingMaterial(material1, Integer.parseInt(count))) ||
+                    (material2 != null && !empire.havingMaterial(material2, Integer.parseInt(count))) ||
+                    (type.equals("knight") && !empire.havingMaterial(MaterialType.HORSE, Integer.parseInt(count))))
                 return Outputs.NOT_ENOUGH_EQUIPMENT;
         }
         boolean bool = doCreateUnit(type, barrackBoolean, mercenaryBoolean, engineerGuildBoolean, cathedralBoolean
@@ -237,14 +258,14 @@ public class BuildingMenuController {
         return -1;
     }
 
-    public Material getArmouryByName(String name) {
+    public MaterialType getArmouryByName(String name) {
         for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
             if (militaryUnitName.getName().equals(name))
                 return militaryUnitName.getArmour();
         return null;
     }
 
-    public Material getArmamentByName(String name) {
+    public MaterialType getArmamentByName(String name) {
         for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
             if (militaryUnitName.getName().equals(name))
                 return militaryUnitName.getArmament();
@@ -263,42 +284,55 @@ public class BuildingMenuController {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
                 MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
+                empire.reduceMaterial(MilitaryUnitName.ARCHER.getArmament().getName(), 1);
                 return true;
             }
             case "Crossbowmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
                 MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
+                empire.reduceMaterial(MilitaryUnitName.CROSSBOW_MEN.getArmament().getName(), 1);
+                empire.reduceMaterial(MilitaryUnitName.CROSSBOW_MEN.getArmour().getName(), 1);
                 return true;
             }
             case "Spearmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
                 MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
+                empire.reduceMaterial(MilitaryUnitName.SPEAR_MEN.getArmament().getName(), 1);
                 return true;
             }
             case "Pikemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
                 MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
+                empire.reduceMaterial(MilitaryUnitName.PIKE_MEN.getArmament().getName(), 1);
+                empire.reduceMaterial(MilitaryUnitName.PIKE_MEN.getArmour().getName(), 1);
                 return true;
             }
             case "Macemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
                 MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
+                empire.reduceMaterial(MilitaryUnitName.MACE_MEN.getArmament().getName(), 1);
+                empire.reduceMaterial(MilitaryUnitName.MACE_MEN.getArmour().getName(), 1);
                 return true;
             }
             case "Swordsmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
                 MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
+                empire.reduceMaterial(MilitaryUnitName.SWORDSMEN.getArmament().getName(), 1);
+                empire.reduceMaterial(MilitaryUnitName.SWORDSMEN.getArmour().getName(), 1);
                 return true;
             }
             case "Knight" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
                 MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
+                empire.reduceMaterial(MilitaryUnitName.KNIGHT.getArmament().getName(), 1);
+                empire.reduceMaterial(MilitaryUnitName.KNIGHT.getArmour().getName(), 1);
+                empire.reduceMaterial("horse", 1);
                 return true;
             }
         }

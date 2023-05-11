@@ -1,5 +1,7 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
+import org.example.model.People;
+import org.example.model.Worker;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
@@ -10,6 +12,7 @@ import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static org.example.view.mainMenu.gameMenu.CreateMapMenu.gameMap;
@@ -93,12 +96,17 @@ public class CreateMapMenuController {
     public Outputs clear(Tile tile) {
         if (tile == null) return Outputs.INVALID_COORDINATES;
         tile.removeAllUnit();
-        if (tile.getBuilding() != null) {
-            tile.getBuilding().getEmpire().getBuildings().remove(tile.getBuilding());
-            int beginX = tile.getBuilding().getBeginX();
-            int beginY = tile.getBuilding().getBeginY();
-            int endX = tile.getBuilding().getEndX();
-            int endY = tile.getBuilding().getEndY();
+        Building building = tile.getBuilding();
+        if (building != null) {
+            building.getEmpire().getBuildings().remove(building);
+            int beginX = building.getBeginX();
+            int beginY = building.getBeginY();
+            int endX = building.getEndX();
+            int endY = building.getEndY();
+            building.getEmpire().getPeople().removeAll(
+                    getMap().getTile(beginX, beginY).getPeople());
+            getThisEmpire().reduceMaxPopulation(building.getBuildingName().getNumberOfWorkers());
+            getMap().getTile(beginX, beginY).removeAllUnit();
             for (int i = beginX; i < endX; i++) {
                 for (int j = beginY; j < endY; j++) {
                     //TODO check
@@ -158,6 +166,12 @@ public class CreateMapMenuController {
         if (BuildingMenuController.isGroundSuitable(buildingName, xOfBuilding, yOfBuilding))
             return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
         BuildingMenuController.putBuilding(buildingName, xOfBuilding, yOfBuilding, getThisEmpire());
+        for(int i = 0; i < buildingName.getNumberOfWorkers(); i++) {
+            Worker worker = new Worker(getMap().getTile(xOfBuilding, yOfBuilding), getThisEmpire());
+            getThisEmpire().addPeople(worker);
+            getMap().getTileWhitXAndY(xOfBuilding, yOfBuilding).addUnit(worker);
+        }
+        getThisEmpire().increaseMaxPopulation(buildingName.getNumberOfWorkers());
         return Outputs.SUCCESS;
     }
 

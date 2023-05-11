@@ -3,6 +3,7 @@ package org.example.model;
 
 import org.example.model.building.Building;
 import org.example.model.building.Material;
+import org.example.model.building.Stable;
 import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
@@ -31,12 +32,12 @@ public class Empire {
     private int fearPopularity;
     private int population;
     private int maxPopulation;
-    private int gold;
+    private float gold;
     private Color color;
 
     private Map map;
     private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
-    private LinkedHashMap<FoodType, Integer> foods = new LinkedHashMap<>(4);
+    private LinkedHashMap<FoodType, Float> foods = new LinkedHashMap<>(4);
     private ArrayList<Building> buildings = new ArrayList<>();
     private ArrayList<People> people = new ArrayList<>();
     //TODO: should be set
@@ -57,10 +58,10 @@ public class Empire {
         this.taxPopularity = 0;
         this.fearPopularity = 0;
         this.religionPopularity = 0;
-        foods.put(FoodType.BREED, 0);
-        foods.put(FoodType.APPLE, 0);
-        foods.put(FoodType.MEET, 0);
-        foods.put(FoodType.CHEESE, 0);
+        foods.put(FoodType.BREED, (float) 0);
+        foods.put(FoodType.APPLE, (float) 0);
+        foods.put(FoodType.MEET, (float) 0);
+        foods.put(FoodType.CHEESE, (float) 0);
         initializeMaterials();
         initializePeople();
     }
@@ -91,7 +92,7 @@ public class Empire {
     }
 
     public int getPopularity() {
-        return popularity;
+        return people.size();
     }
 
     public int getFoodRate() {
@@ -106,7 +107,7 @@ public class Empire {
         return fearRate;
     }
 
-    public LinkedHashMap<FoodType, Integer> getFoods() {
+    public LinkedHashMap<FoodType, Float> getFoods() {
         return foods;
     }
 
@@ -134,13 +135,17 @@ public class Empire {
         fearPopularity += fearRate;
     }
 
-    public void setFoodPopularity() {
+    public void setFoodPopularity(int variety) {
         foodPopularity += (4*foodRate);
+        foodPopularity += variety;
+    }
+
+    public int getVarietyFood(){
         int variety = -1;
         for(FoodType foodType: FoodType.values()){
             if(foods.get(foodType) > 0) variety++;
         }
-        foodPopularity += variety;
+        return variety;
     }
 
     public void setTaxPopularity() {
@@ -190,6 +195,21 @@ public class Empire {
 
     }
 
+   public int getTotalAmountOfFoods(){
+        int amount = 0;
+        for(FoodType foodType : FoodType.values())
+            amount += foods.get(foodType);
+        return amount;
+    }
+
+    public void increaseMaxPopulation(int amount) {
+        this.maxPopulation += amount;
+    }
+
+    public void reduceMaxPopulation(int amount) {
+        this.maxPopulation -= amount;
+    }
+
     public void increasePopulation(int amount) {
         if (this.population + amount <= this.maxPopulation)
             this.population += amount;
@@ -202,14 +222,22 @@ public class Empire {
     public void removePeople(People people) {
         this.people.remove(people);
     }
+    public void addPeople(People people) {
+        this.people.add(people);
+    }
 
     public void removePeople() {
         for (People person : people) {
-            if (!(person instanceof MilitaryUnit)) {
+            if (!(person instanceof MilitaryUnit) && !(person instanceof Worker)) {
                 people.remove(person);
                 return;
             }
         }
+    }
+
+    public void reduceHorseForDestroy(Stable stable) {
+        this.reduceMaterial("horse", stable.getNumberOfHorse());
+
     }
 
     public void addUnit(MilitaryUnit militaryUnit) {
@@ -217,7 +245,7 @@ public class Empire {
     }
 
 
-    public int getGold() {
+    public float getGold() {
         return gold;
     }
 
@@ -237,6 +265,7 @@ public class Empire {
             }
         }
     }
+
 
     public void reduceMaterial(String materialName, int count) {
         for (Material material : materials.keySet()) {
@@ -259,11 +288,12 @@ public class Empire {
         return population;
     }
 
-    public boolean havingMaterial(Material material, int count) {
+    //TODO check
+    public boolean havingMaterial(MaterialType materialType, int count) {
 
         for (Material material1 : materials.keySet()) {
-            if (material1.getMaterialType().getName().equals(material.getMaterialType().getName())
-                    && materials.get(material) > count) {
+            if (material1.getMaterialType().getName().equals(materialType.getName())
+                    && materials.get(material1) > count) {
                 return true;
             }
         }
@@ -317,11 +347,11 @@ public class Empire {
         return null;
     }
 
-    public void reduceGold(int amount) {
+    public void reduceGold(float amount) {
         this.gold -= amount;
     }
 
-    public void addGold(int amount) {
+    public void addGold(float amount) {
         this.gold += amount;
     }
 
@@ -353,4 +383,29 @@ public class Empire {
         this.foodPopularity += amount;
     }
 
+    public int getNormalPopulation() {
+        int number = 0;
+        for (People people1 : people) {
+            if (!(people1 instanceof MilitaryUnit) && !(people1 instanceof Worker))
+                number++;
+        }
+        return number;
+    }
+
+    public void changePeopleToWorker(int numberOfWorkers ,int x, int y) {
+        ArrayList<People> worker = new ArrayList<>();
+        int count = 0;
+        for (People person : people) {
+            if (count == numberOfWorkers) break;
+            if (!(person instanceof Worker) && !(person instanceof MilitaryUnit)) {
+                worker.add(person);
+                count++;
+            }
+        }
+        people.removeAll(worker);
+        for (People person : worker)
+            person.getPosition().removeUnit(person);
+        for (int i = 0; i < numberOfWorkers; i++)
+            people.add(new Worker(getMap().getTile(x, y), this));
+    }
 }

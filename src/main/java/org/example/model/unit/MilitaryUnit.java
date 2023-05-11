@@ -27,6 +27,7 @@ public class MilitaryUnit extends People {
     protected int patrolX2 = MAX_VALUE;
     protected int patrolY2 = MAX_VALUE;
     protected boolean isMoved;
+    protected boolean isAttacked;
 
     public MilitaryUnit(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
         super(position, empire);
