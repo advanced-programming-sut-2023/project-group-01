@@ -80,7 +80,13 @@ public class TradeMenu {
     }
 
     public void tradeChecker(Matcher matcher) {
-
+        matcher.find();
+        String type = matcher.group("type");
+        int amount = Integer.parseInt(matcher.group("amount"));
+        int price = Integer.parseInt(matcher.group("price"));
+        String message = matcher.group("message");
+        Outputs outputs = tradeMenuController.trade(type, amount, price, message);
+        System.out.println(outputs.toString());
     }
 
     public void tradeList() {
@@ -103,6 +109,7 @@ public class TradeMenu {
     }
 
     public void tradeAcceptChecker(Matcher matcher) {
+        matcher.find();
         int id = Integer.parseInt(matcher.group("id"));
         String message = matcher.group("message");
         Outputs outputs = tradeMenuController.tradeAccept(id, message);
