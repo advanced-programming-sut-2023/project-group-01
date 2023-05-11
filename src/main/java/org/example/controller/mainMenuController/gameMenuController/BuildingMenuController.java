@@ -473,7 +473,7 @@ public class BuildingMenuController {
     public Outputs repair() {
         if (buildingMenu.getSelectedBuilding() == null) {
             return Outputs.EMPTY_SELECTED_BUILDING;
-        } else if (!empire.havingMaterial(new Material(MaterialType.STONE), checkRepair())) {
+        } else if (!empire.havingMaterial(MaterialType.STONE, checkRepair())) {
             return Outputs.NOT_ENOUGH_STONE;
         }
         int x = buildingMenu.getSelectedBuilding().getBeginX();
