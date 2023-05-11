@@ -206,7 +206,7 @@ public class NextTurn {
         unit.goToPos(integer / mapSize, integer % mapSize);
         Building building = getMap().getTile(integer / mapSize, integer % mapSize).getBuilding();
 
-        if (building != null && building instanceof KillingPits) {
+        if (building != null && building instanceof KillingPits && !building.getEmpire().equals(unit.getEmpire())) {
             if (unit.getMilitaryUnitName().getHitPoint() > ((KillingPits) building).getDamage()) {
                 unit.getMilitaryUnitName().reduceHitPoint(((KillingPits) building).getDamage());
                 ((KillingPits) building).setUsed();

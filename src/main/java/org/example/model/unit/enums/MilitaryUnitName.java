@@ -3,32 +3,35 @@ package org.example.model.unit.enums;
 import org.example.Voice;
 import org.example.model.Empire;
 import org.example.model.building.castleBuilding.Armoury;
+import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.HitPoint;
 import org.example.model.building.Material;
 import org.example.model.unit.MilitaryUnit;
 
+import static org.example.model.building.enums.MaterialType.*;
+
 public enum MilitaryUnitName {
     LORD(Color.RED, GunShot.ZERO, "lord", "lord", Attack.LORD_ATTACK, HitPoint.LORD, Speed.MIDDLE, 0, null, null, false, null),
-    ARCHER(Color.RED, GunShot.HIGH, "european", "Archer", Attack.LOW, HitPoint.LOW, Speed.HIGH, 12, null, null, false, Voice.ARCHER),
-    CROSSBOW_MEN(Color.RED, GunShot.MIDDLE, "european", "Crossbowmen", Attack.LOW, HitPoint.MIDDLE, Speed.LOW, 20, null, null, false, Voice.CROSSBOW_MEN),
-    SPEAR_MEN(Color.RED, GunShot.ZERO, "european", "Spearmen", Attack.MIDDLE, HitPoint.SO_LOW, Speed.MIDDLE, 8, null, null, false, Voice.SPEAR_MEN),
-    PIKE_MEN(Color.RED, GunShot.ZERO, "european", "Pikemen", Attack.MIDDLE, HitPoint.HIGH, Speed.LOW, 20, null, null, false, Voice.PIKE_MEN),
-    MACE_MEN(Color.RED, GunShot.ZERO, "european", "Macemen", Attack.HIGH, HitPoint.MIDDLE, Speed.MIDDLE, 20, null, null, false, Voice.MACE_MEN),
-    SWORDSMEN(Color.RED, GunShot.ZERO, "european", "Swordsmen", Attack.SO_HIGH, HitPoint.SO_LOW, Speed.VERY_LOW, 40, null, null, false, Voice.SWORDSMEN),
-    KNIGHT(Color.RED, GunShot.ZERO, "european", "Knight", Attack.SO_HIGH, HitPoint.HIGH, Speed.SO_HIGH, 40, null, null, true, Voice.KNIGHT),
-    TUNNELER(Color.RED, GunShot.ZERO, "european", "Tunneler", Attack.MIDDLE, HitPoint.SO_LOW, Speed.SO_HIGH, 30, null, null, false, Voice.TUNNELER),
-    LADDER_MEN(Color.RED, GunShot.ZERO, "european", "Laddermen", Attack.ZERO, HitPoint.SO_LOW, Speed.SO_HIGH, 4, null, null, false, Voice.LADDER_MEN),
-    ENGINEER(Color.RED, GunShot.ZERO, "european", "Engineer", Attack.ZERO, HitPoint.SO_LOW, Speed.MIDDLE, 30, null, null, false, Voice.ENGINEER),
-    BLACK_MONK(Color.RED, GunShot.ZERO, "european", "Black Monk", Attack.MIDDLE, HitPoint.MIDDLE, Speed.LOW, 10, null, null, false, Voice.BLACK_MONK),
+    ARCHER(Color.RED, GunShot.HIGH, "european", "archer", Attack.LOW, HitPoint.LOW, Speed.HIGH, 12, null, ARC, false, Voice.ARCHER),
+    CROSSBOW_MEN(Color.RED, GunShot.MIDDLE, "european", "crossbowmen", Attack.LOW, HitPoint.MIDDLE, Speed.LOW, 20, LEATHER_ARMOUR, CROSSBOW, false, Voice.CROSSBOW_MEN),
+    SPEAR_MEN(Color.RED, GunShot.ZERO, "european", "spearmen", Attack.MIDDLE, HitPoint.SO_LOW, Speed.MIDDLE, 8, null, SPEAR, false, Voice.SPEAR_MEN),
+    PIKE_MEN(Color.RED, GunShot.ZERO, "european", "pikemen", Attack.MIDDLE, HitPoint.HIGH, Speed.LOW, 20, METAL_ARMOUR, PIKE, false, Voice.PIKE_MEN),
+    MACE_MEN(Color.RED, GunShot.ZERO, "european", "macemen", Attack.HIGH, HitPoint.MIDDLE, Speed.MIDDLE, 20, LEATHER_ARMOUR, MACE, false, Voice.MACE_MEN),
+    SWORDSMEN(Color.RED, GunShot.ZERO, "european", "swordsmen", Attack.SO_HIGH, HitPoint.SO_LOW, Speed.VERY_LOW, 40, METAL_ARMOUR, SWORD, false, Voice.SWORDSMEN),
+    KNIGHT(Color.RED, GunShot.ZERO, "european", "knight", Attack.SO_HIGH, HitPoint.HIGH, Speed.SO_HIGH, 40, METAL_ARMOUR, SWORD, true, Voice.KNIGHT),
+    TUNNELER(Color.RED, GunShot.ZERO, "european", "tunneler", Attack.MIDDLE, HitPoint.SO_LOW, Speed.SO_HIGH, 30, null, null, false, Voice.TUNNELER),
+    LADDER_MEN(Color.RED, GunShot.ZERO, "european", "laddermen", Attack.ZERO, HitPoint.SO_LOW, Speed.SO_HIGH, 4, null, null, false, Voice.LADDER_MEN),
+    ENGINEER(Color.RED, GunShot.ZERO, "european", "engineer", Attack.ZERO, HitPoint.SO_LOW, Speed.MIDDLE, 30, null, null, false, Voice.ENGINEER),
+    BLACK_MONK(Color.RED, GunShot.ZERO, "european", "blackMonk", Attack.MIDDLE, HitPoint.MIDDLE, Speed.LOW, 10, null, null, false, Voice.BLACK_MONK),
     //Bow Units :
-    ARCHER_BOW(Color.RED, GunShot.HIGH, "bow", "Archer Bow", Attack.LOW, HitPoint.LOW, Speed.HIGH, 75, null, null, false, Voice.ARCHER_BOW),
-    SLAVES(Color.RED, GunShot.ZERO, "bow", "Slaves", Attack.VERY_LOW, HitPoint.NOTHING, Speed.HIGH, 5, null, null, false, Voice.SLAVES),
-    SLINGERS(Color.RED, GunShot.LOW, "bow", "Slingers", Attack.LOW, HitPoint.SO_LOW, Speed.HIGH, 12, null, null, false, Voice.SLINGERS),
-    ASSASSINS(Color.RED, GunShot.ZERO, "bow", "Assassins", Attack.MIDDLE, HitPoint.MIDDLE, Speed.MIDDLE, 60, null, null, false, Voice.ASSASSINS),
-    HORSE_ARCHER(Color.RED, GunShot.HIGH, "bow", "Horse Archers", Attack.LOW, HitPoint.MIDDLE, Speed.SO_HIGH, 80, null, null, true, Voice.HORSE_ARCHER),
-    ARABIAN_SWORSMEN(Color.RED, GunShot.ZERO, "bow", "Arabian Swordsmen", Attack.HIGH, HitPoint.HIGH, Speed.SO_HIGH, 80, null, null, false, Voice.ARABIAN_SWORSMEN),
-    FIRE_THROWERS(Color.RED, GunShot.LOW, "bow", "Fire Throwers", Attack.HIGH, HitPoint.LOW, Speed.SO_HIGH, 100, null, null, false, Voice.FIRE_THROWERS);
+    ARCHER_BOW(Color.RED, GunShot.HIGH, "bow", "archerBow", Attack.LOW, HitPoint.LOW, Speed.HIGH, 75, null, null, false, Voice.ARCHER_BOW),
+    SLAVES(Color.RED, GunShot.ZERO, "bow", "alaves", Attack.VERY_LOW, HitPoint.NOTHING, Speed.HIGH, 5, null, null, false, Voice.SLAVES),
+    SLINGERS(Color.RED, GunShot.LOW, "bow", "slingers", Attack.LOW, HitPoint.SO_LOW, Speed.HIGH, 12, null, null, false, Voice.SLINGERS),
+    ASSASSINS(Color.RED, GunShot.ZERO, "bow", "assassins", Attack.MIDDLE, HitPoint.MIDDLE, Speed.MIDDLE, 60, null, null, false, Voice.ASSASSINS),
+    HORSE_ARCHER(Color.RED, GunShot.HIGH, "bow", "horseArchers", Attack.LOW, HitPoint.MIDDLE, Speed.SO_HIGH, 80, null, null, true, Voice.HORSE_ARCHER),
+    ARABIAN_SWORSMEN(Color.RED, GunShot.ZERO, "bow", "arabianSwordsmen", Attack.HIGH, HitPoint.HIGH, Speed.SO_HIGH, 80, null, null, false, Voice.ARABIAN_SWORSMEN),
+    FIRE_THROWERS(Color.RED, GunShot.LOW, "bow", "fireThrowers", Attack.HIGH, HitPoint.LOW, Speed.SO_HIGH, 100, null, null, false, Voice.FIRE_THROWERS);
 
 
     private final Color color;
@@ -40,13 +43,13 @@ public enum MilitaryUnitName {
     private int hitPoint;
     private final int speed;
     private final int cost;
-    private final Material armour;
-    private final Material armament;
+    private final MaterialType armour;
+    private final MaterialType armament;
     private final boolean isHavingHorse;
     private final Voice voice;
 
     MilitaryUnitName(Color color, GunShot gunShot, String type, String name, Attack attack, HitPoint hitPoint,
-                     Speed speed, int price, Material armour, Material armament, boolean isHavingHorse, Voice voice) {
+                     Speed speed, int price, MaterialType armour, MaterialType armament, boolean isHavingHorse, Voice voice) {
         this.state = MilitaryUnitState.STANDING;
         this.color = color;
         this.gunshot = gunShot.getGunShot();
@@ -106,12 +109,12 @@ public enum MilitaryUnitName {
         return gunshot;
     }
 
-    public Material getArmour() {
-        return armour;
+    public MaterialType getArmament() {
+        return armament;
     }
 
-    public Material getArmament() {
-        return armament;
+    public MaterialType getArmour() {
+        return armour;
     }
 
     public MilitaryUnitState getState() {

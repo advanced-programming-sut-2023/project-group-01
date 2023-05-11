@@ -3,6 +3,7 @@ package org.example.model;
 
 import org.example.model.building.Building;
 import org.example.model.building.Material;
+import org.example.model.building.Stable;
 import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
@@ -13,6 +14,8 @@ import org.example.model.unit.MilitaryUnit;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class Empire {
     private EmpireBuilding empireBuilding;
@@ -195,11 +198,16 @@ public class Empire {
 
     public void removePeople() {
         for (People person : people) {
-            if (!(person instanceof MilitaryUnit)) {
+            if (!(person instanceof MilitaryUnit) && !(person instanceof Worker)) {
                 people.remove(person);
                 return;
             }
         }
+    }
+
+    public void reduceHorseForDestroy(Stable stable) {
+        this.reduceMaterial("horse", stable.getNumberOfHorse());
+
     }
 
     public void addUnit(MilitaryUnit militaryUnit) {
@@ -228,6 +236,7 @@ public class Empire {
         }
     }
 
+
     public void reduceMaterial(String materialName, int count) {
         for (Material material : materials.keySet()) {
             if (material.getMaterialType().getName().equals(materialName)) {
@@ -249,19 +258,16 @@ public class Empire {
         return population;
     }
 
-    public boolean havingMaterial(Material material, int count) {
+    //TODO check
+    public boolean havingMaterial(MaterialType materialType, int count) {
 
         for (Material material1 : materials.keySet()) {
-            if (material1.getMaterialType().getName().equals(material.getMaterialType().getName())
-                    && materials.get(material) > count) {
+            if (material1.getMaterialType().getName().equals(materialType.getName())
+                    && materials.get(material1) > count) {
                 return true;
             }
         }
         return false;
-    }
-
-    public Map getMap() {
-        return map;
     }
 
     public LinkedHashMap<Material, Integer> getMaterials() {
@@ -343,4 +349,29 @@ public class Empire {
         this.foodPopularity += amount;
     }
 
+    public int getNormalPopulation() {
+        int number = 0;
+        for (People people1 : people) {
+            if (!(people1 instanceof MilitaryUnit) && !(people1 instanceof Worker))
+                number++;
+        }
+        return number;
+    }
+
+    public void changePeopleToWorker(int numberOfWorkers ,int x, int y) {
+        ArrayList<People> worker = new ArrayList<>();
+        int count = 0;
+        for (People person : people) {
+            if (count == numberOfWorkers) break;
+            if (!(person instanceof Worker) && !(person instanceof MilitaryUnit)) {
+                worker.add(person);
+                count++;
+            }
+        }
+        people.removeAll(worker);
+        for (People person : worker)
+            person.getPosition().removeUnit(person);
+        for (int i = 0; i < numberOfWorkers; i++)
+            people.add(new Worker(getMap().getTile(x, y), this));
+    }
 }
