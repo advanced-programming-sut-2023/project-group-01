@@ -162,6 +162,16 @@ public class BestPath {
 
         //TODO پل آبی را برسی کن
         //TODO check
+
+
+        if (tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross() &&
+                tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross())
+            return true;
+        if ((tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross()) &&
+        tile2.getBuilding() != null && tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS))
+            return true;
+        if ((tile1.getBuilding() != null && tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS)) && tile2.getBuilding() == null)
+        return true;
         if (((tile1.getBuilding() instanceof Wall) || (tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
                 (tile1.getBuilding() instanceof Gatehouse) || (tile1.getBuilding() instanceof CastleBuilding)) &&
                 ((tile2.getBuilding() instanceof Wall) || (tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
@@ -169,9 +179,6 @@ public class BestPath {
             return true;
         else if (((tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS) || tile1.getBuilding() == null)) &&
                 (tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS) || tile2.getBuilding() == null))
-            return true;
-        else if (tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross() &&
-                tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross())
             return true;
         else if (tile1.getBuilding() instanceof Gatehouse && tile1.getBuilding().getEmpire().equals(empire) &&
                 tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross()) {

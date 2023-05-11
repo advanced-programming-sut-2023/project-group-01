@@ -168,7 +168,6 @@ public class BuildingMenuController {
 
     public static void putBuilding(BuildingName buildingName, int x, int y, Empire empire) {
         int size = buildingName.getSize();
-//        Building building = getBuilding(buildingName, empire, x, y);
         Building building =getBuilding(buildingName, empire, x, y);
 
         for (int i = x; i < x + size; i++)
@@ -214,9 +213,8 @@ public class BuildingMenuController {
         building.getEmpire().removeFromBuildings(building);
         if (building.getBuildingName().equals(BuildingName.STABLE))
             building.getEmpire().reduceHorseForDestroy((Stable) building);
-        for (int i = 0; i < building.getBuildingName().getNumberOfWorkers(); i++) {
+        for (int i = 0; i < building.getBuildingName().getNumberOfWorkers(); i++)
             building.removeBuilding();
-        }
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 
