@@ -334,6 +334,11 @@ public class Empire {
                 return trades.get(i);
         return null;
     }
+
+    public void reduceGold(float amount) {
+        this.gold -= amount;
+    }
+
     public void addGold(float amount) {
         this.gold += amount;
     }

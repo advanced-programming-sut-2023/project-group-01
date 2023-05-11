@@ -2,9 +2,7 @@ package org.example.controller.mainMenuController.gameMenuController;
 
 import org.example.model.Empire;
 import org.example.model.People;
-import org.example.model.building.Building;
-import org.example.model.building.Material;
-import org.example.model.building.Stable;
+import org.example.model.building.*;
 import org.example.model.building.castleBuilding.*;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
@@ -161,21 +159,29 @@ public class BuildingMenuController {
 
     public static void putBuilding(BuildingName buildingName, int x, int y, Empire empire) {
         int size = buildingName.getSize();
-        Building building = getBuilding(buildingName, empire, x, y);
+//        Building building = getBuilding(buildingName, empire, x, y);
 
+        Building building = new Building(empire, x, y, buildingName);
         for (int i = x; i < x + size; i++)
             for (int j = y; j < y + size; j++)
                 getMap().getTile(i, j).setBuilding(building);
         empire.addToBuildings(building);
     }
+//    public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {
+//        if (buildingName.equals(BuildingName.ARMOURY)) return new Armoury(empire, x, y, buildingName);
+//        else if (buildingName.equals(BuildingName.CAGED_WAR_DOGS)) return new CagedDogs(empire, x, y, buildingName);
+//        else if (buildingName.equals(buildingName.KILLING_PIT)) return new KillingPits(empire, x, y, buildingName);
+//        else if (buildingName.equals(BuildingName.OIL_SMELTER)) return new OilSmelter(empire, x, y, buildingName, SecondProducerType.OIL_SMELTER);
+//        else if (buildingName.equals(buildingName.STAIRS)) return new Stairs(empire, x, y, buildingName);
+//        else if (buildingName.equals(BuildingName.WALL)) return new Wall(empire, x, y, buildingName);
+//        else if (buildingName.equals(BuildingName.STABLE)) return new Stable(empire, x, y, buildingName);
+//        else if (buildingName.equals(buildingName.SMALL_STONE_GATEHOUSE)) return new Gatehouse(empire, x, y, buildingName);
+//        else if (buildingName.equals(buildingName.BIG_STONE_GATEHOUSE)) return new Gatehouse(empire, x, y, buildingName);
+//        else if (buildingName.equals(buildingName.))
+//            return null;
+//    }
 
-    public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {
-        if (buildingName.equals(BuildingName.ARMOURY)) return new Armoury(empire, x, y, buildingName);
-        else if (buildingName.equals(BuildingName.CAGED_WAR_DOGS)) return new CagedDogs(empire, x, y, buildingName);
-        else if (buildingName.equals(buildingName.KILLING_PIT)) return new KillingPits(empire, x, y, buildingName);
-        else if (buildingName.equals(BuildingName.OIL_SMELTER)) return new OilSmelter(empire, x, y, buildingName);
-        else if (buildingName.equals(buildingName.STAIRS)) return new Stairs(empire, x, y, buildingName);
-    }
+
     public static Outputs destroyBuilding(Building building) {
         if (building == null) return Outputs.EMPTY_SELECTED_BUILDING;
 

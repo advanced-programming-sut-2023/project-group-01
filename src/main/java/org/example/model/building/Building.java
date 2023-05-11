@@ -25,7 +25,7 @@ public class Building {
         this.endX = x1 + buildingName.getSize();
         this.endY = y1 + buildingName.getSize();
         this.buildingName = buildingName;
-        this.workers = empire.returnPeopleForWorker(buildingName.getNumberOfWorkers(), x1, y1);
+        //this.workers = empire.returnPeopleForWorker(buildingName.getNumberOfWorkers(), x1, y1);
     }
 
     public BuildingName getBuildingName() {

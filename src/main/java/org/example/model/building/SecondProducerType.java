@@ -18,7 +18,7 @@ public enum SecondProducerType {
     ARMOUR_WORKSHOP(MaterialType.IRON, null, MaterialType.METAL_ARMOUR, null),
 
     //Different :
-    OIL_SMELTER(MaterialType.IRON, null, MaterialType.MELTED_IRON, null);
+    OIL_SMELTER(MaterialType.IRON, null, MaterialType.MELTED_IRON, MaterialType.OIL);
 
     private final MaterialType firstEnterance;
     private final MaterialType secondEnterance2;
