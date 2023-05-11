@@ -1,11 +1,16 @@
 package org.example.model.building;
 
 import org.example.model.Empire;
+import org.example.model.People;
+import org.example.model.Worker;
 import org.example.model.building.enums.BuildingName;
+
+import java.util.ArrayList;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class Building {
+    protected ArrayList<Worker> workers;
     protected Empire empire;
     protected int beginX;
     protected int endX;
@@ -20,6 +25,7 @@ public class Building {
         this.endX = x1 + buildingName.getSize();
         this.endY = y1 + buildingName.getSize();
         this.buildingName = buildingName;
+        this.workers = empire.returnPeopleForWorker(buildingName.getNumberOfWorkers(), x1, y1);
     }
 
     public BuildingName getBuildingName() {
@@ -27,10 +33,18 @@ public class Building {
     }
 
     public void removeBuilding() {
+
         for (int i = beginX; i < endX; i++)
             for (int j = beginY; j < endY; j++)
                 getMap().getTile(i, j).setBuilding(null);
+
+        for (Worker worker : workers) {
+            worker.getPosition().removeUnit(worker);
+            empire.getPeople().add(new People(getMap().getTile(beginX, beginY), this.getEmpire()));
+        }
+
         empire.getBuildings().remove(this);
+        this.getEmpire().getPeople().removeAll(workers);
     }
     public int getBeginX() {
         return beginX;

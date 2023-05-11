@@ -4,6 +4,7 @@ import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 import org.example.model.building.Stable;
+import org.example.model.building.castleBuilding.*;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.building.enums.TypeOfTile;
@@ -79,7 +80,7 @@ public class BuildingMenuController {
         else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY))
             if (dropStorageBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
-        empire.changePeopleToWorker(buildingName.getNumberOfWorkers(), x0, y0);
+
         putBuilding(buildingName, x0, y0, empire);
         if (buildingName.equals(BuildingName.STABLE))
             empire.addMaterial("horse", 4);
@@ -162,9 +163,7 @@ public class BuildingMenuController {
 
     public static void putBuilding(BuildingName buildingName, int x, int y, Empire empire) {
         int size = buildingName.getSize();
-        Building building;
-        if (buildingName.equals(BuildingName.STABLE)) building = new Stable(empire, x, y, buildingName);
-        else building = new Building(empire, x, y, buildingName);
+        Building building = getBuilding(buildingName, empire, x, y);
 
         for (int i = x; i < x + size; i++)
             for (int j = y; j < y + size; j++)
@@ -172,6 +171,13 @@ public class BuildingMenuController {
         empire.addToBuildings(building);
     }
 
+    public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {
+        if (buildingName.equals(BuildingName.ARMOURY)) return new Armoury(empire, x, y, buildingName);
+        else if (buildingName.equals(BuildingName.CAGED_WAR_DOGS)) return new CagedDogs(empire, x, y, buildingName);
+        else if (buildingName.equals(buildingName.KILLING_PIT)) return new KillingPits(empire, x, y, buildingName);
+        else if (buildingName.equals(BuildingName.OIL_SMELTER)) return new OilSmelter(empire, x, y, buildingName);
+        else if (buildingName.equals(buildingName.STAIRS)) return new Stairs(empire, x, y, buildingName);
+    }
     public static Outputs destroyBuilding(Building building) {
         if (building == null) return Outputs.EMPTY_SELECTED_BUILDING;
 
@@ -188,6 +194,9 @@ public class BuildingMenuController {
         building.getEmpire().removeFromBuildings(building);
         if (building.getBuildingName().equals(BuildingName.STABLE))
             building.getEmpire().reduceHorseForDestroy((Stable) building);
+        for (int i = 0; i < building.getBuildingName().getNumberOfWorkers(); i++) {
+            building.removeBuilding();
+        }
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 
