@@ -1,17 +1,18 @@
-package org.example.model.building.castleBuilding;
+package org.example.model.building;
 
 import org.example.model.Empire;
 import org.example.model.building.Material;
+import org.example.model.building.castleBuilding.CastleBuilding;
 import org.example.model.building.enums.BuildingName;
 
-public class Armoury extends CastleBuilding {
+public class Storage extends Building {
 
-    int[][] capacity = new int[10][5];
+    int capacity = 200;
+    int full = 0;
 
-    public Armoury(Empire empire, int x1, int y1, BuildingName buildingName) {
+    public Storage(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1, y1, buildingName);
     }
-
 
     public String isFull(Material material) {
         //TODO

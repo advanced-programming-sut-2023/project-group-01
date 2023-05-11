@@ -8,8 +8,6 @@ import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class EmpireMenuController {
 
-
-
     public Outputs foodRate(int rateNumber){
         if(rateNumber <= 2 && rateNumber >= -2) getThisEmpire().setFoodRate(rateNumber);
         else return Outputs.INVALID_RATE_FOR_FOOD;

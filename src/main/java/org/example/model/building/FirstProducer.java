@@ -7,9 +7,12 @@ import org.example.model.building.enums.FirstProducerType;
 public class FirstProducer extends Building {
     private FirstProducerType producerType;
 
-    public FirstProducer(Empire empire, int x1, int y1, BuildingName buildingName, FirstProducerType producerType) {
+    public FirstProducer(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1, y1, buildingName);
-        this.producerType = producerType;
+        //TODO
+        for (FirstProducerType firstProducerType : FirstProducerType.values())
+            if (firstProducerType.toString().equals(buildingName.getName()))
+                this.producerType = firstProducerType;
     }
 
     public void setProducerType(FirstProducerType producerType) {
