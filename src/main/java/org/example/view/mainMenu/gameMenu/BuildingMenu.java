@@ -62,7 +62,7 @@ public class BuildingMenu {
     }
 
     public void destroyBuilding() {
-        System.out.println(buildingMenuController.destroyBuilding().toString());
+        System.out.println(buildingMenuController.destroyBuilding(selectedBuilding).toString());
     }
 
     public void createUnitChecker(Matcher matcher) {

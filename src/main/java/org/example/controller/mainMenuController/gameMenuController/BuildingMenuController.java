@@ -170,25 +170,22 @@ public class BuildingMenuController {
         empire.addToBuildings(building);
     }
 
-    public Outputs destroyBuilding() {
-        if (buildingMenu.getSelectedBuilding() == null) {
-            return Outputs.EMPTY_SELECTED_BUILDING;
-        }
+    public static Outputs destroyBuilding(Building building) {
+        if (building == null) return Outputs.EMPTY_SELECTED_BUILDING;
 
-        int x1 = buildingMenu.getSelectedBuilding().getBeginX();
-        int y1 = buildingMenu.getSelectedBuilding().getBeginY();
-        int x2 = buildingMenu.getSelectedBuilding().getEndX();
-        int y2 = buildingMenu.getSelectedBuilding().getEndY();
+        int x1 = building.getBeginX();
+        int y1 = building.getBeginY();
+        int x2 = building.getEndX();
+        int y2 = building.getEndY();
 
-        for (int i = x1; i < x2; i++) {
-            for (int j = y1; j < y2; j++) {
-                //TODO check
+        //TODO check
+        for (int i = x1; i < x2; i++)
+            for (int j = y1; j < y2; j++)
                 GameMenu.getMap().getTile(i, j).setBuilding(null);
-            }
-        }
-        buildingMenu.getSelectedBuilding().getEmpire().removeFromBuildings(buildingMenu.getSelectedBuilding());
-        if (buildingMenu.getSelectedBuilding().getBuildingName().equals(BuildingName.STABLE))
-            empire.reduceHorseForDestroy((Stable) buildingMenu.getSelectedBuilding());
+
+        building.getEmpire().removeFromBuildings(building);
+        if (building.getBuildingName().equals(BuildingName.STABLE))
+            building.getEmpire().reduceHorseForDestroy((Stable) building);
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 
