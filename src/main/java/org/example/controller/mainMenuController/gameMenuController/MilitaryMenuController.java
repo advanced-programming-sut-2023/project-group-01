@@ -1,6 +1,7 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
 import org.example.BestPath;
+import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
@@ -269,7 +270,6 @@ public class MilitaryMenuController {
         else return Outputs.VALID_X_Y;
     }
 
-
     public Outputs attack(String x, String y) {
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
@@ -291,6 +291,9 @@ public class MilitaryMenuController {
     }
 
     public Outputs attack_E(String x, String y) {
+        Outputs outputs = commonOutPuts(x, y);
+        if (!outputs.equals(Outputs.VALID_X_Y))
+            return outputs;
 
         return null;
     }
