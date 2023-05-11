@@ -62,7 +62,7 @@ public class TradeMenu {
                 tradeAcceptChecker(matcher);
             else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.TRADE_HISTORY)) != null)
                 tradeHistory();
-            else System.out.println("Invalid command!");
+            else System.out.println("Invalid command in Trade Menu !");
         }
     }
 
@@ -74,7 +74,7 @@ public class TradeMenu {
 
     public void showEmpires() {
         int numberOfEmpire = 1;
-        for (Empire empire : getEmpires())
+        for (Empire empire : GameMenu.getEmpires())
             if (!empire.equals(getThisEmpire()))
                 System.out.println("Empire" + numberOfEmpire++ + ". " + empire.getPlayer().getUsername());
     }

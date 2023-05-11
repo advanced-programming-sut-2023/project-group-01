@@ -41,9 +41,9 @@ public class BuildingMenu {
             else if (BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DESTROY_BUILDING).matches())
                 destroyBuilding();
             else if (input.equals("exit"))
-                return;
+                break;
             else
-                System.out.println("Invalid Command in Military menu!");
+                System.out.println("Invalid Command in Building menu!");
         }
     }
 

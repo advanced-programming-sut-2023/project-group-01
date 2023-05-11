@@ -1,6 +1,7 @@
 package org.example.view.mainMenu;
 
 import org.example.controller.mainMenuController.ProfileMenuController;
+import org.example.model.Data;
 import org.example.model.User;
 import org.example.view.enums.CaptchaAsciiArt;
 import org.example.view.enums.Outputs;
@@ -8,6 +9,8 @@ import org.example.view.enums.commands.ProfileMenuCommands;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -25,6 +28,7 @@ public class ProfileMenu {
         String inputLine;
         Matcher matcher;
         Outputs output;
+        setRanks();
 
         while (true) {
             inputLine = scanner.nextLine();
@@ -53,7 +57,7 @@ public class ProfileMenu {
                 MainMenu mainMenu = new MainMenu(currentUser);
                 mainMenu.run(scanner);
                 break;
-            } else System.out.println("Invalid command in profile menu !");
+            } else System.out.println("Invalid command in Profile Menu !");
 
         }
     }
@@ -160,5 +164,13 @@ public class ProfileMenu {
                 continue;
             }
         }
+    }
+
+    private static void setRanks(){
+        Data.getUsers().sort(new User.Sort());
+        for (int i=0;i<Data.getUsers().size();i++){
+            Data.getUsers().get(i).setRank(i+1);
+        }
+
     }
 }

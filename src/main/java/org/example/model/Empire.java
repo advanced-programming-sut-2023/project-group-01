@@ -63,6 +63,7 @@ public class Empire {
         foods.put(FoodType.MEET, (float) 0);
         foods.put(FoodType.CHEESE, (float) 0);
         initializeMaterials();
+        initializePeople();
     }
 
     private void initializeMaterials() {
@@ -70,6 +71,13 @@ public class Empire {
             this.materials.put(new Material(materialType), 0);
         }
     }
+
+    private void initializePeople(){
+        for (int i=0;i<10;i++){
+            people.add(new People(getMap().getTile(empireBuilding.getX(),empireBuilding.getY()),this));
+        }
+    }
+
 
     public ArrayList<Building> getBuildings() {
         return buildings;
@@ -291,6 +299,10 @@ public class Empire {
         }
         return false;
     }
+
+//    public Map getMap() {
+//        return map;
+//    }
 
     public LinkedHashMap<Material, Integer> getMaterials() {
         return materials;

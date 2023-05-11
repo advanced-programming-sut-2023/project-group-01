@@ -2,10 +2,7 @@ package org.example.view;
 
 import org.example.controller.RegisterMenuController;
 import org.example.model.Data;
-import org.example.view.enums.CaptchaAsciiArt;
-import org.example.view.enums.Outputs;
-import org.example.view.enums.RandomSlogans;
-import org.example.view.enums.SecurityQuestion;
+import org.example.view.enums.*;
 import org.example.view.enums.commands.RegisterMenuCommands;
 
 import java.io.IOException;
@@ -20,6 +17,7 @@ public class RegisterMenu {
     private static final LoginMenu loginmenu = new LoginMenu();
     private static final RegisterMenu registerMenu = new RegisterMenu();
     public static String randomPass;
+    public static String unitTestTempOutput;
 
     public void run(Scanner scanner) throws NoSuchAlgorithmException, IOException {
         System.out.println("Now you are in Register Menu!");
@@ -27,15 +25,18 @@ public class RegisterMenu {
         Matcher matcher;
         randomPass = null;
 
-        while (true) {
+        while (scanner.hasNextLine()) {
             inputLine = scanner.nextLine();
 
             if ((matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX)).find()) {
                 Outputs output = register(matcher, inputLine);
+                unitTestTempOutput = "Success";
                 if (output.equals(Outputs.RANDOM_SLOGAN)) {
                     System.out.println(output.toString() + randomSlogan());
-                    if (randomPass != null)
+                    if (randomPass != null){
+                        System.out.println(output.toString() + randomPass + " .Please re enter random password to confirm");
                         randomPassConfirmRun(scanner);
+                    }
                     securityQuestionRun(scanner);
                     break;
                 }
@@ -54,7 +55,8 @@ public class RegisterMenu {
                 loginmenu.run(scanner);
                 break;
             } else if (RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.EXIT).find()) break;
-            else System.out.println("Invalid command in register menu!");
+            else printError("Invalid command in Register Menu!");
+            unitTestTempOutput = "Success";
         }
     }
 
@@ -62,16 +64,18 @@ public class RegisterMenu {
         String inputLine;
         Matcher matcher;
 
-        while (true) {
-            inputLine = scanner.nextLine();
+        while (scanner.hasNextLine()) {
+
+           inputLine = scanner.nextLine();
 
             if ((matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.RANDOM_PASSWORD_CONFIRMATION_REGEX)).find()) {
                 if (registerMenuController.randomPasswordConfirmation(matcher.group("passwordConfirm")) == null) {
-                    System.out.println("Password successfully confirmed.");
+                    printSuccess("Password successfully confirmed.");
+                    unitTestTempOutput = "Success";
                     securityQuestionRun(scanner);
                     break;
                 } else
-                    System.out.println(registerMenuController.randomPasswordConfirmation(matcher.group("passwordConfirm")).toString());
+                    printError(registerMenuController.randomPasswordConfirmation(matcher.group("passwordConfirm")).toString());
             }
         }
     }
@@ -85,13 +89,14 @@ public class RegisterMenu {
         System.out.println("1." + SecurityQuestion.getQuestion(0));
         System.out.println("2." + SecurityQuestion.getQuestion(1));
         System.out.println("3." + SecurityQuestion.getQuestion(2));
-        while (true) {
+        while (scanner.hasNextLine()) {
             inputLine = scanner.nextLine();
 
             if ((matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.PICK_QUESTION_REGEX)).find()) {
                 output = pickSecurityQuestion(matcher);
                 if (output.equals(Outputs.SUCCESS)) {
                     captchaRun(scanner);
+                    unitTestTempOutput = "Success";
                     break;
                 }
                 System.out.println(output);
@@ -107,24 +112,29 @@ public class RegisterMenu {
         while (true) {
             System.out.println(CaptchaAsciiArt.captchaGenerator());
             System.out.println("Enter captcha or enter \"0\" to generate a new captcha.");
-            inputLine = scanner.nextLine();
+            if (scanner.hasNext())inputLine = scanner.nextLine();
+            else break;
             int number = -1;
             boolean isValid = true;
 
             try {
                 number = Integer.parseInt(inputLine);
             } catch (NumberFormatException | NullPointerException e) {
-                System.out.println("Invalid input");
+                printError("Invalid input");
                 isValid = false;
+                unitTestTempOutput = "WrongNumber";
             }
             if (isValid) {
                 if (number == 0)
                     continue;
-                if (number != CaptchaAsciiArt.captchaValue)
-                    System.out.println("Your didn't enter captcha correctly.");
+                if (number != CaptchaAsciiArt.captchaValue){
+                    printError("You didn't enter captcha correctly.");
+                    unitTestTempOutput = "WrongCaptcha";
+                }
+
                 else {
                     Data.addUser(RegisterMenuController.temporaryCreatedUser);
-                    System.out.println("Register done successfully!");
+                    printSuccess("Register done successfully!");
                     try {
                         registerMenu.run(scanner);
                     } catch (NoSuchAlgorithmException | IOException e) {
@@ -135,14 +145,14 @@ public class RegisterMenu {
             }
             try {
                 TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                continue;
+            } catch (InterruptedException ignored) {
+
             }
         }
     }
 
 
-    private Outputs pickSecurityQuestion(Matcher matcher) {
+    public Outputs pickSecurityQuestion(Matcher matcher) {
         if (matcher.group("number") == null || matcher.group("answer") == null || matcher.group("answerConfirm") == null)
             return Outputs.NOT_ENOUGH_DATA;
 
@@ -152,9 +162,10 @@ public class RegisterMenu {
         return registerMenuController.securityQuestion(number, answer, answerConfirm);
     }
 
-    private String randomSlogan() {
+    public String randomSlogan() {
         String slogan = RandomSlogans.getRandomSlogan();
         RegisterMenuController.temporaryCreatedUser.setSlogan(slogan);
+        unitTestTempOutput = "Success";
         return slogan;
     }
 
@@ -192,4 +203,19 @@ public class RegisterMenu {
         return Outputs.INVALID_REGISTRATION_INPUT;
 
     }
+
+    public static void printSuccess(String string) {
+        BackgroundColor.changeColor(BackgroundColor.ANSI_GREEN_BACKGROUND);
+        BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_TEXT);
+        System.out.println(string);
+        BackgroundColor.changeColor(BackgroundColor.ANSI_RESET);
+    }
+
+    public static void printError(String string) {
+        BackgroundColor.changeColor(BackgroundColor.ANSI_RED_COLOR);
+        BackgroundColor.changeColor(BackgroundColor.ANSI_BLACK_TEXT);
+        System.out.println(string);
+        BackgroundColor.changeColor(BackgroundColor.ANSI_RESET);
+    }
+
 }

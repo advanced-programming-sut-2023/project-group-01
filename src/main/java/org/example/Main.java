@@ -6,6 +6,8 @@ import org.example.view.RegisterMenu;
 import org.example.view.mainMenu.MainMenu;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
@@ -14,6 +16,9 @@ public class Main {
 
         UsersDatabaseJSON.initializeUsers();
         UsersDatabaseJSON.loadStayedLoggedInUser();
+        Data.setDefaultMap( new String(Files.readAllBytes(Paths.get("DefaultMap.txt"))));
+
+
         Scanner scanner = new Scanner(System.in);
 
         if (Data.getStayedLoggedIn() == null) {

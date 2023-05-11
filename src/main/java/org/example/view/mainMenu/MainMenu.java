@@ -45,6 +45,7 @@ public class MainMenu {
             } else if (inputLine.equals("start game")){
                 GameMenu gameMenu = new GameMenu(currentUser);
                 gameMenu.run(scanner);
+                break;
             }else if (inputLine.equals("exit project"))
                 break;
             else System.out.println("Invalid command in Main Menu!");

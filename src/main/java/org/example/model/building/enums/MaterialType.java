@@ -14,7 +14,7 @@ public enum MaterialType {
     MEAT("meat", 40, 20, "food"),
     FLOUR("flour", 160, 50, "food"),
     CHEESE("cheese", 40, 20, "food"),
-    BARLEY("grape", 75, 40, "food"),
+    BARLEY("barley", 75, 40, "food"),
     ALE("ale", 100, 40, "food"),
 
 
@@ -22,7 +22,7 @@ public enum MaterialType {
     ARC("arc", 155, 75, "warfare"),
     CROSSBOW("crossbow", 290, 150, "warfare"),
     MACE("mace", 290, 150, "warfare"),
-    PIKE("axe", 180, 90, "warfare"),
+    PIKE("pike", 180, 90, "warfare"),
     SWORD("sword", 290, 150, "warfare"),
     SPEAR("spear", 100, 50, "warfare"),
     LEATHER_ARMOUR("leatherArmour", 125, 60, "warfare"),

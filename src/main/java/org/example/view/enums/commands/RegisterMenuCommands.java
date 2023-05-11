@@ -27,6 +27,7 @@ public enum RegisterMenuCommands {
         this.regex = regex;
     }
 
+
     public static Matcher getMatcher(String input, RegisterMenuCommands registerMenuCommands){
 
         Pattern pattern = Pattern.compile(registerMenuCommands.regex);

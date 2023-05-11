@@ -2,6 +2,7 @@ package org.example.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.example.view.RegisterMenu;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,13 +26,12 @@ public class UsersDatabaseJSON {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("data.json")));
-            ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>() {
-            }.getType());
-            if (users != null)
-                Data.setUsers(users);
-            System.out.println("Users data initialized successfully !");
+            ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>(){}.getType());
+            if (users!=null)
+            Data.setUsers(users);
+            RegisterMenu.printSuccess("Users data initialized successfully !");
         } catch (IOException e) {
-            System.out.println("Unable to read from database");
+            RegisterMenu.printError("Unable to read from database");
         }
 
     }
@@ -42,13 +42,11 @@ public class UsersDatabaseJSON {
         fileWriter.close();
     }
 
-    public static void loadStayedLoggedInUser() {
+    public static void loadStayedLoggedInUser(){
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("loggedIn.json")));
-            User user = (User) new Gson().fromJson(json, new TypeToken<User>() {
-            }.getType());
-            Data.setStayedLoggedIn(findUserWithUsername(user.getUsername()));
+            Data.setStayedLoggedIn(new Gson().fromJson(json, new TypeToken<User>(){}.getType()));
 
         } catch (IOException e) {
 

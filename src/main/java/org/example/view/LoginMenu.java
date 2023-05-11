@@ -116,9 +116,9 @@ public class LoginMenu {
             }
             if (isValid) {
                 if (number == 0) continue;
-                if (number != CaptchaAsciiArt.captchaValue) System.out.println("Your didn't enter captcha correctly.");
+                if (number != CaptchaAsciiArt.captchaValue) RegisterMenu.printError("Your didn't enter captcha correctly.");
                 else {
-                    System.out.println("login successful !");
+                    RegisterMenu.printSuccess("login successful !");
                     MainMenu mainMenu = new MainMenu(Data.findUserWithUsername(username));
                     mainMenu.run(scanner);
                     break;
