@@ -145,6 +145,8 @@ public enum BuildingName {
         return type;
     }
 
+
+
     public static BuildingName getBuildingNameWithName(String name){
         for (int i = 0; i < BuildingName.values().length; i++)
             if(BuildingName.values()[i].name.equals(name))
