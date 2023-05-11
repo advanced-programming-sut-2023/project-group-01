@@ -1,11 +1,12 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
 import org.example.model.Empire;
-import org.example.model.building.Building;
-import org.example.model.building.Material;
-import org.example.model.building.Stable;
+import org.example.model.People;
+import org.example.model.building.*;
 import org.example.model.building.castleBuilding.*;
+import org.example.model.building.castleBuilding.enums.TowerType;
 import org.example.model.building.enums.BuildingName;
+import org.example.model.building.enums.FirstProducerType;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.building.enums.TypeOfTile;
 import org.example.model.unit.MilitaryUnit;
@@ -80,7 +81,11 @@ public class BuildingMenuController {
         else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY))
             if (dropStorageBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
-
+        if (buildingName.equals(BuildingName.CATHEDRAL))
+            for (int i = 0; i < 6; i++) {
+                int XY = findXY(buildingName);
+                empire.getPeople().add(new People(getMap().getTile(XY/getMap().getSize(), XY/getMap().getSize()), empire));
+            }
         putBuilding(buildingName, x0, y0, empire);
         if (buildingName.equals(BuildingName.STABLE))
             empire.addMaterial("horse", 4);
@@ -163,7 +168,8 @@ public class BuildingMenuController {
 
     public static void putBuilding(BuildingName buildingName, int x, int y, Empire empire) {
         int size = buildingName.getSize();
-        Building building = getBuilding(buildingName, empire, x, y);
+//        Building building = getBuilding(buildingName, empire, x, y);
+        Building building =getBuilding(buildingName, empire, x, y);
 
         for (int i = x; i < x + size; i++)
             for (int j = y; j < y + size; j++)
@@ -172,11 +178,25 @@ public class BuildingMenuController {
     }
 
     public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {
-        if (buildingName.equals(BuildingName.ARMOURY)) return new Armoury(empire, x, y, buildingName);
-        else if (buildingName.equals(BuildingName.CAGED_WAR_DOGS)) return new CagedDogs(empire, x, y, buildingName);
-        else if (buildingName.equals(buildingName.KILLING_PIT)) return new KillingPits(empire, x, y, buildingName);
-        else if (buildingName.equals(BuildingName.OIL_SMELTER)) return new OilSmelter(empire, x, y, buildingName);
-        else if (buildingName.equals(buildingName.STAIRS)) return new Stairs(empire, x, y, buildingName);
+        if (buildingName.getName().equals("building")) return new Building(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("gateHouse")) return new Gatehouse(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("tower")) return new Tower(empire, x, y, buildingName, getTypeOfTowerTypeByName(buildingName));
+        else if (buildingName.getName().equals("stairs")) return new CastleBuilding(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("storage")) return new Storage(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("killingPit")) return new KillingPits(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("firstProducer")) return new FirstProducer(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("secondProducer")) return new SecondProducer(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("pitchDitch")) return new PitchDitch(empire, x, y, buildingName);
+        else if (buildingName.getName().equals("cagedWarDogs")) return new CagedDogs(empire, x, y, buildingName);
+        else return null;
+    }
+
+    private static TowerType getTypeOfTowerTypeByName(BuildingName buildingName) {
+        if (buildingName.getName().equals("LookoutTower")) return TowerType.LOOKOUT_TOWER;
+        else if (buildingName.getName().equals("PerimeterTurret")) return TowerType.PERIMETER_TOWER;
+        else if (buildingName.getName().equals("DefenceTurret")) return TowerType.DEFENSE_TURRET;
+        else if (buildingName.getName().equals("RoundTower")) return TowerType.ROUND_TOWER;
+        else return TowerType.SQUARE_TOWER;
     }
     public static Outputs destroyBuilding(Building building) {
         if (building == null) return Outputs.EMPTY_SELECTED_BUILDING;
@@ -189,7 +209,7 @@ public class BuildingMenuController {
         //TODO check
         for (int i = x1; i < x2; i++)
             for (int j = y1; j < y2; j++)
-                GameMenu.getMap().getTile(i, j).setBuilding(null);
+                getMap().getTile(i, j).setBuilding(null);
 
         building.getEmpire().removeFromBuildings(building);
         if (building.getBuildingName().equals(BuildingName.STABLE))
@@ -352,10 +372,6 @@ public class BuildingMenuController {
         int buildingSize = buildingName.getSize();
         int x = buildingMenu.getSelectedBuilding().getBeginX();
         int y = buildingMenu.getSelectedBuilding().getBeginY();
-//        System.out.println("x of building " + x);
-//        System.out.println("y of building " + y);
-//        System.out.println("size " + getMap().getSize());
-//        System.out.println();
 
         int size = getMap().getSize();
         //TODO check

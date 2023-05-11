@@ -1,13 +1,9 @@
 package org.example.model.unit.enums;
 
 import org.example.Voice;
-import org.example.model.Empire;
-import org.example.model.building.castleBuilding.Armoury;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.HitPoint;
-import org.example.model.building.Material;
-import org.example.model.unit.MilitaryUnit;
 
 import static org.example.model.building.enums.MaterialType.*;
 

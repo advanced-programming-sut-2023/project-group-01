@@ -2,14 +2,18 @@ package org.example.model.building;
 
 import org.example.model.Empire;
 import org.example.model.building.enums.BuildingName;
+import org.example.model.building.enums.FirstProducerType;
 
 public class SecondProducer extends Building {
     private SecondProducerType producerType;
 
-    public SecondProducer(Empire empire, int x1, int y1, BuildingName buildingName, SecondProducerType secondProducerType) {
+    public SecondProducer(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1, y1, buildingName);
-        this.producerType = secondProducerType;
+        for (SecondProducerType secondProducerType : SecondProducerType.values())
+            if (secondProducerType.toString().equals(buildingName.getName()))
+                this.producerType = secondProducerType;
     }
+
 
     public SecondProducerType getProducerType() {
         return producerType;

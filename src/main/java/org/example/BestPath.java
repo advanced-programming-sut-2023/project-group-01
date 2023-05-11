@@ -4,9 +4,9 @@ import org.example.model.Empire;
 import org.example.model.building.Gatehouse;
 import org.example.model.building.Tile;
 import org.example.model.building.castleBuilding.CastleBuilding;
-import org.example.model.building.castleBuilding.Stairs;
 import org.example.model.building.castleBuilding.Tower;
 import org.example.model.building.castleBuilding.Wall;
+import org.example.model.building.enums.BuildingName;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,12 +147,12 @@ public class BestPath {
     }
 
     private boolean checkNeighborForAssassins(Tile tile1, Tile tile2) {
-        if (((tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross()) || (tile1.getBuilding() != null &&
+        if ((tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross()) || (tile1.getBuilding() != null &&
                 (tile1.getBuilding() instanceof Wall || tile1.getBuilding() instanceof Gatehouse ||
-                        tile1.getBuilding() instanceof Tower || tile1.getBuilding() instanceof Stairs))) &&
+                        tile1.getBuilding() instanceof Tower || tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS))) &&
                 ((tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross()) || (tile2.getBuilding() != null &&
                         (tile2.getBuilding() instanceof Wall || tile2.getBuilding() instanceof Gatehouse ||
-                                tile2.getBuilding() instanceof Tower || tile2.getBuilding() instanceof Stairs)))) {
+                                tile2.getBuilding() instanceof Tower || tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS))))) {
             return true;
         }
         return false;
@@ -162,13 +162,13 @@ public class BestPath {
 
         //TODO پل آبی را برسی کن
         //TODO check
-        if (((tile1.getBuilding() instanceof Wall) || (tile1.getBuilding() instanceof Stairs) ||
+        if (((tile1.getBuilding() instanceof Wall) || (tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
                 (tile1.getBuilding() instanceof Gatehouse) || (tile1.getBuilding() instanceof CastleBuilding)) &&
-                ((tile2.getBuilding() instanceof Wall) || (tile2.getBuilding() instanceof Stairs) ||
-                        (tile2.getBuilding() instanceof Gatehouse) || (tile2.getBuilding() instanceof CastleBuilding)))
+                ((tile2.getBuilding() instanceof Wall) || (tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
+                        (tile2.getBuilding() instanceof Gatehouse) || (tile2.getBuilding() instanceof CastleBuilding)))))
             return true;
-        else if (((tile1.getBuilding() instanceof Stairs || tile1.getBuilding() == null)) &&
-                (tile2.getBuilding() instanceof Stairs || tile2.getBuilding() == null))
+        else if (((tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS) || tile1.getBuilding() == null)) &&
+                (tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS) || tile2.getBuilding() == null))
             return true;
         else if (tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross() &&
                 tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross())
