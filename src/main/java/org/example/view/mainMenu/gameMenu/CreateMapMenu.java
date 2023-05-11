@@ -3,7 +3,10 @@ package org.example.view.mainMenu.gameMenu;
 
 import org.example.controller.mainMenuController.gameMenuController.CreateMapMenuController;
 import org.example.model.Data;
+import org.example.model.Empire;
 import org.example.model.Map;
+import org.example.model.User;
+import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.CreateMapMenuCommands;
 
@@ -11,12 +14,19 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
+
 public class CreateMapMenu {
 
     public static Map gameMap;
-
+    private final User player;
+    public CreateMapMenu(User player){
+        this.player = player;
+    }
     public Map run(Scanner scanner) {
         setGameMapSize(scanner);
+        player.setInGame(true);
+        GameMenu.getEmpires().add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
+        GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
         while (true) {
             String command = scanner.nextLine();
             Matcher matcher;
