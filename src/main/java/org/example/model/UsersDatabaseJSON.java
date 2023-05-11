@@ -26,9 +26,10 @@ public class UsersDatabaseJSON {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("data.json")));
-            ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>(){}.getType());
-            if (users!=null)
-            Data.setUsers(users);
+            ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>() {
+            }.getType());
+            if (users != null)
+                Data.setUsers(users);
             RegisterMenu.printSuccess("Users data initialized successfully !");
         } catch (IOException e) {
             RegisterMenu.printError("Unable to read from database");
@@ -42,11 +43,13 @@ public class UsersDatabaseJSON {
         fileWriter.close();
     }
 
-    public static void loadStayedLoggedInUser(){
+    public static void loadStayedLoggedInUser() {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("loggedIn.json")));
-            Data.setStayedLoggedIn(new Gson().fromJson(json, new TypeToken<User>(){}.getType()));
+            User user = new Gson().fromJson(json, new TypeToken<User>() {
+            }.getType());
+            Data.setStayedLoggedIn(findUserWithUsername(user.getUsername()));
 
         } catch (IOException e) {
 

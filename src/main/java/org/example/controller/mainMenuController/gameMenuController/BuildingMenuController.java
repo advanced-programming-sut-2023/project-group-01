@@ -178,16 +178,16 @@ public class BuildingMenuController {
     }
 
     public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {
-        if (buildingName.getName().equals("building")) return new Building(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("gateHouse")) return new Gatehouse(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("tower")) return new Tower(empire, x, y, buildingName, getTypeOfTowerTypeByName(buildingName));
-        else if (buildingName.getName().equals("stairs")) return new CastleBuilding(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("storage")) return new Storage(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("killingPit")) return new KillingPits(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("firstProducer")) return new FirstProducer(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("secondProducer")) return new SecondProducer(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("pitchDitch")) return new PitchDitch(empire, x, y, buildingName);
-        else if (buildingName.getName().equals("cagedWarDogs")) return new CagedDogs(empire, x, y, buildingName);
+        if (buildingName.getType().equals("building")) return new Building(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("gateHouse")) return new Gatehouse(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("tower")) return new Tower(empire, x, y, buildingName, getTypeOfTowerTypeByName(buildingName));
+        else if (buildingName.getType().equals("stairs")) return new CastleBuilding(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("storage")) return new Storage(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("killingPit")) return new KillingPits(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("firstProducer")) return new FirstProducer(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("secondProducer")) return new SecondProducer(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("pitchDitch")) return new PitchDitch(empire, x, y, buildingName);
+        else if (buildingName.getType().equals("cagedWarDogs")) return new CagedDogs(empire, x, y, buildingName);
         else return null;
     }
 

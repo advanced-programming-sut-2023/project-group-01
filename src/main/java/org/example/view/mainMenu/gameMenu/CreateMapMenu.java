@@ -23,10 +23,6 @@ public class CreateMapMenu {
         this.player = player;
     }
     public Map run(Scanner scanner) {
-        setGameMapSize(scanner);
-        player.setInGame(true);
-        GameMenu.getEmpires().add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
-        GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
         while (true) {
             String command = scanner.nextLine();
             Matcher matcher;
@@ -81,25 +77,6 @@ public class CreateMapMenu {
         return gameMap;
     }
 
-    public void setGameMapSize(Scanner scanner) {
-        while (true) {
-            System.out.println("please enter size for map\n" +
-                    "1. 200 * 200\n" +
-                    "2. 400 * 400");
-            switch (scanner.nextLine()) {
-                case "1":
-                    gameMap = new Map(200);
-                    System.out.println("Size of map is 200 * 200");
-                    return;
-                case "2":
-                    gameMap = new Map(400);
-                    System.out.println("Size of map is 400 * 400");
-                    return;
-                default:
-                    System.out.println("Invalid size");
-            }
-        }
-    }
 
     public Outputs setTextureForATileChecker(Matcher matcher) {
         matcher.find();

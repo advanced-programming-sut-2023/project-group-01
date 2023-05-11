@@ -12,8 +12,8 @@ public class OilSmelter extends SecondProducer {
 
     private Engineer engineer;
 
-    public OilSmelter(Empire empire, int x1, int y1, BuildingName buildingName, SecondProducerType producerType) {
-        super(empire, x1,  y1,  buildingName, producerType);
+    public OilSmelter(Empire empire, int x1, int y1, BuildingName buildingName) {
+        super(empire, x1,  y1,  buildingName);
     }
 
 

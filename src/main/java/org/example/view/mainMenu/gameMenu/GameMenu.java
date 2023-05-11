@@ -49,6 +49,9 @@ public class GameMenu {
     }
 
     public boolean setEmpires(int numberOfEmpires, Scanner scanner, InitializeMaterial initializeMaterial) {
+        player.setInGame(true);
+        GameMenu.getEmpires().add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
+        GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
         for (int i = 2; i <= numberOfEmpires; i++)
             while (true) {
                 System.out.println("Please enter username of player\n +" +
@@ -89,12 +92,14 @@ public class GameMenu {
     }
 
     public static Map getMap() {
-        return map;
+        if(map != null) return map;
+        else return CreateMapMenu.gameMap;
     }
 
     public void run(Scanner scanner) {
-        map = new CreateMapMenu(player).run(scanner);
-        if (setEmpires(setNumberOfEmpires(scanner), scanner, setLevelOfGame(scanner)))
+        setGameMapSize(scanner);
+        if (setEmpires(setNumberOfEmpires(scanner), scanner, setLevelOfGame(scanner))) {
+            map = new CreateMapMenu(player).run(scanner);
             while (true) {
                 String command = scanner.nextLine();
                 Matcher matcher;
@@ -107,7 +112,7 @@ public class GameMenu {
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GET_PLAYER)) != null)
                     System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null)
-                    nextTurn.nextTurn(); //TODO ask ali for increase turn;
+                    nextTurn.nextTurn(); //TODO check increase turn;
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null) {
                     MilitaryMenu militaryMenu = new MilitaryMenu(thisEmpire, this);
                     militaryMenu.run(scanner);
@@ -122,7 +127,7 @@ public class GameMenu {
                     tradeMenu.run(scanner);
                 } else System.out.println("Invalid command in Game Menu !");
             }
-        else {
+        } else {
             setUsersGameFinished();
             System.out.println("Game canceled");
         }
@@ -155,6 +160,26 @@ public class GameMenu {
         return initializeMaterial;
     }
 
+    public void setGameMapSize(Scanner scanner) {
+        while (true) {
+            System.out.println("please enter size for map\n" +
+                    "1. 200 * 200\n" +
+                    "2. 400 * 400");
+            switch (scanner.nextLine()) {
+                case "1":
+                    CreateMapMenu.gameMap = new Map(200);
+                    System.out.println("Size of map is 200 * 200");
+                    return;
+                case "2":
+                    CreateMapMenu.gameMap = new Map(400);
+                    System.out.println("Size of map is 400 * 400");
+                    return;
+                default:
+                    System.out.println("Invalid size");
+            }
+        }
+    }
+
 
     public static ArrayList<Empire> getEmpires() {
         return empires;
@@ -174,7 +199,7 @@ public class GameMenu {
             Building building = new Building(empires.get(i - 1), EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
                     EmpireBuilding.valueOf("EMPIRE_" + i).getY(),
                     BuildingName.EMPIRE_CASTLE);
-            map.getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
+            getMap().getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
                     EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(building);
             empires.get(i - 1).addToBuildings(building);
             BuildingMenuController.putBuilding(BuildingName.STOCKPILE, EmpireBuilding.valueOf("EMPIRE_" + i).getX(),

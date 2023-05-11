@@ -133,6 +133,10 @@ public enum BuildingName {
         return size;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public int getNumberOfWorkers() {
         return numberOfWorkers;
     }

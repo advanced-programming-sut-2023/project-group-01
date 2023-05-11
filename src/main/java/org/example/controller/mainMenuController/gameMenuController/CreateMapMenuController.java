@@ -146,7 +146,7 @@ public class CreateMapMenuController {
             return Outputs.TILE_NOT_EMPTY;
         if (buildingName.getTypeCanBuildBuilding() != tile.getTypeOfTile())
             return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
-        tile.setBuilding(new Building(getThisEmpire(), xOfMap, yOfMap, buildingName));
+        tile.setBuilding(new Building(null, xOfMap, yOfMap, buildingName));
         return Outputs.SUCCESS;
     }
 
