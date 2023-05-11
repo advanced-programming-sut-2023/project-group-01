@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public enum GameMenuCommands {
 
     SHOW_MAP("show map(?: -x (?<xOfMap>\\d+)()| -y (?<yOfMap>\\d+)()){2}\\2\\4"),
-    GO_TO_EMPIRE_MENU("^go to empire menu$"),
+    GO_TO_EMPIRE_MENU("^enter empire menu$"),
     GET_TURN_NUMBER("^show turn number$"),
     GET_PLAYER("^show player$"),
     TRADE_MENU("^enter trade menu$"),

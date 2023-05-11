@@ -15,14 +15,14 @@ public class EmpireMenuController {
     }
 
     public Outputs taxRate(int taxNumber){
-        if(taxNumber <= 2 && taxNumber >= -2) getThisEmpire().setTaxRate(taxNumber);
-        else return Outputs.INVALID_RATE_FOR_FOOD;
+        if(taxNumber <= 8 && taxNumber >= -3) getThisEmpire().setTaxRate(taxNumber);
+        else return Outputs.INVALID_RATE_FOR_TAX;
         return Outputs.SUCCESS;
     }
 
     public Outputs fearRate(int fearNumber){
-        if(fearNumber <= 2 && fearNumber >= -2) getThisEmpire().setFearRate(fearNumber);
-        else return Outputs.INVALID_RATE_FOR_FOOD;
+        if(fearNumber <= 5 && fearNumber >= -5) getThisEmpire().setFearRate(fearNumber);
+        else return Outputs.INVALID_RATE_FOR_FEAR;
         return Outputs.SUCCESS;
     }
 

@@ -109,7 +109,7 @@ public enum Outputs {
     NOT_HAVING_TUNNELER("Not Having Tunneler"),
     INVALID_CATAPULT_NAME("Invalid CatapultName"),
     NOT_ENOUGH_ENGINEER("Not Enough Engineer"),
-    SUCCESSFUL_CATAPULT("Sucessful Catapult"),
+    SUCCESSFUL_CATAPULT("Successful Catapult"),
     NO_EXISTANCE_FOR_ENEMY("No enemy exist"),
     SUCCESSFUL_ATTACK("Successful Attack"),
     DIGED_TUNNEL("Diged tunnel"),

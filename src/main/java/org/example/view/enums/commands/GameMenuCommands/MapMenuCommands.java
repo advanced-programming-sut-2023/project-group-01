@@ -5,8 +5,8 @@ import java.util.regex.Pattern;
 
 public enum MapMenuCommands {
 
-    MOVE_MAP("move map(?=.*(?<up> up )(?<upCount>\\d+))?(?=.*(?<right> right )(?<rightCount>\\d+))?" +
-            "(?=.*(?<left> left )(?<leftCount>\\d+))?(?=.*(?<down> down )(?<downCount>\\d+))?"),
+    MOVE_MAP("move map(?=.*(?<up> up )(?<upCount>\\d+)?)?(?=.*(?<right> right )(?<rightCount>\\d+)?)?" +
+            "(?=.*(?<left> left )(?<leftCount>\\d+)?)?(?=.*(?<down> down )(?<downCount>\\d+)?)?"),
     SHOW_DETAIL("show detail(?: -x (?<xOfMap>\\d+)()| -y (?<yOfMap>\\d+)()){2}\\2\\4");
     private final String regex;
 

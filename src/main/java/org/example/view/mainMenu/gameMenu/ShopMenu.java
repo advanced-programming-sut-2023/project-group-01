@@ -28,7 +28,7 @@ public class ShopMenu {
                 System.out.println(sell(matcher).toString());
             else if (inputLine.equals("show golds"))
                 System.out.println("You have " + GameMenu.getThisEmpire().getGold() + " golds.");
-            else if (inputLine.equals("exit shop menu")) {
+            else if (inputLine.equals("exit")) {
                 return;
             } else System.out.println("Invalid command in Shop Menu");
 

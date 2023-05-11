@@ -1,7 +1,5 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
-import org.example.BestPath;
-import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;

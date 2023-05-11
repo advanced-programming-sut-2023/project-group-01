@@ -1,4 +1,4 @@
-package org.example;
+package org.example.controller.mainMenuController.gameMenuController;
 
 import org.example.model.Empire;
 import org.example.model.building.Gatehouse;
@@ -197,9 +197,6 @@ public class BestPath {
             return true;
         }
 
-        if ((tile1.getBuilding() instanceof Wall && ((Wall) tile1.getBuilding()).getHaveLadder()) ||
-                tile2.getBuilding() instanceof Wall && ((Wall) tile2.getBuilding()).getHaveLadder())
-            return true;
 
         if (tile1.getBuilding().equals(tile2.getBuilding())) return true;
 

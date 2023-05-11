@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.BestPath;
+import org.example.controller.mainMenuController.gameMenuController.BestPath;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
@@ -18,6 +18,7 @@ import org.example.view.mainMenu.gameMenu.GameMenu;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static org.example.view.mainMenu.gameMenu.GameMenu.getEmpires;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class NextTurn {
@@ -31,6 +32,7 @@ public class NextTurn {
     public NextTurn(GameMenu gameMenu) {
         this.gameMenu = gameMenu;
         this.turnNumber = 0;
+        this.empires = getEmpires();
     }
 
     public void addEmpire(Empire empire) {
@@ -39,7 +41,7 @@ public class NextTurn {
     }
 
     public void nextTurn() {
-        if (turnNumber == numberOfEmpires - 1) {
+        if (turnNumber == numberOfEmpires) {
             turnNumber = 0;
             currentEmpire = empires.get(0);
             doRates();
@@ -182,6 +184,8 @@ public class NextTurn {
         Building building;
         for (Empire empire : empires) {
             for (MilitaryUnit unit : tile.findUnit(empire)) {
+                if (unit.getMilitaryUnitName().equals(MilitaryUnitName.LORD))
+                    continue;
                 xDest = unit.getXDestination();
                 yDest = unit.getYDestination();
                 building = getMap().getTile(xDest, yDest).getBuilding();
@@ -442,17 +446,17 @@ public class NextTurn {
     }
 
     private void attack(Tile tile, int x, int y) {
-        ArrayList<MilitaryUnit> enenmy1 = new ArrayList<>();
+        ArrayList<MilitaryUnit> enemy1 = new ArrayList<>();
         ArrayList<MilitaryUnit> enemy2 = new ArrayList<>();
         boolean[] isAttack = new boolean[empires.size()];
 
         for (int i = 0; i < empires.size(); i++) {
-            enenmy1 = tile.findUnit(empires.get(i));
-            if (enenmy1.size() != 0) {
+            enemy1 = tile.findUnit(empires.get(i));
+            if (enemy1.size() != 0) {
                 for (int j = 0; j < empires.size(); j++) {
                     enemy2 = tile.findUnit(empires.get(j));
                     if (!isAttack[i] && enemy2.size() != 0) {
-                        attackUnits(enenmy1, enemy2);
+                        attackUnits(enemy1, enemy2);
                     }
                 }
                 isAttack[i] = true;
@@ -463,8 +467,8 @@ public class NextTurn {
         for (boolean booll : isAttack)
             if (booll) bool = true;
 
-        if (!bool && enenmy1.size() != 0)
-            for (MilitaryUnit unit : enenmy1)
+        if (!bool && enemy1.size() != 0)
+            for (MilitaryUnit unit : enemy1)
                 doAttacking(unit);
     }
 
@@ -472,7 +476,7 @@ public class NextTurn {
         int damage1 = 0;
         int counter1 = 0;
         int damage2 = 0;
-        int counetr2 = 0;
+        int counter2 = 0;
         for (MilitaryUnit unit : enemy1) {
             if (!(unit instanceof Catapult))
                 damage1 += unit.getMilitaryUnitName().getAttack();
@@ -486,12 +490,12 @@ public class NextTurn {
                 damage1 += unit.getMilitaryUnitName().getAttack();
             if (unit instanceof Catapult && ((Catapult) unit).getCatapultName().equals(CatapultName.FIRE_BALLISTRA)) {
                 damage2 += ((Catapult) unit).getCatapultName().getDamage();
-                counetr2++;
+                counter2++;
             }
         }
 
         damage1 /= counter1;
-        damage2 /= counetr2;
+        damage2 /= counter2;
 
         for (MilitaryUnit unit : enemy1) {
             if (unit.getMilitaryUnitName().getHitPoint() > damage1)

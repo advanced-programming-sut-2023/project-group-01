@@ -1,11 +1,8 @@
-package org.example;
-
-import org.example.model.unit.MilitaryUnit;
+package org.example.model;
 
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 public enum Voice {
     ARCHER("VoiceData/3.wav"),

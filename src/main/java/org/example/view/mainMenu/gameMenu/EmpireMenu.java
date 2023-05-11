@@ -43,6 +43,7 @@ public class EmpireMenu {
     }
 
     public void foodRateChecker(Matcher matcher) {
+        matcher.find();
         try {
             int foodRate = Integer.valueOf(matcher.group("foodRate"));
             Outputs outputs = new EmpireMenuController().foodRate(foodRate);
@@ -53,6 +54,7 @@ public class EmpireMenu {
     }
 
     public void taxRateChecker(Matcher matcher) {
+        matcher.find();
         try {
             int taxRate = Integer.valueOf(matcher.group("taxRate"));
             Outputs outputs = new EmpireMenuController().taxRate(taxRate);
@@ -63,6 +65,7 @@ public class EmpireMenu {
     }
 
     public void fearRateChecker(Matcher matcher) {
+        matcher.find();
         try {
             int fearRate = Integer.valueOf(matcher.group("fearRate"));
             Outputs outputs = new EmpireMenuController().fearRate(fearRate);

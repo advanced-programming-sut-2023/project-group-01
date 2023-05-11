@@ -11,6 +11,7 @@ import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
 import org.example.model.unit.Lord;
 import org.example.model.unit.MilitaryUnit;
+import org.example.model.unit.enums.MilitaryUnitName;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -58,6 +59,7 @@ public class Empire {
         this.taxPopularity = 0;
         this.fearPopularity = 0;
         this.religionPopularity = 0;
+        this.lord = new Lord(getMap().getTile(empireBuilding.getX(),empireBuilding.getY()),this, MilitaryUnitName.LORD,empireBuilding.getY(),empireBuilding.getY());
         foods.put(FoodType.BREED, (float) 0);
         foods.put(FoodType.APPLE, (float) 0);
         foods.put(FoodType.MEET, (float) 0);
@@ -253,7 +255,7 @@ public class Empire {
         this.gold += count;
     }
 
-    public void decreaseGold(int count) {
+    public void decreaseGold(float count) {
         this.gold -= count;
     }
 
@@ -347,9 +349,6 @@ public class Empire {
         return null;
     }
 
-    public void reduceGold(float amount) {
-        this.gold -= amount;
-    }
 
     public void addGold(float amount) {
         this.gold += amount;

@@ -16,7 +16,7 @@ public class Main {
 
         UsersDatabaseJSON.initializeUsers();
         UsersDatabaseJSON.loadStayedLoggedInUser();
-//        Data.setDefaultMap( new String(Files.readAllBytes(Paths.get("DefaultMap.txt"))));
+        Data.setDefaultMap( new String(Files.readAllBytes(Paths.get("DefaultMap.txt"))));
 
 
         Scanner scanner = new Scanner(System.in);

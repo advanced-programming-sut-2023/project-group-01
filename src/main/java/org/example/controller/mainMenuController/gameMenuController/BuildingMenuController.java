@@ -13,6 +13,7 @@ import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
+import org.example.view.mainMenu.gameMenu.CreateMapMenu;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
@@ -243,12 +244,12 @@ public class BuildingMenuController {
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Tunneler"))
             tunnelerBoolean = true;
 
-        if (empire.getPopulation() < Integer.parseInt(count))
+        if (empire.getNormalPopulation() < Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_POPULATION;
 
         if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
             return Outputs.INVALID_MILITARY_TYPE;
-        else if (empire.getGold() > getPriceByName(type) * Integer.parseInt(count))
+        else if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_MONEY;
         else if (barrackBoolean) {
             material1 = getArmouryByName(type);
@@ -511,11 +512,11 @@ public class BuildingMenuController {
         for (int i = x - 5; i < x + 5; i++) {
             for (int j = y - 5; j < y + 5; y++) {
                 if (getMap().getTile(x, y) != null && getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire).size() != 0) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public int checkRepair() {

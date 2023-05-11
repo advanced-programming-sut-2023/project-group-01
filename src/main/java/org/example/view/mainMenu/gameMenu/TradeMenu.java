@@ -39,7 +39,7 @@ public class TradeMenu {
         while (true) {
             String command = scanner.nextLine();
             Matcher matcher;
-            if (command.equals("exit trade menu")) return;
+            if (command.equals("exit")) return;
             else if (command.equals("trade with an empire")) {
                 outer:
                 while (true) {

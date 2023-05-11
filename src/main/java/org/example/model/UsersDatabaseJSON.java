@@ -47,9 +47,8 @@ public class UsersDatabaseJSON {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("loggedIn.json")));
-            User user = new Gson().fromJson(json, new TypeToken<User>() {
-            }.getType());
-            Data.setStayedLoggedIn(findUserWithUsername(user.getUsername()));
+            User user = new Gson().fromJson(json, new TypeToken<User>(){}.getType());
+            Data.setStayedLoggedIn(Data.findUserWithUsername(user.getUsername()));
 
         } catch (IOException e) {
 

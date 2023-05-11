@@ -20,10 +20,10 @@ public class Building {
     private final BuildingName buildingName;
 
     public Building (Empire empire, int x1, int y1, BuildingName buildingName) {
-        this.empire.reduceGold(buildingName.getGoldCost());
+        this.empire=empire;
+        this.empire.decreaseGold((buildingName.getGoldCost()));
         this.empire.reduceMaterial("stone", buildingName.getStoneCost());
         this.empire.reduceMaterial("wood", buildingName.getWoodCost());
-        this.empire = empire;
         this.beginX = x1;
         this.beginY = y1;
         this.endX = x1 + buildingName.getSize();
