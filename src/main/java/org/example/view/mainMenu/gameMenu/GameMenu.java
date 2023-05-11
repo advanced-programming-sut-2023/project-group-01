@@ -202,8 +202,8 @@ public class GameMenu {
             getMap().getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
                     EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(building);
             empires.get(i - 1).addToBuildings(building);
-            BuildingMenuController.putBuilding(BuildingName.STOCKPILE, EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
-                    EmpireBuilding.valueOf("EMPIRE_" + i).getY() + 1, empires.get(i - 1));
+            BuildingMenuController.putBuilding(BuildingName.STOCKPILE, EmpireBuilding.valueOf("EMPIRE_" + i).getX() + 1,
+                    EmpireBuilding.valueOf("EMPIRE_" + i).getY(), empires.get(i - 1));
         }
     }
 
