@@ -1,5 +1,6 @@
 package org.example.view.mainMenu.gameMenu;
 
+import org.example.controller.mainMenuController.gameMenuController.GameMenuController;
 import org.example.model.Map;
 import org.example.model.People;
 import org.example.model.building.Tile;
@@ -10,6 +11,7 @@ import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.BackgroundColor;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.ShowMapAsciiArt;
+import org.example.view.enums.commands.GameMenuCommands.GameMenuCommands;
 import org.example.view.enums.commands.GameMenuCommands.MapMenuCommands;
 
 import java.util.Scanner;
@@ -39,9 +41,24 @@ public class MapMenu {
                 moveMapChecker(matcher);
             else if ((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.SHOW_DETAIL)) != null)
                 showDetailOfMapChecker(matcher);
+            else if((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_MAP)) != null)
+                showMapMoveCheck(matcher);
             else if (command.equals("exit")) return;
             else System.out.println("Invalid command in Map Menu !");
         }
+    }
+
+    private void showMapMoveCheck(Matcher matcher) {
+        matcher.find();
+        int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
+        int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
+        if (map.getTileWhitXAndY(xOfMap, yOfMap) == null) {
+            System.out.println(Outputs.INVALID_COORDINATES.toString());
+            return;
+        }
+            this.xOfMap = xOfMap;
+            this.yOfMap = yOfMap;
+            showMap();
     }
 
     public void showMap() {
