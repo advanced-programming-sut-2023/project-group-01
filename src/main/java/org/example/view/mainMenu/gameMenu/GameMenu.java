@@ -49,9 +49,6 @@ public class GameMenu {
     }
 
     public boolean setEmpires(int numberOfEmpires, Scanner scanner, InitializeMaterial initializeMaterial) {
-        player.setInGame(true);
-        empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
-        thisEmpire = empires.get(0);
         for (int i = 2; i <= numberOfEmpires; i++)
             while (true) {
                 System.out.println("Please enter username of player\n +" +
@@ -79,6 +76,10 @@ public class GameMenu {
             InitializeMaterial.setSources(empires.get(i), initializeMaterial);
     }
 
+    public static void setThisEmpire(Empire thisEmpire) {
+        GameMenu.thisEmpire = thisEmpire;
+    }
+
     public static Empire getThisEmpire() {
         return thisEmpire;
     }
@@ -92,7 +93,7 @@ public class GameMenu {
     }
 
     public void run(Scanner scanner) {
-        map = new CreateMapMenu().run(scanner);
+        map = new CreateMapMenu(player).run(scanner);
         if (setEmpires(setNumberOfEmpires(scanner), scanner, setLevelOfGame(scanner)))
             while (true) {
                 String command = scanner.nextLine();
