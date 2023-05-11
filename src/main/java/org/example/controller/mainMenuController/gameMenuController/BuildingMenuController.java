@@ -34,7 +34,10 @@ public class BuildingMenuController {
             return Outputs.INVALID_Y;
         } else if (Integer.parseInt(x) > getMap().getSize() || Integer.parseInt(y) > getMap().getSize()) {
             return Outputs.OUT_OF_RANGE;
-        } else if (!getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding().getEmpire()
+        }else if (getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding()==null){
+            return Outputs.NOT_HAVING_BUILDING;
+        }
+        else if (!getMap().getTile(Integer.parseInt(x), Integer.parseInt(y)).getBuilding().getEmpire()
                 .equals(buildingMenu.getEmpire())) {
             return Outputs.NOT_HAVING_BUILDING;
         } else {
@@ -193,12 +196,13 @@ public class BuildingMenuController {
             cathedralBoolean = true;
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Tunneler"))
             tunnelerBoolean = true;
-        else if (empire.getPopulation() < Integer.parseInt(count))
+
+        if (empire.getPopulation() < Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_POPULATION;
 
         if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
             return Outputs.INVALID_MILITARY_TYPE;
-        else if (empire.getGold() > getPriceByName(type) * Integer.parseInt(count))
+        else if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_MONEY;
         else if (barrackBoolean) {
             material1 = getArmouryByName(type);
@@ -211,6 +215,8 @@ public class BuildingMenuController {
                 , tunnelerBoolean, Integer.parseInt(count));
         if (!bool)
             return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
+
+        empire.decreaseGold(getPriceByName(type) * Integer.parseInt(count));
         return Outputs.SUCCESSFUL_CREATE;
     }
 

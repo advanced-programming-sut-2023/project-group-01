@@ -53,7 +53,6 @@ public class RegisterMenuController {
             RegisterMenu.randomPass = password;
         }
 
-        System.out.println(password);
 
         byte[] salt = createNewSalt();
         String passwordHash = PasswordHash.getPasswordHash(password, salt);
@@ -129,7 +128,7 @@ public class RegisterMenuController {
         return Outputs.VALID_REGISTRATION_INPUT;
     }
 
-    private String createRandomPassword() {
+    public String createRandomPassword() {
         CharacterRule smallLetter = new CharacterRule(EnglishCharacterData.LowerCase);
         CharacterRule capitalletter = new CharacterRule(EnglishCharacterData.UpperCase);
         CharacterRule digit = new CharacterRule(EnglishCharacterData.Digit);
@@ -137,8 +136,10 @@ public class RegisterMenuController {
         PasswordGenerator passGen = new PasswordGenerator();
         Random random = new Random();
         String password = passGen.generatePassword(random.nextInt(10) + 6, specialCharacter, smallLetter, capitalletter, digit);
+        RegisterMenu.randomPass = password.replaceAll("\"", "#");
         return password.replaceAll("\"", "#");
     }
+
 
     private byte[] createNewSalt() throws NoSuchAlgorithmException {
         SecureRandom random = new SecureRandom();

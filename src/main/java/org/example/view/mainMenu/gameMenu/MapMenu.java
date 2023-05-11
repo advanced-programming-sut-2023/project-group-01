@@ -40,7 +40,7 @@ public class MapMenu {
             else if ((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.SHOW_DETAIL)) != null)
                 showDetailOfMapChecker(matcher);
             else if (command.equals("exit")) return;
-            else System.out.println("Invalid command!");
+            else System.out.println("Invalid command in Map Menu !");
         }
     }
 

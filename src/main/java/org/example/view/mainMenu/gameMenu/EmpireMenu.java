@@ -38,7 +38,7 @@ public class EmpireMenu {
                 taxRateShow();
             else if ((matcher = EmpireMenuCommands.getMatcher(command, EmpireMenuCommands.CHANGE_FEAR_RATE)) != null)
                 fearRateChecker(matcher);
-            else System.out.println("Invalid command!");
+            else System.out.println("Invalid command in Empire Menu !");
         }
     }
 

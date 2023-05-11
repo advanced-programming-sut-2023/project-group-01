@@ -2,6 +2,7 @@ package org.example.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.example.view.RegisterMenu;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,9 +27,9 @@ public class UsersDatabaseJSON {
             ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>(){}.getType());
             if (users!=null)
             Data.setUsers(users);
-            System.out.println("Users data initialized successfully !");
+            RegisterMenu.printSuccess("Users data initialized successfully !");
         } catch (IOException e) {
-            System.out.println("Unable to read from database");
+            RegisterMenu.printError("Unable to read from database");
         }
 
     }

@@ -1,6 +1,7 @@
 package org.example.model;
 
 import org.example.view.enums.SecurityQuestion;
+import java.util.Comparator;
 
 public class User {
 
@@ -115,4 +116,13 @@ public class User {
     public void setInGame(Boolean inGame) {
         this.inGame = inGame;
     }
+
+    public static class Sort implements Comparator<User> {
+        public int compare(User a, User b) {
+            return b.getHighScore()-a.getHighScore();
+        }
+    }
+
+
 }
+

@@ -6,6 +6,15 @@ public class Data {
 
     private static ArrayList<User> users = new ArrayList<>();
     private static User stayedLoggedIn;
+    private static String defaultMap;
+
+    public static void setDefaultMap(String defaultMap) {
+        Data.defaultMap = defaultMap;
+    }
+
+    public static String getDefaultMap() {
+        return defaultMap;
+    }
 
     public static ArrayList<User> getUsers() {
         return users;
