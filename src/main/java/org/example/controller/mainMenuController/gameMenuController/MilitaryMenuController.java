@@ -259,16 +259,15 @@ public class MilitaryMenuController {
     }
 
     public Outputs attack(String x, String y) {
-        //CATAPULT
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
         else if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
-        else if (!checkEnemyExistance(Integer.parseInt(x), Integer.parseInt(y))) return Outputs.NO_EXISTANCE_FOR_ENEMY;
+        else if (!checkEnemyExistance(Integer.parseInt(x), Integer.parseInt(y)) &&
+                !checkBuildingExist(Integer.parseInt(x), Integer.parseInt(y))) return Outputs.NO_EXISTANCE_FOR_ENEMY;
 
         int xAttack = Integer.parseInt(x);
         int yAttack = Integer.parseInt(y);
-        int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
-        int yStart = militaryMenu.getSelectedUnit().get(0).getYPos();
+
         for (People person : getMap().getTile(xAttack, yAttack).getPeople()) {
             if (person instanceof MilitaryUnit && person.getEmpire().equals(empire) && ((MilitaryUnit) person).getMilitaryUnitName().getGunshot() == 0) {
                 ((MilitaryUnit) person).setXAttack(xAttack);
@@ -280,10 +279,17 @@ public class MilitaryMenuController {
     }
 
 
+
     private boolean checkEnemyExistance(int x, int y) {
         for (People person : getMap().getTile(x, y).getPeople()) {
             if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire)) return true;
         }
+        return false;
+    }
+
+    private boolean checkBuildingExist(int x, int y) {
+        if (getMap().getTile(x, y).getBuilding() != null && getMap().getTile(x, y).getBuilding().getEmpire().equals(empire))
+            return true;
         return false;
     }
 

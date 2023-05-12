@@ -587,7 +587,6 @@ public class NextTurn {
         else
             enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
 
-
         if (enemy.size() != 0) {
 
             Building building1 = getMap().getTile(enemy.get(0).getXPos(), enemy.get(0).getYPos()).getBuilding();
