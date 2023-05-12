@@ -123,7 +123,8 @@ public enum Outputs {
     SUCCESSFUL_DISBAND("Successful disband"),
     NO_ENGINEER("No engineer for pouring oil in this Tile"),
     WRONG_UNIT_TYPE("wrong unit type"),
-    NOT_ENOUGH_CAPACITY("Not enough capacity")
+    NOT_ENOUGH_CAPACITY("Not enough capacity"),
+    NOT_ENOUGH_WOOD("Not enough wood")
     ;
     private String output;
 

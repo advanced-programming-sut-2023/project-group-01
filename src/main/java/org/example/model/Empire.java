@@ -131,7 +131,6 @@ public class Empire {
         return capacity - isFull;
     }
 
-
     public ArrayList<Building> getBuildings() {
         return buildings;
     }
@@ -291,13 +290,11 @@ public class Empire {
 
     public void reduceHorseForDestroy(Stable stable) {
         this.reduceMaterial("horse", stable.getNumberOfHorse());
-
     }
 
     public void addUnit(MilitaryUnit militaryUnit) {
         people.add(militaryUnit);
     }
-
 
     public float getGold() {
         return gold;

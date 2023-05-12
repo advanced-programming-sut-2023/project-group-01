@@ -86,8 +86,9 @@ public class BuildingMenuController {
                 empire.getPeople().add(new People(getMap().getTile(XY/getMap().getSize(), XY/getMap().getSize()), empire));
             }
         putBuilding(buildingName, x0, y0, empire);
-        if (buildingName.equals(BuildingName.STABLE))
-            empire.addMaterial("horse", 4);
+        if (buildingName.equals(BuildingName.STABLE)) empire.addMaterial("horse", 4);
+        if (!empire.havingMaterial(MaterialType.WOOD, buildingName.getWoodCost())) return Outputs.NOT_ENOUGH_WOOD;
+        if (!empire.havingMaterial(MaterialType.STONE, buildingName.getStoneCost())) return Outputs.NOT_ENOUGH_STONE;
         return SUCCESSFUL_DROP_BUILDING;
     }
 
