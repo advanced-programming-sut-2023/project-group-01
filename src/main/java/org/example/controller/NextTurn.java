@@ -223,7 +223,8 @@ public class NextTurn {
         Building building;
         for (Empire empire : empires) {
             for (MilitaryUnit unit : tile.findUnit(empire)) {
-                if (unit.getMilitaryUnitName().equals(MilitaryUnitName.LORD)) continue;
+                if (unit.getMilitaryUnitName() != null)
+                    if (unit.getMilitaryUnitName().equals(MilitaryUnitName.LORD)) continue;
                 if (unit.getXDestination() < getMap().getSize()) {
                     xDest = unit.getXDestination();
                     yDest = unit.getYDestination();
@@ -587,7 +588,6 @@ public class NextTurn {
         else
             enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
 
-
         if (enemy.size() != 0) {
 
             Building building1 = getMap().getTile(enemy.get(0).getXPos(), enemy.get(0).getYPos()).getBuilding();
@@ -689,7 +689,7 @@ public class NextTurn {
     private void doForNextTurn() {
         for (Empire empire : empires) {
             for (People person : empire.getPeople()) {
-                if (person instanceof MilitaryUnit) {
+                if (person instanceof MilitaryUnit && !(person instanceof Catapult)) {
                     ((MilitaryUnit) person).setNotMoved();
                     if (((MilitaryUnit) person).getMilitaryUnitName().getHitPoint() <= 0) {
                         ((MilitaryUnit) person).removeUnit();

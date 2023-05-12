@@ -5,6 +5,7 @@ import org.example.model.People;
 import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.TypeOfTile;
+import org.example.model.unit.Catapult;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.BackgroundColor;
@@ -168,7 +169,7 @@ public class MapMenu {
     private int findNumber(Tile tile, MilitaryUnitName militaryUnitName) {
         int number = 0;
         for (People person : tile.getPeople())
-            if (person instanceof MilitaryUnit && ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName))
+            if (person instanceof MilitaryUnit && !(person instanceof Catapult) && ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName))
                 number++;
         return number;
     }

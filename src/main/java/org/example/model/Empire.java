@@ -6,6 +6,7 @@ import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
+import org.example.model.unit.Catapult;
 import org.example.model.unit.Engineer;
 import org.example.model.unit.Lord;
 import org.example.model.unit.MilitaryUnit;
@@ -454,9 +455,13 @@ public class Empire {
 
     public void setAttackOfUnits() {
         for (People unit : people) {
-            if (unit instanceof MilitaryUnit) {
-                int newAttack = ((MilitaryUnit) unit).getMilitaryUnitName().getMaxAttack() * (100 + -5 * fearRate) / 100;
+            int newAttack;
+            if (unit instanceof MilitaryUnit && !(unit instanceof Catapult)) {
+                newAttack = ((MilitaryUnit) unit).getMilitaryUnitName().getMaxAttack() * (100 + -5 * fearRate) / 100;
                 ((MilitaryUnit) unit).getMilitaryUnitName().setAttack(newAttack);
+            }else if (unit instanceof Catapult){
+                newAttack =  ((Catapult) unit).getCatapultName().getDamage();
+                ((Catapult) unit).getCatapultName().setDamage(newAttack);
             }
         }
     }
