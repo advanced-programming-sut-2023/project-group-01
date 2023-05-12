@@ -303,9 +303,12 @@ public class Empire {
         return false;
     }
 
-//    public Map getMap() {
-//        return map;
-//    }
+    public boolean haveBuilding(BuildingName buildingName) {
+        for (Building building : buildings)
+            if (building.getBuildingName().equals(buildingName))
+                return true;
+        return false;
+    }
 
     public LinkedHashMap<Material, Integer> getMaterials() {
         return materials;
