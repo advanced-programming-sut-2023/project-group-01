@@ -232,9 +232,10 @@ public class BuildingMenuController {
         MaterialType material2 = null;
 
         if (type == null) return Outputs.EMPTY_TYPE;
-        else if (buildingMenu.getSelectedBuilding() == null) return Outputs.EMPTY_SELECTED_BUILDING;
-        else if (count == null) return Outputs.EMPTY_COUNT;
-        else if (!count.matches("\\d+")) return Outputs.INVALID_COUNT;
+        if (buildingMenu.getSelectedBuilding() == null) return Outputs.EMPTY_SELECTED_BUILDING;
+        if (count == null) return Outputs.EMPTY_COUNT;
+        if (!count.matches("\\d+")) return Outputs.INVALID_COUNT;
+        if (!checkValidMilitaryName(type)) return WRONG_UNIT_TYPE;
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Barrack"))
             barrackBoolean = true;
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Mercenary Barrack"))
@@ -255,7 +256,6 @@ public class BuildingMenuController {
         if (barrackBoolean) {
             material1 = getArmouryByName(type);
             material2 = getArmamentByName(type);
-            //TODO about armament
             if ((material1 != null && !empire.havingMaterial(material1, Integer.parseInt(count))) ||
                     (material2 != null && !empire.havingMaterial(material2, Integer.parseInt(count))) ||
                     (type.equals("knight") && !empire.havingMaterial(MaterialType.HORSE, Integer.parseInt(count))))
@@ -265,9 +265,6 @@ public class BuildingMenuController {
                 , tunnelerBoolean, Integer.parseInt(count));
         if (!bool)
             return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
-
-        if (!checkValidMilitaryName(type))
-            return WRONG_UNIT_TYPE;
         if (material1 != null)
             empire.reduceMaterial(material1.getName(), Integer.parseInt(count));
         if (material2 != null)
