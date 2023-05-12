@@ -245,10 +245,10 @@ public class BuildingMenuController {
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Tunneler"))
             tunnelerBoolean = true;
 
+        if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
+            return Outputs.WRONG_UNIT_TYPE;
         if (empire.getNormalPopulation() < Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_POPULATION;
-        if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
-            return Outputs.INVALID_MILITARY_TYPE;
         if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_MONEY;
         if (barrackBoolean) {
@@ -353,8 +353,10 @@ public class BuildingMenuController {
                 MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
                 return true;
             }
+            default -> {
+                return false;
+            }
         }
-        return false;
     }
 
     public int findXY(BuildingName buildingName) {
@@ -422,8 +424,10 @@ public class BuildingMenuController {
                 MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
                 return true;
             }
+            default -> {
+                return false;
+            }
         }
-        return false;
     }
 
     private boolean Engineer(String militaryUnitName, int count) {

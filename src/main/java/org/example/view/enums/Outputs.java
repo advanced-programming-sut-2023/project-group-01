@@ -122,6 +122,7 @@ public enum Outputs {
     NOT_NEAR_BUILDING("Not near Building"),
     SUCCESSFUL_DISBAND("Successful disband"),
     NO_ENGINEER("No engineer in this Tile"),
+    WRONG_UNIT_TYPE("wrong unit type"),
     ;
     private String output;
 
