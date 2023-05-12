@@ -97,7 +97,8 @@ public class TradeMenu {
 
     private void printTradeInfo(ArrayList<Trade> trades) {
         for (int i = 0; i < trades.size(); i++) {
-            System.out.print("empire: " + trades.get(i).getEmpire().getPlayer().getUsername() +
+            System.out.print("from empire: " + trades.get(i).getEmpireRequester().getPlayer().getUsername() +
+                    "| to empire: " + trades.get(i).getToEmpire().getPlayer().getUsername() +
                     "| material: " + trades.get(i).getMaterial().getMaterialType().getName() +
                     "| amount: " + trades.get(i).getAmountMaterial() +
                     "| price: " + trades.get(i).getPrice() +

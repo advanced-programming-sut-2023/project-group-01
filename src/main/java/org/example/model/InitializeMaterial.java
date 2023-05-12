@@ -111,7 +111,6 @@ public enum InitializeMaterial {
                 return initializeMaterial.metalArmour;
             default:
                 return 0;
-                //TODO ask ali for Different
         }
     }
 }
