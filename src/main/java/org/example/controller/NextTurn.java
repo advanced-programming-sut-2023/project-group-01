@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.controller.mainMenuController.gameMenuController.BestPath;
 import org.example.model.Empire;
 import org.example.model.People;
+import org.example.model.Worker;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.castleBuilding.*;
@@ -93,20 +94,40 @@ public class NextTurn {
             empires.get(i).setTaxPopularity();
             empires.get(i).setFoodPopularity(variety);
             empires.get(i).setPopularity();
+            changePopulation(empires.get(i));
         }
+    }
+
+    private void changePopulation(Empire empire) {
+        float foodRatio = (float) ((empire.getFoodRate() + 2) * 0.5);
+        float remainFood = empire.getTotalAmountOfFoods() - foodRatio * empire.getPopularity();
+        if (remainFood > 0 && empire.getPopularity() > 0)
+            for (int i = 0; i < remainFood / 2; i++)
+                if (empire.getPopulation() < empire.getMaxPopulation())
+                    empire.addPeople(new People(getMap().getTile(
+                            empire.getEmpireBuilding().getX(), empire.getEmpireBuilding().getY()), empire));
+        else if(empire.getPopularity() < 0){
+            int amount = -empire.getPopularity();
+            for (People people: empire.getPeople()){
+                if(!(people instanceof Worker) && !(people instanceof MilitaryUnit)){
+                    empire.removePeople(people);
+                    people.getPosition().removeUnit(people);
+                }
+            }
+        }
+
     }
 
     private void getFoodCheck(Empire empire) {
         float foodRatio = (float) ((empire.getFoodRate() + 2) * 0.5);
-        if(empire.getTotalAmountOfFoods() < foodRatio * empire.getPopularity())
+        if (empire.getTotalAmountOfFoods() < foodRatio * empire.getPopularity())
             empire.setFoodRate(-2);
         else {
             float amountOfFood = foodRatio * empire.getPopularity();
-            for(FoodType foodType: FoodType.values()){
-                if(empire.getFoods().get(foodType) >= amountOfFood){
+            for (FoodType foodType : FoodType.values()) {
+                if (empire.getFoods().get(foodType) >= amountOfFood) {
                     empire.getFoods().replace(foodType, empire.getFoods().get(foodType) - amountOfFood);
-                }
-                else{
+                } else {
                     amountOfFood -= empire.getFoods().get(foodType);
                     empire.getFoods().replace(foodType, (float) 0);
                 }
@@ -172,7 +193,7 @@ public class NextTurn {
         for (Empire empire : empires)
             if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
                 removingEmpires.add(empire);
-                empire.getPlayer().setHighScore( empire.getPlayer().getHighScore() + score);
+                empire.getPlayer().setHighScore(empire.getPlayer().getHighScore() + score);
                 score += 200;
             }
         if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
@@ -675,7 +696,7 @@ public class NextTurn {
                 }
             }
             for (Building building : empire.getBuildings()) {
-                if (building.getBuildingName().getHitPoint() <= 0 || (building instanceof KillingPits && ((KillingPits)building).isUsed()))
+                if (building.getBuildingName().getHitPoint() <= 0 || (building instanceof KillingPits && ((KillingPits) building).isUsed()))
                     building.removeBuilding();
             }
         }

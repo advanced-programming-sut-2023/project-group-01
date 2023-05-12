@@ -53,7 +53,8 @@ public class TradeMenu {
                         else if (command.equals("cancel")) {
                             empireForTrade = null;
                             break outer;
-                        } else if (command.equals("exit trade menu")) return;
+                        } else if (command.equals("exit")) return;
+                        else System.out.println("Invalid command in Trade whit empire !");
                     }
                 }
             } else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.TRADE_LIST)) != null)

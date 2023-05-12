@@ -13,7 +13,8 @@ public enum EmpireMenuCommands {
     SHOW_FOOD_RATE("^show food rate$"),
     CHANGE_TAX_RATE("^change tax rate -r (?<taxRate>.+)"),
     SHOW_TAX_RATE("^show tax rate$"),
-    CHANGE_FEAR_RATE("^change fear rate -r (?<fearRate>.+)");
+    CHANGE_FEAR_RATE("^change fear rate -r (?<fearRate>.+)"),
+    SHOW_POPULATION("^show population$");
     private final String regex;
 
 
