@@ -1,6 +1,7 @@
 package org.example.model.building.castleBuilding;
 
 import org.example.model.Empire;
+import org.example.model.People;
 import org.example.model.building.SecondProducer;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.unit.Engineer;
