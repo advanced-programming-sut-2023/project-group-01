@@ -15,7 +15,7 @@ public enum BuildingName {
     DEFENSE_TURRET("tower", 1200, 1200, BuildingCategory.CASTLE_BUILDING, "DefenceTurret", 0, 15, 0, 0, 3, TypeOfTile.NORMAL_GROUND),
     ROUND_TOWER("tower", 2000, 2000, BuildingCategory.CASTLE_BUILDING, "RoundTower", 0, 40, 0, 0, 4, TypeOfTile.NORMAL_GROUND),
     SQUARE_TOWER("tower", 1600, 1600, BuildingCategory.CASTLE_BUILDING, "SquareTower", 0, 35, 0, 0, 4, TypeOfTile.NORMAL_GROUND),
-    WALL("wall", 700, 700 , BuildingCategory.CASTLE_BUILDING, "Wall", 0,1, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    WALL("wall", 700, 700, BuildingCategory.CASTLE_BUILDING, "Wall", 0, 1, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
     STAIRS("building", 400, 400, BuildingCategory.CASTLE_BUILDING, "Stairs", 0, 4, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
     ARMOURY("storage", 280, 280, BuildingCategory.CASTLE_BUILDING, "Armoury", 0, 0, 5, 0, 2, TypeOfTile.NORMAL_GROUND),
     BARRACK("building", 350, 350, BuildingCategory.CASTLE_BUILDING, "Barrack", 0, 15, 0, 0, 5, TypeOfTile.NORMAL_GROUND),
@@ -52,11 +52,12 @@ public enum BuildingName {
     BAKERY("secondProducer", 310, 310, BuildingCategory.FOOD_PROCESSING_BUILDING, "Bakery", 0, 0, 10, 1, 2, TypeOfTile.NORMAL_GROUND),
     ALE_PRODUCING("secondProducer", 300, 300, BuildingCategory.FOOD_PROCESSING_BUILDING, "AleProducing", 0, 0, 10, 1, 2, TypeOfTile.NORMAL_GROUND),
     GRANARY("storage", 330, 330, BuildingCategory.FOOD_PROCESSING_BUILDING, "FoodStockpile", 0, 0, 5, 0, 2, TypeOfTile.NORMAL_GROUND),
-    desertShrub("", Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"desertShrub", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
-    cherryPalm("", Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"CherryPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
-    oliveTree("",Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"oliveTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
-    coconutPalm("",Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"coconutPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
-    palmTree("",Integer.MAX_VALUE,Integer.MAX_VALUE,BuildingCategory.TREES,"palmTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),;
+    desertShrub("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "desertShrub", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    cherryPalm("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "CherryPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    oliveTree("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "oliveTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    coconutPalm("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "coconutPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    palmTree("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "palmTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
+    ;
 
     private final String type;
     private int hitPoint;
@@ -101,7 +102,7 @@ public enum BuildingName {
         return hitPoint;
     }
 
-    public BuildingCategory getBuildingCategory(){
+    public BuildingCategory getBuildingCategory() {
         return buildingCategory;
     }
 
@@ -133,15 +134,14 @@ public enum BuildingName {
         return typeCanBuildBuilding;
     }
 
+
     public String getType() {
         return type;
     }
 
-
-
-    public static BuildingName getBuildingNameWithName(String name){
+    public static BuildingName getBuildingNameWithName(String name) {
         for (int i = 0; i < BuildingName.values().length; i++)
-            if(BuildingName.values()[i].name.equals(name))
+            if (BuildingName.values()[i].name.equals(name))
                 return BuildingName.values()[i];
         return null;
     }

@@ -4,6 +4,7 @@ import org.example.model.Empire;
 import org.example.model.building.*;
 import org.example.model.building.castleBuilding.*;
 import org.example.model.building.castleBuilding.enums.TowerType;
+import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.building.enums.TypeOfTile;
@@ -103,7 +104,8 @@ public class BuildingMenuController {
 
     public BuildingName findBuildingNameByName(String name) {
         for (BuildingName buildingName : BuildingName.values()) {
-            if (buildingName.getName().equals(name)) {
+            if (buildingName.getName().equals(name) &&
+                    !buildingName.getBuildingCategory().equals(BuildingCategory.TREES)) {
                 return buildingName;
             }
         }
