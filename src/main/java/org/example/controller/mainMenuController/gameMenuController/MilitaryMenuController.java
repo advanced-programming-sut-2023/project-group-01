@@ -54,26 +54,11 @@ public class MilitaryMenuController {
     }
 
     public static void moving(int xStart, int yStart, int xDestination, int yDestination, Empire empire) {
-        boolean isAssassin = isAllTheUnitsAssassins(xStart, yStart, empire);
         BestPath bestPath = new BestPath(empire);
-        LinkedList<Integer> path = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false, isAssassin);
-
+        LinkedList<Integer> path = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false, false);
         for (MilitaryUnit militaryUnit : getMap().getTile(xStart, yStart).findUnit(empire)) {
             militaryUnit.setDest(xDestination, yDestination);
-
         }
-    }
-
-    private boolean isMoveFinished() {
-
-        return false;
-    }
-
-    private static boolean isAllTheUnitsAssassins(int x, int y, Empire empire) {
-        for (MilitaryUnit unit : getMap().getTile(x, y).findUnit(empire))
-            if (!unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
-                return false;
-        return true;
     }
 
     public Outputs patrolUnit(String x1, String y1, String x2, String y2) {

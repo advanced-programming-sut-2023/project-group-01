@@ -296,7 +296,7 @@ public class Empire {
 
         for (Material material1 : materials.keySet()) {
             if (material1.getMaterialType().getName().equals(materialType.getName())
-                    && materials.get(material1) > count) {
+                    && materials.get(material1) >= count) {
                 return true;
             }
         }

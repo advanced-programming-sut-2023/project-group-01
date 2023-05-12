@@ -227,8 +227,8 @@ public class BuildingMenuController {
         boolean engineerGuildBoolean = false;
         boolean cathedralBoolean = false;
         boolean tunnelerBoolean = false;
-        MaterialType material1;
-        MaterialType material2;
+        MaterialType material1 = null;
+        MaterialType material2 = null;
 
         if (type == null) return Outputs.EMPTY_TYPE;
         else if (buildingMenu.getSelectedBuilding() == null) return Outputs.EMPTY_SELECTED_BUILDING;
@@ -247,12 +247,11 @@ public class BuildingMenuController {
 
         if (empire.getNormalPopulation() < Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_POPULATION;
-
         if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
             return Outputs.INVALID_MILITARY_TYPE;
-        else if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count))
+        if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_MONEY;
-        else if (barrackBoolean) {
+        if (barrackBoolean) {
             material1 = getArmouryByName(type);
             material2 = getArmamentByName(type);
             //TODO about armament
@@ -266,6 +265,10 @@ public class BuildingMenuController {
         if (!bool)
             return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
 
+        if (material1 != null)
+            empire.reduceMaterial(material1.getName(), Integer.parseInt(count));
+        if (material2 != null)
+            empire.reduceMaterial(material2.getName(), Integer.parseInt(count));
         empire.decreaseGold(getPriceByName(type) * Integer.parseInt(count));
         return Outputs.SUCCESSFUL_CREATE;
     }
@@ -306,62 +309,48 @@ public class BuildingMenuController {
         int size = getMap().getSize();
         int x = XY / size;
         int y = XY % size;
-        //System.out.println("x :  " + x + "| y : " + y);
 
         switch (militaryUnitName) {
             case "Archer" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
                 MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
-                empire.reduceMaterial(MilitaryUnitName.ARCHER.getArmament().getName(), 1);
                 return true;
             }
             case "Crossbowmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
                 MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
-                empire.reduceMaterial(MilitaryUnitName.CROSSBOW_MEN.getArmament().getName(), 1);
-                empire.reduceMaterial(MilitaryUnitName.CROSSBOW_MEN.getArmour().getName(), 1);
                 return true;
             }
             case "Spearmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
                 MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
-                empire.reduceMaterial(MilitaryUnitName.SPEAR_MEN.getArmament().getName(), 1);
                 return true;
             }
             case "Pikemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
                 MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
-                empire.reduceMaterial(MilitaryUnitName.PIKE_MEN.getArmament().getName(), 1);
-                empire.reduceMaterial(MilitaryUnitName.PIKE_MEN.getArmour().getName(), 1);
                 return true;
             }
             case "Macemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
                 MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
-                empire.reduceMaterial(MilitaryUnitName.MACE_MEN.getArmament().getName(), 1);
-                empire.reduceMaterial(MilitaryUnitName.MACE_MEN.getArmour().getName(), 1);
                 return true;
             }
             case "Swordsmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
                 MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
-                empire.reduceMaterial(MilitaryUnitName.SWORDSMEN.getArmament().getName(), 1);
-                empire.reduceMaterial(MilitaryUnitName.SWORDSMEN.getArmour().getName(), 1);
                 return true;
             }
             case "Knight" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
                 MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
-                empire.reduceMaterial(MilitaryUnitName.KNIGHT.getArmament().getName(), 1);
-                empire.reduceMaterial(MilitaryUnitName.KNIGHT.getArmour().getName(), 1);
-                empire.reduceMaterial("horse", 1);
                 return true;
             }
         }
