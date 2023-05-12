@@ -24,7 +24,8 @@ public class TradeMenuController {
         if (price < 0) return Outputs.INVALID_PRICE_TRADE;
         int id = tradeMenu.getEmpireForTrade().getTradeHistory().size() +
                 tradeMenu.getEmpireForTrade().getTrades().size() + 1;
-        Trade trade = new Trade(id, new Material(materialType), resourceAmount, price, message, getThisEmpire());
+        Trade trade = new Trade(id, new Material(materialType), resourceAmount, price,
+                message, getThisEmpire(), tradeMenu.getEmpireForTrade());
         tradeMenu.getEmpireForTrade().addToTrades(trade);
         tradeMenu.getEmpireForTrade().addToNewTrade(trade);
         getThisEmpire().addToTradeHistory(trade);
