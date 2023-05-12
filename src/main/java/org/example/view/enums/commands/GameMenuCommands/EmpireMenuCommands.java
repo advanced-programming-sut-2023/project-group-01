@@ -14,7 +14,8 @@ public enum EmpireMenuCommands {
     CHANGE_TAX_RATE("^change tax rate -r (?<taxRate>.+)"),
     SHOW_TAX_RATE("^show tax rate$"),
     CHANGE_FEAR_RATE("^change fear rate -r (?<fearRate>.+)"),
-    SHOW_POPULATION("^show population$");
+    SHOW_POPULATION("^show population$"),
+    SHOW_MAX_POPULATION("^show capacity of empire$");
     private final String regex;
 
 
@@ -24,7 +25,7 @@ public enum EmpireMenuCommands {
 
     public static Matcher getMatcher(String input, EmpireMenuCommands empireMenuCommands){
         Pattern pattern = Pattern.compile(empireMenuCommands.regex);
-        if (pattern.matcher(input).find())
+        if (pattern.matcher(input).matches())
             return pattern.matcher(input);
         return null;
     }

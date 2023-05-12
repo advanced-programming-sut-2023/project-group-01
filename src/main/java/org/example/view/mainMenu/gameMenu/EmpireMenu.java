@@ -42,6 +42,8 @@ public class EmpireMenu {
                 break;
             else if(EmpireMenuCommands.getMatcher(command,EmpireMenuCommands.SHOW_POPULATION) != null)
                 System.out.println("Your population is: " + empire.getPopulation());
+            else if(EmpireMenuCommands.getMatcher(command, EmpireMenuCommands.SHOW_MAX_POPULATION) != null)
+                System.out.println("The population capacity of the empire is: " + empire.getMaxPopulation());
             else System.out.println("Invalid command in Empire Menu !");
         }
     }
@@ -87,7 +89,7 @@ public class EmpireMenu {
     }
 
     public void showPopularity() {
-        System.out.println("Your popularity is " + empire.getPopularity());
+        System.out.println("Your popularity is :" + empire.getPopularity());
     }
 
     public void showFoodList() {

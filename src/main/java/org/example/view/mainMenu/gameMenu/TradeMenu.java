@@ -35,6 +35,7 @@ public class TradeMenu {
     }
 
     public void run(Scanner scanner) {
+        System.out.println("you are now in Trade menu\nnew request:");
         showNewTrades();
         while (true) {
             String command = scanner.nextLine();

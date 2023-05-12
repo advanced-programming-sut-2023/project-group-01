@@ -22,7 +22,7 @@ public enum GameMenuCommands {
 
     public static Matcher getMatcher(String input, GameMenuCommands gameMenuCommands){
         Pattern pattern = Pattern.compile(gameMenuCommands.regex);
-        if (pattern.matcher(input).find())
+        if (pattern.matcher(input).matches())
             return pattern.matcher(input);
         return null;
     }

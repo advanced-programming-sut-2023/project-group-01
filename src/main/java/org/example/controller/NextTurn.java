@@ -115,9 +115,10 @@ public class NextTurn {
         float remainFood = empire.getTotalAmountOfFoods() - foodRatio * empire.getPopularity();
         if (remainFood > 0 && empire.getPopularity() > 0)
             for (int i = 0; i < remainFood / 2; i++)
-                if (empire.getPopulation() < empire.getMaxPopulation())
+                if (empire.getPopulation() < empire.getMaxPopulation()) {
                     empire.addPeople(new People(getMap().getTile(
                             empire.getEmpireBuilding().getX(), empire.getEmpireBuilding().getY()), empire));
+                }
         else if(empire.getPopularity() < 0){
             int amount = -empire.getPopularity();
             for (People people: empire.getPeople()){
@@ -142,6 +143,7 @@ public class NextTurn {
             for (FoodType foodType : FoodType.values()) {
                 if (empire.getFoods().get(foodType) >= amountOfFood) {
                     empire.getFoods().replace(foodType, empire.getFoods().get(foodType) - amountOfFood);
+                    break;
                 } else {
                     amountOfFood -= empire.getFoods().get(foodType);
                     empire.getFoods().replace(foodType, (float) 0);

@@ -19,7 +19,7 @@ public enum CreateMapMenuCommands {
 
     public static Matcher getMatcher(String input, CreateMapMenuCommands createMapMenuCommands){
         Pattern pattern = Pattern.compile(createMapMenuCommands.regex);
-        if (pattern.matcher(input).find())
+        if (pattern.matcher(input).matches())
             return pattern.matcher(input);
         return null;
     }

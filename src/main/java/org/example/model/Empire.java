@@ -37,7 +37,6 @@ public class Empire {
     private float gold;
     private Color color;
 
-    private Map map;
     private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
     private LinkedHashMap<FoodType, Float> foods = new LinkedHashMap<>(4);
     private ArrayList<Building> buildings = new ArrayList<>();
@@ -60,6 +59,7 @@ public class Empire {
         this.taxPopularity = 0;
         this.fearPopularity = 0;
         this.religionPopularity = 0;
+        this.maxPopulation = 20;
         this.lord = new Lord(getMap().getTile(empireBuilding.getX(), empireBuilding.getY()), this, MilitaryUnitName.LORD, empireBuilding.getY(), empireBuilding.getY());
         foods.put(FoodType.BREED, (float) 0);
         foods.put(FoodType.APPLE, (float) 0);
@@ -144,7 +144,7 @@ public class Empire {
     }
 
     public int getPopularity() {
-        return people.size();
+        return popularity;
     }
 
     public int getFoodRate() {
@@ -336,7 +336,7 @@ public class Empire {
     }
 
     public int getPopulation() {
-        return population;
+        return people.size();
     }
 
     //TODO check
@@ -508,4 +508,10 @@ public class Empire {
     }
 
 
+    public boolean havingSmallGate() {
+        for (Building building: buildings)
+            if(building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE))
+                return true;
+        return false;
+    }
 }

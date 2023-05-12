@@ -15,6 +15,7 @@ public class EmpireMenuController {
     }
 
     public Outputs taxRate(int taxNumber){
+        if(!getThisEmpire().havingSmallGate()) return Outputs.NOT_HAVING_SMALL_GATEHOUSE;
         if(taxNumber <= 8 && taxNumber >= -3) getThisEmpire().setTaxRate(taxNumber);
         else return Outputs.INVALID_RATE_FOR_TAX;
         return Outputs.SUCCESS;

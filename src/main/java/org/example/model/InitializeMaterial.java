@@ -1,6 +1,7 @@
 package org.example.model;
 
 import org.example.model.building.enums.MaterialType;
+import org.example.model.enums.FoodType;
 
 public enum InitializeMaterial {
 
@@ -64,6 +65,14 @@ public enum InitializeMaterial {
         for (int i = 0; i < MaterialType.values().length; i++) {
             int amount = initializeMaterial.setAmount(MaterialType.values()[i].getName(), initializeMaterial);
             empire.addMaterial(MaterialType.values()[i].getName(), amount);
+            if (MaterialType.values()[i].getName().equals("bread"))
+                empire.getFoods().put(FoodType.BREED, (float) amount);
+            if (MaterialType.values()[i].getName().equals("meat"))
+                empire.getFoods().put(FoodType.MEET, (float) amount);
+            if (MaterialType.values()[i].getName().equals("apple"))
+                empire.getFoods().put(FoodType.APPLE, (float) amount);
+            if (MaterialType.values()[i].getName().equals("cheese"))
+                empire.getFoods().put(FoodType.CHEESE, (float) amount);
         }
     }
 
