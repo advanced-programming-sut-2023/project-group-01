@@ -10,10 +10,4 @@ public class Lord extends MilitaryUnit {
         super(position, empire, militaryUnitName, xPos, yPos);
     }
 
-
-//    @Override
-//    protected void finalize() throws Throwable {
-//
-//        //TODO ending game
-//    }
 }

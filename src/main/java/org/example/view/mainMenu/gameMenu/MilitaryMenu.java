@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 public class MilitaryMenu {
     private final MilitaryMenuController militaryMenuController;
     private final Empire empire;
-    private ArrayList<MilitaryUnit> selectedUnit;
+    private ArrayList<MilitaryUnit> selectedUnit = new ArrayList<>();
 
     public MilitaryMenu(Empire empire, GameMenu gameMenu) {
         this.empire = empire;

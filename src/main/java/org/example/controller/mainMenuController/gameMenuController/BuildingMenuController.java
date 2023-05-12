@@ -80,27 +80,32 @@ public class BuildingMenuController {
         else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY))
             if (dropStorageBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
-        if (buildingName.equals(BuildingName.CATHEDRAL))
-            for (int i = 0; i < 6; i++) {
-                int XY = findXY(buildingName);
-                empire.getPeople().add(new People(getMap().getTile(XY/getMap().getSize(), XY/getMap().getSize()), empire));
-            }
-        putBuilding(buildingName, x0, y0, empire);
-        if (buildingName.equals(BuildingName.STABLE)) empire.addMaterial("horse", 4);
         if (!empire.havingMaterial(MaterialType.WOOD, buildingName.getWoodCost())) return Outputs.NOT_ENOUGH_WOOD;
         if (!empire.havingMaterial(MaterialType.STONE, buildingName.getStoneCost())) return Outputs.NOT_ENOUGH_STONE;
+        putBuilding(buildingName, x0, y0, empire);
+        if (buildingName.equals(BuildingName.STABLE)) empire.addMaterial("horse", 4);
         return SUCCESSFUL_DROP_BUILDING;
     }
 
     public Outputs dropStorageBuilding(int x, int y, BuildingName buildingName) {
+        if (!haveStorage(buildingName))
+            return SUCCESSFUL_DROP_BUILDING;
         //TODO امپراطوری انبار دارد یا ندارد
         //equals ha jabeja shavand
 
         for (int i = x - 1; i <= x + buildingName.getSize(); i++)
             for (int j = y - 1; j <= y + buildingName.getSize(); j++)
-                if (buildingName.equals(getMap().getTile(i, j).getBuilding().getBuildingName()))
+                if (getMap().getTile(i, j).getBuilding() != null &&
+                        buildingName.equals(getMap().getTile(i, j).getBuilding().getBuildingName()))
                     return SUCCESSFUL_DROP_BUILDING;
         return Outputs.NOT_NEAR_BUILDING;
+    }
+
+    public boolean haveStorage(BuildingName buildingName) {
+        for (Building building : empire.getBuildings())
+            if (building.getBuildingName().equals(buildingName))
+                return true;
+        return false;
     }
 
     public BuildingName findBuildingNameByName(String name) {
@@ -189,6 +194,7 @@ public class BuildingMenuController {
             case "pitchDitch" -> new PitchDitch(empire, x, y, buildingName);
             case "cagedWarDogs" -> new CagedDogs(empire, x, y, buildingName);
             case "oilSmelter" -> new OilSmelter(empire, x, y, buildingName);
+            case "wall" -> new Wall(empire, x, y, buildingName);
             default -> null;
         };
     }
@@ -238,17 +244,16 @@ public class BuildingMenuController {
         if (count == null) return Outputs.EMPTY_COUNT;
         if (!count.matches("\\d+")) return Outputs.INVALID_COUNT;
         if (!checkValidMilitaryName(type)) return WRONG_UNIT_TYPE;
-        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Barrack"))
+        if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Barrack"))
             barrackBoolean = true;
-        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("MercenaryBarrack"))
+        if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("MercenaryBarrack"))
             mercenaryBoolean = true;
-        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("EngineerGuild"))
+        if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("EngineerGuild"))
             engineerGuildBoolean = true;
-        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Cathedral"))
+        if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Cathedral"))
             cathedralBoolean = true;
-        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Tunneler"))
+        if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("TunnelerGuild"))
             tunnelerBoolean = true;
-
         if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
             return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
         if (empire.getNormalPopulation() < Integer.parseInt(count))
@@ -263,10 +268,8 @@ public class BuildingMenuController {
                     (type.equals("knight") && !empire.havingMaterial(MaterialType.HORSE, Integer.parseInt(count))))
                 return Outputs.NOT_ENOUGH_EQUIPMENT;
         }
-        boolean bool = doCreateUnit(type, barrackBoolean, mercenaryBoolean, engineerGuildBoolean, cathedralBoolean
-                , tunnelerBoolean, Integer.parseInt(count));
-        if (!bool)
-            return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
+        doCreateUnit(type, barrackBoolean, mercenaryBoolean, engineerGuildBoolean, cathedralBoolean, tunnelerBoolean,
+                Integer.parseInt(count));
         if (material1 != null)
             empire.reduceMaterial(material1.getName(), Integer.parseInt(count));
         if (material2 != null)
@@ -376,16 +379,16 @@ public class BuildingMenuController {
         int size = getMap().getSize();
         //TODO check
         for (int i = x; i < x + buildingSize; i++)
-            if (y > 1 && i < size)
+            if (y > 1 && i < size && getMap().getTile(i, y - 1) != null)
                 return i * size + y - 1;
         for (int j = y; j < y + buildingSize; j++)
-            if (x > 1 && j < size)
+            if (x > 1 && j < size  && getMap().getTile(x - 1, j) != null)
                 return (x - 1) * size + j;
         for (int i = x; i < x + buildingSize; i++)
-            if (y + buildingSize < size && i < size)
+            if (y + buildingSize < size && i < size  && getMap().getTile(i, y + buildingSize) != null)
                 return i * size + y + buildingSize;
         for (int j = y; j < y + buildingSize; j++)
-            if (x + buildingSize < size && j < size)
+            if (x + buildingSize < size && j < size  && getMap().getTile(x, j) != null)
                 return (x + buildingSize) * size + j;
         return -1;
     }

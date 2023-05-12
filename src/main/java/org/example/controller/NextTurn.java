@@ -220,21 +220,27 @@ public class NextTurn {
     }
 
     public void doOnAllMilitaryUnit(Tile tile, int x, int y) {
-        int xDest;
-        int yDest;
+        int xDest = -1;
+        int yDest = -1;
         Building building;
         for (Empire empire : empires) {
             for (MilitaryUnit unit : tile.findUnit(empire)) {
                 if (unit.getMilitaryUnitName().equals(MilitaryUnitName.LORD))
                     continue;
-                xDest = unit.getXDestination();
-                yDest = unit.getYDestination();
+                if (unit.getXDestination() < getMap().getSize()) {
+                    xDest = unit.getXDestination();
+                    yDest = unit.getYDestination();
+                } else if (unit.getPatrolX1() < getMap().getSize()) {
+                    xDest = unit.getPatrolX2();
+                    yDest = unit.getPatrolY2();
+                }
+                if (xDest == -1 && yDest == -1)
+                    continue;
                 building = getMap().getTile(xDest, yDest).getBuilding();
                 if (building == null && !unit.isMoved())
                     callMoveFunctions(unit, false);
                 else if (building != null && !unit.isMoved() && unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
                     callMoveFunctions(unit, true);
-
             }
         }
     }
@@ -343,14 +349,16 @@ public class NextTurn {
         ArrayList<MilitaryUnit> enemy = new ArrayList<>();
         boolean patrolBool = false;
         if (unit.getPatrolX1() < getMap().getSize()) patrolBool = true;
+
         for (int k = 0; k < gunShot; k++) {
             for (int i = x - k; i < x + k; i++) {
                 for (int j = y - k; j < y + k; j++) {
                     if (patrolBool && (i == x) && (j == y))
                         continue;
-                    if ((enemy = getMap().getTile(i, j).findNearEnemiesMilitaryUnit(unit.getEmpire())).size() != 0) {
+                    if (i > 0 && i < getMap().getSize() && j > 0 && j < getMap().getSize() &&
+                            (enemy = getMap().getTile(i, j).findNearEnemiesMilitaryUnit(unit.getEmpire())).size() != 0)
                         return enemy;
-                    }
+
                 }
             }
         }

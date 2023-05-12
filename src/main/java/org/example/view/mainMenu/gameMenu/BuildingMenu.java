@@ -54,7 +54,6 @@ public class BuildingMenu {
     }
 
     public void dropBuildingChecker(Matcher matcher) {
-        //TODO switching x, y, type
         String x = matcher.group("x");
         String y = matcher.group("y");
         String type = matcher.group("type");

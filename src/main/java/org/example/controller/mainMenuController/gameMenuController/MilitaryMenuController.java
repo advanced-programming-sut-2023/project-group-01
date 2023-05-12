@@ -1,6 +1,5 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
-import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
@@ -40,7 +39,7 @@ public class MilitaryMenuController {
     public Outputs moveUnit(String x, String y) {
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
-        if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
+        if (militaryMenu.getSelectedUnit().size() == 0) return Outputs.EMPTY_SELECTED_UNIT;
 
         int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
         int yStart = militaryMenu.getSelectedUnit().get(0).getYPos();
@@ -176,11 +175,12 @@ public class MilitaryMenuController {
 
     public Outputs digTunnel(String x, String y) {
         if (!commonOutPuts(x, y).equals(Outputs.VALID_X_Y)) return commonOutPuts(x, y);
+        if (militaryMenu.getSelectedUnit().size() == 0) return Outputs.EMPTY_SELECTED_UNIT;
 
         int xPos = Integer.parseInt(x);
         int yPos = Integer.parseInt(y);
         Building building = getMap().getTile(xPos, yPos).getBuilding();
-        ArrayList<MilitaryUnit> Tunneler = finTunneler();
+        ArrayList<MilitaryUnit> Tunneler = findTunneler();
 
         if (Tunneler.size() == 0) {
             militaryMenu.getSelectedUnit().clear();
@@ -189,9 +189,9 @@ public class MilitaryMenuController {
 
         int damage = Tunneler.size() * MilitaryUnitName.TUNNELER.getAttack();
 
-        if (building.getBuildingName().getHitPoint() > damage)
+        if (building != null && building.getBuildingName().getHitPoint() > damage)
             building.getBuildingName().reduceHitPoint(damage);
-        else {
+        else if (building != null){
             building.getEmpire().getBuildings().remove(building);
             getMap().getTile(xPos, yPos).setBuilding(null);
         }
@@ -204,10 +204,10 @@ public class MilitaryMenuController {
         return Outputs.DIGED_TUNNEL;
     }
 
-    public ArrayList<MilitaryUnit> finTunneler() {
+    public ArrayList<MilitaryUnit> findTunneler() {
         ArrayList<MilitaryUnit> Tunneler = new ArrayList<MilitaryUnit>();
         for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit())
-            if (militaryUnit.getMilitaryUnitName().getName().equals("Tunneler"))
+            if (militaryUnit.getMilitaryUnitName().getName().equals("tunneler"))
                 Tunneler.add(militaryUnit);
         return Tunneler;
     }
@@ -282,15 +282,6 @@ public class MilitaryMenuController {
         }
         militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_ATTACK;
-    }
-
-
-    public Outputs attack_E(String x, String y) {
-        Outputs outputs = commonOutPuts(x, y);
-        if (!outputs.equals(Outputs.VALID_X_Y))
-            return outputs;
-
-        return null;
     }
 
     private boolean checkEnemyExistance(int x, int y) {

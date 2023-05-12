@@ -31,13 +31,11 @@ public enum BuildingName {
     QUARRY("firstProducer", 300, 300, BuildingCategory.INDUSTRIAL_BUILDING, "Quarry", 0, 0, 20, 3, 4, TypeOfTile.STONE_MINE),
     STOCKPILE("storage", 0, 0, BuildingCategory.INDUSTRIAL_BUILDING, "Stockpile", 0, 0, 0, 0, 3, TypeOfTile.NORMAL_GROUND),
     WOODCUTTER("firstProducer", 180, 180, BuildingCategory.INDUSTRIAL_BUILDING, "Woodcutter", 0, 0, 3, 1, 2, TypeOfTile.NORMAL_GROUND),
-    //TODO
     APOTHECARY("building", 300, 300, BuildingCategory.TOWN_BUILDING, "Apothecary", 150, 0, 20, 0, 3, TypeOfTile.NORMAL_GROUND),
     HOVEL("building", 280, 280, BuildingCategory.TOWN_BUILDING, "Hovel", 0, 0, 6, 0, 2, TypeOfTile.NORMAL_GROUND),
     CHURCH("building", 800, 800, BuildingCategory.TOWN_BUILDING, "Church", 250, 0, 0, 0, 6, TypeOfTile.NORMAL_GROUND),
     CATHEDRAL("building", 1000, 1000, BuildingCategory.TOWN_BUILDING, "Cathedral", 1000, 0, 0, 0, 9, TypeOfTile.NORMAL_GROUND),
     WELL("building", 500, 500, BuildingCategory.TOWN_BUILDING, "Well", 30, 0, 0, 0, 2, TypeOfTile.NORMAL_GROUND),
-    //TODO
     WATER_POT("building", 200, 200, BuildingCategory.TOWN_BUILDING, "WaterPot", 60, 0, 0, 3, 2, TypeOfTile.NORMAL_GROUND),
     ARMOURER("secondProducer", 340, 340, BuildingCategory.WEAPON_BUILDING, "ArmourerWorkshop", 100, 0, 20, 1, 3, TypeOfTile.NORMAL_GROUND),
     BLACKSMITH("secondProducer", 340, 340, BuildingCategory.WEAPON_BUILDING, "BlacksmithWorkshop", 100, 0, 20, 1, 3, TypeOfTile.NORMAL_GROUND),
@@ -48,7 +46,7 @@ public enum BuildingName {
     PITCH_DITCH("pitchDitch", 0, 0, BuildingCategory.CASTLE_BUILDING, "PitchDitch", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
     CAGED_WAR_DOGS("cagedWarDogs", 0, 0, BuildingCategory.CASTLE_BUILDING, "CagedWarDogs", 100, 0, 10, 0, 1, TypeOfTile.NORMAL_GROUND),
     //TODO
-    TUNNELER_GUILD("building", 220, 220, BuildingCategory.CASTLE_BUILDING, "Tunneler", 0, 0, 0, 1, 3, TypeOfTile.NORMAL_GROUND),
+    TUNNELER_GUILD("building", 220, 220, BuildingCategory.CASTLE_BUILDING, "TunnelerGuild", 0, 0, 0, 1, 3, TypeOfTile.NORMAL_GROUND),
     //چادر محاصره
     STABLE("firstProducer", 220, 220, BuildingCategory.CASTLE_BUILDING, "Stable", 400, 0, 20, 0, 3, TypeOfTile.NORMAL_GROUND),
     APPLE_GARDEN("firstProducer", 310, 310, BuildingCategory.FARM_BUILDING, "AppleGarden", 0, 0, 5, 1, 4, TypeOfTile.MEADOW),
@@ -72,10 +70,6 @@ public enum BuildingName {
     private final int stoneCost;
     private final int woodCost;
     private final int size;
-
-
-    //TODO : set this
-    //TODO چادر محاصره
     private final TypeOfTile typeCanBuildBuilding;
     private int numberOfWorkers;
 

@@ -1,16 +1,21 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
 import org.example.model.Empire;
+import org.example.model.People;
+import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
 import org.example.model.building.Tile;
-import org.example.model.building.castleBuilding.CastleBuilding;
 import org.example.model.building.castleBuilding.Tower;
 import org.example.model.building.castleBuilding.Wall;
 import org.example.model.building.enums.BuildingName;
+import org.example.model.unit.Catapult;
+import org.example.model.unit.CatapultName;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+
+import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class BestPath {
     //TODO set the empire
@@ -34,11 +39,11 @@ public class BestPath {
         boolean[] visit = new boolean[size * size];
         initializeAndSetNeighbors(Tiles, tiles, size, visit, tunnelerOption, assassinsOption);
         LinkedList<Integer> path = gainShortestPath(Tiles, visit, xStart, yStart, xDestination, yDestination, size);
-        //TODO check
         assert path != null;
         Collections.reverse(path);
         return path;
     }
+
     private LinkedList<Integer> gainShortestPath(ArrayList<ArrayList<Integer>> Tiles, boolean[] visit,
                                                  int xStart, int yStart, int xDestination, int yDestination, int size) {
         int pred[] = new int[size * size];
@@ -76,7 +81,7 @@ public class BestPath {
         while (!queue.isEmpty()) {
             int hold = queue.remove();
             for (int i = 0; i < Tiles.get(hold).size(); i++) {
-                if (visit[Tiles.get(hold).get(i)] == false) {
+                if (!visit[Tiles.get(hold).get(i)]) {
                     visit[Tiles.get(hold).get(i)] = true;
                     dist[Tiles.get(hold).get(i)] = dist[hold] + 1;
                     pred[Tiles.get(hold).get(i)] = hold;
@@ -89,9 +94,6 @@ public class BestPath {
         return false;
     }
 
-    //ببین یه دیوار و یه زمین عادی اگه داخل زمین عادی نردبان باشه اوکیه یا نه؟
-    //برای دروازه بیا چک کن اگه مالک ان یکی دیگه بود ارتباط نده اگر نه ارتباط بده
-    //اگه دروازه مال خودش بود باز بود بولینش ترو هست اگر نه بولینش فالس هست
     private void initializeAndSetNeighbors(ArrayList<ArrayList<Integer>> Tiles, Tile[][] tiles, int size,
                                            boolean[] visit, boolean tunnelerOption, boolean assassinsOption) {
 
@@ -103,7 +105,8 @@ public class BestPath {
         for (int j = 0; j < size - 1; j++) {
             if (tunnelerOption && checkNeighborForTunneler(tiles[0][j], tiles[0][j + 1]))
                 addEdge(Tiles, 0, j, 0, j + 1, size);
-            else if (assassinsOption && checkNeighborForAssassins(tiles[0][j], tiles[0][j + 1] ))
+            else if (assassinsOption && (checkNeighborForAssassins(tiles[0][j], tiles[0][j + 1]) ||
+                    checkNeighbor(tiles[0][j], 0, j, tiles[0][j + 1], 0, j + 1, visit)))
                 addEdge(Tiles, 0, j, 0, j + 1, size);
             else if (!tunnelerOption && checkNeighbor(tiles[0][j], 0, j, tiles[0][j + 1], 0, j + 1, visit))
                 addEdge(Tiles, 0, j, 0, j + 1, size);
@@ -112,7 +115,8 @@ public class BestPath {
         for (int i = 0; i < size - 1; i++) {
             if (tunnelerOption && checkNeighborForTunneler(tiles[i][0], tiles[i + 1][0]))
                 addEdge(Tiles, i, 0, i + 1, 0, size);
-            else if (assassinsOption && checkNeighborForAssassins(tiles[i][0], tiles[i + 1][0]))
+            else if (assassinsOption && checkNeighborForAssassins(tiles[i][0], tiles[i + 1][0]) ||
+                    checkNeighbor(tiles[i][0], i, 0, tiles[i + 1][0], i + 1, 0, visit))
                 addEdge(Tiles, i, 0, i + 1, 0, size);
             else if (!tunnelerOption && !assassinsOption && checkNeighbor(tiles[i][0], i, 0, tiles[i + 1][0], i + 1, 0, visit))
                 addEdge(Tiles, i, 0, i + 1, 0, size);
@@ -127,9 +131,11 @@ public class BestPath {
                     if (checkNeighborForTunneler(tiles[i][j], tiles[i][j - 1]))
                         addEdge(Tiles, i, j, i, j - 1, size);
                 } else if (assassinsOption) {
-                    if (checkNeighborForAssassins(tiles[i][j], tiles[i - 1][j]))
+                    if (checkNeighborForAssassins(tiles[i][j], tiles[i - 1][j]) ||
+                            checkNeighbor(tiles[i][j], i, j, tiles[i - 1][j], i - 1, j, visit))
                         addEdge(Tiles, i, j, i - 1, j, size);
-                    if (checkNeighborForAssassins(tiles[i][j], tiles[i][j - 1]))
+                    if (checkNeighborForAssassins(tiles[i][j], tiles[i][j - 1]) ||
+                            checkNeighbor(tiles[i][j], i, j, tiles[i][j - 1], i, j - 1, visit))
                         addEdge(Tiles, i, j, i, j - 1, size);
                 } else {
                     if (checkNeighbor(tiles[i][j], i, j, tiles[i - 1][j], i - 1, j, visit))
@@ -147,78 +153,102 @@ public class BestPath {
     }
 
     private boolean checkNeighborForAssassins(Tile tile1, Tile tile2) {
-        if ((tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross()) || (tile1.getBuilding() != null &&
-                (tile1.getBuilding() instanceof Wall || tile1.getBuilding() instanceof Gatehouse ||
-                        tile1.getBuilding() instanceof Tower || tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS))) &&
-                ((tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross()) || (tile2.getBuilding() != null &&
-                        (tile2.getBuilding() instanceof Wall || tile2.getBuilding() instanceof Gatehouse ||
-                                tile2.getBuilding() instanceof Tower || tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS))))) {
+        Building building1 = tile1.getBuilding();
+        Building building2 = tile2.getBuilding();
+        if (building1 == null && building2 != null && isBuildingOkForAssassinsMove(building2))
             return true;
-        }
+        if (building2 == null && building1 != null && isBuildingOkForAssassinsMove(building1))
+            return true;
+        return false;
+    }
+
+    private boolean isBuildingOkForAssassinsMove(Building building) {
+        BuildingName buildingName = building.getBuildingName();
+        if (building instanceof Gatehouse || buildingName.getType().equals("tower") || building instanceof Wall)
+            return true;
         return false;
     }
 
     private boolean checkNeighbor(Tile tile1, int x1, int y1, Tile tile2, int x2, int y2, boolean[] visit) {
 
-        //TODO پل آبی را برسی کن
-        //TODO check
+        Building building1 = tile1.getBuilding();
+        Building building2 = tile2.getBuilding();
+        boolean cross1 = tile1.getTypeOfTile().getCanCross();
+        boolean cross2 = tile2.getTypeOfTile().getCanCross();
+        boolean siegeTower1 = haveCatapultTower(tile1);
+        boolean siegeTower2 = haveCatapultTower(tile2);
 
+        if (!cross1 || !cross2)
+            return false;
+        if (building1 != null && building1.getBuildingName().equals(BuildingName.EMPIRE_CASTLE))
+            return true;
+        if (building2 != null && building2.getBuildingName().equals(BuildingName.EMPIRE_CASTLE))
+            return true;
+        if (building1 == null && building2 == null)
+            return true;
+        if (building1 == null && building2 != null && building2.getBuildingName().equals(BuildingName.STAIRS))
+            return true;
+        if (building1 != null && building1.getBuildingName().equals(BuildingName.STAIRS) && building2 == null)
+            return true;
+        if (building2 != null && building2.getBuildingName().equals(BuildingName.STAIRS) && building1 == null)
+            return true;
+        if (building1 != null && building2 != null && isNeighborForBuildings(building1, building2))
+            return true;
+        if (checkGateHouse(building1, building2, cross1, cross2, x1, y1, x2, y2, visit))
+            return true;
+        if (building1 != null && building2 != null && isNeighborForWall(building1, building2))
+            return true;
+        if (building1 != null && building2 != null && building1.equals(building2))
+            return true;
+        if (building1 == null && building2 != null && siegeTower2)
+            return true;
+        if (building2 == null && building1 != null && siegeTower1)
+            return true;
+        return false;
+    }
 
-        if (tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross() &&
-                tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross())
-            return true;
-        if ((tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross()) &&
-        tile2.getBuilding() != null && tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS))
-            return true;
-        if ((tile1.getBuilding() != null && tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS)) && tile2.getBuilding() == null)
-        return true;
-        if (((tile1.getBuilding() != null && tile1.getBuilding() instanceof Wall) ||
-                (tile1.getBuilding() != null && tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
-                (tile1.getBuilding() != null && tile1.getBuilding() instanceof Gatehouse) ||
-                (tile1.getBuilding() != null && tile1.getBuilding() instanceof CastleBuilding)) &&
-                ((tile2.getBuilding() instanceof Wall) || (tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
-                        (tile2.getBuilding() instanceof Gatehouse) || (tile2.getBuilding() instanceof CastleBuilding)))))
-            return true;
-        else if (((tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS) || tile1.getBuilding() == null)) &&
-                (tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS) || tile2.getBuilding() == null))
-            return true;
-        else if (tile1.getBuilding() instanceof Gatehouse && tile1.getBuilding().getEmpire().equals(empire) &&
-                tile2.getBuilding() == null && tile2.getTypeOfTile().getCanCross()) {
-            if (((Gatehouse) (tile1.getBuilding())).getClosed()) {
-                int size = (int) Math.sqrt(visit.length);
-                visit[x1 * size + y1] = true;
-            }
-            return true;
-        } else if (tile2.getBuilding() instanceof Gatehouse && tile2.getBuilding().getEmpire().equals(empire) &&
-                tile1.getBuilding() == null && tile1.getTypeOfTile().getCanCross()) {
-            if (((Gatehouse) (tile2.getBuilding())).getClosed()) {
-                int size = (int) Math.sqrt(visit.length);
-                visit[x2 * size + y2] = true;
-            }
-            return true;
-        }
+    private boolean isNeighborForBuildings(Building building1, Building building2) {
+        boolean bool1 = false;
+        boolean bool2 = false;
 
-
-        if (tile1.getBuilding().equals(tile2.getBuilding())) return true;
+        if (building1.equals(building2)) return true;
+        if (building1 instanceof Wall || building1.getBuildingName().equals(BuildingName.STAIRS) ||
+                building1 instanceof Gatehouse || building1 instanceof Tower)
+            bool1 = true;
+        if (building2 instanceof Wall || building2.getBuildingName().equals(BuildingName.STAIRS) ||
+                building2 instanceof Gatehouse || building2 instanceof Tower)
+            bool2 = true;
+        if (bool1 && bool2) return true;
 
         return false;
     }
 
+    private boolean isNeighborForWall(Building building1, Building building2) {
+        boolean bool1 = false;
+        boolean bool2 = false;
+        if (building1 != null && building1 instanceof Wall && ((Wall) building1).getHaveLadder()) bool1 = true;
+        if (building2 != null && building2 instanceof Wall && ((Wall) building2).getHaveLadder()) bool2 = true;
+        if (bool1 || bool2) return true;
+        return false;
+    }
 
+    private boolean checkGateHouse(Building building1, Building building2, boolean cross1,
+                                   boolean cross2, int x1, int y1, int x2, int y2, boolean[] visit) {
+        boolean bool1 = false;
+        boolean bool2 = false;
+        int mapSize = getMap().getSize();
+        if (building1 != null && building1 instanceof Gatehouse && building2 == null && cross2) bool1 = true;
+        if (building2 != null && building2 instanceof Gatehouse && building1 == null && cross1) bool2 = true;
+        if (bool1 && ((Gatehouse) building1).getOpen()) visit[x1 * mapSize + y1] = true;
+        if (bool2 && ((Gatehouse) building2).getOpen()) visit[x2 * mapSize + y2] = true;
+        if (bool1 || bool2) return true;
+        return false;
+    }
 
-//    public static void main(String[] args) {
-//        Tile[][] tiles = new Tile[20][];
-//        for (int i = 0; i < 20; i++) {
-//            tiles[i] = new Tile[20];
-//            for (int j = 0; j < 20; j++) {
-//                tiles[i][j] = new Tile();
-//            }
-//        }
-//
-//        BestPath bestPath = new BestPath(new Empire(null, null));
-//        for (Integer x : bestPath.input(tiles, 0, 0, 10, 5)) {
-//            System.out.println("x : " + x/ 20 + " | y : " + x % 20);
-//        }
-//
-//    }
+    private boolean haveCatapultTower(Tile tile) {
+        for (People person : tile.getPeople())
+            if (person instanceof Catapult && ((Catapult)person).getCatapultName().equals(CatapultName.SIEGE_TOWER))
+                return true;
+        return false;
+    }
 }
