@@ -56,7 +56,7 @@ public class NextTurn {
             doRates();
             doOnAllTiles();
             checkEmpireExist();
-            doFornextTurn();
+            doForNextTurn();
         } else {
             turnNumber++;
             currentEmpire = empires.get(turnNumber);
@@ -706,7 +706,7 @@ public class NextTurn {
         return enemy;
     }
 
-    private void doFornextTurn() {
+    private void doForNextTurn() {
         for (Empire empire : empires) {
             for (People person : empire.getPeople()) {
                 if (person instanceof MilitaryUnit) {

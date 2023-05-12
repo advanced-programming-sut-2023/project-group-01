@@ -37,9 +37,9 @@ public class TradeMenuController {
         if (trade == null) return Outputs.INVALID_ID;
         if (!getThisEmpire().havingMaterial(trade.getMaterial().getMaterialType(), trade.getAmountMaterial()))
             return Outputs.NOT_ENOUGH_MATERIAL;
-        if (tradeMenu.getEmpireForTrade().getGold() < trade.getPrice())
+        if (trade.getEmpireRequester().getGold() < trade.getPrice())
             return Outputs.TRADE_NOT_ENOUGH_GOLD;
-        tradeMenu.getEmpireForTrade().decreaseGold(trade.getPrice());
+        trade.getEmpireRequester().decreaseGold(trade.getPrice());
         getThisEmpire().reduceMaterial(trade.getMaterial(), trade.getAmountMaterial());
         trade.setAcceptMessage(message);
         getThisEmpire().addToTradeHistory(trade);

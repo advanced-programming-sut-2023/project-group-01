@@ -12,6 +12,8 @@ import org.example.model.enums.FoodType;
 import org.example.model.unit.Lord;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
+import org.example.view.enums.Outputs;
+import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -363,7 +365,11 @@ public class Empire {
     }
 
     public void reduceMaterial(Material material, int amount) {
-        this.materials.replace(material, this.materials.get(material) - amount);
+        for (Material myMaterial : materials.keySet()) {
+            if (myMaterial.getMaterialType().getName().equals(material.getMaterialType().getName())) {
+                materials.replace(myMaterial, materials.get(myMaterial) - amount);
+            }
+        }
     }
 
     public void addToBuildings(Building building) {
