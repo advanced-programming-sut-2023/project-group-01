@@ -24,7 +24,7 @@ public enum MilitaryUnitName {
     BLACK_MONK(Color.RED, GunShot.ZERO, "european", "blackMonk", Attack.MIDDLE, HitPoint.MIDDLE, Speed.LOW, 10, null, null, false, Voice.BLACK_MONK),
     //Bow Units :
     ARCHER_BOW(Color.RED, GunShot.HIGH, "bow", "archerBow", Attack.LOW, HitPoint.LOW, Speed.HIGH, 75, null, null, false, Voice.ARCHER_BOW),
-    SLAVES(Color.RED, GunShot.ZERO, "bow", "alaves", Attack.VERY_LOW, HitPoint.NOTHING, Speed.HIGH, 5, null, null, false, Voice.SLAVES),
+    SLAVES(Color.RED, GunShot.ZERO, "bow", "slaves", Attack.VERY_LOW, HitPoint.NOTHING, Speed.HIGH, 5, null, null, false, Voice.SLAVES),
     SLINGERS(Color.RED, GunShot.LOW, "bow", "slingers", Attack.LOW, HitPoint.SO_LOW, Speed.HIGH, 12, null, null, false, Voice.SLINGERS),
     ASSASSINS(Color.RED, GunShot.ZERO, "bow", "assassins", Attack.MIDDLE, HitPoint.MIDDLE, Speed.MIDDLE, 60, null, null, false, Voice.ASSASSINS),
     HORSE_ARCHER(Color.RED, GunShot.HIGH, "bow", "horseArchers", Attack.LOW, HitPoint.MIDDLE, Speed.SO_HIGH, 80, null, null, true, Voice.HORSE_ARCHER),
