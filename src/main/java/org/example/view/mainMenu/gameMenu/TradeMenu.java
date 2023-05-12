@@ -102,11 +102,10 @@ public class TradeMenu {
                     "| material: " + trades.get(i).getMaterial().getMaterialType().getName() +
                     "| amount: " + trades.get(i).getAmountMaterial() +
                     "| price: " + trades.get(i).getPrice() +
-                    "| id: " + trades.get(i).getId() +
                     "| request message: " + trades.get(i).getRequestMessage());
             if(trades.equals(getThisEmpire().getTradeHistory()))
                 System.out.println("| accept answer: " + trades.get(i).getAcceptMessage());
-            else System.out.println();
+            else System.out.println("| id: " + trades.get(i).getId());
         }
     }
 

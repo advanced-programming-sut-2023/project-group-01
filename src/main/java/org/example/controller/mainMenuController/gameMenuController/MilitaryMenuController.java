@@ -170,7 +170,7 @@ public class MilitaryMenuController {
 
     public void deleteMilitaryUnitANDBuilding(int x, int y, int number) {
         for (People person : getMap().getTile(x, y).getPeople())
-            ((MilitaryUnit)person).removeUnit();
+            ((MilitaryUnit) person).removeUnit();
         Building building = getMap().getTile(x, y).getBuilding();
         if (building != null) building.getBuildingName().reduceHitPoint(number * 300);
     }
@@ -284,7 +284,7 @@ public class MilitaryMenuController {
         int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
         int yStart = militaryMenu.getSelectedUnit().get(0).getYPos();
         for (People person : getMap().getTile(xAttack, yAttack).getPeople()) {
-            if (person instanceof MilitaryUnit && person.getEmpire().equals(empire) && ((MilitaryUnit)person).getMilitaryUnitName().getGunshot() == 0) {
+            if (person instanceof MilitaryUnit && person.getEmpire().equals(empire) && ((MilitaryUnit) person).getMilitaryUnitName().getGunshot() == 0) {
                 ((MilitaryUnit) person).setXAttack(xAttack);
                 ((MilitaryUnit) person).setYAttack(yAttack);
             }
@@ -337,7 +337,7 @@ public class MilitaryMenuController {
                 militaryUnit.removeUnit();
             }
 
-            return null;
+        return null;
     }
 
 }
