@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 
 public class RegisterMenuController {
 
+
     public static User temporaryCreatedUser;
     private boolean randomPassword;
 

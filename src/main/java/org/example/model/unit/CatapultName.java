@@ -17,7 +17,7 @@ public enum CatapultName {
     private final String name;
     private final int fireRange;
     private final int numberOfEngineers;
-    private final int damage;
+    private int damage;
     private final int capacity;
     private final boolean canAttackUnit;
     private final boolean canMove;
@@ -73,6 +73,10 @@ public enum CatapultName {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public void reduceHitPoint(int hitPoint) {

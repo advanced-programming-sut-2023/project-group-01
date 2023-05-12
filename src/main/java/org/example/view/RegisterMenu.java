@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 
 public class RegisterMenu {
 
+
     private static final RegisterMenuController registerMenuController = new RegisterMenuController();
     private static final LoginMenu loginmenu = new LoginMenu();
     private static final RegisterMenu registerMenu = new RegisterMenu();

@@ -231,7 +231,6 @@ public class MilitaryMenuController {
         getMap().getTile(x, y).addUnit(catapult);
 
         militaryMenu.getSelectedUnit().clear();
-        System.out.println("engineer size : " + engineers.size() + " | catapultCapacity :" + catapultName.getCapacity());
         return Outputs.SUCCESSFUL_CATAPULT;
     }
 
@@ -259,6 +258,7 @@ public class MilitaryMenuController {
     }
 
     public Outputs attack(String x, String y) {
+        //CATAPULT
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
         else if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
@@ -277,7 +277,6 @@ public class MilitaryMenuController {
         militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_ATTACK;
     }
-
 
 
     private boolean checkEnemyExistance(int x, int y) {
