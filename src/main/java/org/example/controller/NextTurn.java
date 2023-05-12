@@ -716,12 +716,12 @@ public class NextTurn {
                     }
                 }
             }
-            ArrayList<KillingPits> killingPits = new ArrayList<>();
+            ArrayList<Building> buildings = new ArrayList<>();
             for (Building building : empire.getBuildings()) {
                 if (building.getBuildingName().getHitPoint() <= 0 || (building instanceof KillingPits && ((KillingPits)building).isUsed()))
-                    killingPits.add((KillingPits) building);
+                    buildings.add(building);
             }
-            empire.getBuildings().removeAll(killingPits);
+            empire.getBuildings().removeAll(buildings);
         }
     }
 
