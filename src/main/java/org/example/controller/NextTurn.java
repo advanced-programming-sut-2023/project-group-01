@@ -339,10 +339,13 @@ public class NextTurn {
         int x = unit.getXPos();
         int y = unit.getYPos();
         ArrayList<MilitaryUnit> enemy = new ArrayList<>();
-
+        boolean patrolBool = false;
+        if (unit.getPatrolX1() < getMap().getSize()) patrolBool = true;
         for (int k = 0; k < gunShot; k++) {
             for (int i = x - k; i < x + k; i++) {
                 for (int j = y - k; j < y + k; j++) {
+                    if (patrolBool && (i == x) && (j == y))
+                        continue;
                     if ((enemy = getMap().getTile(i, j).findNearEnemiesMilitaryUnit(unit.getEmpire())).size() != 0) {
                         return enemy;
                     }
@@ -713,10 +716,12 @@ public class NextTurn {
                     }
                 }
             }
+            ArrayList<KillingPits> killingPits = new ArrayList<>();
             for (Building building : empire.getBuildings()) {
                 if (building.getBuildingName().getHitPoint() <= 0 || (building instanceof KillingPits && ((KillingPits)building).isUsed()))
-                    building.removeBuilding();
+                    killingPits.add((KillingPits) building);
             }
+            empire.getBuildings().removeAll(killingPits);
         }
     }
 

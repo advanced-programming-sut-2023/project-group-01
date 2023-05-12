@@ -293,6 +293,8 @@ public class MilitaryMenuController {
         return Outputs.SUCCESSFUL_ATTACK;
     }
 
+
+
     public Outputs attack_E(String x, String y) {
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y))
