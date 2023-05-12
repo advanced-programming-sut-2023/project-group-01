@@ -238,9 +238,9 @@ public class BuildingMenuController {
         if (!checkValidMilitaryName(type)) return WRONG_UNIT_TYPE;
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Barrack"))
             barrackBoolean = true;
-        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Mercenary Barrack"))
+        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("MercenaryBarrack"))
             mercenaryBoolean = true;
-        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Engineer Guild"))
+        else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("EngineerGuild"))
             engineerGuildBoolean = true;
         else if (buildingMenu.getSelectedBuilding().getBuildingName().getName().equals("Cathedral"))
             cathedralBoolean = true;
