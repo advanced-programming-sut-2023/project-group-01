@@ -148,11 +148,8 @@ public class MilitaryMenuController {
     }
 
     private Outputs doPourOil(String direction) {
-        int size = 0;
-        for (Engineer engineer : findPourOilers()) {
-            engineer.cancelOil();
-            size++;
-        }
+        int size = findPourOilers().size();
+
         if (size == 0) return Outputs.NO_ENGINEER;
 
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
