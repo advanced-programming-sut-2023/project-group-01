@@ -59,6 +59,9 @@ public class MilitaryUnit extends People {
         this.yPos = yPos;
         getMap().getTile(xPos, yPos).addUnit(this);
         this.isMoved = true;
+        if (getMap().getTile(xPos, yPos).getBuilding() != null && getMap().getTile(xPos, yPos).
+                getBuilding().getBuildingName().getType().equals("gateHouse"))
+            getMap().getTile(xPos, yPos).getBuilding().setEmpire(empire);
     }
 
     public int getXAttack() {
