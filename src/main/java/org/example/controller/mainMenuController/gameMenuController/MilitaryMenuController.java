@@ -1,5 +1,6 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
+import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
@@ -133,6 +134,9 @@ public class MilitaryMenuController {
         if (!(direction.equals("left") || direction.equals("right") || direction.equals("up") || direction.equals("down"))) {
             militaryMenu.getSelectedUnit().clear();
             return Outputs.WRONG_POUR_OIL_DIRECTION;
+        } else if (findPourOilers().size() == 0) {
+            militaryMenu.getSelectedUnit().clear();
+            return Outputs.NO_ONE_TO_POUR_OIL;
         } else {
             return doPourOil(direction);
         }
@@ -283,6 +287,8 @@ public class MilitaryMenuController {
         militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_ATTACK;
     }
+
+
 
     private boolean checkEnemyExistance(int x, int y) {
         for (People person : getMap().getTile(x, y).getPeople()) {

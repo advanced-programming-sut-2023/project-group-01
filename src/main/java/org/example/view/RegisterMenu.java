@@ -2,6 +2,7 @@ package org.example.view;
 
 import org.example.controller.RegisterMenuController;
 import org.example.model.Data;
+import org.example.model.UsersDatabaseJSON;
 import org.example.view.enums.*;
 import org.example.view.enums.commands.RegisterMenuCommands;
 
@@ -135,6 +136,11 @@ public class RegisterMenu {
                 else {
                     Data.addUser(RegisterMenuController.temporaryCreatedUser);
                     printSuccess("Register done successfully!");
+                    try {
+                        UsersDatabaseJSON.saveUsersInJSON();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     try {
                         registerMenu.run(scanner);
                     } catch (NoSuchAlgorithmException | IOException e) {

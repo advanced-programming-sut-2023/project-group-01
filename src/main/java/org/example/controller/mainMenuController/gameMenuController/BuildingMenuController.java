@@ -182,6 +182,7 @@ public class BuildingMenuController {
     }
 
     public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {
+
         return switch (buildingName.getType()) {
             case "building" -> new Building(empire, x, y, buildingName);
             case "gateHouse" -> new Gatehouse(empire, x, y, buildingName);
