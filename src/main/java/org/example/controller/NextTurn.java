@@ -112,6 +112,9 @@ public class NextTurn {
                 if(!(people instanceof Worker) && !(people instanceof MilitaryUnit)){
                     empire.removePeople(people);
                     people.getPosition().removeUnit(people);
+                    amount--;
+                    if (amount == 0)
+                        break;
                 }
             }
         }
