@@ -3,10 +3,7 @@ package org.example.view.mainMenu.gameMenu;
 import org.example.controller.NextTurn;
 import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
 import org.example.controller.mainMenuController.gameMenuController.GameMenuController;
-import org.example.model.Empire;
-import org.example.model.InitializeMaterial;
-import org.example.model.Map;
-import org.example.model.User;
+import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
@@ -32,11 +29,10 @@ public class GameMenu {
 
     private static Empire thisEmpire;
 
-    private int turnNumber = 1;
+    private int turnNumber;
 
     public GameMenu(User player) {
         this.player = player;
-        nextTurn = new NextTurn(this);
     }
 
 
@@ -49,6 +45,13 @@ public class GameMenu {
     }
 
     public boolean setEmpires(int numberOfEmpires, Scanner scanner, InitializeMaterial initializeMaterial) {
+        try {
+            UsersDatabaseJSON.saveUsersInJSON();
+            UsersDatabaseJSON.saveStayedLoggedInUser();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         player.setInGame(true);
         GameMenu.getEmpires().add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
         GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
@@ -69,6 +72,8 @@ public class GameMenu {
                 else System.out.println("User not found");
             }
         System.out.println("All of the players added to the game.");
+        nextTurn = new NextTurn(this);
+        turnNumber = empires.size();
         addEmpireBuildingsToMap();
         setMaterialForEmpires(initializeMaterial);
         return true;
@@ -88,7 +93,7 @@ public class GameMenu {
     }
 
     public int getTurnNumber() {
-        return turnNumber;
+        return turnNumber/empires.size();
     }
 
     public static Map getMap() {
@@ -111,8 +116,10 @@ public class GameMenu {
                     System.out.println("The turn number is " + getTurnNumber());
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GET_PLAYER)) != null)
                     System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
-                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null)
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null){
+                    turnNumber++;
                     nextTurn.nextTurn(); //TODO check increase turn;
+                }
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null) {
                     MilitaryMenu militaryMenu = new MilitaryMenu(thisEmpire, this);
                     militaryMenu.run(scanner);

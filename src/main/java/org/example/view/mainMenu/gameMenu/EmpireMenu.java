@@ -38,6 +38,8 @@ public class EmpireMenu {
                 taxRateShow();
             else if ((matcher = EmpireMenuCommands.getMatcher(command, EmpireMenuCommands.CHANGE_FEAR_RATE)) != null)
                 fearRateChecker(matcher);
+            else if (command.equals("exit"))
+                break;
             else if(EmpireMenuCommands.getMatcher(command,EmpireMenuCommands.SHOW_POPULATION) != null)
                 System.out.println("Your population is: " + empire.getPopulation());
             else System.out.println("Invalid command in Empire Menu !");

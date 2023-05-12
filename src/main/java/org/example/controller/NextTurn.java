@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.controller.mainMenuController.gameMenuController.BestPath;
 import org.example.model.Empire;
 import org.example.model.People;
+import org.example.model.UsersDatabaseJSON;
 import org.example.model.Worker;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
@@ -16,6 +17,7 @@ import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -34,6 +36,11 @@ public class NextTurn {
         this.gameMenu = gameMenu;
         this.turnNumber = 0;
         this.empires = getEmpires();
+        this.numberOfEmpires = empires.size();
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
     }
 
     public void addEmpire(Empire empire) {
@@ -42,7 +49,8 @@ public class NextTurn {
     }
 
     public void nextTurn() {
-        if (turnNumber == numberOfEmpires) {
+
+        if (turnNumber == numberOfEmpires - 1) {
             turnNumber = 0;
             currentEmpire = empires.get(0);
             doRates();
@@ -53,6 +61,8 @@ public class NextTurn {
             turnNumber++;
             currentEmpire = empires.get(turnNumber);
         }
+        GameMenu.setThisEmpire(currentEmpire);
+
     }
 
     public void doOnAllTiles() {
@@ -196,7 +206,12 @@ public class NextTurn {
         for (Empire empire : empires)
             if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
                 removingEmpires.add(empire);
-                empire.getPlayer().setHighScore(empire.getPlayer().getHighScore() + score);
+                empire.getPlayer().setHighScore( empire.getPlayer().getHighScore() + score);
+                try {
+                    UsersDatabaseJSON.saveUsersInJSON();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 score += 200;
             }
         if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
@@ -699,7 +714,7 @@ public class NextTurn {
                 }
             }
             for (Building building : empire.getBuildings()) {
-                if (building.getBuildingName().getHitPoint() <= 0 || (building instanceof KillingPits && ((KillingPits) building).isUsed()))
+                if (building.getBuildingName().getHitPoint() <= 0 || (building instanceof KillingPits && ((KillingPits)building).isUsed()))
                     building.removeBuilding();
             }
         }
