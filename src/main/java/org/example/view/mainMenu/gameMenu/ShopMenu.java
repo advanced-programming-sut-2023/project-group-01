@@ -1,6 +1,7 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.model.building.Material;
+import org.example.model.building.enums.MaterialType;
 import org.example.view.enums.BackgroundColor;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.ShopMenuCommands;
@@ -48,14 +49,31 @@ public class ShopMenu {
                     return Outputs.INVALID_MATERIAL_NAME;
                 if (GameMenu.getThisEmpire().getGold() < material.getMaterialType().getBuyingPrice() * count)
                     return Outputs.NOT_ENOUGH_GOLD;
+
+                if (buying(material, count) != null)
+                    return Outputs.NOT_ENOUGH_CAPACITY;
                 materials.put(material, materials.get(material) + count);
                 GameMenu.getThisEmpire().decreaseGold(material.getMaterialType().getBuyingPrice() * count);
                 return Outputs.SUCCESS_BUY;
                 //TODO check anbar
             }
         }
-
         return Outputs.INVALID_MATERIAL_NAME;
+    }
+
+    public Outputs buying(Material material, int count) {
+        int capacity = 0;
+        if (material.getMaterialType().getTypeOfProduct().equals("source"))
+            capacity = GameMenu.getThisEmpire().havingStockpile();
+        else if (material.getMaterialType().getTypeOfProduct().equals("food"))
+            capacity= GameMenu.getThisEmpire().havingGranary();
+        else if (material.getMaterialType().getTypeOfProduct().equals("warfare"))
+            capacity = GameMenu.getThisEmpire().havingArmoury();
+
+        if (count > capacity)
+            return Outputs.NOT_ENOUGH_CAPACITY;
+        else
+            return null;
     }
 
     public Outputs sell(Matcher matcher) {

@@ -4,6 +4,7 @@ package org.example.model;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 import org.example.model.building.Stable;
+import org.example.model.building.Storage;
 import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
@@ -89,6 +90,47 @@ public class Empire {
         }
     }
 
+    public int havingStockpile() {
+        int capacity = 0;
+        int isFull = 0;
+        for (Building building : buildings)
+            if (building.getBuildingName().equals(BuildingName.STOCKPILE))
+                capacity += ((Storage) building).getCapacity();
+
+        for (Material material : materials.keySet())
+            if (material.getMaterialType().getTypeOfProduct().equals("source"))
+                isFull += materials.get(material);
+
+        return capacity - isFull;
+    }
+
+    public int havingGranary() {
+        int capacity = 0;
+        int isFull = 0;
+        for (Building building : buildings)
+            if (building.getBuildingName().equals(BuildingName.GRANARY))
+                capacity += ((Storage) building).getCapacity();
+
+        for (Material material : materials.keySet())
+            if (material.getMaterialType().getTypeOfProduct().equals("food"))
+                isFull += materials.get(material);
+
+        return capacity - isFull;
+    }
+
+    public int havingArmoury() {
+        int capacity = 0;
+        int isFull = 0;
+        for (Building building : buildings)
+            if (building.getBuildingName().equals(BuildingName.ARMOURY))
+                capacity += ((Storage) building).getCapacity();
+
+        for (Material material : materials.keySet())
+            if (material.getMaterialType().getTypeOfProduct().equals("warfare"))
+                isFull += materials.get(material);
+
+        return capacity - isFull;
+    }
 
 
     public ArrayList<Building> getBuildings() {
