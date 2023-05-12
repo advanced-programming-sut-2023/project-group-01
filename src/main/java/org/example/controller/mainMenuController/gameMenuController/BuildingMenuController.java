@@ -246,7 +246,7 @@ public class BuildingMenuController {
             tunnelerBoolean = true;
 
         if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
-            return Outputs.WRONG_UNIT_TYPE;
+            return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
         if (empire.getNormalPopulation() < Integer.parseInt(count))
             return Outputs.NOT_ENOUGH_POPULATION;
         if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count))
