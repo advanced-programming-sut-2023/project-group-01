@@ -1,8 +1,7 @@
 package org.example.model;
 
 import org.example.model.building.Tile;
-import org.example.model.building.castleBuilding.EmpireBuilding;
-import org.example.model.enums.Color;
+import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 
 import java.util.ArrayList;
 

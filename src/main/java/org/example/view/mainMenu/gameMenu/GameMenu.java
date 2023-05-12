@@ -5,13 +5,11 @@ import org.example.controller.mainMenuController.gameMenuController.BuildingMenu
 import org.example.controller.mainMenuController.gameMenuController.GameMenuController;
 import org.example.model.*;
 import org.example.model.building.Building;
-import org.example.model.building.castleBuilding.EmpireBuilding;
+import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.GameMenuCommands;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;

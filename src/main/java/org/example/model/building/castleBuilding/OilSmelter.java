@@ -15,14 +15,8 @@ public class OilSmelter extends SecondProducer {
     private Engineer engineer;
 
     public OilSmelter(Empire empire, int x1, int y1, BuildingName buildingName) {
-        super(empire, x1,  y1,  buildingName);
-        initializeOil();
-    }
-
-    private void initializeOil() {
-        for (People person : empire.getPeople())
-            if (person instanceof Engineer)
-                ((Engineer) person).addOil();
+        super(empire, x1, y1, buildingName);
+        empire.initializeOil();
     }
 
     public Engineer getEngineer() {

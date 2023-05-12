@@ -4,16 +4,15 @@ package org.example.model;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 import org.example.model.building.Stable;
-import org.example.model.building.castleBuilding.EmpireBuilding;
+import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.FoodType;
+import org.example.model.unit.Engineer;
 import org.example.model.unit.Lord;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
-import org.example.view.enums.Outputs;
-import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -81,6 +80,15 @@ public class Empire {
             people.add(new People(getMap().getTile(empireBuilding.getX(), empireBuilding.getY()), this));
         }
     }
+
+    public void initializeOil() {
+        for (People person : people) {
+            if (person instanceof Engineer) {
+                ((Engineer) person).addOil();
+            }
+        }
+    }
+
 
 
     public ArrayList<Building> getBuildings() {

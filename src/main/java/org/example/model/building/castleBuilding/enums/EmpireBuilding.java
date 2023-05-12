@@ -1,4 +1,4 @@
-package org.example.model.building.castleBuilding;
+package org.example.model.building.castleBuilding.enums;
 
 import org.example.model.Empire;
 import org.example.model.building.Tile;
