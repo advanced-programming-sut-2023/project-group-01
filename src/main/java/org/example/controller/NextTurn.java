@@ -172,7 +172,7 @@ public class NextTurn {
         for (Empire empire : empires)
             if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
                 removingEmpires.add(empire);
-                empire.getPlayer().setHighScore( empire.getPlayer().getHighScore() + score);
+                empire.getPlayer().setHighScore(empire.getPlayer().getHighScore() + score);
                 score += 200;
             }
         if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
