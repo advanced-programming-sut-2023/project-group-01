@@ -318,43 +318,43 @@ public class BuildingMenuController {
         int y = XY % size;
 
         switch (militaryUnitName) {
-            case "Archer" -> {
+            case "archer" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER, x, y);
                 MilitaryUnitName.ARCHER.getVoice().playVoice(MilitaryUnitName.ARCHER.getVoice());
                 return true;
             }
-            case "Crossbowmen" -> {
+            case "crossbowmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.CROSSBOW_MEN, x, y);
                 MilitaryUnitName.CROSSBOW_MEN.getVoice().playVoice(MilitaryUnitName.CROSSBOW_MEN.getVoice());
                 return true;
             }
-            case "Spearmen" -> {
+            case "spearmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SPEAR_MEN, x, y);
                 MilitaryUnitName.SPEAR_MEN.getVoice().playVoice(MilitaryUnitName.SPEAR_MEN.getVoice());
                 return true;
             }
-            case "Pikemen" -> {
+            case "pikemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.PIKE_MEN, x, y);
                 MilitaryUnitName.PIKE_MEN.getVoice().playVoice(MilitaryUnitName.PIKE_MEN.getVoice());
                 return true;
             }
-            case "Macemen" -> {
+            case "macemen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.MACE_MEN, x, y);
                 MilitaryUnitName.MACE_MEN.getVoice().playVoice(MilitaryUnitName.MACE_MEN.getVoice());
                 return true;
             }
-            case "Swordsmen" -> {
+            case "swordsmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SWORDSMEN, x, y);
                 MilitaryUnitName.SWORDSMEN.getVoice().playVoice(MilitaryUnitName.SWORDSMEN.getVoice());
                 return true;
             }
-            case "Knight" -> {
+            case "knight" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.KNIGHT, x, y);
                 MilitaryUnitName.KNIGHT.getVoice().playVoice(MilitaryUnitName.KNIGHT.getVoice());
@@ -395,37 +395,37 @@ public class BuildingMenuController {
         int y = XY % size;
 
         switch (militaryUnitName) {
-            case "Archer Bow" -> {
+            case "archerBow" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARCHER_BOW, x, y);
                 MilitaryUnitName.ARCHER_BOW.getVoice().playVoice(MilitaryUnitName.ARCHER_BOW.getVoice());
                 return true;
             }
-            case "Slingers" -> {
+            case "slingers" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLINGERS, x, y);
                 MilitaryUnitName.SLINGERS.getVoice().playVoice(MilitaryUnitName.SLINGERS.getVoice());
                 return true;
             }
-            case "Assassins" -> {
+            case "assassins" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ASSASSINS, x, y);
                 MilitaryUnitName.ASSASSINS.getVoice().playVoice(MilitaryUnitName.ASSASSINS.getVoice());
                 return true;
             }
-            case "Horse Archers" -> {
+            case "horseArchers" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.HORSE_ARCHER, x, y);
                 MilitaryUnitName.HORSE_ARCHER.getVoice().playVoice(MilitaryUnitName.HORSE_ARCHER.getVoice());
                 return true;
             }
-            case "Arabian Swordsmen" -> {
+            case "arabianSwordsmen" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ARABIAN_SWORSMEN, x, y);
                 MilitaryUnitName.ARABIAN_SWORSMEN.getVoice().playVoice(MilitaryUnitName.ARABIAN_SWORSMEN.getVoice());
                 return true;
             }
-            case "Fire Throwers" -> {
+            case "fireThrowers" -> {
                 for (int i = 0; i < count; i++)
                     new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.FIRE_THROWERS, x, y);
                 MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
@@ -441,14 +441,14 @@ public class BuildingMenuController {
         int XY = findXY(BuildingName.ENGINEER_GUILD), size = getMap().getSize(), x = XY / size, y = XY % size;
         boolean haveOilSmelter = findOilSmelter();
 
-        if (militaryUnitName.equals("Engineer")) {
+        if (militaryUnitName.equals("engineer")) {
             for (int i = 0; i < count; i++) {
                 Engineer engineer = new Engineer(getMap().getTile(x, y), empire, MilitaryUnitName.ENGINEER, x, y);
                 if (haveOilSmelter) engineer.addOil();
             }
             MilitaryUnitName.ENGINEER.getVoice().playVoice(MilitaryUnitName.ENGINEER.getVoice());
             return true;
-        } else if (militaryUnitName.equals("Laddermen")) {
+        } else if (militaryUnitName.equals("laddermen")) {
             for (int i = 0; i < count; i++)
                 new LadderMen(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN, x, y);
             MilitaryUnitName.LADDER_MEN.getVoice().playVoice(MilitaryUnitName.LADDER_MEN.getVoice());
