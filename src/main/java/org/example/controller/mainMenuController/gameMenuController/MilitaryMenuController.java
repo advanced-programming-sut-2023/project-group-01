@@ -40,6 +40,7 @@ public class MilitaryMenuController {
     public Outputs moveUnit(String x, String y) {
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
+        if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
 
         int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
         int yStart = militaryMenu.getSelectedUnit().get(0).getYPos();
