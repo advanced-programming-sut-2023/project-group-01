@@ -79,12 +79,4 @@ public enum CatapultName {
         this.hitPoint -= hitPoint;
     }
 
-//    public Catapult getCatapultByName(String name) {
-//        for (CatapultName catapultName : CatapultName.values()) {
-//            if (catapultName.getName().equals(name)) {
-//                return new Catapult(catapultName);
-//            }
-//        }
-//        return null;
-//    }
 }

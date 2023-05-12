@@ -136,16 +136,7 @@ public enum MilitaryUnitName {
     public Voice getVoice() {
         return voice;
     }
-
-//    public MilitaryUnit getBarrackMilitaryUnitByName(String name, Empire empire) {
-//        // if (name.equals())
-//        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values()) {
-//            if (militaryUnitName.getName().equals(name)) {
-//                return new MilitaryUnit(null, empire, militaryUnitName, );
-//            }
-//        }
-//        return null;
-//    }
+    
     public static MilitaryUnitName getMilitaryUnitWhitName(String name){
         for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
             if(militaryUnitName.getName().equals(name))

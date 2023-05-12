@@ -6,8 +6,6 @@ import org.example.model.building.enums.BuildingName;
 
 public class CastleBuilding extends Building {
 
-    private int capacityOfUnit;
-
     public CastleBuilding(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1, y1, buildingName);
     }

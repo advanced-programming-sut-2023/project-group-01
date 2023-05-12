@@ -593,7 +593,7 @@ public class NextTurn {
             Building building1 = getMap().getTile(enemy.get(0).getXPos(), enemy.get(0).getYPos()).getBuilding();
             int damage = unit.getMilitaryUnitName().getAttack();
             if (building1 != null && building1.getBuildingName().getType().equals("tower"))
-                damage -= ((Tower) building1).getTowerType().getDefendRange() / 10;
+                damage -= ((Tower) building1).getTowerType().getDefendRange();
             damage /= enemy.size();
             for (MilitaryUnit militaryUnit : enemy) {
                 if (militaryUnit.getMilitaryUnitName().getHitPoint() > damage)

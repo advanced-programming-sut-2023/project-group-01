@@ -68,13 +68,5 @@ public class Tile {
         people.clear();
     }
 
-    public MilitaryUnit findEnemyMilitaryUnitForArcher(Empire empire) {
-        for (People person : people)
-            if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire) && (!((MilitaryUnit) person).getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)))
-                return (MilitaryUnit) person;
-        return null;
-    }
-
-
 }
 

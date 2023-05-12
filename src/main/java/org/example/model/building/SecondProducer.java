@@ -22,10 +22,6 @@ public class SecondProducer extends Building {
         return producerType;
     }
 
-    public void setProducerType(SecondProducerType producerType) {
-        this.producerType = producerType;
-    }
-
     public void createMaterial() {
         if (empire.havingMaterial(producerType.getFirstEnterance(), rate) && empire.havingMaterial(producerType.getSecondEnterance2(), rate)) {
             if (producerType.getFirstProduct() != null && empire.checkCapacity(producerType.getFirstProduct(), rate))

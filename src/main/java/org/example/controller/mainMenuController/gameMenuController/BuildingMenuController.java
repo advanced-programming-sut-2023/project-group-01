@@ -49,15 +49,11 @@ public class BuildingMenuController {
     }
 
     public Outputs dropBuilding(String x, String y, String type) {
-        if (x == null) {
-            return Outputs.EMPTY_X;
-        } else if (y == null) {
-            return Outputs.EMPTY_Y;
-        } else if (!x.matches("\\d+")) {
-            return Outputs.INVALID_X;
-        } else if (!y.matches("\\d+")) {
-            return Outputs.INVALID_Y;
-        }
+        if (x == null) return Outputs.EMPTY_X;
+        else if (y == null) return Outputs.EMPTY_Y;
+        else if (!x.matches("\\d+")) return Outputs.INVALID_X;
+        else if (!y.matches("\\d+")) return Outputs.INVALID_Y;
+
         BuildingName buildingName = findBuildingNameByName(type);
         if (buildingName == null) return Outputs.INVALID_BUILDING_TYPE;
         int x0 = Integer.parseInt(x);
@@ -70,9 +66,18 @@ public class BuildingMenuController {
         else if (isPositionFull(buildingName, x0, y0)) return Outputs.FULL_POSITION;
         else if (isGroundSuitable(buildingName, x0, y0)) return Outputs.NOT_SUITABLE_GROUND;
         else if (empire.getNormalPopulation() < buildingName.getNumberOfWorkers()) return Outputs.NOT_ENOUGH_POPULATION;
-        else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY))
-            if (dropStorageBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
+        else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY)) {
+            if (dropNearBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
+        }
+        if (buildingName.equals(BuildingName.DRAWBRIDGE)) {
+            if (dropNearBuilding(Integer.parseInt(x), Integer.parseInt(y), BuildingName.BIG_STONE_GATEHOUSE).
+                    equals(Outputs.NOT_NEAR_BUILDING))
+                return Outputs.NOT_NEAR_BUILDING;
+            if (dropNearBuilding(Integer.parseInt(x), Integer.parseInt(y), BuildingName.SMALL_STONE_GATEHOUSE).
+                    equals(Outputs.NOT_NEAR_BUILDING))
+                return Outputs.NOT_NEAR_BUILDING;
+        }
         if (!empire.havingMaterial(MaterialType.WOOD, buildingName.getWoodCost())) return Outputs.NOT_ENOUGH_WOOD;
         if (!empire.havingMaterial(MaterialType.STONE, buildingName.getStoneCost())) return Outputs.NOT_ENOUGH_STONE;
         putBuilding(buildingName, x0, y0, empire);
@@ -80,7 +85,7 @@ public class BuildingMenuController {
         return SUCCESSFUL_DROP_BUILDING;
     }
 
-    public Outputs dropStorageBuilding(int x, int y, BuildingName buildingName) {
+    public Outputs dropNearBuilding(int x, int y, BuildingName buildingName) {
         if (!haveStorage(buildingName)) return SUCCESSFUL_DROP_BUILDING;
 
         for (int i = x - 1; i <= x + buildingName.getSize(); i++)
