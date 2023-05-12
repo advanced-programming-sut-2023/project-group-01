@@ -3,14 +3,11 @@ package org.example.view.mainMenu.gameMenu;
 
 import org.example.controller.mainMenuController.gameMenuController.CreateMapMenuController;
 import org.example.model.Data;
-import org.example.model.Empire;
 import org.example.model.Map;
 import org.example.model.User;
-import org.example.model.building.castleBuilding.EmpireBuilding;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.CreateMapMenuCommands;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
