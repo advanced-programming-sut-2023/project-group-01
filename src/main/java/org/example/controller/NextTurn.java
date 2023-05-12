@@ -9,6 +9,7 @@ import org.example.model.building.Building;
 import org.example.model.building.Tile;
 import org.example.model.building.castleBuilding.CagedDogs;
 import org.example.model.building.castleBuilding.KillingPits;
+import org.example.model.building.castleBuilding.Tower;
 import org.example.model.building.castleBuilding.Wall;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.enums.FoodType;
@@ -586,8 +587,14 @@ public class NextTurn {
         else
             enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
 
+
         if (enemy.size() != 0) {
-            int damage = unit.getMilitaryUnitName().getAttack() / enemy.size();
+
+            Building building1 = getMap().getTile(enemy.get(0).getXPos(), enemy.get(0).getYPos()).getBuilding();
+            int damage = unit.getMilitaryUnitName().getAttack();
+            if (building1 != null && building1.getBuildingName().getType().equals("tower"))
+                damage -= ((Tower) building1).getTowerType().getDefendRange() / 10;
+            damage /= enemy.size();
             for (MilitaryUnit militaryUnit : enemy) {
                 if (militaryUnit.getMilitaryUnitName().getHitPoint() > damage)
                     militaryUnit.getMilitaryUnitName().reduceHitPoint(damage);
