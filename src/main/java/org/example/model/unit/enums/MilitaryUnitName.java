@@ -37,7 +37,7 @@ public enum MilitaryUnitName {
     private final String type;
     private final String name;
     private MilitaryUnitState state;
-    private final int attack;
+    private int attack;
     private int hitPoint;
     private final int speed;
     private final int cost;
@@ -67,16 +67,20 @@ public enum MilitaryUnitName {
         this.state = state;
     }
 
+    public void setHitPoint(int hitPoint) {
+        this.hitPoint = hitPoint;
+    }
+
+    public void setGunshot(int gunshot) {
+        this.gunshot = gunshot;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
     public void reduceHitPoint(int hitPoint) {
         this.hitPoint -= hitPoint;
-    }
-
-    public void increaseGunshot(int gunshot) {
-        this.gunshot += gunshot;
-    }
-
-    public void reduceGunshot(int gunshot) {
-        this.gunshot -= gunshot;
     }
 
     public String getType() {

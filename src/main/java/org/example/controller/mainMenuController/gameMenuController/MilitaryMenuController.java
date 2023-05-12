@@ -1,5 +1,6 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
+import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
@@ -53,8 +54,26 @@ public class MilitaryMenuController {
     }
 
     public static void moving(int xStart, int yStart, int xDestination, int yDestination, Empire empire) {
-        for (MilitaryUnit militaryUnit : getMap().getTile(xStart, yStart).findUnit(empire))
+        boolean isAssassin = isAllTheUnitsAssassins(xStart, yStart, empire);
+        BestPath bestPath = new BestPath(empire);
+        LinkedList<Integer> path = bestPath.input(getMap().getMap(), xStart, yStart, xDestination, yDestination, false, isAssassin);
+
+        for (MilitaryUnit militaryUnit : getMap().getTile(xStart, yStart).findUnit(empire)) {
             militaryUnit.setDest(xDestination, yDestination);
+
+        }
+    }
+
+    private boolean isMoveFinished() {
+
+        return false;
+    }
+
+    private static boolean isAllTheUnitsAssassins(int x, int y, Empire empire) {
+        for (MilitaryUnit unit : getMap().getTile(x, y).findUnit(empire))
+            if (!unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
+                return false;
+        return true;
     }
 
     public Outputs patrolUnit(String x1, String y1, String x2, String y2) {
@@ -107,26 +126,24 @@ public class MilitaryMenuController {
 
         int xPos = Integer.parseInt(x);
         int yPos = Integer.parseInt(y);
+        ArrayList<MilitaryUnit> units = getMap().getTile(xPos, yPos).findUnit(empire);
 
-        if (getMap().getTile(xPos, yPos).findUnit(empire).size() == 0)
+        if (units.size() == 0)
             return Outputs.NOT_HAVING_TROOP;
         else if (!set.equals("standing") && !set.equals("defensive") && !set.equals("offensive"))
             return Outputs.INVALID_UNIT_STATE;
         else if (set.equals("standing")) {
-            for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
+            for (MilitaryUnit militaryUnit : units)
                 if (militaryUnit.getEmpire().equals(empire))
                     militaryUnit.getMilitaryUnitName().setState(MilitaryUnitState.STANDING);
-            }
         } else if (set.equals("defensive")) {
-            for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
+            for (MilitaryUnit militaryUnit : units)
                 if (militaryUnit.getEmpire().equals(empire))
                     militaryUnit.getMilitaryUnitName().setState(MilitaryUnitState.DEFENSIVE);
-            }
         } else {
-            for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
+            for (MilitaryUnit militaryUnit : units)
                 if (militaryUnit.getEmpire().equals(empire))
                     militaryUnit.getMilitaryUnitName().setState(MilitaryUnitState.OFFENSIVE);
-            }
         }
         return Outputs.SUCCESSFUL_SET_STATE;
 
@@ -151,6 +168,7 @@ public class MilitaryMenuController {
             engineer.cancelOil();
             size++;
         }
+        if (size == 0) return Outputs.NO_ENGINEER;
 
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
         int y = militaryMenu.getSelectedUnit().get(0).getYPos();
@@ -269,6 +287,7 @@ public class MilitaryMenuController {
     }
 
     public Outputs attack(String x, String y) {
+        //CATAPULT
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
         else if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
@@ -279,7 +298,7 @@ public class MilitaryMenuController {
         int xStart = militaryMenu.getSelectedUnit().get(0).getXPos();
         int yStart = militaryMenu.getSelectedUnit().get(0).getYPos();
         for (People person : getMap().getTile(xAttack, yAttack).getPeople()) {
-            if (person instanceof MilitaryUnit && person.getEmpire().equals(empire)) {
+            if (person instanceof MilitaryUnit && person.getEmpire().equals(empire) && ((MilitaryUnit)person).getMilitaryUnitName().getGunshot() == 0) {
                 ((MilitaryUnit) person).setXAttack(xAttack);
                 ((MilitaryUnit) person).setYAttack(yAttack);
             }

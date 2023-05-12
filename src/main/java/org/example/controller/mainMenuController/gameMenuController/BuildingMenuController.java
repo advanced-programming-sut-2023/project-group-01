@@ -6,17 +6,14 @@ import org.example.model.building.*;
 import org.example.model.building.castleBuilding.*;
 import org.example.model.building.castleBuilding.enums.TowerType;
 import org.example.model.building.enums.BuildingName;
-import org.example.model.building.enums.FirstProducerType;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.building.enums.TypeOfTile;
+import org.example.model.unit.Engineer;
+import org.example.model.unit.LadderMen;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
-import org.example.view.mainMenu.gameMenu.CreateMapMenu;
-import org.example.view.mainMenu.gameMenu.GameMenu;
-
-import java.util.ArrayList;
 
 import static org.example.view.enums.Outputs.SUCCESSFUL_DROP_BUILDING;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
@@ -178,25 +175,29 @@ public class BuildingMenuController {
     }
 
     public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {
-        if (buildingName.getType().equals("building")) return new Building(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("gateHouse")) return new Gatehouse(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("tower")) return new Tower(empire, x, y, buildingName, getTypeOfTowerTypeByName(buildingName));
-        else if (buildingName.getType().equals("stairs")) return new CastleBuilding(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("storage")) return new Storage(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("killingPit")) return new KillingPits(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("firstProducer")) return new FirstProducer(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("secondProducer")) return new SecondProducer(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("pitchDitch")) return new PitchDitch(empire, x, y, buildingName);
-        else if (buildingName.getType().equals("cagedWarDogs")) return new CagedDogs(empire, x, y, buildingName);
-        else return null;
+        return switch (buildingName.getType()) {
+            case "building" -> new Building(empire, x, y, buildingName);
+            case "gateHouse" -> new Gatehouse(empire, x, y, buildingName);
+            case "tower" -> new Tower(empire, x, y, buildingName, getTypeOfTowerTypeByName(buildingName));
+            case "stairs" -> new CastleBuilding(empire, x, y, buildingName);
+            case "storage" -> new Storage(empire, x, y, buildingName);
+            case "killingPit" -> new KillingPits(empire, x, y, buildingName);
+            case "firstProducer" -> new FirstProducer(empire, x, y, buildingName);
+            case "secondProducer" -> new SecondProducer(empire, x, y, buildingName);
+            case "pitchDitch" -> new PitchDitch(empire, x, y, buildingName);
+            case "cagedWarDogs" -> new CagedDogs(empire, x, y, buildingName);
+            default -> null;
+        };
     }
 
     private static TowerType getTypeOfTowerTypeByName(BuildingName buildingName) {
-        if (buildingName.getName().equals("LookoutTower")) return TowerType.LOOKOUT_TOWER;
-        else if (buildingName.getName().equals("PerimeterTurret")) return TowerType.PERIMETER_TOWER;
-        else if (buildingName.getName().equals("DefenceTurret")) return TowerType.DEFENSE_TURRET;
-        else if (buildingName.getName().equals("RoundTower")) return TowerType.ROUND_TOWER;
-        else return TowerType.SQUARE_TOWER;
+        return switch (buildingName.getName()) {
+            case "LookoutTower" -> TowerType.LOOKOUT_TOWER;
+            case "PerimeterTurret" -> TowerType.PERIMETER_TOWER;
+            case "DefenceTurret" -> TowerType.DEFENSE_TURRET;
+            case "RoundTower" -> TowerType.ROUND_TOWER;
+            default -> TowerType.SQUARE_TOWER;
+        };
     }
     public static Outputs destroyBuilding(Building building) {
         if (building == null) return Outputs.EMPTY_SELECTED_BUILDING;
@@ -437,22 +438,29 @@ public class BuildingMenuController {
     }
 
     private boolean Engineer(String militaryUnitName, int count) {
-        int XY = findXY(BuildingName.ENGINEER_GUILD);
-        int size = getMap().getSize();
-        int x = XY / size;
-        int y = XY % size;
+        int XY = findXY(BuildingName.ENGINEER_GUILD), size = getMap().getSize(), x = XY / size, y = XY % size;
+        boolean haveOilSmelter = findOilSmelter();
 
         if (militaryUnitName.equals("Engineer")) {
-            for (int i = 0; i < count; i++)
-                new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.ENGINEER, x, y);
+            for (int i = 0; i < count; i++) {
+                Engineer engineer = new Engineer(getMap().getTile(x, y), empire, MilitaryUnitName.ENGINEER, x, y);
+                if (haveOilSmelter) engineer.addOil();
+            }
             MilitaryUnitName.ENGINEER.getVoice().playVoice(MilitaryUnitName.ENGINEER.getVoice());
             return true;
         } else if (militaryUnitName.equals("Laddermen")) {
             for (int i = 0; i < count; i++)
-                new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN, x, y);
+                new LadderMen(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.LADDER_MEN, x, y);
             MilitaryUnitName.LADDER_MEN.getVoice().playVoice(MilitaryUnitName.LADDER_MEN.getVoice());
             return true;
         }
+        return false;
+    }
+
+    private boolean findOilSmelter() {
+        for (Building building : empire.getBuildings())
+            if (building.getBuildingName().equals(BuildingName.OIL_SMELTER))
+                return true;
         return false;
     }
 

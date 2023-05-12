@@ -121,6 +121,8 @@ public class MilitaryMenu {
         Outputs outputs = militaryMenuController.disbandUnit(x ,y);
         if (outputs != null)
             System.out.println(outputs.toString());
+        else
+            System.out.println(Outputs.SUCCESSFUL_DISBAND);
     }
 
     public void setSelectedUnit(ArrayList<MilitaryUnit> selectedUnit) {

@@ -120,6 +120,8 @@ public enum Outputs {
     EMPTY_POSITION("EMPTY Position"),
     WRONG_UNIT_FOR_SELECTED_BUILDING("Wrong building for selected building"),
     NOT_NEAR_BUILDING("Not near Building"),
+    SUCCESSFUL_DISBAND("Successful disband"),
+    NO_ENGINEER("No engineer in this Tile"),
     ;
     private String output;
 

@@ -453,14 +453,14 @@ public class NextTurn {
         for (int i = 0; i < empires.size(); i++) {
             enemy1 = tile.findUnit(empires.get(i));
             if (enemy1.size() != 0) {
-                for (int j = 0; j < empires.size(); j++) {
+                for (int j = i + 1; j < empires.size(); j++) {
                     enemy2 = tile.findUnit(empires.get(j));
                     if (!isAttack[i] && enemy2.size() != 0) {
                         attackUnits(enemy1, enemy2);
                     }
                 }
-                isAttack[i] = true;
             }
+            isAttack[i] = true;
         }
 
         boolean bool = false;
@@ -573,7 +573,7 @@ public class NextTurn {
         }
     }
 
-    private void doAttack(MilitaryUnit unit) {
+    private static void doAttack(MilitaryUnit unit) {
         //Attack be building
         if (!(unit instanceof Catapult))
             doNormalAttack(unit);
@@ -581,7 +581,7 @@ public class NextTurn {
             CatapultAttack((Catapult) unit);
     }
 
-    private void CatapultAttack(Catapult catapult) {
+    private static void CatapultAttack(Catapult catapult) {
         int xPos = catapult.getXPos();
         int yPos = catapult.getYPos();
         int x = catapult.getXAttack();
@@ -597,7 +597,7 @@ public class NextTurn {
         }
     }
 
-    private void doNormalAttack(MilitaryUnit unit) {
+    private static void doNormalAttack(MilitaryUnit unit) {
         int xPos = unit.getXPos();
         int yPos = unit.getYPos();
         int x = unit.getXAttack();

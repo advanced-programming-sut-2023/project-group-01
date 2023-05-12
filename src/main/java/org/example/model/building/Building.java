@@ -24,12 +24,13 @@ public class Building {
         this.empire.decreaseGold((buildingName.getGoldCost()));
         this.empire.reduceMaterial("stone", buildingName.getStoneCost());
         this.empire.reduceMaterial("wood", buildingName.getWoodCost());
+        this.empire = empire;
         this.beginX = x1;
         this.beginY = y1;
         this.endX = x1 + buildingName.getSize();
         this.endY = y1 + buildingName.getSize();
         this.buildingName = buildingName;
-        //this.workers = empire.returnPeopleForWorker(buildingName.getNumberOfWorkers(), x1, y1);
+        this.workers = empire.changePeopleToWorker(buildingName.getNumberOfWorkers(), x1, y1);
     }
 
     public BuildingName getBuildingName() {

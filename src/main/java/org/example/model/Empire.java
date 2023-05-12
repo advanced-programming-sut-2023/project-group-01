@@ -59,7 +59,7 @@ public class Empire {
         this.taxPopularity = 0;
         this.fearPopularity = 0;
         this.religionPopularity = 0;
-        this.lord = new Lord(getMap().getTile(empireBuilding.getX(),empireBuilding.getY()),this, MilitaryUnitName.LORD,empireBuilding.getY(),empireBuilding.getY());
+        this.lord = new Lord(getMap().getTile(empireBuilding.getX(), empireBuilding.getY()), this, MilitaryUnitName.LORD, empireBuilding.getY(), empireBuilding.getY());
         foods.put(FoodType.BREED, (float) 0);
         foods.put(FoodType.APPLE, (float) 0);
         foods.put(FoodType.MEET, (float) 0);
@@ -74,9 +74,9 @@ public class Empire {
         }
     }
 
-    private void initializePeople(){
-        for (int i=0;i<10;i++){
-            people.add(new People(getMap().getTile(empireBuilding.getX(),empireBuilding.getY()),this));
+    private void initializePeople() {
+        for (int i = 0; i < 10; i++) {
+            people.add(new People(getMap().getTile(empireBuilding.getX(), empireBuilding.getY()), this));
         }
     }
 
@@ -138,25 +138,25 @@ public class Empire {
     }
 
     public void setFoodPopularity(int variety) {
-        foodPopularity += (4*foodRate);
+        foodPopularity += (4 * foodRate);
         foodPopularity += variety;
     }
 
-    public int getVarietyFood(){
+    public int getVarietyFood() {
         int variety = -1;
-        for(FoodType foodType: FoodType.values()){
-            if(foods.get(foodType) > 0) variety++;
+        for (FoodType foodType : FoodType.values()) {
+            if (foods.get(foodType) > 0) variety++;
         }
         return variety;
     }
 
     public void setTaxPopularity() {
-        if(taxRate <= 0)
-            taxPopularity += ((taxRate*-2) + 1);
-        else if(taxRate <= 4)
-            taxPopularity -= taxRate*2;
-        else{
-            switch (taxRate){
+        if (taxRate <= 0)
+            taxPopularity += ((taxRate * -2) + 1);
+        else if (taxRate <= 4)
+            taxPopularity -= taxRate * 2;
+        else {
+            switch (taxRate) {
                 case 5:
                     taxPopularity -= 12;
                     break;
@@ -197,9 +197,9 @@ public class Empire {
 
     }
 
-   public int getTotalAmountOfFoods(){
+    public int getTotalAmountOfFoods() {
         int amount = 0;
-        for(FoodType foodType : FoodType.values())
+        for (FoodType foodType : FoodType.values())
             amount += foods.get(foodType);
         return amount;
     }
@@ -224,6 +224,7 @@ public class Empire {
     public void removePeople(People people) {
         this.people.remove(people);
     }
+
     public void addPeople(People people) {
         this.people.add(people);
     }
@@ -374,24 +375,23 @@ public class Empire {
         buildings.remove(building);
     }
 
-    public void addToReligionPopularity(int amount){
+    public void addToReligionPopularity(int amount) {
         this.religionPopularity += amount;
     }
 
-    public void addToFoodPopularity(int amount){
+    public void addToFoodPopularity(int amount) {
         this.foodPopularity += amount;
     }
 
     public int getNormalPopulation() {
         int number = 0;
-        for (People people1 : people) {
+        for (People people1 : people)
             if (!(people1 instanceof MilitaryUnit) && !(people1 instanceof Worker))
                 number++;
-        }
         return number;
     }
 
-    public void changePeopleToWorker(int numberOfWorkers ,int x, int y) {
+    public ArrayList<Worker> changePeopleToWorker(int numberOfWorkers, int x, int y) {
         ArrayList<People> worker = new ArrayList<>();
         int count = 0;
         for (People person : people) {
@@ -404,7 +404,11 @@ public class Empire {
         people.removeAll(worker);
         for (People person : worker)
             person.getPosition().removeUnit(person);
-        for (int i = 0; i < numberOfWorkers; i++)
-            people.add(new Worker(getMap().getTile(x, y), this));
+        ArrayList<Worker> workers = new ArrayList<>();
+        for (int i = 0; i < numberOfWorkers; i++) {
+            Worker worker1 = new Worker(getMap().getTile(x, y), this);
+            people.add(worker1);
+        }
+        return workers;
     }
 }
