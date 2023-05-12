@@ -187,6 +187,7 @@ public class BuildingMenuController {
             case "secondProducer" -> new SecondProducer(empire, x, y, buildingName);
             case "pitchDitch" -> new PitchDitch(empire, x, y, buildingName);
             case "cagedWarDogs" -> new CagedDogs(empire, x, y, buildingName);
+            case "oilSmelter" -> new OilSmelter(empire, x, y, buildingName);
             default -> null;
         };
     }

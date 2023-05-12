@@ -121,7 +121,7 @@ public enum Outputs {
     WRONG_UNIT_FOR_SELECTED_BUILDING("Wrong building for selected building"),
     NOT_NEAR_BUILDING("Not near Building"),
     SUCCESSFUL_DISBAND("Successful disband"),
-    NO_ENGINEER("No engineer in this Tile"),
+    NO_ENGINEER("No engineer for pouring oil in this Tile"),
     WRONG_UNIT_TYPE("wrong unit type"),
     ;
     private String output;

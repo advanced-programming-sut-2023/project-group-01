@@ -1,6 +1,8 @@
 package org.example.model.building.castleBuilding;
 
 import org.example.model.Empire;
+import org.example.model.InitializeMaterial;
+import org.example.model.People;
 import org.example.model.building.FirstProducer;
 import org.example.model.building.SecondProducer;
 import org.example.model.building.SecondProducerType;
@@ -14,8 +16,14 @@ public class OilSmelter extends SecondProducer {
 
     public OilSmelter(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1,  y1,  buildingName);
+        initializeOil();
     }
 
+    private void initializeOil() {
+        for (People person : empire.getPeople())
+            if (person instanceof Engineer)
+                ((Engineer) person).addOil();
+    }
 
     public Engineer getEngineer() {
         return engineer;

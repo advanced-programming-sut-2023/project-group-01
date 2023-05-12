@@ -174,7 +174,8 @@ public class BestPath {
         return true;
         if (((tile1.getBuilding() != null && tile1.getBuilding() instanceof Wall) ||
                 (tile1.getBuilding() != null && tile1.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
-                (tile1.getBuilding() instanceof Gatehouse) || (tile1.getBuilding() instanceof CastleBuilding)) &&
+                (tile1.getBuilding() != null && tile1.getBuilding() instanceof Gatehouse) ||
+                (tile1.getBuilding() != null && tile1.getBuilding() instanceof CastleBuilding)) &&
                 ((tile2.getBuilding() instanceof Wall) || (tile2.getBuilding().getBuildingName().equals(BuildingName.STAIRS) ||
                         (tile2.getBuilding() instanceof Gatehouse) || (tile2.getBuilding() instanceof CastleBuilding)))))
             return true;

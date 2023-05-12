@@ -37,6 +37,8 @@ public class MilitaryMenu {
                 moveUnitChecker(matcher);
             else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.PATROL_UNIT)).matches())
                 patrolUnitChecker(matcher);
+            else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).matches())
+                cancelPatrolUnitChecker(matcher);
             else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.SET_STATE)).matches())
                 setUnitChecker(matcher);
             else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.ATTACK)).matches())

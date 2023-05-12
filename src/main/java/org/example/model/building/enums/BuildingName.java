@@ -27,8 +27,7 @@ public enum BuildingName {
     IRON_MINE("firstProducer", 320, 320, BuildingCategory.INDUSTRIAL_BUILDING, "IronMine", 0, 0, 20, 2, 3, TypeOfTile.IRON_MINE),
     MARKET("building", 330, 330, BuildingCategory.INDUSTRIAL_BUILDING, "Market", 0, 0, 5, 1, 3, TypeOfTile.NORMAL_GROUND),
     OX_TETHER("building", 100, 100, BuildingCategory.INDUSTRIAL_BUILDING, "OxTether", 0, 0, 5, 1, 1, TypeOfTile.NORMAL_GROUND),
-    PITCH_RIG("firstProducer", 240, 240, BuildingCategory.INDUSTRIAL_BUILDING, "PitchRig", 0, 0, 20, 1, 2, TypeOfTile.OIL_GROUND),
-    QUARRY("firstProducer", 300, 300, BuildingCategory.INDUSTRIAL_BUILDING, "Quarry", 0, 0, 20, 3, 4, TypeOfTile.STONE_MINE),
+    PITCH_RIG("oilSmelter", 300, 300, BuildingCategory.INDUSTRIAL_BUILDING, "Quarry", 0, 0, 20, 3, 4, TypeOfTile.STONE_MINE),
     STOCKPILE("storage", 0, 0, BuildingCategory.INDUSTRIAL_BUILDING, "Stockpile", 0, 0, 0, 0, 3, TypeOfTile.NORMAL_GROUND),
     WOODCUTTER("firstProducer", 180, 180, BuildingCategory.INDUSTRIAL_BUILDING, "Woodcutter", 0, 0, 3, 1, 2, TypeOfTile.NORMAL_GROUND),
     //TODO
