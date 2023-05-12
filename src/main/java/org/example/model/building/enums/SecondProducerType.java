@@ -1,4 +1,4 @@
-package org.example.model.building;
+package org.example.model.building.enums;
 
 import org.example.model.building.enums.MaterialType;
 
@@ -44,6 +44,10 @@ public enum SecondProducerType {
 
     public MaterialType getFirstProduct() {
         return firstProduct;
+    }
+
+    public MaterialType getSecondProduct() {
+        return secondProduct;
     }
 
     //TODO should be used for things that has two product

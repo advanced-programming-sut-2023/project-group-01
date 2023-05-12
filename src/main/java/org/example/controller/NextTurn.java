@@ -105,6 +105,8 @@ public class NextTurn {
             empires.get(i).setFoodPopularity(variety);
             empires.get(i).setPopularity();
             changePopulation(empires.get(i));
+            empires.get(i).setAttackOfUnits();
+            empires.get(i).createMaterial();
         }
     }
 

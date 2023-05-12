@@ -33,6 +33,7 @@ public enum MilitaryUnitName {
 
 
     private final Color color;
+    private final int maxAttack;
     private int gunshot;
     private final String type;
     private final String name;
@@ -54,6 +55,7 @@ public enum MilitaryUnitName {
         this.type = type;
         this.name = name;
         this.attack = attack.getAttack();
+        this.maxAttack = attack.getAttack();
         this.hitPoint = hitPoint.getHitPoint();
         this.speed = speed.getSpeed();
         this.cost = price;
@@ -89,6 +91,10 @@ public enum MilitaryUnitName {
 
     public String getName() {
         return name;
+    }
+
+    public int getMaxAttack() {
+        return maxAttack;
     }
 
     public int getAttack() {
@@ -146,6 +152,5 @@ public enum MilitaryUnitName {
                 return militaryUnitName;
         return null;
     }
-
 
 }

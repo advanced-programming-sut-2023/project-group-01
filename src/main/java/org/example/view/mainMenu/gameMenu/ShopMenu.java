@@ -50,7 +50,7 @@ public class ShopMenu {
                 if (GameMenu.getThisEmpire().getGold() < material.getMaterialType().getBuyingPrice() * count)
                     return Outputs.NOT_ENOUGH_GOLD;
 
-                if (buying(material, count) != null)
+                if (!GameMenu.getThisEmpire().checkCapacity(material.getMaterialType(), count))
                     return Outputs.NOT_ENOUGH_CAPACITY;
                 materials.put(material, materials.get(material) + count);
                 GameMenu.getThisEmpire().decreaseGold(material.getMaterialType().getBuyingPrice() * count);
@@ -59,21 +59,6 @@ public class ShopMenu {
             }
         }
         return Outputs.INVALID_MATERIAL_NAME;
-    }
-
-    public Outputs buying(Material material, int count) {
-        int capacity = 0;
-        if (material.getMaterialType().getTypeOfProduct().equals("source"))
-            capacity = GameMenu.getThisEmpire().havingStockpile();
-        else if (material.getMaterialType().getTypeOfProduct().equals("food"))
-            capacity= GameMenu.getThisEmpire().havingGranary();
-        else if (material.getMaterialType().getTypeOfProduct().equals("warfare"))
-            capacity = GameMenu.getThisEmpire().havingArmoury();
-
-        if (count > capacity)
-            return Outputs.NOT_ENOUGH_CAPACITY;
-        else
-            return null;
     }
 
     public Outputs sell(Matcher matcher) {

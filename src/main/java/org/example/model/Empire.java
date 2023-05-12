@@ -1,9 +1,7 @@
 
 package org.example.model;
 
-import org.example.model.building.Building;
-import org.example.model.building.Material;
-import org.example.model.building.Stable;
+import org.example.model.building.*;
 import org.example.model.building.Storage;
 import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
@@ -14,6 +12,7 @@ import org.example.model.unit.Engineer;
 import org.example.model.unit.Lord;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
+import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -382,6 +381,10 @@ public class Empire {
         trades.add(trade);
     }
 
+    public void removeTrade(Trade trade){
+        trades.remove(trade);
+    }
+
     public ArrayList<Trade> getTradeHistory() {
         return tradeHistory;
     }
@@ -470,4 +473,42 @@ public class Empire {
         }
         return workers;
     }
+
+    public void setAttackOfUnits(){
+        for(People unit: people){
+            if(unit instanceof MilitaryUnit) {
+                int newAttack = ((MilitaryUnit) unit).getMilitaryUnitName().getMaxAttack() *(100 + -5 * fearRate) /100;
+                ((MilitaryUnit) unit).getMilitaryUnitName().setAttack(newAttack);
+            }
+        }
+    }
+
+    public void createMaterial(){
+        for(Building building : buildings){
+            if(building instanceof FirstProducer){
+                ((FirstProducer) building).setRate(fearRate + 5);
+                ((FirstProducer) building).createMaterial();
+            }
+            if(building instanceof SecondProducer){
+                ((SecondProducer) building).setRate(fearRate + 5);
+                ((SecondProducer) building).createMaterial();
+            }
+        }
+    }
+
+    public boolean checkCapacity(MaterialType materialType, int count) {
+        int capacity = 0;
+        if (materialType.getTypeOfProduct().equals("source"))
+            capacity = havingStockpile();
+        else if (materialType.getTypeOfProduct().equals("food"))
+            capacity= havingGranary();
+        else if (materialType.getTypeOfProduct().equals("warfare"))
+            capacity = havingArmoury();
+        if (count > capacity)
+            return false;
+        else
+            return true;
+    }
+
+
 }

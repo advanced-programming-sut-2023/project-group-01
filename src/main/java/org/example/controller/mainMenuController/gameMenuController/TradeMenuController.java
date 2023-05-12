@@ -4,6 +4,8 @@ import org.example.model.Trade;
 import org.example.model.building.Material;
 import org.example.model.building.enums.MaterialType;
 import org.example.view.enums.Outputs;
+import org.example.view.mainMenu.gameMenu.GameMenu;
+import org.example.view.mainMenu.gameMenu.ShopMenu;
 import org.example.view.mainMenu.gameMenu.TradeMenu;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
@@ -39,11 +41,30 @@ public class TradeMenuController {
             return Outputs.NOT_ENOUGH_MATERIAL;
         if (trade.getEmpireRequester().getGold() < trade.getPrice())
             return Outputs.TRADE_NOT_ENOUGH_GOLD;
+        if(!trade.getEmpireRequester().checkCapacity(trade.getMaterial().getMaterialType(), trade.getAmountMaterial()))
+            return Outputs.NOT_ENOUGH_CAPACITY;
         trade.getEmpireRequester().decreaseGold(trade.getPrice());
+        getThisEmpire().addGold(trade.getPrice());
         getThisEmpire().reduceMaterial(trade.getMaterial(), trade.getAmountMaterial());
+        trade.getEmpireRequester().addMaterial(trade.getMaterial().getMaterialType().getName(), trade.getAmountMaterial());
         trade.setAcceptMessage(message);
         getThisEmpire().addToTradeHistory(trade);
+        getThisEmpire().removeTrade(trade);
         return Outputs.SUCCESS;
+    }
+
+    public boolean checkCapacity(MaterialType materialType, int count) {
+        int capacity = 0;
+        if (materialType.getTypeOfProduct().equals("source"))
+            capacity = GameMenu.getThisEmpire().havingStockpile();
+        else if (materialType.getTypeOfProduct().equals("food"))
+            capacity= GameMenu.getThisEmpire().havingGranary();
+        else if (materialType.getTypeOfProduct().equals("warfare"))
+            capacity = GameMenu.getThisEmpire().havingArmoury();
+        if (count > capacity)
+            return false;
+        else
+            return true;
     }
 
 
