@@ -16,11 +16,6 @@ public class Engineer extends MilitaryUnit {
             this.haveOIl = true;
     }
 
-
-
-    public void cancelOil() {
-        this.haveOIl = false;
-    }
     public void addOil() {
         this.haveOIl = true;
     }

@@ -135,6 +135,8 @@ public class MilitaryMenuController {
     }
 
     public Outputs pourOil(String direction) {
+        if (militaryMenu.getSelectedUnit().size() == 0)
+            return Outputs.EMPTY_SELECTED_UNIT;
         if (!(direction.equals("left") || direction.equals("right") || direction.equals("up") || direction.equals("down"))) {
             militaryMenu.getSelectedUnit().clear();
             return Outputs.WRONG_POUR_OIL_DIRECTION;
@@ -142,7 +144,6 @@ public class MilitaryMenuController {
             militaryMenu.getSelectedUnit().clear();
             return Outputs.NO_ONE_TO_POUR_OIL;
         } else {
-            militaryMenu.getSelectedUnit().clear();
             return doPourOil(direction);
         }
     }
@@ -224,11 +225,13 @@ public class MilitaryMenuController {
         ArrayList<Engineer> engineers = findEngineer();
         CatapultName catapultName = findCatapultName(equipmentName);
 
+        if (militaryMenu.getSelectedUnit().size() == 0)
+            return Outputs.EMPTY_SELECTED_UNIT;
+
         if (catapultName == null)
             return Outputs.INVALID_CATAPULT_NAME;
-        else if (catapultName.getCapacity() > engineers.size())
+        else if (catapultName.getNumberOfEngineers() > engineers.size())
             return Outputs.NOT_ENOUGH_ENGINEER;
-
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
         int y = militaryMenu.getSelectedUnit().get(0).getYPos();
 
@@ -240,6 +243,7 @@ public class MilitaryMenuController {
         getMap().getTile(x, y).addUnit(catapult);
 
         militaryMenu.getSelectedUnit().clear();
+        System.out.println("engineer size : " + engineers.size() + " | catapultCapacity :" + catapultName.getCapacity());
         return Outputs.SUCCESSFUL_CATAPULT;
     }
 

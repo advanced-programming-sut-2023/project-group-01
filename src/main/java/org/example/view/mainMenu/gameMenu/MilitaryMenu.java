@@ -110,7 +110,7 @@ public class MilitaryMenu {
     }
 
     public void buildChecker(Matcher matcher) {
-        String equipment = matcher.group("equipment");
+        String equipment = matcher.group("equipmentName");
         System.out.println(militaryMenuController.build(equipment).toString());
     }
 
