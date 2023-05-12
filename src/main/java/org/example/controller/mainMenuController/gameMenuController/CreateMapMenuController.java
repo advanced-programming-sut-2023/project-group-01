@@ -1,6 +1,5 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
-import org.example.model.People;
 import org.example.model.Worker;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
@@ -12,7 +11,6 @@ import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import static org.example.view.mainMenu.gameMenu.CreateMapMenu.gameMap;
@@ -29,10 +27,8 @@ public class CreateMapMenuController {
             else if (typeOfTile.equals(TypeOfTile.BIG_POND)) return setBigPond(x, y);
             else {
                 Tile tile = gameMap.getTileWhitXAndY(x, y);
-                if (tile == null)
-                    return Outputs.INVALID_COORDINATES;
-                if (tile.getBuilding() != null)
-                    return Outputs.TILE_NOT_EMPTY;
+                if (tile == null) return Outputs.INVALID_COORDINATES;
+                if (tile.getBuilding() != null) return Outputs.TILE_NOT_EMPTY;
                 tile.setTypeOfTile(typeOfTile);
                 return Outputs.SUCCESS;
             }
@@ -42,41 +38,35 @@ public class CreateMapMenuController {
     private Outputs setSmallPond(int x, int y) {
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++) {
-                Tile tile = gameMap.getTileWhitXAndY(x+i, y+j);
-                if (tile == null)
-                    return Outputs.INVALID_COORDINATES;
-                if (tile.getBuilding() != null)
-                    return Outputs.TILE_NOT_EMPTY;
+                Tile tile = gameMap.getTileWhitXAndY(x + i, y + j);
+                if (tile == null) return Outputs.INVALID_COORDINATES;
+                if (tile.getBuilding() != null) return Outputs.TILE_NOT_EMPTY;
             }
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++) {
-                Tile tile = gameMap.getTileWhitXAndY(x+i, y+j);
+                Tile tile = gameMap.getTileWhitXAndY(x + i, y + j);
                 tile.setTypeOfTile(TypeOfTile.SMALL_POND);
             }
         return Outputs.SUCCESS;
     }
 
-    public Outputs setBigPond(int x, int y){
+    public Outputs setBigPond(int x, int y) {
         for (int i = -2; i <= 2; i++)
             for (int j = -2; j <= 2; j++) {
                 Tile tile = gameMap.getTileWhitXAndY(x, y);
-                if (tile == null)
-                    return Outputs.INVALID_COORDINATES;
-                if (tile.getBuilding() != null)
-                    return Outputs.TILE_NOT_EMPTY;
+                if (tile == null) return Outputs.INVALID_COORDINATES;
+                if (tile.getBuilding() != null) return Outputs.TILE_NOT_EMPTY;
             }
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++) {
-                Tile tile = gameMap.getTileWhitXAndY(x+i, y+j);
+                Tile tile = gameMap.getTileWhitXAndY(x + i, y + j);
                 tile.setTypeOfTile(TypeOfTile.BIG_POND);
             }
         return Outputs.SUCCESS;
     }
 
     public Outputs setTextureForARectangle(int x1, int y1, int x2, int y2, String type) {
-        if (x1 > x2 || y1 < y2 ||
-                gameMap.getTileWhitXAndY(x1, y1) == null ||
-                gameMap.getTileWhitXAndY(x2, y2) == null)
+        if (x1 > x2 || y1 < y2 || gameMap.getTileWhitXAndY(x1, y1) == null || gameMap.getTileWhitXAndY(x2, y2) == null)
             return Outputs.INVALID_COORDINATES;
         TypeOfTile typeOfTile = TypeOfTile.getTypeOfTileWithName(type);
         if (typeOfTile == null) return Outputs.INVALID_TYPE_OF_TILE;
@@ -84,8 +74,7 @@ public class CreateMapMenuController {
             return Outputs.SET_POND_INVALID;
         for (int i = x1; i <= x2; i++)
             for (int j = y2; j <= y1; j++)
-                if (gameMap.getTileWhitXAndY(i, j).getBuilding() != null)
-                    return Outputs.TILE_NOT_EMPTY;
+                if (gameMap.getTileWhitXAndY(i, j).getBuilding() != null) return Outputs.TILE_NOT_EMPTY;
         for (int i = x1; i <= x2; i++)
             for (int j = y2; j <= y1; j++)
                 gameMap.getTileWhitXAndY(i, j).setTypeOfTile(typeOfTile);
@@ -103,13 +92,11 @@ public class CreateMapMenuController {
             int beginY = building.getBeginY();
             int endX = building.getEndX();
             int endY = building.getEndY();
-            building.getEmpire().getPeople().removeAll(
-                    getMap().getTile(beginX, beginY).getPeople());
+            building.getEmpire().getPeople().removeAll(getMap().getTile(beginX, beginY).getPeople());
             getThisEmpire().reduceMaxPopulation(building.getBuildingName().getNumberOfWorkers());
             getMap().getTile(beginX, beginY).removeAllUnit();
             for (int i = beginX; i < endX; i++) {
                 for (int j = beginY; j < endY; j++) {
-                    //TODO check
                     GameMenu.getMap().getTile(i, j).setBuilding(null);
                 }
             }
@@ -140,24 +127,18 @@ public class CreateMapMenuController {
         if (tile == null) return Outputs.INVALID_COORDINATES;
         BuildingName buildingName = BuildingName.getBuildingNameWithName(type);
         if (buildingName == null) return Outputs.INVALID_TYPE_OF_TREE;
-        if (!buildingName.getBuildingCategory().equals(BuildingCategory.TREES))
-            return Outputs.INVALID_TYPE_OF_TREE;
-        if (tile.getBuilding() != null)
-            return Outputs.TILE_NOT_EMPTY;
-        if (buildingName.getTypeCanBuildBuilding() != tile.getTypeOfTile())
-            return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
+        if (!buildingName.getBuildingCategory().equals(BuildingCategory.TREES)) return Outputs.INVALID_TYPE_OF_TREE;
+        if (tile.getBuilding() != null) return Outputs.TILE_NOT_EMPTY;
+        if (buildingName.getTypeCanBuildBuilding() != tile.getTypeOfTile()) return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
         tile.setBuilding(new Building(null, xOfMap, yOfMap, buildingName));
         return Outputs.SUCCESS;
     }
 
     public Outputs dropBuilding(int xOfBuilding, int yOfBuilding, String type) {
-        if (gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding) == null)
-            return Outputs.INVALID_COORDINATES;
+        if (gameMap.getTileWhitXAndY(xOfBuilding, yOfBuilding) == null) return Outputs.INVALID_COORDINATES;
         BuildingName buildingName = BuildingName.getBuildingNameWithName(type);
-        if (buildingName == null)
-            return Outputs.INVALID_TYPE_OF_BUILDING;
-        if (buildingName.getBuildingCategory().equals(BuildingCategory.TREES))
-            return Outputs.INVALID_TYPE_OF_BUILDING;
+        if (buildingName == null) return Outputs.INVALID_TYPE_OF_BUILDING;
+        if (buildingName.getBuildingCategory().equals(BuildingCategory.TREES)) return Outputs.INVALID_TYPE_OF_BUILDING;
         int buildingSize = buildingName.getSize();
         if (gameMap.getTileWhitXAndY(xOfBuilding + buildingSize, yOfBuilding + buildingSize) == null)
             return Outputs.INVALID_COORDINATES;
@@ -166,7 +147,7 @@ public class CreateMapMenuController {
         if (BuildingMenuController.isGroundSuitable(buildingName, xOfBuilding, yOfBuilding))
             return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
         BuildingMenuController.putBuilding(buildingName, xOfBuilding, yOfBuilding, getThisEmpire());
-        for(int i = 0; i < buildingName.getNumberOfWorkers(); i++) {
+        for (int i = 0; i < buildingName.getNumberOfWorkers(); i++) {
             Worker worker = new Worker(getMap().getTile(xOfBuilding, yOfBuilding), getThisEmpire());
             getThisEmpire().addPeople(worker);
             getMap().getTileWhitXAndY(xOfBuilding, yOfBuilding).addUnit(worker);

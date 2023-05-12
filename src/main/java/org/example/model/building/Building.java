@@ -7,7 +7,6 @@ import org.example.model.building.enums.BuildingName;
 
 import java.util.ArrayList;
 
-import static org.example.model.building.enums.MaterialType.STONE;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class Building {
@@ -19,8 +18,8 @@ public class Building {
     protected int endY;
     private final BuildingName buildingName;
 
-    public Building (Empire empire, int x1, int y1, BuildingName buildingName) {
-        this.empire=empire;
+    public Building(Empire empire, int x1, int y1, BuildingName buildingName) {
+        this.empire = empire;
         this.empire.decreaseGold((buildingName.getGoldCost()));
         this.empire.reduceMaterial("stone", buildingName.getStoneCost());
         this.empire.reduceMaterial("wood", buildingName.getWoodCost());
@@ -50,6 +49,7 @@ public class Building {
         empire.getBuildings().remove(this);
         this.getEmpire().getPeople().removeAll(workers);
     }
+
     public int getBeginX() {
         return beginX;
     }

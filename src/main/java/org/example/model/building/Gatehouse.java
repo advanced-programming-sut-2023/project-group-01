@@ -6,7 +6,7 @@ import org.example.model.building.enums.BuildingName;
 
 public class Gatehouse extends CastleBuilding {
 
-    //TODO دروازه یا پل هست
+
     private boolean open = false;
 
     public Gatehouse(Empire empire, int x1, int y1, BuildingName buildingName) {
@@ -20,6 +20,7 @@ public class Gatehouse extends CastleBuilding {
     public void setOpened() {
         open = false;
     }
+
     public boolean getOpen() {
         return open;
     }

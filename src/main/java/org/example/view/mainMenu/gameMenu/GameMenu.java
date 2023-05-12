@@ -55,8 +55,7 @@ public class GameMenu {
         GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
         for (int i = 2; i <= numberOfEmpires; i++)
             while (true) {
-                System.out.println("Please enter username of player\n +" +
-                        "for cancel game enter \"exit game\"");
+                System.out.println("Please enter username of player\n +" + "for cancel game enter \"exit game\"");
                 String username = scanner.nextLine();
                 User user = findUserWithUsername(username);
                 if (user != null) {
@@ -91,11 +90,11 @@ public class GameMenu {
     }
 
     public int getTurnNumber() {
-        return turnNumber/empires.size();
+        return turnNumber / empires.size();
     }
 
     public static Map getMap() {
-        if(map != null) return map;
+        if (map != null) return map;
         else return CreateMapMenu.gameMap;
     }
 
@@ -114,11 +113,10 @@ public class GameMenu {
                     System.out.println("The turn number is " + getTurnNumber());
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.GET_PLAYER)) != null)
                     System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
-                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null){
+                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null) {
                     turnNumber++;
-                    nextTurn.nextTurn(); //TODO check increase turn;
-                }
-                else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null) {
+                    nextTurn.nextTurn();
+                } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null) {
                     MilitaryMenu militaryMenu = new MilitaryMenu(thisEmpire, this);
                     militaryMenu.run(scanner);
                 } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.BUILDING_MENU)) != null) {
@@ -167,9 +165,7 @@ public class GameMenu {
 
     public void setGameMapSize(Scanner scanner) {
         while (true) {
-            System.out.println("please enter size for map\n" +
-                    "1. 200 * 200\n" +
-                    "2. 400 * 400");
+            System.out.println("please enter size for map\n" + "1. 200 * 200\n" + "2. 400 * 400");
             switch (scanner.nextLine()) {
                 case "1":
                     CreateMapMenu.gameMap = new Map(200);
@@ -201,27 +197,22 @@ public class GameMenu {
 
     private void addEmpireBuildingsToMap() {
         for (int i = 1; i <= empires.size(); i++) {
-            Building building = new Building(empires.get(i - 1), EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
-                    EmpireBuilding.valueOf("EMPIRE_" + i).getY(),
-                    BuildingName.EMPIRE_CASTLE);
-            getMap().getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(),
-                    EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(building);
+            Building building = new Building(empires.get(i - 1), EmpireBuilding.valueOf("EMPIRE_" + i).getX(), EmpireBuilding.valueOf("EMPIRE_" + i).getY(), BuildingName.EMPIRE_CASTLE);
+            getMap().getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(), EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(building);
             empires.get(i - 1).addToBuildings(building);
-            BuildingMenuController.putBuilding(BuildingName.STOCKPILE, EmpireBuilding.valueOf("EMPIRE_" + i).getX() + 1,
-                    EmpireBuilding.valueOf("EMPIRE_" + i).getY(), empires.get(i - 1));
+            BuildingMenuController.putBuilding(BuildingName.STOCKPILE, EmpireBuilding.valueOf("EMPIRE_" + i).getX() + 1, EmpireBuilding.valueOf("EMPIRE_" + i).getY(), empires.get(i - 1));
         }
     }
 
     public int setNumberOfEmpires(Scanner scanner) {
         System.out.println("Please enter the number of players between 2,8 :");
-        while (true)
-            try {
-                int numberOfEmpire = Integer.parseInt(scanner.nextLine());
-                if (numberOfEmpire >= 2 && numberOfEmpire <= 8) return numberOfEmpire;
-                else System.out.println("Please enter a number between 2 and 8");
-            } catch (NumberFormatException e) {
-                System.out.println("Your input not a number please try again");
-            }
+        while (true) try {
+            int numberOfEmpire = Integer.parseInt(scanner.nextLine());
+            if (numberOfEmpire >= 2 && numberOfEmpire <= 8) return numberOfEmpire;
+            else System.out.println("Please enter a number between 2 and 8");
+        } catch (NumberFormatException e) {
+            System.out.println("Your input not a number please try again");
+        }
     }
 
     public void setUsersGameFinished() {
@@ -231,8 +222,7 @@ public class GameMenu {
 
     public static Empire getEmpireWhitUsername(String username) {
         for (int i = 0; i < empires.size(); i++)
-            if (empires.get(i).getPlayer().getUsername().equals(username))
-                return empires.get(i);
+            if (empires.get(i).getPlayer().getUsername().equals(username)) return empires.get(i);
         return null;
     }
 }

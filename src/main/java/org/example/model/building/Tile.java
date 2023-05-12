@@ -1,12 +1,10 @@
 package org.example.model.building;
 
-import org.example.Main;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.enums.TypeOfTile;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
-import org.example.model.unit.enums.MilitaryUnitState;
 
 import java.util.ArrayList;
 
@@ -72,8 +70,7 @@ public class Tile {
 
     public MilitaryUnit findEnemyMilitaryUnitForArcher(Empire empire) {
         for (People person : people)
-            if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire) &&
-                    (!((MilitaryUnit) person).getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)))
+            if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire) && (!((MilitaryUnit) person).getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS)))
                 return (MilitaryUnit) person;
         return null;
     }

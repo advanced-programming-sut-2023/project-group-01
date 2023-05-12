@@ -16,18 +16,18 @@ public class CreateMapMenu {
 
     public static Map gameMap;
     private final User player;
-    public CreateMapMenu(User player){
+
+    public CreateMapMenu(User player) {
         this.player = player;
     }
+
     public Map run(Scanner scanner) {
         while (true) {
             String command = scanner.nextLine();
             Matcher matcher;
-            if ((matcher = CreateMapMenuCommands.getMatcher
-                    (command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_TILE)) != null)
+            if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_TILE)) != null)
                 System.out.println(setTextureForATileChecker(matcher).toString());
-            else if ((matcher = CreateMapMenuCommands.getMatcher
-                    (command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_RECTANGLE)) != null)
+            else if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_RECTANGLE)) != null)
                 System.out.println(setTextureForARectangleChecker(matcher).toString());
             else if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.CLEAR)) != null)
                 System.out.println(clearChecker(matcher).toString());
@@ -40,11 +40,10 @@ public class CreateMapMenu {
             else if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.DROP_UNIT)) != null)
                 System.out.println(dropUnitChecker(matcher).toString());
             else if (command.equals("finish")) return gameMap;
-            else if (command.equals("set default map")){
+            else if (command.equals("set default map")) {
                 System.out.println("Default map set successfully!");
                 return runDefaultMap(new Scanner(Data.getDefaultMap()));
-            }
-            else System.out.println("invalid command in Create Map Menu!");
+            } else System.out.println("invalid command in Create Map Menu!");
         }
     }
 
@@ -52,11 +51,9 @@ public class CreateMapMenu {
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine();
             Matcher matcher;
-            if ((matcher = CreateMapMenuCommands.getMatcher
-                    (command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_TILE)) != null)
+            if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_TILE)) != null)
                 setTextureForATileChecker(matcher);
-            else if ((matcher = CreateMapMenuCommands.getMatcher
-                    (command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_RECTANGLE)) != null)
+            else if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.SET_TEXTURE_FOR_A_RECTANGLE)) != null)
                 setTextureForARectangleChecker(matcher);
             else if ((matcher = CreateMapMenuCommands.getMatcher(command, CreateMapMenuCommands.CLEAR)) != null)
                 clearChecker(matcher);
@@ -80,8 +77,7 @@ public class CreateMapMenu {
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
-        Outputs outputs = new CreateMapMenuController().setTextureForATile
-                (xOfMap, yOfMap, type);
+        Outputs outputs = new CreateMapMenuController().setTextureForATile(xOfMap, yOfMap, type);
         return outputs;
     }
 
@@ -92,8 +88,7 @@ public class CreateMapMenu {
         int x2OfMap = Integer.parseInt(matcher.group("x2OfMap"));
         int y2OfMap = Integer.parseInt(matcher.group("y2OfMap"));
         String type = matcher.group("type");
-        Outputs outputs = new CreateMapMenuController().setTextureForARectangle
-                (x1OfMap, y1OfMap, x2OfMap, y2OfMap, type);
+        Outputs outputs = new CreateMapMenuController().setTextureForARectangle(x1OfMap, y1OfMap, x2OfMap, y2OfMap, type);
         return outputs;
     }
 
@@ -110,8 +105,7 @@ public class CreateMapMenu {
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String direction = matcher.group("direction");
-        Outputs outputs = new CreateMapMenuController().dropRock
-                (gameMap.getTileWhitXAndY(xOfMap, yOfMap), direction);
+        Outputs outputs = new CreateMapMenuController().dropRock(gameMap.getTileWhitXAndY(xOfMap, yOfMap), direction);
         return outputs;
     }
 
@@ -120,8 +114,7 @@ public class CreateMapMenu {
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
-        Outputs outputs = new CreateMapMenuController().dropTree
-                (xOfMap, yOfMap, type);
+        Outputs outputs = new CreateMapMenuController().dropTree(xOfMap, yOfMap, type);
         return outputs;
     }
 
@@ -130,8 +123,7 @@ public class CreateMapMenu {
         int xOfMap = Integer.parseInt(matcher.group("xOfMap"));
         int yOfMap = Integer.parseInt(matcher.group("yOfMap"));
         String type = matcher.group("type");
-        Outputs outputs = new CreateMapMenuController().dropBuilding
-                (xOfMap, yOfMap, type);
+        Outputs outputs = new CreateMapMenuController().dropBuilding(xOfMap, yOfMap, type);
         return outputs;
     }
 

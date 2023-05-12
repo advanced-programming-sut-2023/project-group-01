@@ -1,6 +1,5 @@
 package org.example.model.building.castleBuilding.enums;
 
-import org.example.model.Empire;
 import org.example.model.building.Tile;
 import org.example.model.enums.Color;
 
@@ -9,8 +8,8 @@ import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 public enum EmpireBuilding {
 
     EMPIRE_1(10, 10, Color.RED),
-    EMPIRE_2(10, getMap().getMap().length / 2 , Color.YELLOW),
-    EMPIRE_3(10, getMap().getMap().length -10, Color.ORANGE),
+    EMPIRE_2(10, getMap().getMap().length / 2, Color.YELLOW),
+    EMPIRE_3(10, getMap().getMap().length - 10, Color.ORANGE),
     EMPIRE_4(getMap().getMap().length / 2, 10, Color.DARK_BLUE),
     EMPIRE_5(getMap().getMap().length / 2, getMap().getMap().length - 10, Color.GREEN),
     EMPIRE_6(getMap().getMap().length - 10, 10, Color.LIGHT_BLUE),

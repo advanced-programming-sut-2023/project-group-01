@@ -1,8 +1,6 @@
-
 package org.example.model;
 
 import org.example.model.building.*;
-import org.example.model.building.Storage;
 import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
@@ -12,7 +10,6 @@ import org.example.model.unit.Engineer;
 import org.example.model.unit.Lord;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
-import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -21,7 +18,6 @@ import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class Empire {
     private EmpireBuilding empireBuilding;
-    //TODO set
     private Lord lord;
     private final User player;
     private int popularity;
@@ -41,7 +37,6 @@ public class Empire {
     private LinkedHashMap<FoodType, Float> foods = new LinkedHashMap<>(4);
     private ArrayList<Building> buildings = new ArrayList<>();
     private ArrayList<People> people = new ArrayList<>();
-    //TODO: should be set
     private LinkedHashMap<String, Boolean> CanBuildOrProduceSomething = new LinkedHashMap<>();
     private ArrayList<Trade> newTrade = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
@@ -97,8 +92,7 @@ public class Empire {
                 capacity += ((Storage) building).getCapacity();
 
         for (Material material : materials.keySet())
-            if (material.getMaterialType().getTypeOfProduct().equals("source"))
-                isFull += materials.get(material);
+            if (material.getMaterialType().getTypeOfProduct().equals("source")) isFull += materials.get(material);
 
         return capacity - isFull;
     }
@@ -107,12 +101,10 @@ public class Empire {
         int capacity = 0;
         int isFull = 0;
         for (Building building : buildings)
-            if (building.getBuildingName().equals(BuildingName.GRANARY))
-                capacity += ((Storage) building).getCapacity();
+            if (building.getBuildingName().equals(BuildingName.GRANARY)) capacity += ((Storage) building).getCapacity();
 
         for (Material material : materials.keySet())
-            if (material.getMaterialType().getTypeOfProduct().equals("food"))
-                isFull += materials.get(material);
+            if (material.getMaterialType().getTypeOfProduct().equals("food")) isFull += materials.get(material);
 
         return capacity - isFull;
     }
@@ -121,12 +113,10 @@ public class Empire {
         int capacity = 0;
         int isFull = 0;
         for (Building building : buildings)
-            if (building.getBuildingName().equals(BuildingName.ARMOURY))
-                capacity += ((Storage) building).getCapacity();
+            if (building.getBuildingName().equals(BuildingName.ARMOURY)) capacity += ((Storage) building).getCapacity();
 
         for (Material material : materials.keySet())
-            if (material.getMaterialType().getTypeOfProduct().equals("warfare"))
-                isFull += materials.get(material);
+            if (material.getMaterialType().getTypeOfProduct().equals("warfare")) isFull += materials.get(material);
 
         return capacity - isFull;
     }
@@ -201,10 +191,8 @@ public class Empire {
     }
 
     public void setTaxPopularity() {
-        if (taxRate <= 0)
-            taxPopularity += ((taxRate * -2) + 1);
-        else if (taxRate <= 4)
-            taxPopularity -= taxRate * 2;
+        if (taxRate <= 0) taxPopularity += ((taxRate * -2) + 1);
+        else if (taxRate <= 4) taxPopularity -= taxRate * 2;
         else {
             switch (taxRate) {
                 case 5:
@@ -263,8 +251,7 @@ public class Empire {
     }
 
     public void increasePopulation(int amount) {
-        if (this.population + amount <= this.maxPopulation)
-            this.population += amount;
+        if (this.population + amount <= this.maxPopulation) this.population += amount;
     }
 
     public void reducePopulation() {
@@ -339,12 +326,10 @@ public class Empire {
         return people.size();
     }
 
-    //TODO check
     public boolean havingMaterial(MaterialType materialType, int count) {
 
         for (Material material1 : materials.keySet()) {
-            if (material1.getMaterialType().getName().equals(materialType.getName())
-                    && materials.get(material1) >= count) {
+            if (material1.getMaterialType().getName().equals(materialType.getName()) && materials.get(material1) >= count) {
                 return true;
             }
         }
@@ -353,8 +338,7 @@ public class Empire {
 
     public boolean haveBuilding(BuildingName buildingName) {
         for (Building building : buildings)
-            if (building.getBuildingName().equals(buildingName))
-                return true;
+            if (building.getBuildingName().equals(buildingName)) return true;
         return false;
     }
 
@@ -378,7 +362,7 @@ public class Empire {
         trades.add(trade);
     }
 
-    public void removeTrade(Trade trade){
+    public void removeTrade(Trade trade) {
         trades.remove(trade);
     }
 
@@ -400,8 +384,7 @@ public class Empire {
 
     public Trade getTradeWhitId(int id) {
         for (int i = 0; i < trades.size(); i++)
-            if (trades.get(i).getId() == id)
-                return trades.get(i);
+            if (trades.get(i).getId() == id) return trades.get(i);
         return null;
     }
 
@@ -427,7 +410,6 @@ public class Empire {
         if (building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE)) this.maxPopulation += 8;
         if (building.getBuildingName().equals(BuildingName.BIG_STONE_GATEHOUSE)) this.maxPopulation += 10;
         if (building.getBuildingName().equals(BuildingName.HOVEL)) this.maxPopulation += 8;
-        //TODO check this whit ali
     }
 
     public void removeFromBuildings(Building building) {
@@ -445,8 +427,7 @@ public class Empire {
     public int getNormalPopulation() {
         int number = 0;
         for (People people1 : people)
-            if (!(people1 instanceof MilitaryUnit) && !(people1 instanceof Worker))
-                number++;
+            if (!(people1 instanceof MilitaryUnit) && !(people1 instanceof Worker)) number++;
         return number;
     }
 
@@ -471,22 +452,22 @@ public class Empire {
         return workers;
     }
 
-    public void setAttackOfUnits(){
-        for(People unit: people){
-            if(unit instanceof MilitaryUnit) {
-                int newAttack = ((MilitaryUnit) unit).getMilitaryUnitName().getMaxAttack() *(100 + -5 * fearRate) /100;
+    public void setAttackOfUnits() {
+        for (People unit : people) {
+            if (unit instanceof MilitaryUnit) {
+                int newAttack = ((MilitaryUnit) unit).getMilitaryUnitName().getMaxAttack() * (100 + -5 * fearRate) / 100;
                 ((MilitaryUnit) unit).getMilitaryUnitName().setAttack(newAttack);
             }
         }
     }
 
-    public void createMaterial(){
-        for(Building building : buildings){
-            if(building instanceof FirstProducer){
+    public void createMaterial() {
+        for (Building building : buildings) {
+            if (building instanceof FirstProducer) {
                 ((FirstProducer) building).setRate(fearRate + 5);
                 ((FirstProducer) building).createMaterial();
             }
-            if(building instanceof SecondProducer){
+            if (building instanceof SecondProducer) {
                 ((SecondProducer) building).setRate(fearRate + 5);
                 ((SecondProducer) building).createMaterial();
             }
@@ -495,23 +476,17 @@ public class Empire {
 
     public boolean checkCapacity(MaterialType materialType, int count) {
         int capacity = 0;
-        if (materialType.getTypeOfProduct().equals("source"))
-            capacity = havingStockpile();
-        else if (materialType.getTypeOfProduct().equals("food"))
-            capacity= havingGranary();
-        else if (materialType.getTypeOfProduct().equals("warfare"))
-            capacity = havingArmoury();
-        if (count > capacity)
-            return false;
-        else
-            return true;
+        if (materialType.getTypeOfProduct().equals("source")) capacity = havingStockpile();
+        else if (materialType.getTypeOfProduct().equals("food")) capacity = havingGranary();
+        else if (materialType.getTypeOfProduct().equals("warfare")) capacity = havingArmoury();
+        if (count > capacity) return false;
+        else return true;
     }
 
 
     public boolean havingSmallGate() {
-        for (Building building: buildings)
-            if(building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE))
-                return true;
+        for (Building building : buildings)
+            if (building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE)) return true;
         return false;
     }
 }

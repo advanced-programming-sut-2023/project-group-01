@@ -4,7 +4,7 @@ import org.example.model.Empire;
 import org.example.model.building.enums.BuildingName;
 
 public class CagedDogs extends CastleBuilding {
-    //TODO
+
     private int damage = 50;
 
     public CagedDogs(Empire empire, int x1, int y1, BuildingName buildingName) {

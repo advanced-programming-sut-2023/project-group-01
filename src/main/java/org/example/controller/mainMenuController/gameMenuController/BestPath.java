@@ -18,8 +18,7 @@ import java.util.LinkedList;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class BestPath {
-    //TODO set the empire
-    //TODO reverse the LinkedList
+
     private Empire empire;
 
     public BestPath(Empire empire) {
@@ -32,8 +31,7 @@ public class BestPath {
     }
 
 
-    public LinkedList<Integer> input(Tile[][] tiles, int xStart, int yStart, int xDestination, int yDestination,
-                                     boolean tunnelerOption, boolean assassinsOption) {
+    public LinkedList<Integer> input(Tile[][] tiles, int xStart, int yStart, int xDestination, int yDestination, boolean tunnelerOption, boolean assassinsOption) {
         int size = tiles[0].length;
         ArrayList<ArrayList<Integer>> Tiles = new ArrayList<ArrayList<Integer>>();
         boolean[] visit = new boolean[size * size];
@@ -44,8 +42,7 @@ public class BestPath {
         return path;
     }
 
-    private LinkedList<Integer> gainShortestPath(ArrayList<ArrayList<Integer>> Tiles, boolean[] visit,
-                                                 int xStart, int yStart, int xDestination, int yDestination, int size) {
+    private LinkedList<Integer> gainShortestPath(ArrayList<ArrayList<Integer>> Tiles, boolean[] visit, int xStart, int yStart, int xDestination, int yDestination, int size) {
         int pred[] = new int[size * size];
         int dist[] = new int[size * size];
 
@@ -61,8 +58,7 @@ public class BestPath {
         return path;
     }
 
-    private boolean BFS(ArrayList<ArrayList<Integer>> Tiles, boolean[] visit, int xStart, int yStart,
-                        int xDestination, int yDestination, int[] pred, int[] dist, int size) {
+    private boolean BFS(ArrayList<ArrayList<Integer>> Tiles, boolean[] visit, int xStart, int yStart, int xDestination, int yDestination, int[] pred, int[] dist, int size) {
 
         LinkedList<Integer> queue = new LinkedList<Integer>();
 
@@ -71,7 +67,6 @@ public class BestPath {
             pred[i] = -1;
         }
 
-        //TODO
         if (visit[xStart * size + yStart]) return false;
 
         visit[xStart * size + yStart] = true;
@@ -86,16 +81,14 @@ public class BestPath {
                     dist[Tiles.get(hold).get(i)] = dist[hold] + 1;
                     pred[Tiles.get(hold).get(i)] = hold;
                     queue.add(Tiles.get(hold).get(i));
-                    if (Tiles.get(hold).get(i) == xDestination * size + yDestination)
-                        return true;
+                    if (Tiles.get(hold).get(i) == xDestination * size + yDestination) return true;
                 }
             }
         }
         return false;
     }
 
-    private void initializeAndSetNeighbors(ArrayList<ArrayList<Integer>> Tiles, Tile[][] tiles, int size,
-                                           boolean[] visit, boolean tunnelerOption, boolean assassinsOption) {
+    private void initializeAndSetNeighbors(ArrayList<ArrayList<Integer>> Tiles, Tile[][] tiles, int size, boolean[] visit, boolean tunnelerOption, boolean assassinsOption) {
 
         // Initializing the ArrayList
         for (int i = 0; i < size * size; i++)
@@ -105,8 +98,7 @@ public class BestPath {
         for (int j = 0; j < size - 1; j++) {
             if (tunnelerOption && checkNeighborForTunneler(tiles[0][j], tiles[0][j + 1]))
                 addEdge(Tiles, 0, j, 0, j + 1, size);
-            else if (assassinsOption && (checkNeighborForAssassins(tiles[0][j], tiles[0][j + 1]) ||
-                    checkNeighbor(tiles[0][j], 0, j, tiles[0][j + 1], 0, j + 1, visit)))
+            else if (assassinsOption && (checkNeighborForAssassins(tiles[0][j], tiles[0][j + 1]) || checkNeighbor(tiles[0][j], 0, j, tiles[0][j + 1], 0, j + 1, visit)))
                 addEdge(Tiles, 0, j, 0, j + 1, size);
             else if (!tunnelerOption && checkNeighbor(tiles[0][j], 0, j, tiles[0][j + 1], 0, j + 1, visit))
                 addEdge(Tiles, 0, j, 0, j + 1, size);
@@ -115,8 +107,7 @@ public class BestPath {
         for (int i = 0; i < size - 1; i++) {
             if (tunnelerOption && checkNeighborForTunneler(tiles[i][0], tiles[i + 1][0]))
                 addEdge(Tiles, i, 0, i + 1, 0, size);
-            else if (assassinsOption && checkNeighborForAssassins(tiles[i][0], tiles[i + 1][0]) ||
-                    checkNeighbor(tiles[i][0], i, 0, tiles[i + 1][0], i + 1, 0, visit))
+            else if (assassinsOption && checkNeighborForAssassins(tiles[i][0], tiles[i + 1][0]) || checkNeighbor(tiles[i][0], i, 0, tiles[i + 1][0], i + 1, 0, visit))
                 addEdge(Tiles, i, 0, i + 1, 0, size);
             else if (!tunnelerOption && !assassinsOption && checkNeighbor(tiles[i][0], i, 0, tiles[i + 1][0], i + 1, 0, visit))
                 addEdge(Tiles, i, 0, i + 1, 0, size);
@@ -126,16 +117,12 @@ public class BestPath {
         for (int i = 1; i < size; i++)
             for (int j = 1; j < size; j++) {
                 if (tunnelerOption) {
-                    if (checkNeighborForTunneler(tiles[i][j], tiles[i - 1][j]))
-                        addEdge(Tiles, i, j, i - 1, j, size);
-                    if (checkNeighborForTunneler(tiles[i][j], tiles[i][j - 1]))
-                        addEdge(Tiles, i, j, i, j - 1, size);
+                    if (checkNeighborForTunneler(tiles[i][j], tiles[i - 1][j])) addEdge(Tiles, i, j, i - 1, j, size);
+                    if (checkNeighborForTunneler(tiles[i][j], tiles[i][j - 1])) addEdge(Tiles, i, j, i, j - 1, size);
                 } else if (assassinsOption) {
-                    if (checkNeighborForAssassins(tiles[i][j], tiles[i - 1][j]) ||
-                            checkNeighbor(tiles[i][j], i, j, tiles[i - 1][j], i - 1, j, visit))
+                    if (checkNeighborForAssassins(tiles[i][j], tiles[i - 1][j]) || checkNeighbor(tiles[i][j], i, j, tiles[i - 1][j], i - 1, j, visit))
                         addEdge(Tiles, i, j, i - 1, j, size);
-                    if (checkNeighborForAssassins(tiles[i][j], tiles[i][j - 1]) ||
-                            checkNeighbor(tiles[i][j], i, j, tiles[i][j - 1], i, j - 1, visit))
+                    if (checkNeighborForAssassins(tiles[i][j], tiles[i][j - 1]) || checkNeighbor(tiles[i][j], i, j, tiles[i][j - 1], i, j - 1, visit))
                         addEdge(Tiles, i, j, i, j - 1, size);
                 } else {
                     if (checkNeighbor(tiles[i][j], i, j, tiles[i - 1][j], i - 1, j, visit))
@@ -147,18 +134,15 @@ public class BestPath {
     }
 
     private boolean checkNeighborForTunneler(Tile tile1, Tile tile2) {
-        if (tile1.getTypeOfTile().isWater() || tile2.getTypeOfTile().isWater())
-            return false;
+        if (tile1.getTypeOfTile().isWater() || tile2.getTypeOfTile().isWater()) return false;
         return true;
     }
 
     private boolean checkNeighborForAssassins(Tile tile1, Tile tile2) {
         Building building1 = tile1.getBuilding();
         Building building2 = tile2.getBuilding();
-        if (building1 == null && building2 != null && isBuildingOkForAssassinsMove(building2))
-            return true;
-        if (building2 == null && building1 != null && isBuildingOkForAssassinsMove(building1))
-            return true;
+        if (building1 == null && building2 != null && isBuildingOkForAssassinsMove(building2)) return true;
+        if (building2 == null && building1 != null && isBuildingOkForAssassinsMove(building1)) return true;
         return false;
     }
 
@@ -178,32 +162,22 @@ public class BestPath {
         boolean siegeTower1 = haveCatapultTower(tile1);
         boolean siegeTower2 = haveCatapultTower(tile2);
 
-        if (!cross1 || !cross2)
-            return false;
-        if (building1 != null && building1.getBuildingName().equals(BuildingName.EMPIRE_CASTLE))
-            return true;
-        if (building2 != null && building2.getBuildingName().equals(BuildingName.EMPIRE_CASTLE))
-            return true;
-        if (building1 == null && building2 == null)
-            return true;
+        if (!cross1 || !cross2) return false;
+        if (building1 != null && building1.getBuildingName().equals(BuildingName.EMPIRE_CASTLE)) return true;
+        if (building2 != null && building2.getBuildingName().equals(BuildingName.EMPIRE_CASTLE)) return true;
+        if (building1 == null && building2 == null) return true;
         if (building1 == null && building2 != null && building2.getBuildingName().equals(BuildingName.STAIRS))
             return true;
         if (building1 != null && building1.getBuildingName().equals(BuildingName.STAIRS) && building2 == null)
             return true;
         if (building2 != null && building2.getBuildingName().equals(BuildingName.STAIRS) && building1 == null)
             return true;
-        if (building1 != null && building2 != null && isNeighborForBuildings(building1, building2))
-            return true;
-        if (checkGateHouse(building1, building2, cross1, cross2, x1, y1, x2, y2, visit))
-            return true;
-        if (building1 != null && building2 != null && isNeighborForWall(building1, building2))
-            return true;
-        if (building1 != null && building2 != null && building1.equals(building2))
-            return true;
-        if (building1 == null && building2 != null && siegeTower2)
-            return true;
-        if (building2 == null && building1 != null && siegeTower1)
-            return true;
+        if (building1 != null && building2 != null && isNeighborForBuildings(building1, building2)) return true;
+        if (checkGateHouse(building1, building2, cross1, cross2, x1, y1, x2, y2, visit)) return true;
+        if (building1 != null && building2 != null && isNeighborForWall(building1, building2)) return true;
+        if (building1 != null && building2 != null && building1.equals(building2)) return true;
+        if (building1 == null && building2 != null && siegeTower2) return true;
+        if (building2 == null && building1 != null && siegeTower1) return true;
         return false;
     }
 
@@ -212,11 +186,9 @@ public class BestPath {
         boolean bool2 = false;
 
         if (building1.equals(building2)) return true;
-        if (building1 instanceof Wall || building1.getBuildingName().equals(BuildingName.STAIRS) ||
-                building1 instanceof Gatehouse || building1 instanceof Tower)
+        if (building1 instanceof Wall || building1.getBuildingName().equals(BuildingName.STAIRS) || building1 instanceof Gatehouse || building1 instanceof Tower)
             bool1 = true;
-        if (building2 instanceof Wall || building2.getBuildingName().equals(BuildingName.STAIRS) ||
-                building2 instanceof Gatehouse || building2 instanceof Tower)
+        if (building2 instanceof Wall || building2.getBuildingName().equals(BuildingName.STAIRS) || building2 instanceof Gatehouse || building2 instanceof Tower)
             bool2 = true;
         if (bool1 && bool2) return true;
 
@@ -232,8 +204,7 @@ public class BestPath {
         return false;
     }
 
-    private boolean checkGateHouse(Building building1, Building building2, boolean cross1,
-                                   boolean cross2, int x1, int y1, int x2, int y2, boolean[] visit) {
+    private boolean checkGateHouse(Building building1, Building building2, boolean cross1, boolean cross2, int x1, int y1, int x2, int y2, boolean[] visit) {
         boolean bool1 = false;
         boolean bool2 = false;
         int mapSize = getMap().getSize();
@@ -247,7 +218,7 @@ public class BestPath {
 
     private boolean haveCatapultTower(Tile tile) {
         for (People person : tile.getPeople())
-            if (person instanceof Catapult && ((Catapult)person).getCatapultName().equals(CatapultName.SIEGE_TOWER))
+            if (person instanceof Catapult && ((Catapult) person).getCatapultName().equals(CatapultName.SIEGE_TOWER))
                 return true;
         return false;
     }

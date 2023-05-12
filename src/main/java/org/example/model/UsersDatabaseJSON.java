@@ -10,8 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import static org.example.model.Data.findUserWithUsername;
-
 public class UsersDatabaseJSON {
 
     public static void saveUsersInJSON() throws IOException {
@@ -28,8 +26,7 @@ public class UsersDatabaseJSON {
             json = new String(Files.readAllBytes(Paths.get("data.json")));
             ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>() {
             }.getType());
-            if (users != null)
-                Data.setUsers(users);
+            if (users != null) Data.setUsers(users);
             RegisterMenu.printSuccess("Users data initialized successfully !");
         } catch (IOException e) {
             RegisterMenu.printError("Unable to read from database");
@@ -47,7 +44,8 @@ public class UsersDatabaseJSON {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("loggedIn.json")));
-            User user = new Gson().fromJson(json, new TypeToken<User>(){}.getType());
+            User user = new Gson().fromJson(json, new TypeToken<User>() {
+            }.getType());
             Data.setStayedLoggedIn(Data.findUserWithUsername(user.getUsername()));
 
         } catch (IOException e) {

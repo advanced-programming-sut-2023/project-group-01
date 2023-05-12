@@ -1,7 +1,7 @@
 package org.example.model.building.enums;
 
 public enum TypeOfTile {
-    //TODO check this items
+
     W_ROCK("wRock",false,false),
     E_ROCK("eRock",false,false),
     N_ROCK("nRock",false,false),

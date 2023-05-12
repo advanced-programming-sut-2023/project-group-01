@@ -32,21 +32,19 @@ public class Data {
         Data.stayedLoggedIn = stayedLoggedIn;
     }
 
-    public static User findUserWithUsername(String username){
+    public static User findUserWithUsername(String username) {
         for (User user : users)
-            if (user.getUsername().equals(username))
-                return user;
+            if (user.getUsername().equals(username)) return user;
         return null;
     }
 
-    public static User findUserWithEmail(String email){
+    public static User findUserWithEmail(String email) {
         for (User user : users)
-            if (user.getEmail().equalsIgnoreCase(email))
-                return user;
+            if (user.getEmail().equalsIgnoreCase(email)) return user;
         return null;
     }
 
-    public static void addUser(User user){
+    public static void addUser(User user) {
         users.add(user);
     }
 

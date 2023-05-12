@@ -5,17 +5,12 @@ import org.example.model.People;
 import org.example.model.building.Tile;
 import org.example.model.unit.enums.MilitaryUnitName;
 
-import java.util.LinkedList;
-
 import static java.lang.Integer.MAX_VALUE;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class MilitaryUnit extends People {
 
     protected MilitaryUnitName militaryUnitName;
-    //TODO اگه پاترول ها یکسان بودن جابه جا نشه
-
-    //TODO set xPos & yPOS
     protected int xAttack;
     protected int yAttack;
     protected int xPos;
@@ -60,7 +55,6 @@ public class MilitaryUnit extends People {
     }
 
     public void goToPos(int xPos, int yPos) {
-        //TODO check
         getMap().getTile(this.xPos, this.yPos).removeUnit(this);
         this.xPos = xPos;
         this.yPos = yPos;

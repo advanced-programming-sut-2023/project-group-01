@@ -41,13 +41,10 @@ public enum BuildingName {
     BLACKSMITH("secondProducer", 340, 340, BuildingCategory.WEAPON_BUILDING, "BlacksmithWorkshop", 100, 0, 20, 1, 3, TypeOfTile.NORMAL_GROUND),
     FLETCHER("secondProducer", 340, 340, BuildingCategory.WEAPON_BUILDING, "FletcherWorkshop", 100, 0, 20, 1, 3, TypeOfTile.NORMAL_GROUND),
     POLETURNER("secondProducer", 340, 340, BuildingCategory.WEAPON_BUILDING, "PoleturnerWorkshop", 100, 0, 10, 1, 3, TypeOfTile.NORMAL_GROUND),
-    //TODO
     OIL_SMELTER("oilSmelter", 200, 200, BuildingCategory.WEAPON_BUILDING, "OilSmelter", 100, 0, 0, 1, 2, TypeOfTile.NORMAL_GROUND),
     PITCH_DITCH("pitchDitch", 0, 0, BuildingCategory.CASTLE_BUILDING, "PitchDitch", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND),
     CAGED_WAR_DOGS("cagedWarDogs", 0, 0, BuildingCategory.CASTLE_BUILDING, "CagedWarDogs", 100, 0, 10, 0, 1, TypeOfTile.NORMAL_GROUND),
-    //TODO
     TUNNELER_GUILD("building", 220, 220, BuildingCategory.CASTLE_BUILDING, "TunnelerGuild", 0, 0, 0, 1, 3, TypeOfTile.NORMAL_GROUND),
-    //چادر محاصره
     STABLE("firstProducer", 220, 220, BuildingCategory.CASTLE_BUILDING, "Stable", 400, 0, 20, 0, 3, TypeOfTile.NORMAL_GROUND),
     APPLE_GARDEN("firstProducer", 310, 310, BuildingCategory.FARM_BUILDING, "AppleGarden", 0, 0, 5, 1, 4, TypeOfTile.MEADOW),
     DAIRY_FARM("firstProducer", 310, 310, BuildingCategory.FARM_BUILDING, "DairyFarm", 0, 0, 10, 1, 5, TypeOfTile.MEADOW),

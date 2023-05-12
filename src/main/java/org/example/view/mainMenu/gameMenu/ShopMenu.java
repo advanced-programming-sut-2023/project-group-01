@@ -59,7 +59,6 @@ public class ShopMenu {
                 setFoods(material);
                 getThisEmpire().decreaseGold(material.getMaterialType().getBuyingPrice() * count);
                 return Outputs.SUCCESS_BUY;
-                //TODO check anbar
             }
         }
         return Outputs.INVALID_MATERIAL_NAME;

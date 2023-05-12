@@ -1,6 +1,5 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
-import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
@@ -107,8 +106,7 @@ public class MilitaryMenuController {
         int yPos = Integer.parseInt(y);
         ArrayList<MilitaryUnit> units = getMap().getTile(xPos, yPos).findUnit(empire);
 
-        if (units.size() == 0)
-            return Outputs.NOT_HAVING_TROOP;
+        if (units.size() == 0) return Outputs.NOT_HAVING_TROOP;
         else if (!set.equals("standing") && !set.equals("defensive") && !set.equals("offensive"))
             return Outputs.INVALID_UNIT_STATE;
         else if (set.equals("standing")) {
@@ -129,8 +127,7 @@ public class MilitaryMenuController {
     }
 
     public Outputs pourOil(String direction) {
-        if (militaryMenu.getSelectedUnit().size() == 0)
-            return Outputs.EMPTY_SELECTED_UNIT;
+        if (militaryMenu.getSelectedUnit().size() == 0) return Outputs.EMPTY_SELECTED_UNIT;
         if (!(direction.equals("left") || direction.equals("right") || direction.equals("up") || direction.equals("down"))) {
             militaryMenu.getSelectedUnit().clear();
             return Outputs.WRONG_POUR_OIL_DIRECTION;
@@ -195,7 +192,7 @@ public class MilitaryMenuController {
 
         if (building != null && building.getBuildingName().getHitPoint() > damage)
             building.getBuildingName().reduceHitPoint(damage);
-        else if (building != null){
+        else if (building != null) {
             building.getEmpire().getBuildings().remove(building);
             getMap().getTile(xPos, yPos).setBuilding(null);
         }
@@ -211,8 +208,7 @@ public class MilitaryMenuController {
     public ArrayList<MilitaryUnit> findTunneler() {
         ArrayList<MilitaryUnit> Tunneler = new ArrayList<MilitaryUnit>();
         for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit())
-            if (militaryUnit.getMilitaryUnitName().getName().equals("tunneler"))
-                Tunneler.add(militaryUnit);
+            if (militaryUnit.getMilitaryUnitName().getName().equals("tunneler")) Tunneler.add(militaryUnit);
         return Tunneler;
     }
 
@@ -220,13 +216,10 @@ public class MilitaryMenuController {
         ArrayList<Engineer> engineers = findEngineer();
         CatapultName catapultName = findCatapultName(equipmentName);
 
-        if (militaryMenu.getSelectedUnit().size() == 0)
-            return Outputs.EMPTY_SELECTED_UNIT;
+        if (militaryMenu.getSelectedUnit().size() == 0) return Outputs.EMPTY_SELECTED_UNIT;
 
-        if (catapultName == null)
-            return Outputs.INVALID_CATAPULT_NAME;
-        else if (catapultName.getNumberOfEngineers() > engineers.size())
-            return Outputs.NOT_ENOUGH_ENGINEER;
+        if (catapultName == null) return Outputs.INVALID_CATAPULT_NAME;
+        else if (catapultName.getNumberOfEngineers() > engineers.size()) return Outputs.NOT_ENOUGH_ENGINEER;
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
         int y = militaryMenu.getSelectedUnit().get(0).getYPos();
 
@@ -244,16 +237,14 @@ public class MilitaryMenuController {
 
     public CatapultName findCatapultName(String name) {
         for (CatapultName catapultName : CatapultName.values())
-            if (catapultName.getName().equals(name))
-                return catapultName;
+            if (catapultName.getName().equals(name)) return catapultName;
         return null;
     }
 
     public ArrayList<Engineer> findEngineer() {
         ArrayList<Engineer> engineers = new ArrayList<Engineer>();
         for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit())
-            if (militaryUnit instanceof Engineer)
-                engineers.add((Engineer) militaryUnit);
+            if (militaryUnit instanceof Engineer) engineers.add((Engineer) militaryUnit);
         return engineers;
     }
 
@@ -289,11 +280,9 @@ public class MilitaryMenuController {
     }
 
 
-
     private boolean checkEnemyExistance(int x, int y) {
         for (People person : getMap().getTile(x, y).getPeople()) {
-            if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire))
-                return true;
+            if (person instanceof MilitaryUnit && !person.getEmpire().equals(empire)) return true;
         }
         return false;
     }
@@ -312,17 +301,14 @@ public class MilitaryMenuController {
         BestPath bestPath = new BestPath(empire);
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
         int y = militaryMenu.getSelectedUnit().get(0).getYPos();
-        //TODO check
         LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, destX, destY, false, false);
 
-        if (path != null)
-            for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
-                militaryUnit.setDest(destX, destY);
-            }
-        else
-            for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
-                militaryUnit.removeUnit();
-            }
+        if (path != null) for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
+            militaryUnit.setDest(destX, destY);
+        }
+        else for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
+            militaryUnit.removeUnit();
+        }
 
         return null;
     }

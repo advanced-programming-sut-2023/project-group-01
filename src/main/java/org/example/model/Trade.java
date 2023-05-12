@@ -12,8 +12,7 @@ public class Trade {
     private final Empire empireRequester;
     private final Empire toEmpire;
 
-    public Trade(int id, Material material, int amountMaterial, int price, String requestMessage,
-                 Empire empireRequester, Empire toEmpire) {
+    public Trade(int id, Material material, int amountMaterial, int price, String requestMessage, Empire empireRequester, Empire toEmpire) {
         this.id = id;
         this.material = material;
         this.amountMaterial = amountMaterial;

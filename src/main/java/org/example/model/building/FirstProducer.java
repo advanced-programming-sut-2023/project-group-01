@@ -3,7 +3,6 @@ package org.example.model.building;
 import org.example.model.Empire;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.FirstProducerType;
-import org.example.view.mainMenu.gameMenu.ShopMenu;
 
 public class FirstProducer extends Building {
     private FirstProducerType producerType;
@@ -12,8 +11,7 @@ public class FirstProducer extends Building {
     public FirstProducer(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1, y1, buildingName);
         for (FirstProducerType firstProducerType : FirstProducerType.values())
-            if (firstProducerType.toString().equals(buildingName.getName()))
-                this.producerType = firstProducerType;
+            if (firstProducerType.toString().equals(buildingName.getName())) this.producerType = firstProducerType;
     }
 
     public void setRate(int rate) {

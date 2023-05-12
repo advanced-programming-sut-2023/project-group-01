@@ -1,7 +1,6 @@
 package org.example.model.building.castleBuilding.enums;
 
 public enum TowerType {
-    //TODO some checks
     LOOKOUT_TOWER("lookout tower", 10, 10, 15),
     ROUND_TOWER("round tower", 8, 8, 12),
     SQUARE_TOWER("square tower", 8, 8, 12),

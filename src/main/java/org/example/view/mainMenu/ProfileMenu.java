@@ -9,8 +9,6 @@ import org.example.view.enums.commands.ProfileMenuCommands;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -166,10 +164,10 @@ public class ProfileMenu {
         }
     }
 
-    private static void setRanks(){
+    private static void setRanks() {
         Data.getUsers().sort(new User.Sort());
-        for (int i=0;i<Data.getUsers().size();i++){
-            Data.getUsers().get(i).setRank(i+1);
+        for (int i = 0; i < Data.getUsers().size(); i++) {
+            Data.getUsers().get(i).setRank(i + 1);
         }
 
     }

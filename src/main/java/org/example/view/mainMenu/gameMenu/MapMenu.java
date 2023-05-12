@@ -1,6 +1,5 @@
 package org.example.view.mainMenu.gameMenu;
 
-import org.example.controller.mainMenuController.gameMenuController.GameMenuController;
 import org.example.model.Map;
 import org.example.model.People;
 import org.example.model.building.Tile;
@@ -41,7 +40,7 @@ public class MapMenu {
                 moveMapChecker(matcher);
             else if ((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.SHOW_DETAIL)) != null)
                 showDetailOfMapChecker(matcher);
-            else if((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_MAP)) != null)
+            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_MAP)) != null)
                 showMapMoveCheck(matcher);
             else if (command.equals("exit")) return;
             else System.out.println("Invalid command in Map Menu !");
@@ -56,9 +55,9 @@ public class MapMenu {
             System.out.println(Outputs.INVALID_COORDINATES.toString());
             return;
         }
-            this.xOfMap = xOfMap;
-            this.yOfMap = yOfMap;
-            showMap();
+        this.xOfMap = xOfMap;
+        this.yOfMap = yOfMap;
+        showMap();
     }
 
     public void showMap() {
@@ -69,8 +68,7 @@ public class MapMenu {
                         Tile tile = map.getTileWhitXAndY(xOfMap + i, yOfMap + j);
                         setColorInTerminal(tile);
                         if (tile == null) System.out.print("     ");
-                        else if (!tile.getPeople().isEmpty())
-                            System.out.print(ShowMapAsciiArt.valueOf("S" + line));
+                        else if (!tile.getPeople().isEmpty()) System.out.print(ShowMapAsciiArt.valueOf("S" + line));
                         else if (tile.getBuilding() != null) {
                             BuildingCategory buildingCategory = tile.getBuilding().getBuildingName().getBuildingCategory();
                             if (buildingCategory.equals(BuildingCategory.CASTLE_BUILDING))
@@ -126,21 +124,17 @@ public class MapMenu {
         int left = 0;
         int right = 0;
         if (matcher.group("up") != null)
-            if (matcher.group("upCount") != null)
-                up = Integer.parseInt(matcher.group("upCount"));
+            if (matcher.group("upCount") != null) up = Integer.parseInt(matcher.group("upCount"));
             else up = 1;
 
         if (matcher.group("down") != null)
-            if (matcher.group("downCount") != null)
-                down = Integer.parseInt(matcher.group("downCount"));
+            if (matcher.group("downCount") != null) down = Integer.parseInt(matcher.group("downCount"));
             else down = 1;
         if (matcher.group("left") != null)
-            if (matcher.group("leftCount") != null)
-                left = Integer.parseInt(matcher.group("leftCount"));
+            if (matcher.group("leftCount") != null) left = Integer.parseInt(matcher.group("leftCount"));
             else left = 1;
         if (matcher.group("right") != null)
-            if (matcher.group("rightCount") != null)
-                right = Integer.parseInt(matcher.group("rightCount"));
+            if (matcher.group("rightCount") != null) right = Integer.parseInt(matcher.group("rightCount"));
             else right = 1;
         int newX = xOfMap + right - left;
         int newY = yOfMap + up - down;
@@ -174,8 +168,7 @@ public class MapMenu {
     private int findNumber(Tile tile, MilitaryUnitName militaryUnitName) {
         int number = 0;
         for (People person : tile.getPeople())
-            if (person instanceof MilitaryUnit &&
-                    ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName))
+            if (person instanceof MilitaryUnit && ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName))
                 number++;
         return number;
     }

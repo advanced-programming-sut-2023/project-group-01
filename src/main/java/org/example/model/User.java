@@ -1,6 +1,5 @@
 package org.example.model;
 
-import org.example.view.enums.SecurityQuestion;
 import java.util.Comparator;
 
 public class User {
@@ -19,8 +18,7 @@ public class User {
     private byte[] salt;
 
 
-    public User(String username, String passwordHash, String nickname, String email, String slogan,
-                String securityQuestion, String securityAnswer, byte[] salt) {
+    public User(String username, String passwordHash, String nickname, String email, String slogan, String securityQuestion, String securityAnswer, byte[] salt) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.nickname = nickname;
@@ -29,8 +27,8 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.salt = salt;
-        this.highScore=0;
-        this.rank= Data.getUsers().size() + 1;
+        this.highScore = 0;
+        this.rank = Data.getUsers().size() + 1;
     }
 
     public String getUsername() {
@@ -119,7 +117,7 @@ public class User {
 
     public static class Sort implements Comparator<User> {
         public int compare(User a, User b) {
-            return b.getHighScore()-a.getHighScore();
+            return b.getHighScore() - a.getHighScore();
         }
     }
 

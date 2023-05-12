@@ -28,8 +28,7 @@ public class RegisterMenuTest {
     public void additionalInputs() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 additional";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.INVALID_REGISTRATION_INPUT, output);
     }
 
@@ -37,8 +36,7 @@ public class RegisterMenuTest {
     public void invalidRegisterCommand() {
         inputLine = "chertopert";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = null;
+        if (matcher.find()) output = null;
         else output = Outputs.INVALID_COMMAND;
         Assertions.assertEquals(Outputs.INVALID_COMMAND, output);
     }
@@ -47,8 +45,7 @@ public class RegisterMenuTest {
     public void weakPassword1() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p password password -n nickname -email saeed";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.PASSWORD_WITHOUT_NUMBER, output);
     }
 
@@ -56,8 +53,7 @@ public class RegisterMenuTest {
     public void weakPassword2() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p password2 password2 -n nickname -email saeed";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.PASSWORD_WITHOUT_CAPITAL_LETTER, output);
     }
 
@@ -65,8 +61,7 @@ public class RegisterMenuTest {
     public void weakPassword3() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p Password2 Password2 -n nickname -email saeed";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.PASSWORD_WITHOUT_SPECIAL_CHARACTER, output);
     }
 
@@ -74,8 +69,7 @@ public class RegisterMenuTest {
     public void weakPassword4() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p Paod2 Paod2 -n nickname -email saeed";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.SHORT_PASSWORD, output);
     }
 
@@ -83,8 +77,7 @@ public class RegisterMenuTest {
     public void weakPassword5() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p PASSSS2 PASSSS2 -n nickname -email saeed";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.PASSWORD_WITHOUT_SMALL_LETTER, output);
     }
 
@@ -92,8 +85,7 @@ public class RegisterMenuTest {
     public void randomPassword() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p random -n nickname -email saeed@gmail.com";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.RANDOM_PASSWORD_CONFIRMATION, output);
     }
 
@@ -101,8 +93,7 @@ public class RegisterMenuTest {
     public void invalidEmail() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p @Ramz1 @Ramz1 -n nickname -email saeedgmail.com";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.INVALID_EMAIL, output);
     }
 
@@ -110,8 +101,7 @@ public class RegisterMenuTest {
     public void wrongPasswordConfirm() throws NoSuchAlgorithmException {
         inputLine = "user create -u username1 -p @Ramz1 @Ramz2 -n nickname -email saeed@gmail.com";
         matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.REGISTER_REGEX);
-        if (matcher.find())
-            output = registerMenu.register(matcher, inputLine);
+        if (matcher.find()) output = registerMenu.register(matcher, inputLine);
         Assertions.assertEquals(Outputs.WRONG_PASSWORD_CONFIRM, output);
     }
 
@@ -212,7 +202,7 @@ public class RegisterMenuTest {
 
     @org.junit.Test
     public void randomPasswordConfirmRun() throws NoSuchAlgorithmException, IOException {
-        RegisterMenu.randomPass="Temp";
+        RegisterMenu.randomPass = "Temp";
         Scanner scanner = new Scanner(RegisterMenu.randomPass);
         registerMenu.randomPassConfirmRun(scanner);
         Assertions.assertEquals("Success", RegisterMenu.unitTestTempOutput);
@@ -234,39 +224,39 @@ public class RegisterMenuTest {
 
     @org.junit.Test
     public void nullRegisterInput() throws NoSuchAlgorithmException, IOException {
-        output=registerMenuController.registerValidationCheck(null,null,null,null,null,null,null);
-        Assertions.assertEquals(Outputs.NOT_ENOUGH_DATA,output);
+        output = registerMenuController.registerValidationCheck(null, null, null, null, null, null, null);
+        Assertions.assertEquals(Outputs.NOT_ENOUGH_DATA, output);
     }
 
     @org.junit.Test
     public void invalidUsername() throws NoSuchAlgorithmException, IOException {
-        output=registerMenuController.registerValidationCheck("@","a","a","a","a","a","a");
-        Assertions.assertEquals(Outputs.INVALID_USERNAME,output);
+        output = registerMenuController.registerValidationCheck("@", "a", "a", "a", "a", "a", "a");
+        Assertions.assertEquals(Outputs.INVALID_USERNAME, output);
     }
 
     @org.junit.Test
     public void duplicateUser() throws NoSuchAlgorithmException, IOException {
-        Data.addUser(new User("username11","a","a","a","a","a","a",null));
-        output=registerMenuController.registerValidationCheck("username11","@Ramz1","ab@f.c","a","@Ramz1","a","a");
-        Assertions.assertEquals(Outputs.USER_EXISTS,output);
+        Data.addUser(new User("username11", "a", "a", "a", "a", "a", "a", null));
+        output = registerMenuController.registerValidationCheck("username11", "@Ramz1", "ab@f.c", "a", "@Ramz1", "a", "a");
+        Assertions.assertEquals(Outputs.USER_EXISTS, output);
     }
 
     @org.junit.Test
     public void duplicateEmail() throws NoSuchAlgorithmException, IOException {
-        Data.addUser(new User("username11","a","a","ab@f.c","a","a","a",null));
-        output=registerMenuController.registerValidationCheck("username1","@Ramz1","ab@f.c","a","@Ramz1","a","a");
-        Assertions.assertEquals(Outputs.EMAIL_EXISTS,output);
+        Data.addUser(new User("username11", "a", "a", "ab@f.c", "a", "a", "a", null));
+        output = registerMenuController.registerValidationCheck("username1", "@Ramz1", "ab@f.c", "a", "@Ramz1", "a", "a");
+        Assertions.assertEquals(Outputs.EMAIL_EXISTS, output);
     }
 
     @org.junit.Test
     public void nullSloganWithSwitch() throws NoSuchAlgorithmException, IOException {
-        output=registerMenuController.registerValidationCheck("username1","@Ramz1","ab@dddf.c","a","@Ramz1",null,"a");
-        Assertions.assertEquals(Outputs.NOT_ENOUGH_DATA,output);
+        output = registerMenuController.registerValidationCheck("username1", "@Ramz1", "ab@dddf.c", "a", "@Ramz1", null, "a");
+        Assertions.assertEquals(Outputs.NOT_ENOUGH_DATA, output);
     }
 
     @org.junit.Test
     public void withoutErrorRegisteration() throws NoSuchAlgorithmException, IOException {
-        output=registerMenuController.registerUser("username1","@Ramz1","ab@dddf.c","a","@Ramz1","slog","a");
-        Assertions.assertEquals(Outputs.SUCCESS,output);
+        output = registerMenuController.registerUser("username1", "@Ramz1", "ab@dddf.c", "a", "@Ramz1", "slog", "a");
+        Assertions.assertEquals(Outputs.SUCCESS, output);
     }
 }

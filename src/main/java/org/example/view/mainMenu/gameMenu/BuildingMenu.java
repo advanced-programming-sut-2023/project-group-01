@@ -1,15 +1,10 @@
 package org.example.view.mainMenu.gameMenu;
 
 import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
-import org.example.model.building.Building;
 import org.example.model.Empire;
-import org.example.view.enums.Outputs;
+import org.example.model.building.Building;
 import org.example.view.enums.commands.GameMenuCommands.BuildingMenuCommands;
-import org.example.view.enums.commands.GameMenuCommands.MilitaryMenuCommands;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -36,14 +31,11 @@ public class BuildingMenu {
                 dropBuildingChecker(matcher);
             else if ((matcher = BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.CREATE_UNIT)).matches())
                 createUnitChecker(matcher);
-            else if (BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.REPAIR).matches())
-                repairChecker();
+            else if (BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.REPAIR).matches()) repairChecker();
             else if (BuildingMenuCommands.getMatcher(input, BuildingMenuCommands.DESTROY_BUILDING).matches())
                 destroyBuilding();
-            else if (input.equals("exit"))
-                break;
-            else
-                System.out.println("Invalid Command in Building menu!");
+            else if (input.equals("exit")) break;
+            else System.out.println("Invalid Command in Building menu!");
         }
     }
 

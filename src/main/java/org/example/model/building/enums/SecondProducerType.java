@@ -9,7 +9,6 @@ public enum SecondProducerType {
     BAKERY(MaterialType.WHEAT, null, MaterialType.BREAD, null),
     BREWERY(MaterialType.BARLEY, null, MaterialType.ALE, null),
 
-    //TODO: SOME CHECKS HERE IS NEEDED
     //Weapon :
     FLETCHER_WORKSHOP(MaterialType.WOOD, null, MaterialType.ARC, MaterialType.CROSSBOW),
     POLETURNER_WORKSHOP(MaterialType.WOOD, MaterialType.IRON, MaterialType.SPEAR, MaterialType.PIKE),
@@ -50,10 +49,4 @@ public enum SecondProducerType {
         return secondProduct;
     }
 
-    //TODO should be used for things that has two product
-    public void changeFirstProduct() {
-        MaterialType materialType = firstProduct;
-        this.firstProduct = this.secondProduct;
-        this.secondProduct = materialType;
-    }
 }

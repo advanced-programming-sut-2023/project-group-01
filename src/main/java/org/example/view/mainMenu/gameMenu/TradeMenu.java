@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-import static org.example.view.mainMenu.gameMenu.GameMenu.*;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getEmpireWhitUsername;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class TradeMenu {
 
@@ -98,13 +99,8 @@ public class TradeMenu {
 
     private void printTradeInfo(ArrayList<Trade> trades) {
         for (int i = 0; i < trades.size(); i++) {
-            System.out.print("from empire: " + trades.get(i).getEmpireRequester().getPlayer().getUsername() +
-                    "| to empire: " + trades.get(i).getToEmpire().getPlayer().getUsername() +
-                    "| material: " + trades.get(i).getMaterial().getMaterialType().getName() +
-                    "| amount: " + trades.get(i).getAmountMaterial() +
-                    "| price: " + trades.get(i).getPrice() +
-                    "| request message: " + trades.get(i).getRequestMessage());
-            if(trades.equals(getThisEmpire().getTradeHistory()))
+            System.out.print("from empire: " + trades.get(i).getEmpireRequester().getPlayer().getUsername() + "| to empire: " + trades.get(i).getToEmpire().getPlayer().getUsername() + "| material: " + trades.get(i).getMaterial().getMaterialType().getName() + "| amount: " + trades.get(i).getAmountMaterial() + "| price: " + trades.get(i).getPrice() + "| request message: " + trades.get(i).getRequestMessage());
+            if (trades.equals(getThisEmpire().getTradeHistory()))
                 System.out.println("| accept answer: " + trades.get(i).getAcceptMessage());
             else System.out.println("| id: " + trades.get(i).getId());
         }

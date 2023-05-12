@@ -2,8 +2,6 @@ package org.example.view.mainMenu.gameMenu;
 
 import org.example.controller.mainMenuController.gameMenuController.MilitaryMenuController;
 import org.example.model.Empire;
-import org.example.model.People;
-import org.example.model.User;
 import org.example.model.unit.MilitaryUnit;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.MilitaryMenuCommands;
@@ -51,14 +49,11 @@ public class MilitaryMenu {
                 digTunnelChecker(matcher);
             else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.BUILD_Q)).matches())
                 buildChecker(matcher);
-            else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT).matches())
-                disbandUnit();
+            else if (MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.DISBAND_UNIT).matches()) disbandUnit();
             else if ((matcher = MilitaryMenuCommands.getMatcher(input, MilitaryMenuCommands.CANCEL_PATROL_UNIT)).matches())
                 cancelPatrolUnitChecker(matcher);
-            else if (input.equals("exit"))
-                return;
-            else
-                System.out.println("Invalid command in Military menu!");
+            else if (input.equals("exit")) return;
+            else System.out.println("Invalid command in Military menu!");
         }
     }
 
@@ -120,11 +115,9 @@ public class MilitaryMenu {
         int x = empire.getEmpireBuilding().getX();
         int y = empire.getEmpireBuilding().getY();
 
-        Outputs outputs = militaryMenuController.disbandUnit(x ,y);
-        if (outputs != null)
-            System.out.println(outputs.toString());
-        else
-            System.out.println(Outputs.SUCCESSFUL_DISBAND);
+        Outputs outputs = militaryMenuController.disbandUnit(x, y);
+        if (outputs != null) System.out.println(outputs.toString());
+        else System.out.println(Outputs.SUCCESSFUL_DISBAND);
     }
 
     public void setSelectedUnit(ArrayList<MilitaryUnit> selectedUnit) {

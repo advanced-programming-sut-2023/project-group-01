@@ -7,7 +7,6 @@ public enum InitializeMaterial {
 
     LOW_SOURCE(5000, 0, 20, 0, 20, 0, 50, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    //TODO check the capacity of stockPile
     MIDDLE_SOURCE(20000, 10, 30, 0, 30, 0, 50, 50, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
     HIGH_SOURCE(40000, 20, 50, 10, 40, 0, 50, 50, 50, 0, 50,

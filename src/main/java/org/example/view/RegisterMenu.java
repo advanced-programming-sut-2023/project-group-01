@@ -34,7 +34,7 @@ public class RegisterMenu {
                 unitTestTempOutput = "Success";
                 if (output.equals(Outputs.RANDOM_SLOGAN)) {
                     System.out.println(output.toString() + randomSlogan());
-                    if (randomPass != null){
+                    if (randomPass != null) {
                         System.out.println(output.toString() + randomPass + " .Please re enter random password to confirm");
                         randomPassConfirmRun(scanner);
                     }
@@ -51,8 +51,7 @@ public class RegisterMenu {
                     break;
                 }
                 System.out.println(output.toString());
-            }
-            else if ((matcher = RegisterMenuCommands.getMatcher(inputLine,RegisterMenuCommands.ENTER_LOGIN_MENU)).find()){
+            } else if ((matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.ENTER_LOGIN_MENU)).find()) {
                 loginmenu.run(scanner);
                 break;
             } else if (RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.EXIT).find()) break;
@@ -67,7 +66,7 @@ public class RegisterMenu {
 
         while (scanner.hasNextLine()) {
 
-           inputLine = scanner.nextLine();
+            inputLine = scanner.nextLine();
 
             if ((matcher = RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.RANDOM_PASSWORD_CONFIRMATION_REGEX)).find()) {
                 if (registerMenuController.randomPasswordConfirmation(matcher.group("passwordConfirm")) == null) {
@@ -113,7 +112,7 @@ public class RegisterMenu {
         while (true) {
             System.out.println(CaptchaAsciiArt.captchaGenerator());
             System.out.println("Enter captcha or enter \"0\" to generate a new captcha.");
-            if (scanner.hasNext())inputLine = scanner.nextLine();
+            if (scanner.hasNext()) inputLine = scanner.nextLine();
             else break;
             int number = -1;
             boolean isValid = true;
@@ -126,14 +125,11 @@ public class RegisterMenu {
                 unitTestTempOutput = "WrongNumber";
             }
             if (isValid) {
-                if (number == 0)
-                    continue;
-                if (number != CaptchaAsciiArt.captchaValue){
+                if (number == 0) continue;
+                if (number != CaptchaAsciiArt.captchaValue) {
                     printError("You didn't enter captcha correctly.");
                     unitTestTempOutput = "WrongCaptcha";
-                }
-
-                else {
+                } else {
                     Data.addUser(RegisterMenuController.temporaryCreatedUser);
                     printSuccess("Register done successfully!");
                     try {
@@ -190,22 +186,18 @@ public class RegisterMenu {
         return registerMenuController.registerUser(username, password, email, nickname, passwordConfirm, slogan, sloganSwitch);
     }
 
-    private Outputs CheckNoAdditional(String line, String username, String password, String email, String nickname,
-                                      String passwordConfirm, String slogan) {
+    private Outputs CheckNoAdditional(String line, String username, String password, String email, String nickname, String passwordConfirm, String slogan) {
 
         line = line.replaceAll("-u " + username, "");
-        if (passwordConfirm != null)
-            line = line.replaceAll("-p " + password + " " + passwordConfirm, "");
-        else
-            line = line.replaceAll("-p " + password, "");
+        if (passwordConfirm != null) line = line.replaceAll("-p " + password + " " + passwordConfirm, "");
+        else line = line.replaceAll("-p " + password, "");
         line = line.replaceAll("-email " + email, "");
         line = line.replaceAll("-n " + nickname, "");
         line = line.replaceAll("-s " + slogan, "");
         line = line.replaceAll("-s", "");
         line = line.replaceAll("user create", "");
         line = line.replaceAll("\\s", "");
-        if (line.equals(""))
-            return Outputs.VALID_REGISTRATION_INPUT;
+        if (line.equals("")) return Outputs.VALID_REGISTRATION_INPUT;
         return Outputs.INVALID_REGISTRATION_INPUT;
 
     }

@@ -25,7 +25,8 @@ public enum Voice {
     FIRE_THROWERS("VoiceData/20.wav");
 
     private final File file;
-    Voice (String file) {
+
+    Voice(String file) {
         this.file = new File(file);
     }
 
@@ -55,7 +56,6 @@ public enum Voice {
     public File getFile() {
         return file;
     }
-
 
 
 }
