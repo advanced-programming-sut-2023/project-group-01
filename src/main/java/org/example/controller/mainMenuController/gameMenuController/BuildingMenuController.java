@@ -16,6 +16,7 @@ import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
 import static org.example.view.enums.Outputs.SUCCESSFUL_DROP_BUILDING;
+import static org.example.view.enums.Outputs.WRONG_UNIT_TYPE;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class BuildingMenuController {
@@ -265,12 +266,21 @@ public class BuildingMenuController {
         if (!bool)
             return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
 
+        if (!checkValidMilitaryName(type))
+            return WRONG_UNIT_TYPE;
         if (material1 != null)
             empire.reduceMaterial(material1.getName(), Integer.parseInt(count));
         if (material2 != null)
             empire.reduceMaterial(material2.getName(), Integer.parseInt(count));
         empire.decreaseGold(getPriceByName(type) * Integer.parseInt(count));
         return Outputs.SUCCESSFUL_CREATE;
+    }
+
+    private boolean checkValidMilitaryName(String name) {
+        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
+            if (militaryUnitName.getName().equals(name))
+                return true;
+        return false;
     }
 
     private boolean doCreateUnit(String type, boolean barrackBoolean, boolean mercenaryBoolean,
