@@ -38,8 +38,10 @@ public class BestPath {
         boolean[] visit = new boolean[size * size];
         initializeAndSetNeighbors(Tiles, tiles, size, visit, tunnelerOption, assassinsOption);
         LinkedList<Integer> path = gainShortestPath(Tiles, visit, xStart, yStart, xDestination, yDestination, size);
-        assert path != null;
-        Collections.reverse(path);
+        if (path != null && path.size() != 0)
+            Collections.reverse(path);
+        if (path == null)
+            path = new LinkedList<>();
         return path;
     }
 

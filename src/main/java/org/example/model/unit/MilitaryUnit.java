@@ -89,12 +89,6 @@ public class MilitaryUnit extends People {
         this.yDestination = MAX_VALUE;
     }
 
-    public void movePatrol(int x, int y) {
-        this.xPos = x;
-        this.yPos = y;
-        this.xDestination = MAX_VALUE;
-        this.yDestination = MAX_VALUE;
-    }
 
     public void changePatrol() {
         int x = patrolX1;

@@ -408,6 +408,11 @@ public class BuildingMenuController {
                 MilitaryUnitName.FIRE_THROWERS.getVoice().playVoice(MilitaryUnitName.FIRE_THROWERS.getVoice());
                 return true;
             }
+            case "slaves" ->{
+                for (int i = 0; i < count; i++)
+                    new MilitaryUnit(getMap().getTile(x, y), buildingMenu.getEmpire(), MilitaryUnitName.SLAVES, x , y);
+                return true;
+            }
             default -> {
                 return false;
             }

@@ -29,8 +29,8 @@ public class MilitaryMenuController {
 
     public Outputs selectUnit(String x, String y) {
         Outputs outputs = commonOutPuts(x, y);
+        if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
         if (findMilitary(Integer.parseInt(x), Integer.parseInt(y), empire).size() == 0) return Outputs.NOT_HAVING_TROOP;
-        else if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
 
         militaryMenu.setSelectedUnit(findMilitary(Integer.parseInt(x), Integer.parseInt(y), empire));
         return Outputs.VALID_SELECT_UNIT;
@@ -223,12 +223,11 @@ public class MilitaryMenuController {
         int x = militaryMenu.getSelectedUnit().get(0).getXPos();
         int y = militaryMenu.getSelectedUnit().get(0).getYPos();
 
-        for (int i = 0; i < catapultName.getCapacity(); i++) {
-            getMap().getTile(x, y).removeUnit(engineers.get(i));
+        for (int i = 0; i < catapultName.getNumberOfEngineers(); i++) {
             catapultName.addEngineer(engineers.get(i));
+            engineers.get(i).removeUnit();
         }
-        Catapult catapult = new Catapult(getMap().getTile(x, y), empire, x, y, catapultName);
-        getMap().getTile(x, y).addUnit(catapult);
+        empire.addUnit(new Catapult(getMap().getTile(x, y), empire, x, y, catapultName));
 
         militaryMenu.getSelectedUnit().clear();
         return Outputs.SUCCESSFUL_CATAPULT;
@@ -261,14 +260,13 @@ public class MilitaryMenuController {
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
         else if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
-        else if (!checkEnemyExistance(Integer.parseInt(x), Integer.parseInt(y)) &&
-                !checkBuildingExist(Integer.parseInt(x), Integer.parseInt(y))) return Outputs.NO_EXISTANCE_FOR_ENEMY;
 
         int xAttack = Integer.parseInt(x);
         int yAttack = Integer.parseInt(y);
 
+
         for (People person : getMap().getTile(xAttack, yAttack).getPeople()) {
-            if (person instanceof MilitaryUnit && person.getEmpire().equals(empire) && ((MilitaryUnit) person).getMilitaryUnitName().getGunshot() == 0) {
+            if (person instanceof MilitaryUnit && person.getEmpire().equals(empire)) {
                 ((MilitaryUnit) person).setXAttack(xAttack);
                 ((MilitaryUnit) person).setYAttack(yAttack);
             }

@@ -6,6 +6,7 @@ import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingCategory;
 import org.example.model.building.enums.TypeOfTile;
 import org.example.model.unit.Catapult;
+import org.example.model.unit.CatapultName;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.BackgroundColor;
@@ -164,6 +165,17 @@ public class MapMenu {
         for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
             if ((number = findNumber(tile, militaryUnitName)) != 0)
                 System.out.println(militaryUnitName.getName() + ": " + number);
+        for (CatapultName catapultName : CatapultName.values())
+            if ((number = findCatapultNumber(tile, catapultName)) != 0)
+                System.out.println(catapultName.getName() + ": " + number);
+    }
+
+    private int findCatapultNumber(Tile tile, CatapultName catapultName) {
+        int number = 0;
+        for (People person : tile.getPeople())
+            if (person instanceof Catapult && ((Catapult) person).getCatapultName().equals(catapultName))
+                number++;
+        return number;
     }
 
     private int findNumber(Tile tile, MilitaryUnitName militaryUnitName) {
