@@ -258,7 +258,6 @@ public class MilitaryMenuController {
     }
 
     public Outputs attack(String x, String y) {
-        //CATAPULT
         Outputs outputs = commonOutPuts(x, y);
         if (!outputs.equals(Outputs.VALID_X_Y)) return outputs;
         else if (militaryMenu.getSelectedUnit() == null) return Outputs.EMPTY_SELECTED_UNIT;
@@ -308,13 +307,11 @@ public class MilitaryMenuController {
         int y = militaryMenu.getSelectedUnit().get(0).getYPos();
         LinkedList<Integer> path = bestPath.input(getMap().getMap(), x, y, destX, destY, false, false);
 
-        if (path != null) for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
-            militaryUnit.setDest(destX, destY);
-        }
-        else for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit()) {
-            militaryUnit.removeUnit();
-        }
-
+        if (path != null) for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit())
+            militaryUnit.goToDestination(destX, destY);
+        else
+            for (MilitaryUnit militaryUnit : militaryMenu.getSelectedUnit())
+                militaryUnit.removeUnit();
         return null;
     }
 
