@@ -16,7 +16,7 @@ public enum MapMenuCommands {
 
     public static Matcher getMatcher(String input, MapMenuCommands mapMenuCommands){
         Pattern pattern = Pattern.compile(mapMenuCommands.regex);
-        if (pattern.matcher(input).matches())
+        if (pattern.matcher(input).find())
             return pattern.matcher(input);
         return null;
     }

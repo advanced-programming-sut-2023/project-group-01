@@ -130,7 +130,7 @@ public class CreateMapMenuController {
         if (!buildingName.getBuildingCategory().equals(BuildingCategory.TREES)) return Outputs.INVALID_TYPE_OF_TREE;
         if (tile.getBuilding() != null) return Outputs.TILE_NOT_EMPTY;
         if (buildingName.getTypeCanBuildBuilding() != tile.getTypeOfTile()) return Outputs.INAPPROPRIATE_TYPE_OF_TILE;
-        tile.setBuilding(new Building(null, xOfMap, yOfMap, buildingName));
+        tile.setBuilding(new Building(getThisEmpire(), xOfMap, yOfMap, buildingName));
         return Outputs.SUCCESS;
     }
 

@@ -90,7 +90,7 @@ public class ShopMenu {
                     return Outputs.NOT_ENOUGH_MATERIAL;
                 materials.put(material, materials.get(material) - count);
                 setFoods(material);
-                getThisEmpire().increaseGold(material.getMaterialType().getBuyingPrice() * count);
+                getThisEmpire().increaseGold(material.getMaterialType().getSellingPrice() * count);
                 return Outputs.SUCCESS_SELL;
             }
         }

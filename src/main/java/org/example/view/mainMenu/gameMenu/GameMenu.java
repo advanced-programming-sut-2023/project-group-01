@@ -51,8 +51,9 @@ public class GameMenu {
         }
 
         player.setInGame(true);
-        GameMenu.getEmpires().add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player));
-        GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
+        Empire empire = new Empire(EmpireBuilding.valueOf("EMPIRE_" + 1), player);
+        GameMenu.getEmpires().add(empire);
+        GameMenu.setThisEmpire(empire);
         for (int i = 2; i <= numberOfEmpires; i++)
             while (true) {
                 System.out.println("Please enter username of player\n +" + "for cancel game enter \"exit game\"");

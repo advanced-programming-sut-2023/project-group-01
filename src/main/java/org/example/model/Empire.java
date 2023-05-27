@@ -88,13 +88,19 @@ public class Empire {
     public int havingStockpile() {
         int capacity = 0;
         int isFull = 0;
-        for (Building building : buildings)
-            if (building.getBuildingName().equals(BuildingName.STOCKPILE))
+        for (Building building : buildings){
+            if (building.getBuildingName().equals(BuildingName.STOCKPILE)) {
                 capacity += ((Storage) building).getCapacity();
+            }
+        }
+
 
         for (Material material : materials.keySet())
             if (material.getMaterialType().getTypeOfProduct().equals("source")) isFull += materials.get(material);
 
+        System.out.println(capacity);
+        System.out.println(isFull);
+        System.out.println("---------------------");
         return capacity - isFull;
     }
 
