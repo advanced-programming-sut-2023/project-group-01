@@ -8,4 +8,9 @@ public class MercenaryBarrackMenu extends Application {
     public void start(Stage stage) throws Exception {
 
     }
+
+    public void addElements() {
+
+    }
+
 }

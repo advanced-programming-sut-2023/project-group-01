@@ -8,4 +8,9 @@ public class ShopMenu extends Application {
     public void start(Stage stage) throws Exception {
 
     }
+
+    public void addTapPane() {
+
+    }
+
 }

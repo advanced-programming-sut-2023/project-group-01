@@ -8,4 +8,5 @@ public class ProfileMenu extends Application {
     public void start(Stage stage) throws Exception {
 
     }
+
 }

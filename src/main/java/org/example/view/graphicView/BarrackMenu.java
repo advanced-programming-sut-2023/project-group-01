@@ -9,4 +9,7 @@ public class BarrackMenu extends Application {
     public void start(Stage stage) throws Exception {
 
     }
+
+
+
 }

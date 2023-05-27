@@ -8,4 +8,25 @@ public class BuildingMenu extends Application {
     public void start(Stage stage) throws Exception {
 
     }
+
+    public void dropBuilding() {
+
+    }
+
+    public void enterSelectedBuildingMenu() {
+
+    }
+
+    public void copyBuilding() {
+
+    }
+
+    public void pasteBuilding() {
+
+    }
+
+    public void showBuildingDetail() {
+
+    }
+
 }

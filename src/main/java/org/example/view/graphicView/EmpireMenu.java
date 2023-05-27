@@ -8,4 +8,18 @@ public class EmpireMenu extends Application {
     public void start(Stage stage) throws Exception {
 
     }
+
+    public void showPopularity() {
+
+    }
+
+    public void showRate() {
+
+    }
+
+    public void disease() {
+
+    }
+
+
 }
