@@ -1,4 +1,11 @@
 package org.example.view.graphicView;
 
-public class MercenaryBarrackMenu {
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class MercenaryBarrackMenu extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+
+    }
 }
