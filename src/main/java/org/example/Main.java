@@ -14,23 +14,23 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
-        UsersDatabaseJSON.initializeUsers();
-        UsersDatabaseJSON.loadStayedLoggedInUser();
-        Data.setDefaultMap(new String(Files.readAllBytes(Paths.get("DefaultMap.txt"))));
-
-
-        Scanner scanner = new Scanner(System.in);
-
-        if (Data.getStayedLoggedIn() == null) {
-            RegisterMenu registerMenu = new RegisterMenu();
-            registerMenu.run(scanner);
-        } else {
-            MainMenu mainMenu = new MainMenu(Data.getStayedLoggedIn());
-            mainMenu.run(scanner);
-        }
-
-        UsersDatabaseJSON.saveUsersInJSON();
-        UsersDatabaseJSON.saveStayedLoggedInUser();
+//        UsersDatabaseJSON.initializeUsers();
+//        UsersDatabaseJSON.loadStayedLoggedInUser();
+//        Data.setDefaultMap(new String(Files.readAllBytes(Paths.get("DefaultMap.txt"))));
+//
+//
+//        Scanner scanner = new Scanner(System.in);
+//
+//        if (Data.getStayedLoggedIn() == null) {
+//            RegisterMenu registerMenu = new RegisterMenu();
+//            registerMenu.run(scanner);
+//        } else {
+//            MainMenu mainMenu = new MainMenu(Data.getStayedLoggedIn());
+//            mainMenu.run(scanner);
+//        }
+//
+//        UsersDatabaseJSON.saveUsersInJSON();
+//        UsersDatabaseJSON.saveStayedLoggedInUser();
     }
 
     public static Scanner getScanner() {
