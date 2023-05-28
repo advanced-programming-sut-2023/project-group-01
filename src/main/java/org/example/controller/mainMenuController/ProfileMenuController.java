@@ -1,7 +1,6 @@
 package org.example.controller.mainMenuController;
 
 import org.example.controller.PasswordHash;
-import org.example.controller.RegisterMenuController;
 import org.example.model.User;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.RegisterMenuCommands;
@@ -35,8 +34,8 @@ public class ProfileMenuController {
         if (!(PasswordHash.getPasswordHash(oldPassword, currentUser.getSalt()).equals(currentUser.getPasswordHash())))
             return Outputs.WRONG_OLD_PASSWORD;
 
-        if (!RegisterMenuController.checkPasswordIsSecure(newPassword).equals(Outputs.SECURE_PASSWORD))
-            return RegisterMenuController.checkPasswordIsSecure(newPassword);
+//        if (!RegisterMenuController.checkPasswordIsSecure(newPassword).equals(Outputs.SECURE_PASSWORD))
+//            return RegisterMenuController.checkPasswordIsSecure(newPassword);
 
         currentUser.setPasswordHash(PasswordHash.getPasswordHash(newPassword, currentUser.getSalt()));
         return Outputs.PASSWORD_CHANGE_SUCCESSFUL;

@@ -3,6 +3,7 @@ package org.example.view.graphicView;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -22,6 +23,7 @@ import org.example.model.People;
 import org.example.model.building.Tile;
 import org.example.model.unit.MilitaryUnit;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
@@ -47,10 +49,10 @@ public class MapMenu extends Application {
     private void createPane(AnchorPane anchorPane) {
         GridPane gridPane = new GridPane();
         gridPane.setPrefSize(200, 200);
-        for (int i = 0; i < 200; i++)
-            for (int j = 0; j < 200; j++)
-                gridPane.add(new ImageView(new Image(getMap().getTile(i, j).getTypeOfTile().getPictureAddress())), i, j);
-
+        //    for (int i = 0; i < 200; i++)
+        //      for (int j = 0; j < 200; j++)
+        //        gridPane.add(new ImageView(new Image(getMap().getTile(i, j).getTypeOfTile().getPictureAddress())), i, j);
+        FXMLLoader fxmlLoader = new FXMLLoader(MapMenu.class.getResource("/resources/FXML/MercenaryBarrackMenu.fxml"));
         TabPane tabPane = new TabPane();
 
         ScrollPane scrollPane = new ScrollPane();
@@ -82,7 +84,7 @@ public class MapMenu extends Application {
 
     }
 
-    public void fullTabs(Tab castleTab, String...args) {
+    public void fullTabs(Tab castleTab, String... args) {
         HBox hBox = new HBox();
         ArrayList<ImageView> imageViews = new ArrayList<>();
         for (String arg : args)
@@ -173,8 +175,6 @@ public class MapMenu extends Application {
     public void selectAGroupOfTiles() {
 
     }
-
-
 
 
 }

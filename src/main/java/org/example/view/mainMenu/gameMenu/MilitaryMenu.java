@@ -93,7 +93,7 @@ public class MilitaryMenu {
     public void attackChecker(Matcher matcher) {
         String x = matcher.group("x");
         String y = matcher.group("y");
-        System.out.println(militaryMenuController.attack(x, y).toString());
+//        System.out.println(militaryMenuController.attack(x, y).toString());
     }
 
     public void pourOilChecker(Matcher matcher) {
@@ -108,16 +108,16 @@ public class MilitaryMenu {
 
     public void buildChecker(Matcher matcher) {
         String equipment = matcher.group("equipmentName");
-        System.out.println(militaryMenuController.build(equipment).toString());
+//        System.out.println(militaryMenuController.build(equipment).toString());
     }
 
     public void disbandUnit() {
         int x = empire.getEmpireBuilding().getX();
         int y = empire.getEmpireBuilding().getY();
 
-        Outputs outputs = militaryMenuController.disbandUnit(x, y);
-        if (outputs != null) System.out.println(outputs.toString());
-        else System.out.println(Outputs.SUCCESSFUL_DISBAND);
+//        Outputs outputs = militaryMenuController.disbandUnit(x, y);
+//        if (outputs != null) System.out.println(outputs.toString());
+//        else System.out.println(Outputs.SUCCESSFUL_DISBAND);
     }
 
     public void setSelectedUnit(ArrayList<MilitaryUnit> selectedUnit) {
