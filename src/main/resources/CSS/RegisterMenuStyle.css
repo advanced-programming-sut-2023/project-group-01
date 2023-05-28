@@ -1,0 +1,31 @@
+#textField{
+    -fx-background-color: #C4A484;
+    -fx-background-radius: 20;
+    -fx-border-color: #5C4033;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+    -fx-prompt-text-fill: White;
+}
+
+#title {
+    -fx-font-size: 20.0;
+    -fx-text-fill: White;
+    -fx-background-color: #FFFFFF;
+}
+
+#status {
+    -fx-background-color: #E1CBB6;
+    -fx-background-radius: 20;
+    -fx-border-color: #5C4033;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+    -fx-prompt-text-fill: White;
+}
+
+#button {
+    -fx-font-size: 14.0;
+    -fx-background-color: #713022;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}

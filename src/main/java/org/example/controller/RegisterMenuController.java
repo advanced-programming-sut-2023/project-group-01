@@ -1,15 +1,32 @@
 package org.example.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.example.model.Data;
 import org.example.model.User;
+import org.example.model.UsersDatabaseJSON;
 import org.example.view.RegisterMenu;
 import org.example.view.enums.Outputs;
+import org.example.view.enums.RandomSlogans;
 import org.example.view.enums.SecurityQuestion;
 import org.example.view.enums.commands.RegisterMenuCommands;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -18,7 +35,77 @@ import java.util.regex.Matcher;
 public class RegisterMenuController {
 
     public static User temporaryCreatedUser;
+    public ImageView background;
+    public PasswordField hiddenPassword;
+    public TextField usernameStatus;
+    public TextField username;
+    public TextField passwordStatus;
+    public TextField emailStatus;
+    public TextField email;
+    public Text passwordText;
+    public TextField nickname;
+    public CheckBox chooseSlogan;
+    public TextField slogan;
+    public HBox sloganHBox;
+    public ImageView submit;
+    public VBox registerBoxes;
+    public VBox securityQuestionVBox;
+    public ChoiceBox securityQuestion;
+    public TextField answer;
+    public VBox captchaVBox;
+    public ImageView captchaImage;
+    public TextField captcha;
     private boolean randomPassword;
+    private static boolean isSecurityQuestion;
+
+
+    public void initialize() throws InterruptedException, FileNotFoundException {
+        isSecurityQuestion = false;
+        usernameStatus.setEditable(false);
+        emailStatus.setEditable(false);
+        passwordStatus.setEditable(false);
+        background.setImage(new Image(new FileInputStream("src/main/resources/images/RegisterMenu.png")));
+
+        username.textProperty().addListener((observable, oldText, newText) -> {
+
+            Matcher validUsernameMatcher = RegisterMenuCommands.getMatcher(newText, RegisterMenuCommands.VALID_USERNAME);
+            if (!validUsernameMatcher.find()) usernameStatus.setText(Outputs.INVALID_USERNAME.toString());
+
+            else if (Data.findUserWithUsername(newText) != null) usernameStatus.setText(Outputs.USER_EXISTS.toString());
+
+            else usernameStatus.setText(Outputs.VALID_USERNAME.toString());
+
+            if (usernameStatus.getText().equals(Outputs.VALID_USERNAME.toString()))
+            usernameStatus.setStyle("-fx-text-fill: green;");
+            else
+                usernameStatus.setStyle("-fx-text-fill: red;");
+
+        });
+
+        hiddenPassword.textProperty().addListener((observable, oldText, newText) -> {
+            if (hiddenPassword.getText().length() != 0) {
+                passwordStatus.setText(checkPasswordIsSecure(newText).toString());
+                if (passwordStatus.getText().equals(Outputs.SECURE_PASSWORD.toString()))
+                    passwordStatus.setStyle("-fx-text-fill: green;");
+                else passwordStatus.setStyle("-fx-text-fill: red;");
+            }
+        });
+
+        email.textProperty().addListener((observable, oldText, newText) -> {
+            emailStatus.setText(checkValidEmail(newText).toString());
+
+            if (emailStatus.getText().equals(Outputs.VALID_EMAIL.toString()))
+                emailStatus.setStyle("-fx-text-fill: green;");
+            else emailStatus.setStyle("-fx-text-fill: red;");
+        });
+    }
+
+    public static Outputs checkValidEmail(String mail) {
+        if (Data.findUserWithEmail(mail) != null) return Outputs.EMAIL_EXISTS;
+        Matcher validEmailMatcher = RegisterMenuCommands.getMatcher(mail, RegisterMenuCommands.VALID_EMAIL);
+        if (!validEmailMatcher.find()) return Outputs.INVALID_EMAIL;
+        return Outputs.VALID_EMAIL;
+    }
 
     public static Outputs checkPasswordIsSecure(String password) {
         Matcher matcher = RegisterMenuCommands.getMatcher(password, RegisterMenuCommands.SECURE_PASSWORD);
@@ -125,4 +212,134 @@ public class RegisterMenuController {
     }
 
 
+    public void toggleVisiblePassword() throws InterruptedException {
+        String password = hiddenPassword.getText();
+        hiddenPassword.setPromptText(password);
+        hiddenPassword.clear();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2000),
+                actionEvent -> {
+                    hiddenPassword.setText(password);
+                }));
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+
+    @FXML
+    private void checkValidUsername() {
+        String username2 = username.getText();
+        Matcher validUsernameMatcher = RegisterMenuCommands.getMatcher(username2, RegisterMenuCommands.VALID_USERNAME);
+        if (!validUsernameMatcher.find()) usernameStatus.setText(Outputs.INVALID_USERNAME.toString());
+
+        if (Data.findUserWithUsername(username2) != null) usernameStatus.setText(Outputs.USER_EXISTS.toString());
+
+        usernameStatus.setText(Outputs.VALID_USERNAME.toString());
+
+    }
+
+    public void randomPassword(MouseEvent mouseEvent) {
+        String randomPassword = createRandomPassword();
+        passwordStatus.setText("random password:" + randomPassword);
+
+        hiddenPassword.setPromptText(randomPassword);
+        hiddenPassword.clear();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2000),
+                actionEvent -> {
+                    hiddenPassword.setText(randomPassword);
+                    passwordStatus.setText(Outputs.SECURE_PASSWORD.toString());
+                }));
+        timeline.setCycleCount(1);
+        timeline.play();
+
+    }
+
+    public void chooseSlogan(MouseEvent mouseEvent) {
+        if (chooseSlogan.isSelected()){
+            sloganHBox.setVisible(true);
+        }
+        else sloganHBox.setVisible(false);
+    }
+
+    public void randomSlogan(MouseEvent mouseEvent) {
+        slogan.setText(RandomSlogans.getRandomSlogan());
+    }
+
+    public void submit(MouseEvent mouseEvent) throws NoSuchAlgorithmException, IOException {
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Register Error");
+
+        if (!isSecurityQuestion){
+            if (!usernameStatus.getText().equals(Outputs.VALID_USERNAME.toString())){
+                alert.setContentText("your username is invalid");
+                alert.showAndWait();
+            }else if (!emailStatus.getText().equals(Outputs.VALID_EMAIL.toString())){
+                alert.setContentText("your email is invalid");
+                alert.showAndWait();
+            }
+            else if (!passwordStatus.getText().equals(Outputs.SECURE_PASSWORD.toString())){
+                alert.setContentText("your password is invalid");
+                alert.showAndWait();
+            }else if (nickname.getText().length()==0){
+                alert.setContentText("your nickname field is empty");
+                alert.showAndWait();
+            }else if (chooseSlogan.isSelected()&&slogan.getText().length()==0) {
+                alert.setContentText("your slogan field is empty");
+                alert.showAndWait();
+            }
+            else {
+                byte[] salt = createNewSalt();
+                String passwordHash = PasswordHash.getPasswordHash(hiddenPassword.getText(),salt);
+                temporaryCreatedUser = new User(username.getText(),passwordHash,nickname.getText(),email.getText(),slogan.getText(),null,null,salt);
+                runSecurityQuestion();
+            }
+        }else {
+            if (temporaryCreatedUser.getSecurityQuestion()==null){
+                alert.setContentText("your didn't choose a security question");
+                alert.showAndWait();
+            }
+            else if (answer.getText().length()==0){
+                alert.setContentText("your answer field is empty");
+                alert.showAndWait();
+            }else if (captcha.getText().length()==0){
+                alert.setContentText("your captcha field is empty");
+                alert.showAndWait();
+            }else if (!captcha.getText().equals(String.valueOf(CaptchaGenerator.captchaValue))){
+                alert.setContentText("your captcha answer is wrong");
+                alert.showAndWait();
+                runCaptcha();
+            }else {
+                temporaryCreatedUser.setSecurityAnswer(answer.getText());
+                Data.addUser(temporaryCreatedUser);
+                UsersDatabaseJSON.saveUsersInJSON();
+                alert.setContentText("Success");
+                alert.showAndWait();
+            }
+        }
+
+    }
+
+    public void runSecurityQuestion() throws IOException {
+        isSecurityQuestion = true;
+        background.setImage(new Image(new FileInputStream("src/main/resources/images/SecurityQuestion.png")));
+        registerBoxes.setVisible(false);
+        captchaVBox.setVisible(true);
+        runCaptcha();
+        securityQuestionVBox.setVisible(true);
+        securityQuestion.getItems().add(SecurityQuestion.getQuestion(0));
+        securityQuestion.getItems().add(SecurityQuestion.getQuestion(1));
+        securityQuestion.getItems().add(SecurityQuestion.getQuestion(2));
+
+
+        securityQuestion.setOnAction((event) -> {
+            String question = (String) securityQuestion.getSelectionModel().getSelectedItem();
+            temporaryCreatedUser.setSecurityQuestion(question);
+        });
+
+    }
+
+    public void runCaptcha() throws IOException {
+        CaptchaGenerator.captchaGenerator();
+        captchaImage.setImage(new Image(new FileInputStream( CaptchaGenerator.captchaValue +".png")));
+    }
 }
