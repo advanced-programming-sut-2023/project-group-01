@@ -28,7 +28,7 @@
             <Cursor fx:constant="HAND"/>
         </cursor>
     </ImageView>
-    <ImageView fx:id="back" fitHeight="150.0" fitWidth="200.0" layoutY="650">
+    <ImageView fx:id="back" fitHeight="150.0" fitWidth="200.0" layoutY="650" onMouseClicked="#back">
         <Image url="@../Images/back.png"/>
         <cursor>
             <Cursor fx:constant="HAND"/>

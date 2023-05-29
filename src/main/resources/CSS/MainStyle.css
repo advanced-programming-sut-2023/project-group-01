@@ -1,0 +1,12 @@
+#textField{
+    -fx-background-color: #F6E3D2;
+    -fx-background-radius: 10;
+    -fx-border-color: #5C4033;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-prompt-text-fill: White;
+    -fx-font-size: 22;
+    -fx-alignment: "CENTER";
+    -fx-font-family: "Cooper Black";
+
+}

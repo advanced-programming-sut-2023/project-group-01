@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.example.Main;
 import org.example.model.Data;
 import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
@@ -213,15 +214,7 @@ public class RegisterMenuController {
 
 
     public void toggleVisiblePassword() throws InterruptedException {
-        String password = hiddenPassword.getText();
-        hiddenPassword.setPromptText(password);
-        hiddenPassword.clear();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2000),
-                actionEvent -> {
-                    hiddenPassword.setText(password);
-                }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        LoginMenuController.publicShowPassword(hiddenPassword);
     }
 
     @FXML
@@ -341,5 +334,9 @@ public class RegisterMenuController {
     public void runCaptcha() throws IOException {
         CaptchaGenerator.captchaGenerator();
         captchaImage.setImage(new Image(new FileInputStream( CaptchaGenerator.captchaValue +".png")));
+    }
+
+    public void back(MouseEvent mouseEvent) throws Exception {
+        new Main().start(Main.stage);
     }
 }

@@ -59,7 +59,7 @@ public class MercenaryBarrackMenu extends Application {
     }
 
     public static void createUnit(MilitaryUnitName militaryUnitName, int x , int y) {
-        new MilitaryUnit(getMap().getTile(x, y), NextTurn.getCurrentEmpire(), militaryUnitName, x, y);
+        //new MilitaryUnit(getMap().getTile(x, y), NextTurn.getCurrentEmpire(), militaryUnitName, x, y);
         militaryUnitName.getVoice().playVoice(militaryUnitName.getVoice());
     }
 

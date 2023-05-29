@@ -20,6 +20,7 @@
     -fx-border-radius: 20;
     -fx-border-width: 2;
     -fx-prompt-text-fill: White;
+    -fx-alignment: "CENTER";
 }
 
 #button {
