@@ -1,7 +1,7 @@
 package org.example.view;
 
 import org.example.controller.LoginMenuController;
-import org.example.controller.RegisterMenuController;
+//import org.example.controller.RegisterMenuController;
 import org.example.model.Data;
 import org.example.model.User;
 import org.example.view.enums.BackgroundColor;
@@ -57,7 +57,7 @@ public class LoginMenu {
             } else if ((matcher = LoginMenuCommands.getMatcher(inputLine, LoginMenuCommands.FORGET_PASSWORD)).find()) {
                 System.out.println(forgetPasswordRun(matcher, scanner).toString());
             } else if (LoginMenuCommands.getMatcher(inputLine, LoginMenuCommands.ENTER_REGISTER_MENU).find()) {
-                registerMenu.run(scanner);
+//                registerMenu.run(scanner);
                 break;
             } else if (RegisterMenuCommands.getMatcher(inputLine, RegisterMenuCommands.EXIT).find()) break;
             else {
@@ -116,19 +116,19 @@ public class LoginMenu {
             }
             if (isValid) {
                 if (number == 0) continue;
-                if (number != CaptchaAsciiArt.captchaValue)
-                    RegisterMenu.printError("Your didn't enter captcha correctly.");
-                else {
-                    RegisterMenu.printSuccess("login successful !");
-                    MainMenu mainMenu = new MainMenu(Data.findUserWithUsername(username));
-                    mainMenu.run(scanner);
-                    break;
-                }
+//                if (number != CaptchaAsciiArt.captchaValue)
+//                    RegisterMenu.printError("Your didn't enter captcha correctly.");
+//                else {
+//                    RegisterMenu.printSuccess("login successful !");
+//                    MainMenu mainMenu = new MainMenu(Data.findUserWithUsername(username));
+//                    mainMenu.run(scanner);
+//                    break;
+//                }
             }
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
-                continue;
+//                continue;
             }
         }
     }
@@ -157,10 +157,10 @@ public class LoginMenu {
         while (true) {
             System.out.println("Please enter your new password :");
             inputLine = scanner.nextLine();
-            if (RegisterMenuController.checkPasswordIsSecure(inputLine).equals(Outputs.SECURE_PASSWORD)) {
-                loginMenuController.setNewPassword(inputLine, username);
-                return Outputs.PASSWORD_CHANGE_SUCCESSFUL;
-            } else System.out.println(RegisterMenuController.checkPasswordIsSecure(inputLine).toString());
+//            if (RegisterMenuController.checkPasswordIsSecure(inputLine).equals(Outputs.SECURE_PASSWORD)) {
+//                loginMenuController.setNewPassword(inputLine, username);
+//                return Outputs.PASSWORD_CHANGE_SUCCESSFUL;
+//            } else System.out.println(RegisterMenuController.checkPasswordIsSecure(inputLine).toString());
         }
     }
 }

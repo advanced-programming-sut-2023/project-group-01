@@ -25,7 +25,6 @@ public class ProfileMenu {
         System.out.println("Now you are in Profile Menu!");
         String inputLine;
         Matcher matcher;
-        Outputs output;
         setRanks();
 
         while (true) {

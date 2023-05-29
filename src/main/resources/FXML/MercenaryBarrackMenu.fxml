@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="399.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.MercenaryBarrackMenu">
+
+    <ImageView fitHeight="261.0" fitWidth="651.0" layoutY="139.0" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/MercenaryBarrack/MercenaryBarrack.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="arabianArcher" fitHeight="127.0" fitWidth="78.0" layoutX="16.0" layoutY="230.0" onMouseClicked="#createArabianArcher" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/MercenaryBarrack/armys19.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="slaves" fitHeight="133.0" fitWidth="80" layoutX="99.0" layoutY="230.0" onMouseClicked="#createSlaves" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/MercenaryBarrack/armys20.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="sligners" fitHeight="133.0" fitWidth="80" layoutX="192.0" layoutY="230.0" onMouseClicked="#createSligners" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/MercenaryBarrack/armys21.tgx (1).png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="assassins" fitHeight="130.0" fitWidth="89.0" layoutX="269.0" layoutY="230.0" onMouseClicked="#createAssassins" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/MercenaryBarrack/sc_gameinfo_units_assassin.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="horseArcher" fitHeight="133.0" fitWidth="80" layoutX="371.0" layoutY="230.0" onMouseClicked="#createHorseArcher" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/MercenaryBarrack/armys23.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="arabianSwordsmen" fitHeight="125.0" fitWidth="73.0" layoutX="457.0" layoutY="230.0" onMouseClicked="#createArabianSwordsmen" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/MercenaryBarrack/sc_gameinfo_units_arabswordsman.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="fireThrowers" fitHeight="127.0" fitWidth="88.0" layoutX="540.0" layoutY="230.0" onMouseClicked="#createFireThrowers" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/MercenaryBarrack/armys25.tgx.png" />
+        </image>
+    </ImageView>
+
+    <Text fx:id="peopleNumber" layoutX="578" layoutY="380" style="-fx-text-fill: green; -fx-font-size: 16px;" text=" " wrappingWidth="18.1484375" />
+
+</BorderPane>

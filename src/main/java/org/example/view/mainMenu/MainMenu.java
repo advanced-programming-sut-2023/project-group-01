@@ -3,7 +3,7 @@ package org.example.view.mainMenu;
 import org.example.model.Data;
 import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
-import org.example.view.RegisterMenu;
+//import org.example.view.RegisterMenu;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.MainMenuCommands;
 import org.example.view.mainMenu.gameMenu.GameMenu;
@@ -34,8 +34,8 @@ public class MainMenu {
             if (MainMenuCommands.getMatcher(inputLine, MainMenuCommands.USER_LOGOUT).find()) {
                 Data.setStayedLoggedIn(null);
                 UsersDatabaseJSON.saveStayedLoggedInUser();
-                RegisterMenu registerMenu = new RegisterMenu();
-                registerMenu.run(scanner);
+//                RegisterMenu registerMenu = new RegisterMenu();
+//                registerMenu.run(scanner);
                 break;
             } else if (MainMenuCommands.getMatcher(inputLine, MainMenuCommands.ENTER_PROFILE_MENU).find()) {
                 ProfileMenu profileMenu = new ProfileMenu(currentUser);
