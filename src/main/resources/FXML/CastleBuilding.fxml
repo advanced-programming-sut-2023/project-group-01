@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.BuildingMenu">
+
+    <ImageView fx:id="h" fitHeight="160.0" fitWidth="605.0" pickOnBounds="true">
+        <image>
+            <Image url="@../Images/castleBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="stair" fitHeight="69.0" fitWidth="33.0" layoutX="26.0" layoutY="46.0" pickOnBounds="true"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver">
+        <image>
+            <Image url="@../Images/castleBuilding/stairs.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="smallwall" fitHeight="61.0" fitWidth="56.0" layoutX="61.0" layoutY="46.0" pickOnBounds="true"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver">
+        <image>
+            <Image url="@../Images/castleBuilding/smallWall.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="wall" fitHeight="69.0" fitWidth="68.0" layoutX="119.0" layoutY="46.0" pickOnBounds="true"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver">
+        <image>
+            <Image url="@../Images/castleBuilding/wall.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="longwall" fitHeight="80.0" fitWidth="75.0" layoutX="187.0" layoutY="43.0" pickOnBounds="true"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver">
+        <image>
+            <Image url="@../Images/castleBuilding/longwall.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="barrack" fitHeight="69.0" fitWidth="68.0" layoutX="260.0" layoutY="46.0" pickOnBounds="true"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver">
+        <image>
+            <Image url="@../Images/castleBuilding/barrack.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="mercenarybarrack" fitHeight="61.0" fitWidth="68.0" layoutX="333.0" layoutY="53.0" pickOnBounds="true"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver">
+        <image>
+            <Image url="@../Images/castleBuilding/mercenarybarrack.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="armoury" fitHeight="61.0" fitWidth="50.0" layoutX="409.0" layoutY="43.0" pickOnBounds="true"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver">
+        <image>
+            <Image url="@../Images/castleBuilding/armoury.png" />
+        </image>
+    </ImageView>
+
+
+
+
+    <ImageView fx:id="tower" fitHeight="34.0" fitWidth="33.0" layoutX="466.0" layoutY="36.0" pickOnBounds="true"
+    onMouseClicked="#towerMenu">
+        <image>
+            <Image url="@../Images/empty.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="carehouse" fitHeight="34.0" fitWidth="33.0" layoutX="466.0" layoutY="80.0" pickOnBounds="true"
+              onMouseClicked="#careHouseMenu">
+        <image>
+            <Image url="@../Images/empty.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="militaryBuilding" fitHeight="34.0" fitWidth="33.0" layoutX="509.0" layoutY="36.0" pickOnBounds="true"
+    onMouseClicked="#militaryBuildingMenu">
+        <image>
+            <Image url="@../Images/empty.png" />
+        </image>
+    </ImageView>
+
+
+
+    <ImageView fx:id="castleBuilding" fitHeight="32.0" fitWidth="30.0" layoutX="26.0" layoutY="116.0"
+               pickOnBounds="true" onMouseClicked="#castleBuildingMenu">
+        <image>
+            <Image url="@../Images/empty.png"/>
+        </image>
+    </ImageView>
+
+<!--    <ImageView fx:id="industry" fitHeight="32.0" fitWidth="23.0" layoutX="72.0" layoutY="116.0"-->
+<!--               pickOnBounds="true" onMouseClicked="#industryMenu">-->
+<!--        <image>-->
+<!--            <Image url="@../Images/empty.png"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+
+<!--    <ImageView fx:id="dairyFarm" fitHeight="32.0" fitWidth="29.0" layoutX="107.0" layoutY="116.0"-->
+<!--               pickOnBounds="true" onMouseClicked="#dairyFarmMenu">-->
+<!--        <image>-->
+<!--            <Image url="@../Images/empty.png"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+
+<!--    <ImageView fx:id="townBuilding" fitHeight="32.0" fitWidth="29.0" layoutX="144.0" layoutY="119.0"-->
+<!--               pickOnBounds="true" onMouseClicked="#townBuildingMenu">-->
+<!--        <image>-->
+<!--            <Image url="@../Images/empty.png"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+
+<!--    <ImageView fx:id="weaponBuilding" fitHeight="32.0" fitWidth="25.0" layoutX="185.0" layoutY="119.0"-->
+<!--               pickOnBounds="true" onMouseClicked="#weaponMenu">-->
+<!--        <image>-->
+<!--            <Image url="@../Images/empty.png"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+
+<!--    <ImageView fx:id="foodProcessing" fitHeight="32.0" fitWidth="25.0" layoutX="225.0" layoutY="119.0"-->
+<!--               pickOnBounds="true"-->
+<!--               onMouseClicked="#foodProcessingMenu">-->
+<!--        <image>-->
+<!--            <Image url="@../Images/empty.png"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+
+<!--    <ImageView fx:id="trade" fitHeight="32.0" fitWidth="30.0" layoutX="474.0" layoutY="116.0" pickOnBounds="true"-->
+<!--               onMouseClicked="#openTrade">-->
+<!--        <image>-->
+<!--            <Image url="@../Images/empty.png"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+
+<!--    <ImageView fx:id="info" fitHeight="32.0" fitWidth="25.0" layoutX="510.0" layoutY="116.0" pickOnBounds="true"-->
+<!--               onMouseClicked="#showEmpiresInfo">-->
+<!--        <image>-->
+<!--            <Image url="@../Images/empty.png"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+
+
+</AnchorPane>
