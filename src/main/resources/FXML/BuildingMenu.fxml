@@ -11,4 +11,5 @@
             fx:controller="org.example.view.graphicView.BuildingMenu"
             prefHeight="400.0" prefWidth="600.0">
 
+
 </AnchorPane>

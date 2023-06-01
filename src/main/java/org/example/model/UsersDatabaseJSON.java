@@ -27,9 +27,9 @@ public class UsersDatabaseJSON {
             ArrayList<User> users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>() {
             }.getType());
             if (users != null) Data.setUsers(users);
-            RegisterMenu.printSuccess("Users data initialized successfully !");
+//            RegisterMenu.printSuccess("Users data initialized successfully !");
         } catch (IOException e) {
-            RegisterMenu.printError("Unable to read from database");
+//            RegisterMenu.printError("Unable to read from database");
         }
 
     }

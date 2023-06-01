@@ -56,5 +56,7 @@ public enum Voice {
         return file;
     }
 
-
+    public static void main(String[] args) {
+        ARCHER.playVoice(ARCHER);
+    }
 }
