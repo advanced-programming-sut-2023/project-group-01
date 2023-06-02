@@ -1,0 +1,51 @@
+#info{
+    -fx-background-color: #F6E3D2;
+    -fx-background-radius: 5;
+    -fx-border-color: #5C4033;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-prompt-text-fill: White;
+    -fx-font-size: 14;
+    -fx-alignment: "CENTER";
+    -fx-font-family: "Courgette";
+}
+
+#title{
+    -fx-background-color: #824D23;
+    -fx-background-radius: 30;
+    -fx-border-color: #FADB5B;
+    -fx-border-radius: 30;
+    -fx-border-width: 4;
+    -fx-prompt-text-fill: White;
+    -fx-text-fill: White;
+    -fx-font-size: 18;
+    -fx-alignment: "CENTER";
+    -fx-font-family: "Courgette";
+}
+
+#button{
+    -fx-font-family: "Berlin Sans FB";
+    -fx-background-color: #B8845A;
+    -fx-cursor: HAND;
+}
+
+#status{
+    -fx-border-color: #9E6639;
+    -fx-border-radius: 3;
+}
+
+#changeBox{
+    -fx-border-color: #9E6639;
+    -fx-border-radius: 3;
+    -fx-border-width: 4;
+}
+
+#label{
+    -fx-font-size: 36;
+    -fx-font-family: "Lesson Learned";
+    -fx-text-fill: White;
+}
+
+#cursor{
+    -fx-cursor: HAND;
+}
