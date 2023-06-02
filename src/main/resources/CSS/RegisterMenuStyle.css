@@ -8,9 +8,10 @@
 }
 
 #title {
-    -fx-font-size: 20.0;
+    -fx-font-size: 24.0;
     -fx-text-fill: White;
     -fx-background-color: #FFFFFF;
+    -fx-font-family: "Library Records";
 }
 
 #status {
@@ -21,6 +22,8 @@
     -fx-border-width: 2;
     -fx-prompt-text-fill: White;
     -fx-alignment: "CENTER";
+    /*-fx-font-family: "Lesson Learned";*/
+    /*-fx-font-size: 18;*/
 }
 
 #button {
@@ -29,4 +32,5 @@
     -fx-background-radius: 10;
     -fx-text-fill: white;
     -fx-cursor: hand;
+    -fx-font-family: "Library Records";
 }

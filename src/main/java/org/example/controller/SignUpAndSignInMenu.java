@@ -3,11 +3,14 @@ package org.example.controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Main;
@@ -16,6 +19,7 @@ import org.example.model.UsersDatabaseJSON;
 import org.example.view.LoginMenu;
 import org.example.view.LoginMenuApp;
 import org.example.view.RegisterMenuApp;
+import org.example.view.graphicView.Music;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,6 +38,14 @@ public class SignUpAndSignInMenu extends Application {
         stage.setScene(scene);
         stage.setTitle("Sign up and Sign in menu");
         stage.show();
+
+    }
+
+    public void initialize(){
+        background.setOnScroll((ScrollEvent event) -> {
+            // Adjust the zoom factor as per your requirement
+            System.out.println(event.getDeltaY());
+        });
     }
 
     public void loginMenuRun(MouseEvent mouseEvent) throws Exception {
@@ -49,4 +61,7 @@ public class SignUpAndSignInMenu extends Application {
         new RegisterMenuApp().start(Main.stage);
     }
 
+    public void clickSound() {
+        Music.playClickSound();
+    }
 }
