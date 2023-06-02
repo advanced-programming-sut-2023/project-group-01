@@ -59,7 +59,8 @@ public class Main extends Application {
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
         new SignUpAndSignInMenu().start(stage);
         //new ScoreBoard().start(Main.stage);
-        //check github
+
+        //goh to github
     }
 
 }
