@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="160.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.view.graphicView.BuildingMenu">
+
+    <ImageView fx:id="perv" fitHeight="160" fitWidth="600.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/food.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="aLot" fitHeight="41.0" fitWidth="66.0" layoutX="423.0" layoutY="69.0"
+               pickOnBounds="true" onMouseClicked="#changeFoodRate">
+        <image>
+            <Image url="@../../Images/foodSize/aLot.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="full" fitHeight="33.0" fitWidth="59.0" layoutX="399.0" layoutY="125.0"
+               pickOnBounds="true" onMouseClicked="#changeFoodRate">
+        <image>
+            <Image url="@../../Images/foodSize/full.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="middle" fitHeight="41.0" fitWidth="66.0" layoutX="358.0" layoutY="36.0"
+               pickOnBounds="true" onMouseClicked="#changeFoodRate">
+        <image>
+            <Image url="@../../Images/foodSize/middle.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="little" fitHeight="33.0" fitWidth="59.0" layoutX="300.0" layoutY="77.0"
+               pickOnBounds="true" onMouseClicked="#changeFoodRate">
+        <image>
+            <Image url="@../../Images/foodSize/little.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="veryLittle" fitHeight="33.0" fitWidth="66.0" layoutX="330.0" layoutY="125.0"
+               pickOnBounds="true" onMouseClicked="#changeFoodRate">
+        <image>
+            <Image url="@../../Images/foodSize/veryLittle.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="dast" fitHeight="33.0" fitWidth="22.0" layoutX="380.0" layoutY="90.0"
+               pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/foodSize/dast.png"/>
+        </image>
+    </ImageView>
+
+</AnchorPane>

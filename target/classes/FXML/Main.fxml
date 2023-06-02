@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.SignUpAndSignInMenu"
+            prefHeight="800" prefWidth="1530">
+
+    <stylesheets>
+        <URL value="@../CSS/MainStyle.css"/>
+    </stylesheets>
+
+    <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" preserveRatio="true" focusTraversable="true" >
+        <Image url="@../Images/Background.png"/>
+    </ImageView>
+
+    <VBox spacing="115" layoutX="1080" layoutY="215" >
+        <TextField text="Register Menu" id="textField" editable="false" onMouseClicked="#registerMenuRun">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </TextField>
+        <TextField text="Login Menu" id="textField" editable="false" onMouseClicked="#loginMenuRun">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </TextField>
+        <TextField text="Exit Game" id="textField" editable="false" onMouseClicked="#exitGame">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </TextField>
+    </VBox>
+
+
+
+</AnchorPane>

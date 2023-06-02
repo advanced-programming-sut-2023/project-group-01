@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.LoginMenuController"
+            prefHeight="800.0" prefWidth="1530.0" >
+
+
+    <stylesheets>
+        <URL value="@../CSS/RegisterMenuStyle.css"/>
+    </stylesheets>
+
+
+    <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" preserveRatio="true" >
+        <Image url="@../Images/LoginMenu.png"/>
+    </ImageView>
+    <ImageView fx:id="submit" fitHeight="150.0" fitWidth="200.0" layoutY="500" onMouseClicked="#submit">
+        <Image url="@../Images/submit.png"/>
+        <cursor>
+            <Cursor fx:constant="HAND"/>
+        </cursor>
+    </ImageView>
+    <ImageView fx:id="back" fitHeight="150.0" fitWidth="200.0" layoutY="650" onMouseClicked="#back">
+        <Image url="@../Images/back.png"/>
+        <cursor>
+            <Cursor fx:constant="HAND"/>
+        </cursor>
+    </ImageView>
+
+
+    <HBox layoutY="130" layoutX="450">
+        <Text text="Username : " id="title"/>
+        <TextField promptText="username" minWidth="200" prefWidth="200" fx:id="username" id="textField"/>
+    </HBox>
+
+    <VBox layoutX="450" layoutY="300" spacing="5">
+        <HBox>
+            <Text text="Password : " fx:id="passwordText" id="title"/>
+            <PasswordField fx:id="hiddenPassword" prefWidth="200" id="textField" promptText="password" />
+            <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#toggleVisiblePassword">
+                <Image url="@../Images/showPassword.png"/>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </ImageView>
+        </HBox>
+        <Text fx:id="forgotPassword" text="forget password ?" id="status" onMouseClicked="#forgotPassword">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Text>
+
+
+
+    </VBox>
+
+    <VBox fx:id="captchaVBox" layoutX="450" layoutY="370" spacing="5">
+        <ImageView fx:id="captchaImage" fitHeight="100" fitWidth="300" pickOnBounds="true" preserveRatio="true">
+        </ImageView>
+        <TextField fx:id="captcha" id="textField" promptText="captcha" prefWidth="50"/>
+        <Button id="button" text="Regenerate Captcha" onMouseClicked="#runCaptcha"/>
+    </VBox>
+
+
+    <VBox fx:id="forgotPasswordVBox" visible="false" layoutX="450" layoutY="370" spacing="5">
+        <TextField editable="false" fx:id="question" id="status"/>
+        <TextField fx:id="answer" id="textField"/>
+        <HBox>
+            <Text text="New password : " fx:id="newPasswordText" id="title"/>
+            <PasswordField fx:id="newHiddenPassword" prefWidth="200" id="textField" promptText="password" layoutX="400" layoutY="170"/>
+            <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#toggleVisibleNewPassword">
+                <Image url="@../Images/showPassword.png"/>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </ImageView>
+        </HBox>
+        <TextField fx:id="passwordStatus" id="status" prefWidth="400"/>
+    </VBox>
+
+
+</AnchorPane>
