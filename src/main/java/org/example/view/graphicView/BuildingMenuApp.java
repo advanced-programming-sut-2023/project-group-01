@@ -13,6 +13,7 @@ import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
 import org.example.model.building.castleBuilding.Tower;
 import org.example.model.building.enums.BuildingName;
+import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +32,7 @@ public class BuildingMenuApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         //BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml")
-        Pane buildingPane = FXMLLoader.load(BuildingMenuApp.class.getResource("/FXML/BuildingMenu/Granary.fxml"));
+        Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
         BuildingMenuApp.buildingPane = buildingPane;
         BuildingMenuApp.stage = stage;
         Scene scene = new Scene(buildingPane);
