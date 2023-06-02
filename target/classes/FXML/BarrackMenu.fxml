@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="160" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.BarrackMenu">
+
+    <ImageView fitHeight="160" fitWidth="651.0" layoutY="-1.0" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" url="@../Images/GameTabs/Barrack/Barrack.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="Archer" fitHeight="76.0" fitWidth="53.0" layoutX="34.0" layoutY="47.0" onMouseClicked="#createArcher" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/Barrack/armys1.tgx.png" />
+        </image>
+    </ImageView>
+
+
+    <ImageView fx:id="spearmen" fitHeight="76.0" fitWidth="60.0" layoutX="117.0" layoutY="41.0" onMouseClicked="#createSpearmen" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/Barrack/armys2.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="macemen" fitHeight="76.0" fitWidth="60.0" layoutX="206.0" layoutY="41.0" onMouseClicked="#createMacemen" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/Barrack/armys3.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="crossbowmen" fitHeight="76.0" fitWidth="60.0" layoutX="296.0" layoutY="38.0" onMouseClicked="#createCrossbowmen" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/Barrack/armys4.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="pikemen" fitHeight="76.0" fitWidth="60.0" layoutX="382.0" layoutY="47.0" onMouseClicked="#createPikemen" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/Barrack/armys5.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="swordsmen" fitHeight="76.0" fitWidth="53.0" layoutX="475.0" layoutY="47.0" onMouseClicked="#createSwordsmen" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/Barrack/armys6.tgx.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="knight" fitHeight="67.0" fitWidth="53.0" layoutX="561.0" layoutY="51.0" onMouseClicked="#createKnight" pickOnBounds="true">
+        <image>
+            <Image backgroundLoading="true" preserveRatio="true" requestedHeight="50" requestedWidth="30" url="@../Images/GameTabs/Barrack/armys7.tgx.png" />
+        </image>
+    </ImageView>
+
+
+    <Text fx:id="number" layoutX="585.0" layoutY="40.0" stroke="white"  wrappingWidth="20.888671875" />
+
+</AnchorPane>
