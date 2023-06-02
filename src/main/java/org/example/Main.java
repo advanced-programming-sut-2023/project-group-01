@@ -3,16 +3,9 @@ package org.example;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.example.controller.CaptchaGenerator;
 import org.example.controller.SignUpAndSignInMenu;
 import org.example.model.Data;
 import org.example.model.UsersDatabaseJSON;
-import org.example.view.LoginMenuApp;
-import org.example.view.RegisterMenu;
-import org.example.view.RegisterMenuApp;
-import org.example.view.graphicView.MainMenu;
-import org.example.view.graphicView.ProfileMenu;
-import org.example.view.graphicView.ScoreBoard;
 
 import java.io.FileInputStream;
 import java.io.IOException;

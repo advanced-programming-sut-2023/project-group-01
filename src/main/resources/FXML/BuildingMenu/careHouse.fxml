@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.BuildingMenuApp">
+
+    <ImageView fx:id="h" fitHeight="160.0" fitWidth="605.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/careHouse.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="smallgatehouse" fitHeight="77.0" fitWidth="67.0" layoutX="81.0" layoutY="39.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/carehouse/smallgatehouse.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="biggatehouse" fitHeight="83.0" fitWidth="79.0" layoutX="158.0" layoutY="39.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/carehouse/biggatehouse.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="drawbridge" fitHeight="77.0" fitWidth="73.0" layoutX="249.0" layoutY="42.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/carehouse/drawbridge.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="cagedwardogs" fitHeight="57.0" fitWidth="60.0" layoutX="341.0" layoutY="39.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/carehouse/cagedwardogs.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="pitchditch" fitHeight="32.0" fitWidth="60.0" layoutX="414.0" layoutY="52.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/carehouse/pitchditch.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="killingpit" fitHeight="32.0" fitWidth="60.0" layoutX="407.0" layoutY="87.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/carehouse/killingpit.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="brazier" fitHeight="32.0" fitWidth="23.0" layoutX="477.0" layoutY="68.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/carehouse/brazier.png" />
+        </image>
+    </ImageView>
+
+
+
+
+    <ImageView fx:id="castleBuilding" fitHeight="32.0" fitWidth="30.0" layoutX="30.0" layoutY="124.0" onMouseClicked="#castleBuildingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/castleBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="industry" fitHeight="32.0" fitWidth="40.0" layoutX="65.0" layoutY="124.0" onMouseClicked="#industryMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/industryBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="dairyFarm" fitHeight="32.0" fitWidth="30.0" layoutX="105.0" layoutY="124.0" onMouseClicked="#dairyFarmMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/dairyFarm.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="townBuilding" fitHeight="32.0" fitWidth="30.0" layoutX="143.0" layoutY="124.0" onMouseClicked="#townBuildingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/townBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="weaponBuilding" fitHeight="32.0" fitWidth="40.0" layoutX="179.0" layoutY="124.0" onMouseClicked="#weaponMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/weaponBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="foodProcessing" fitHeight="32.0" fitWidth="40.0" layoutX="219.0" layoutY="124.0" onMouseClicked="#foodProcessingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/foodProcessing.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="trade" fitHeight="32.0" fitWidth="30.0" layoutX="474.0" layoutY="124.0" onMouseClicked="#openTrade" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/trade.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="info" fitHeight="32.0" fitWidth="30.0" layoutX="507.0" layoutY="124.0" onMouseClicked="#showEmpiresInfo" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/empireInfo.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="perv" fitHeight="44.0" fitWidth="47.0" layoutX="25.0" layoutY="56.0" onMouseClicked="#prev" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/prev.png" />
+        </image>
+    </ImageView>
+
+
+</AnchorPane>
