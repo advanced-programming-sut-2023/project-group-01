@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="160" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.CreateUnitMenuApp">
+
+    <ImageView fx:id="a" fitHeight="160.0" fitWidth="600.0" layoutX="4.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/GameTabs/cathedral.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fitHeight="110.0" fitWidth="75.0" layoutX="280.0" layoutY="42.0" onMouseClicked="#createBlackMonk"
+               pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/empty.png"/>
+        </image>
+    </ImageView>
+
+</AnchorPane>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.mainMenuController.ProfileMenuController"
+            prefHeight="800" prefWidth="1530">
+
+    <stylesheets>
+        <URL value="@../CSS/ProfileMenuStyle.css"/>
+    </stylesheets>
+
+
+    <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" focusTraversable="true" preserveRatio="true">
+        <Image url="@../Images/ProfileMenu.png"/>
+    </ImageView>
+
+    <ImageView id="cursor"  fx:id="avatar" layoutX="1310" layoutY="52" fitHeight="170.0" fitWidth="170.0"
+               onDragOver="#onDragCheck" onDragDropped="#changeImageWithDrag" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/download.png"/>
+    </ImageView>
+    <ImageView id="cursor"  fx:id="chooseAvatarFromFile" layoutX="1360" layoutY="230" onMouseClicked="#chooseFromFile" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/fileChooser.png"/>
+        <cursor>
+            <Cursor fx:constant="HAND"/>
+        </cursor>
+    </ImageView>
+    <ImageView id="cursor"  fx:id="chooseAvatarFromGallery" layoutX="1400" layoutY="230" onMouseClicked="#chooseFromGallery" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/camera.png"/>
+        <cursor>
+            <Cursor fx:constant="HAND"/>
+        </cursor>
+    </ImageView>
+
+    <VBox fx:id="infoVBox" spacing="45" layoutY="120" layoutX="85" maxWidth="150" >
+        <TextField editable="false" fx:id="username" id="info"/>
+        <TextField editable="false" fx:id="nickname" id="info"/>
+        <TextField editable="false" fx:id="email" id="info" text="saeed@gamil.com"/>
+        <TextField editable="false" fx:id="slogan" id="info"/>
+    </VBox>
+
+    <VBox fx:id="changeInfo" spacing="10" layoutY="60" layoutX="550" prefWidth="600">
+        <TextField editable="false" text="change username" id="title"/>
+        <HBox spacing="5" alignment="CENTER">
+            <TextField promptText="new username" fx:id="newUsername" id="changeBox"/>
+            <TextField editable="false" fx:id="newUsernameStatus"  minWidth="250" id="status"/>
+            <Button text="Change Username" id="button" onMouseClicked="#changeUsername"/>
+        </HBox>
+
+        <TextField editable="false" text="change nickname" id="title"/>
+        <HBox spacing="5" alignment="CENTER">
+            <TextField promptText="new nickname" fx:id="newNickname" id="changeBox"/>
+            <Button text="Change Nickname" id="button" onMouseClicked="#changeNickname"/>
+        </HBox>
+
+        <TextField editable="false" text="change email" id="title"/>
+        <HBox spacing="5" alignment="CENTER">
+            <TextField promptText="new email" fx:id="newEmail" id="changeBox"/>
+            <TextField editable="false" fx:id="newEmailStatus" minWidth="250" id="status"/>
+            <Button text="Change Email" id="button" onMouseClicked="#changeEmail"/>
+        </HBox>
+
+        <TextField editable="false" text="change slogan" id="title"/>
+        <HBox spacing="5" alignment="CENTER">
+            <TextField promptText="new slogan" fx:id="newSlogan" id="changeBox"/>
+            <Button text="Change Slogan" id="button" onMouseClicked="#changeSlogan"/>
+        </HBox>
+
+
+        <HBox alignment="CENTER">
+
+            <TextField editable="false" text="change password" id="title" onMouseClicked="#changePassword">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </TextField>
+            <TextField editable="false" text="score board" id="title" onMouseClicked="#scoreBoard">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </TextField>
+        </HBox>
+
+    </VBox>
+    <ImageView onMouseEntered="#clickSound" fitHeight="150.0" fitWidth="300.0" id="cursor" layoutY="600" layoutX="700" onMouseClicked="#backToMainMenu" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/BackToMainMenu.png"/>
+    </ImageView>
+
+    <ImageView id="cursor"  fx:id="galleryBackground" visible="false" fitHeight="600.0" fitWidth="800.0" layoutY="100" layoutX="400" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/AvatarsBackground.png"/>
+    </ImageView>
+
+    <VBox fx:id="galleryVBox" visible="false" layoutY="200" layoutX="520" spacing="30" id="cursor" >
+        <HBox spacing="50">
+            <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../Images/Avatars/avatar1.jpg"/>
+            </ImageView>
+            <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../Images/Avatars/avatar2.jpg"/>
+            </ImageView>
+            <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../Images/Avatars/avatar3.jpg"/>
+            </ImageView>
+        </HBox>
+        <HBox spacing="50">
+            <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../Images/Avatars/avatar4.jpg"/>
+            </ImageView>
+            <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../Images/Avatars/avatar5.jpg"/>
+            </ImageView>
+            <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../Images/Avatars/avatar6.jpg"/>
+            </ImageView>
+        </HBox>
+    </VBox>
+
+</AnchorPane>

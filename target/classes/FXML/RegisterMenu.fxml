@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Rectangle?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.RegisterMenuController"
+            prefHeight="800.0" prefWidth="1530.0">
+
+    <stylesheets>
+        <URL value="@../CSS/RegisterMenuStyle.css"/>
+    </stylesheets>
+
+    <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/Background.jpg"/>
+    </ImageView>
+
+    <ImageView onMouseEntered="#clickSound" fx:id="submit" fitHeight="150.0" fitWidth="200.0" layoutY="500" onMouseClicked="#submit">
+        <Image url="@../Images/submit.png"/>
+        <cursor>
+            <Cursor fx:constant="HAND"/>
+        </cursor>
+    </ImageView>
+    <ImageView onMouseEntered="#clickSound" fx:id="back" fitHeight="150.0" fitWidth="200.0" layoutY="650" onMouseClicked="#back">
+        <Image url="@../Images/back.png"/>
+        <cursor>
+            <Cursor fx:constant="HAND"/>
+        </cursor>
+    </ImageView>
+
+    <VBox fx:id="registerBoxes" spacing="65" layoutY="130" layoutX="420">
+        <HBox>
+            <VBox>
+                <HBox>
+                    <Text text="Username : " id="title"/>
+                    <TextField promptText="username" prefWidth="200" fx:id="username" id="textField"/>
+                </HBox>
+                <Group>
+                    <TextField fx:id="usernameStatus" id="status" prefWidth="400" />
+                </Group>
+            </VBox>
+
+        </HBox>
+        <HBox>
+            <VBox>
+                <HBox>
+                    <Text text="Password : " fx:id="passwordText" id="title"/>
+                    <PasswordField fx:id="hiddenPassword" prefWidth="200" id="textField" promptText="password" layoutX="400" layoutY="170"/>
+                    <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#toggleVisiblePassword">
+                        <Image url="@../Images/showPassword.png"/>
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </ImageView>
+                    <Button id="button" text="random" onMouseClicked="#randomPassword"/>
+                </HBox>
+                <TextField fx:id="passwordStatus" id="status" prefWidth="400"/>
+            </VBox>
+        </HBox>
+        <HBox>
+
+            <VBox>
+                <HBox>
+                    <Text text="Nickname : " id="title"/>
+                    <TextField fx:id="nickname" prefWidth="200" id="textField" promptText="nickname" layoutX="400" layoutY="170"/>
+                </HBox>
+                <TextField fx:id="temp" id="textField" prefWidth="400" visible="false"/>
+            </VBox>
+        </HBox>
+        <HBox>
+            <VBox>
+                <HBox>
+                    <Text text="Email : " id="title"/>
+                    <TextField promptText="email" prefWidth="200" fx:id="email" id="textField"/>
+                </HBox>
+                <TextField fx:id="emailStatus" id="status" prefWidth="400" />
+            </VBox>
+        </HBox>
+
+
+            <VBox>
+                <HBox>
+                    <Text text="Choose Slogan : " id="title"/>
+                    <CheckBox fx:id="chooseSlogan" onMouseClicked="#chooseSlogan"/>
+                </HBox>
+                <HBox visible="false" fx:id="sloganHBox">
+                    <Text text="Slogan : " id="title"/>
+                    <TextField fx:id="slogan" id="textField" prefWidth="200"/>
+                    <ChoiceBox fx:id="famousSlogans" maxWidth="100" id="button"/>
+                    <Button id="button" text="random" onMouseClicked="#randomSlogan"/>
+                </HBox>
+            </VBox>
+
+    </VBox>
+
+    <VBox fx:id="securityQuestionVBox" visible="false" layoutX="550" layoutY="150" spacing="10">
+        <Text text="Security question : " id="title"/>
+        <ChoiceBox fx:id="securityQuestion" id="button"/>
+        <TextField fx:id="answer" id="textField" promptText="answer" prefWidth="200"/>
+    </VBox>
+
+    <VBox fx:id="captchaVBox" visible="false" layoutX="580" layoutY="420" spacing="20">
+        <ImageView fx:id="captchaImage" fitHeight="100" fitWidth="300" pickOnBounds="true" preserveRatio="true">
+        </ImageView>
+        <TextField fx:id="captcha" id="textField" promptText="captcha" prefWidth="50"/>
+        <Button id="button" text="Regenerate Captcha" onMouseClicked="#runCaptcha"/>
+    </VBox>
+
+</AnchorPane>

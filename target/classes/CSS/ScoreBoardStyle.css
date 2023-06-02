@@ -1,0 +1,11 @@
+#label{
+    /*-fx-font-size: 20;*/
+    /*-fx-font-family: "Lesson Learned";*/
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 16;
+    -fx-text-fill: White;
+}
+
+#cursor{
+    -fx-cursor: HAND;
+}

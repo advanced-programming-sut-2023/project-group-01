@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.view.graphicView.MainMenuApp"
+            prefHeight="800.0" prefWidth="1530.0">
+
+    <stylesheets>
+        <URL value="@../CSS/ProfileMenuStyle.css"/>
+    </stylesheets>
+
+
+    <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" focusTraversable="true" preserveRatio="true">
+        <Image url="@../Images/MainMenu.jpg"/>
+    </ImageView>
+
+    <VBox layoutX="1085" layoutY="150" alignment="CENTER" spacing="73">
+        <Label onMouseEntered="#clickSound" text="Enter Profile Menu" id="label" onMouseClicked="#enterProfileMenu">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Label>
+        <Label onMouseEntered="#clickSound" text="Start Game" id="label" onMouseClicked="#startGame">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Label>
+        <Label onMouseEntered="#clickSound" text="Logout" id="label" onMouseClicked="#logout">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Label>
+    </VBox>
+
+</AnchorPane>
