@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.BuildingMenuApp">
+
+    <ImageView fx:id="h" fitHeight="160.0" fitWidth="600.0" layoutX="5.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="hovel" fitHeight="65.0" fitWidth="63.0" layoutX="24.0" layoutY="43.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/hovel.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="chapel" fitHeight="65.0" fitWidth="47.0" layoutX="92.0" layoutY="43.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/chapel.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="church" fitHeight="71.0" fitWidth="88.0" layoutX="144.0" layoutY="37.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/church.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="cathedral" fitHeight="98.0" fitWidth="105.0" layoutX="225.0" layoutY="21.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/cathedral.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="apothecary" fitHeight="90.0" fitWidth="95.0" layoutX="330.0" layoutY="29.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/apothecary.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="waterpot" fitHeight="48.0" fitWidth="47.0" layoutX="455.0" layoutY="68.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/waterpot.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="well" fitHeight="48.0" fitWidth="40.0" layoutX="425.0" layoutY="29.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/well.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="background" fitHeight="79.0" fitWidth="40.0" layoutX="503" layoutY="29.0" onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/townBuildings/background.png" />
+        </image>
+    </ImageView>
+
+
+    <ImageView fx:id="castleBuilding" fitHeight="34.0" fitWidth="30.0" layoutX="32.0" layoutY="116.0" onMouseClicked="#castleBuildingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/castleBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="industry" fitHeight="34.0" fitWidth="30.0" layoutX="69.0" layoutY="116.0" onMouseClicked="#industryMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/industryBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="dairyFarm" fitHeight="34.0" fitWidth="33.0" layoutX="106.0" layoutY="116.0" onMouseClicked="#dairyFarmMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/dairyFarm.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="townBuilding" fitHeight="34.0" fitWidth="30.0" layoutX="144.0" layoutY="116.0" onMouseClicked="#townBuildingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/townBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="weaponBuilding" fitHeight="34.0" fitWidth="33.0" layoutX="180.0" layoutY="116.0" onMouseClicked="#weaponMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/weaponBuilding.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="foodProcessing" fitHeight="34.0" fitWidth="33.0" layoutX="218.0" layoutY="116.0" onMouseClicked="#foodProcessingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/foodProcessing.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="trade" fitHeight="34.0" fitWidth="33.0" layoutX="472.0" layoutY="116.0" onMouseClicked="#openTrade" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/trade.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="info" fitHeight="34.0" fitWidth="33.0" layoutX="505.0" layoutY="116.0" onMouseClicked="#showEmpiresInfo" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/empireInfo.png" />
+        </image>
+    </ImageView>
+
+
+</AnchorPane>
