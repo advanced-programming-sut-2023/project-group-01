@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.ShopMenuApp">
+
+    <ImageView fx:id="commodity" fitHeight="160.0" fitWidth="600.0" layoutX="1.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../../Images/ShopMenu/shopMenu.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="food" fitHeight="57.0" fitWidth="61.0" layoutX="142.0" layoutY="66.0" pickOnBounds="true"
+    onMouseClicked="#enterFoodShop">
+        <image>
+            <Image url="@../../../Images/ShopMenu/food.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="industry" fitHeight="57.0" fitWidth="68.0" layoutX="227.0" layoutY="66.0" pickOnBounds="true"
+    onMouseClicked="#enterindustryShop">
+        <image>
+            <Image url="@../../../Images/ShopMenu/industry.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="weapon" fitHeight="57.0" fitWidth="76.0" layoutX="319.0" layoutY="66.0" pickOnBounds="true"
+    onMouseClicked="#enterWeaponShop">
+        <image>
+            <Image url="@../../../Images/ShopMenu/weapon.png" />
+        </image>
+    </ImageView>
+
+
+</AnchorPane>

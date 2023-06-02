@@ -217,6 +217,52 @@ public class BuildingMenuController {
         return Outputs.SUCCESSFUL_DESTROY_BUILDING;
     }
 
+    public Outputs repair() {
+        if (buildingMenu.getSelectedBuilding() == null) {
+            return Outputs.EMPTY_SELECTED_BUILDING;
+        } else if (!empire.havingMaterial(MaterialType.STONE, checkRepair())) {
+            return Outputs.NOT_ENOUGH_STONE;
+        }
+        int x = buildingMenu.getSelectedBuilding().getBeginX();
+        int y = buildingMenu.getSelectedBuilding().getBeginY();
+        if (findNearEnemy(x, y)) {
+            return Outputs.NEAR_ENEMY;
+        } else {
+            int size = buildingMenu.getSelectedBuilding().getBuildingName().getSize();
+            for (int i = x; i < x + size; i++) {
+                for (int j = y; j < y + size; j++) {
+                    buildingMenu.getSelectedBuilding().getBuildingName().setHitPoint();
+                }
+            }
+            empire.reduceMaterial(buildingMenu.getSelectedBuilding().getBuildingName().getName(), checkRepair());
+            return Outputs.SUCCESSFUL_REPAIR;
+        }
+    }
+
+    private boolean findNearEnemy(int x, int y) {
+        for (int i = x - 5; i < x + 5; i++) {
+            for (int j = y - 5; j < y + 5; y++) {
+                if (getMap().getTile(x, y) != null && getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire).size() != 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int checkRepair() {
+        int maxHitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getMaxHitPoint();
+        int hitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getHitPoint();
+        int cost = (maxHitPoint - hitPoint) * buildingMenu.getSelectedBuilding().getBuildingName().getStoneCost();
+
+        return Math.abs(cost / maxHitPoint);
+    }
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
     public Outputs createUnit(String type, String count) {
 
         boolean barrackBoolean = false;
@@ -242,6 +288,8 @@ public class BuildingMenuController {
             tunnelerBoolean = true;
         if (!barrackBoolean && !mercenaryBoolean && !engineerGuildBoolean && !cathedralBoolean && !tunnelerBoolean)
             return Outputs.WRONG_UNIT_FOR_SELECTED_BUILDING;
+
+
         if (empire.getNormalPopulation() < Integer.parseInt(count)) return Outputs.NOT_ENOUGH_POPULATION;
         if (empire.getGold() < getPriceByName(type) * Integer.parseInt(count)) return Outputs.NOT_ENOUGH_MONEY;
         if (barrackBoolean) {
@@ -473,48 +521,7 @@ public class BuildingMenuController {
         }
         return false;
     }
-
-    public Outputs repair() {
-        if (buildingMenu.getSelectedBuilding() == null) {
-            return Outputs.EMPTY_SELECTED_BUILDING;
-        } else if (!empire.havingMaterial(MaterialType.STONE, checkRepair())) {
-            return Outputs.NOT_ENOUGH_STONE;
-        }
-        int x = buildingMenu.getSelectedBuilding().getBeginX();
-        int y = buildingMenu.getSelectedBuilding().getBeginY();
-        if (findNearEnemy(x, y)) {
-            return Outputs.NEAR_ENEMY;
-        } else {
-            int size = buildingMenu.getSelectedBuilding().getBuildingName().getSize();
-            for (int i = x; i < x + size; i++) {
-                for (int j = y; j < y + size; j++) {
-                    buildingMenu.getSelectedBuilding().getBuildingName().setHitPoint();
-                }
-            }
-            empire.reduceMaterial(buildingMenu.getSelectedBuilding().getBuildingName().getName(), checkRepair());
-            return Outputs.SUCCESSFUL_REPAIR;
-        }
-    }
-
-    private boolean findNearEnemy(int x, int y) {
-        for (int i = x - 5; i < x + 5; i++) {
-            for (int j = y - 5; j < y + 5; y++) {
-                if (getMap().getTile(x, y) != null && getMap().getTile(x, y).findNearEnemiesMilitaryUnit(empire).size() != 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public int checkRepair() {
-        int maxHitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getMaxHitPoint();
-        int hitPoint = buildingMenu.getSelectedBuilding().getBuildingName().getHitPoint();
-        int cost = (maxHitPoint - hitPoint) * buildingMenu.getSelectedBuilding().getBuildingName().getStoneCost();
-
-        return Math.abs(cost / maxHitPoint);
-    }
-
+///////////////////////////////////////////////////////////////////////////////////
 
     public void setEmpire(Empire empire) {
         this.empire = empire;
