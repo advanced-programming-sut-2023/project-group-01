@@ -53,6 +53,7 @@ public class Main extends Application {
         new SignUpAndSignInMenu().start(stage);
         //new ScoreBoard().start(Main.stage);
         //goh to github
+        //یعنی واقعا ریدم تو گیتهاب عن تو گیتهاب
     }
 
 }
