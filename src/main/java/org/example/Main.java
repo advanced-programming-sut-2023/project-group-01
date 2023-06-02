@@ -34,7 +34,7 @@ public class Main extends Application {
 //            mainMenu.run(scanner);
 //        }
         //be koda sag to git. lanat be git va sazandash boro bemir
-
+        //goh to git va sazande va estefade konnande va yak yakishon.
 
         launch(args);
 
