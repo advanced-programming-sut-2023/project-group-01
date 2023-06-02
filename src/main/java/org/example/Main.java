@@ -36,6 +36,7 @@ public class Main extends Application {
 //            MainMenu mainMenu = new MainMenu(Data.getStayedLoggedIn());
 //            mainMenu.run(scanner);
 //        }
+        //be koda sag to git. lanat be git va sazandash boro bemir
 
         launch(args);
 
