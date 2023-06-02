@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="160" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.CreateUnitMenuApp">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.CreateUnitMenu">
 
     <ImageView fx:id="a" fitHeight="160.0" fitWidth="600.0" layoutX="4.0" pickOnBounds="true">
         <image>
