@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.ShopMenuApp">
+
+    <ImageView fx:id="foodShop" fitHeight="160" fitWidth="600" pickOnBounds="true">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/firstShopMenu.png"/>
+        </image>
+    </ImageView>
+
+
+    <ImageView fx:id="meat" fitHeight="52.0" fitWidth="47.0" layoutX="105.0" layoutY="55.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/meat.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="meatText" layoutX="120.0" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+    <ImageView fx:id="cheese" fitHeight="43.0" fitWidth="54.0" layoutX="160.0" layoutY="64.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/cheese.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="cheeseText" layoutX="180.0" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+    <ImageView fx:id="apple" fitHeight="43.0" fitWidth="47.0" layoutX="217.0" layoutY="64.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/apple.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="appleText" layoutX="235.0" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+    <ImageView fx:id="barley" fitHeight="43.0" fitWidth="47.0" layoutX="269.0" layoutY="64.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/barley.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="barleyText" layoutX="287.0" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+    <ImageView fx:id="ale" fitHeight="43.0" fitWidth="47.0" layoutX="327.0" layoutY="64.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/ale.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="aleText" layoutX="340.0" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+    <ImageView fx:id="wheat" fitHeight="52.0" fitWidth="47.0" layoutX="383.0" layoutY="64.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/wheat.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="wheatText" layoutX="395.0" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+    <ImageView fx:id="floor" fitHeight="52.0" fitWidth="54.0" layoutX="435.0" layoutY="62.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/floor.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="floorText" layoutX="450" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+    <ImageView fx:id="bread" fitHeight="43.0" fitWidth="64.0" layoutX="489.0" layoutY="64.0" pickOnBounds="true"
+               onMouseClicked="#goShopping">
+        <image>
+            <Image url="@../../../Images/ShopMenu/foodShop/bread.png"/>
+        </image>
+    </ImageView>
+    <Text fx:id="breadText" layoutX="515" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Text>
+
+
+
+</AnchorPane>

@@ -1,5 +1,8 @@
 package org.example.model.building.enums;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+
 public enum MaterialType {
 
 
@@ -71,5 +74,7 @@ public enum MaterialType {
         return buyingPrice;
     }
 
-
+    public String getPictureAddress() {
+        return null;
+    }
 }
