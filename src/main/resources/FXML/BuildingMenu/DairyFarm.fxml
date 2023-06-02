@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.BuildingMenu">
+
+    <ImageView fx:id="h" fitHeight="160.0" fitWidth="600.0" layoutX="5.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/dairyFarm.png"/>
+        </image>
+    </ImageView>
+
+
+    <ImageView fx:id="dairyfarm" fitHeight="68.0" fitWidth="78.0" layoutX="155.0" layoutY="43.0"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver"
+               pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/dairyFarm/dairyfarm.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="applefarm" fitHeight="68.0" fitWidth="87.0" layoutX="255.0" layoutY="43.0"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver"
+               pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/dairyFarm/applefarm.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="wheatfarm" fitHeight="75.0" fitWidth="78.0" layoutX="353.0" layoutY="39.0"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver"
+               pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/dairyFarm/wheatfarm.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="hopsfarm" fitHeight="68.0" fitWidth="87.0" layoutX="457.0" layoutY="43.0"
+               onDragDetected="#handleDragDetected" onDragDone="#handleOnDragDropped" onDragOver="#handleDragOver"
+               pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/dairyFarm/hopsfarm.png"/>
+        </image>
+    </ImageView>
+
+
+    <ImageView fx:id="castleBuilding" fitHeight="34.0" fitWidth="30.0" layoutX="32.0" layoutY="123.0"
+               onMouseClicked="#castleBuildingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/castleBuilding.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="industry" fitHeight="34.0" fitWidth="30.0" layoutX="73.0" layoutY="124.0"
+               onMouseClicked="#industryMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/industryBuilding.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="dairyFarm" fitHeight="34.0" fitWidth="30.0" layoutX="109.5" layoutY="124.0"
+               onMouseClicked="#dairyFarmMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/dairyFarm.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="townBuilding" fitHeight="34.0" fitWidth="30.0" layoutX="148.0" layoutY="124.0"
+               onMouseClicked="#townBuildingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/townBuilding.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="weaponBuilding" fitHeight="34.0" fitWidth="33.0" layoutX="182.0" layoutY="124.0"
+               onMouseClicked="#weaponMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/weaponBuilding.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="foodProcessing" fitHeight="34.0" fitWidth="39.0" layoutX="219.0" layoutY="124.0"
+               onMouseClicked="#foodProcessingMenu" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/foodProcessing.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="trade" fitHeight="34.0" fitWidth="33.0" layoutX="479.0" layoutY="123.0"
+               onMouseClicked="#openTrade" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/trade.png"/>
+        </image>
+    </ImageView>
+
+    <ImageView fx:id="info" fitHeight="34.0" fitWidth="30.0" layoutX="517.0" layoutY="123.0"
+               onMouseClicked="#showEmpiresInfo" pickOnBounds="true">
+        <image>
+            <Image url="@../../Images/options/empireInfo.png"/>
+        </image>
+    </ImageView>
+
+
+</AnchorPane>

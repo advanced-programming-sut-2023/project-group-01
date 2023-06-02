@@ -4,23 +4,36 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.input.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.example.model.building.Building;
+import org.example.model.building.Gatehouse;
+import org.example.model.building.castleBuilding.Tower;
+import org.example.model.building.enums.BuildingName;
+import org.example.view.mainMenu.gameMenu.ShopMenu;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedHashMap;
+
+import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class BuildingMenu extends Application {
 
+    private Building currentBuilding;
     private static Pane buildingPane;
+    private static Pane savePreviousPane;
     private static Stage stage;
+    @FXML
+    private ImageView dast;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/foodProcessing.fxml"));
+        //BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml")
+        Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/Granary.fxml"));
         BuildingMenu.buildingPane = buildingPane;
         BuildingMenu.stage = stage;
         Scene scene = new Scene(buildingPane);
@@ -30,35 +43,6 @@ public class BuildingMenu extends Application {
 
     @FXML
     public void initialize() {
-
-    }
-
-    public void addElements(TabPane tabPane) {
-        Tab foodProcessing = new Tab();
-        Tab weaponTab = new Tab();
-        Tab townBuildings = new Tab();
-        Tab farmTab = new Tab();
-        Tab industryTab = new Tab();
-        Tab castleBuilding = new Tab();
-        Tab towerTab = new Tab();
-        Tab careHouse = new Tab();
-        Tab militaryTab = new Tab();
-
-    }
-
-    public void enterSelectedBuildingMenu() {
-
-    }
-
-    public void copyBuilding() {
-
-    }
-
-    public void pasteBuilding() {
-
-    }
-
-    public void showBuildingDetail() {
 
     }
 
@@ -76,64 +60,57 @@ public class BuildingMenu extends Application {
     }
 
     public void showEmpiresInfo(MouseEvent mouseEvent) {
+        //TODO
         System.out.println("show info");
     }
 
     public void openTrade(MouseEvent mouseEvent) {
+        //TODO
         System.out.println("trade");
     }
 
     public void foodProcessingMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/foodProcessing.fxml");
-        System.out.println("foodProcessing");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/foodProcessing.fxml");
         openMenu(address);
     }
 
     public void weaponMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/WeaponBuilding.fxml");
-        System.out.println("weaponBuilding");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/WeaponBuilding.fxml");
         openMenu(address);
     }
 
     public void townBuildingMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/TownBuilding.fxml");
-        System.out.println("townBuilding");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/TownBuilding.fxml");
         openMenu(address);
     }
 
     public void dairyFarmMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/DairyFarm.fxml");
-        System.out.println("dairyFarm");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/DairyFarm.fxml");
         openMenu(address);
     }
 
     public void industryMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/IndustryBuilding.fxml");
-        System.out.println("industry");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/IndustryBuilding.fxml");
         openMenu(address);
     }
 
     public void castleBuildingMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/CastleBuilding.fxml");
-        System.out.println("castleBuilding");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/CastleBuilding.fxml");
         openMenu(address);
     }
 
     public void towerMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/tower.fxml");
-        System.out.println("towerBuilding");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/tower.fxml");
         openMenu(address);
     }
 
     public void careHouseMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/careHouse.fxml");
-        System.out.println("careHouse");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/careHouse.fxml");
         openMenu(address);
     }
 
     public void militaryBuildingMenu(MouseEvent mouseEvent) throws IOException {
-        URL address = BuildingMenu.class.getResource("/FXML/MilitaryBuilding.fxml");
-        System.out.println("militaryBuilding");
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/MilitaryBuilding.fxml");
         openMenu(address);
     }
 
@@ -142,4 +119,99 @@ public class BuildingMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void prev(MouseEvent mouseEvent) throws IOException {
+        URL address = BuildingMenu.class.getResource("/FXML/BuildingMenu/CastleBuilding.fxml");
+        openMenu(address);
+    }
+
+    public BuildingName getBuildingNameByFxId(String fxId) {
+        for (BuildingName buildingName : BuildingName.values())
+            if (buildingName.getName().equalsIgnoreCase(fxId))
+                return buildingName;
+        return null;
+    }
+
+    public void setCurrentBuilding(Building currentBuilding) {
+        this.currentBuilding = currentBuilding;
+    }
+
+    public Building getCurrentBuilding() {
+        return currentBuilding;
+    }
+
+    public void enterSelectedBuildingMenu() throws Exception {
+        if (currentBuilding != null) {
+            savePreviousPane = buildingPane;
+            if (currentBuilding.getBuildingName().equals(BuildingName.BARRACK) ||
+                    currentBuilding.getBuildingName().equals(BuildingName.MERCENARY_BARRACKS) ||
+                    currentBuilding.getBuildingName().equals(BuildingName.CATHEDRAL) ||
+                    currentBuilding.getBuildingName().equals(BuildingName.ENGINEER_GUILD) ||
+                    currentBuilding.getBuildingName().equals(BuildingName.TUNNELER_GUILD)
+            ) {
+                CreateUnitMenu createUnitMenu = new CreateUnitMenu();
+                createUnitMenu.setCurrentBuilding(currentBuilding);
+                createUnitMenu.start(stage);
+            } else if (currentBuilding.getBuildingName().equals(BuildingName.GRANARY)){
+                openGranaryMenu();
+            } else if (currentBuilding instanceof Gatehouse) {
+                openGateHouse();
+            } else if (currentBuilding instanceof Tower) {
+                openTower();
+            } else if (currentBuilding.getBuildingName().equals(BuildingName.MARKET)) {
+                ShopMenuApp shopMenu = new ShopMenuApp();
+                ShopMenuApp.setCurrentBuilding(currentBuilding);
+                shopMenu.start(stage);
+            }
+        }
+    }
+
+    public void openGranaryMenu() throws IOException {
+        Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/Granary.fxml"));
+        BuildingMenu.buildingPane = buildingPane;
+        Scene scene = new Scene(buildingPane);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void changeFoodRate(MouseEvent mouseEvent) {
+        String id = ((ImageView) mouseEvent.getSource()).getId();
+        int foodRate = 1;
+        if (id.equals("aLot"))
+            foodRate = 2;
+        else if (id.equals("full"))
+            foodRate = 1;
+        else if (id.equals("middle"))
+            foodRate = 0;
+        else if (id.equals("little"))
+            foodRate = -1;
+        else if (id.equals("veryLittle"))
+            foodRate = -2;
+        //TODO check
+        if (getThisEmpire().getFoodRate() != foodRate) {
+            dast.setRotate(dast.getRotate() + 72);
+            getThisEmpire().setFoodRate(foodRate);
+        }
+    }
+
+    public void openGateHouse() {
+
+    }
+
+    public void openTower() {
+
+    }
+
+    public void copyBuilding() {
+
+    }
+
+    public void pasteBuilding() {
+
+    }
+
+    public void showBuildingDetail() {
+
+    }
+
 }
