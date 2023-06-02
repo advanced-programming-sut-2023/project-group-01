@@ -55,9 +55,6 @@ public class Main extends Application {
         //new ScoreBoard().start(Main.stage);
     }
     
-    //testttttttt
-    //test2
-    //test3
-    //test4
+    //test final
 
 }
