@@ -176,12 +176,12 @@ public class CreateUnitMenuApp extends Application {
             return;
         }
         if (empire.getGold() < militaryUnitName.getCost()) {
-            ErrorInCreatingUnit("pool nadari");
+            ErrorInCreatingUnit("preduce ool nadari");
             return;
         }
 
-//        if (armour != null) empire.reduceMaterial(armour);
-//        if (armament != null) empire.reduceMaterial(armament);
+        if (armour != null) empire.reduceMaterial(armour);
+        if (armament != null) empire.reduceMaterial(armament);
         empire.decreaseGold(militaryUnitName.getCost());
         //        new MilitaryUnit(getMap().getTile(x, y), NextTurn.getCurrentEmpire(), militaryUnitName, x, y);
         militaryUnitName.getVoice().playVoice(militaryUnitName.getVoice());
