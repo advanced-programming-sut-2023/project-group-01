@@ -1,10 +1,10 @@
 package org.example.model.building;
 
+import javafx.scene.image.ImageView;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.enums.TypeOfTile;
 import org.example.model.unit.MilitaryUnit;
-import org.example.model.unit.enums.MilitaryUnitName;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,6 @@ public class Tile {
     private ArrayList<People> people = new ArrayList<>();
     private Building building;
     private TypeOfTile typeOfTile = TypeOfTile.NORMAL_GROUND;
-
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
@@ -66,6 +65,10 @@ public class Tile {
 
     public void removeAllUnit() {
         people.clear();
+    }
+
+    public void setImage(){
+
     }
 
 }

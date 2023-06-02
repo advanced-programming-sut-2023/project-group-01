@@ -1,16 +1,19 @@
 package org.example.model.building.enums;
 
+import org.example.Main;
+
 public enum TypeOfTile {
 
     W_ROCK("wRock",false,false, ""),
     E_ROCK("eRock",false,false, ""),
     N_ROCK("nRock",false,false, ""),
     S_ROCK("sRock",false,false, ""),
-    NORMAL_GROUND("normal", true, false, ""),
+    NORMAL_GROUND("normal", true, false, Main.class.getResource("/Images/tiles/grass_tile.jpg").toString()),
     GRAVEL_GROUND("gravel", true, false, ""),
     STONE_MINE("stoneMine",true, false, ""),
     IRON_MINE("ironMine", true, false, ""),
-    GRASSLAND("grassland", true, false, ""),
+    GRASSLAND("grassland", true, false,
+            Main.class.getResource("/Images/tiles/grass_tile.jpg").toString()),
     MEADOW("meadow",true, false, ""),
     FULL_MEADOW("fullMeadow",true, false, ""),
     OIL_GROUND("oilGround",true, false, ""),
@@ -20,7 +23,7 @@ public enum TypeOfTile {
     SMALL_POND("smallPond",false, true, ""),
     BIG_POND("bigPond",false, true, ""),
     BEACH("beach",true, false, ""),
-    SEA("sea",false, true, "");
+    SEA("sea",false, true,  Main.class.getResource("/Images/tiles/sea_tile.jpg").toString());
     private final boolean canCross;
     private final boolean isWater;
     private final String name;

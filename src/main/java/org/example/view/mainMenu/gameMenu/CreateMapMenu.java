@@ -8,6 +8,9 @@ import org.example.model.User;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.CreateMapMenuCommands;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -41,6 +44,12 @@ public class CreateMapMenu {
                 System.out.println(dropUnitChecker(matcher).toString());
             else if (command.equals("finish")) return gameMap;
             else if (command.equals("set default map")) {
+                try {
+                    Data.setDefaultMap(new String(Files.readAllBytes(Paths.get("DefaultMap.txt"))));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                gameMap = new Map(200);
                 System.out.println("Default map set successfully!");
                 return runDefaultMap(new Scanner(Data.getDefaultMap()));
             } else System.out.println("invalid command in Create Map Menu!");
