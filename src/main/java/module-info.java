@@ -16,4 +16,6 @@ module strongholdCrusader {
 
     exports org.example.view.graphicView;
     opens org.example.view.graphicView to javafx.fxml;
+    exports org.example.controller.mainMenuController;
+    opens  org.example.controller.mainMenuController to javafx.fxml;
 }
