@@ -1,12 +1,7 @@
 package org.example.model.building.enums;
 
 public enum MaterialType {
-    //Sources :
-    IRON("iron", 215, 115, "source"),
-    STONE("stone", 70, 35, "source"),
-    OIL("oil", 100, 50, "source"),
-    WOOD("wood", 20, 5, "source"),
-    WHEAT("wheat", 115, 40, "source"),
+
 
     //Foods :
     BREAD("bread", 40, 20, "food"),
@@ -16,6 +11,13 @@ public enum MaterialType {
     CHEESE("cheese", 40, 20, "food"),
     BARLEY("barley", 75, 40, "food"),
     ALE("ale", 100, 40, "food"),
+
+    //Sources :
+    IRON("iron", 215, 115, "source"),
+    STONE("stone", 70, 35, "source"),
+    OIL("oil", 100, 50, "source"),
+    WOOD("wood", 20, 5, "source"),
+    WHEAT("wheat", 115, 40, "source"),
 
 
     //Warfares :
