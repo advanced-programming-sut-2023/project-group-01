@@ -22,13 +22,13 @@
         <Image url="@../Images/Background.jpg"/>
     </ImageView>
 
-    <ImageView fx:id="submit" fitHeight="150.0" fitWidth="200.0" layoutY="500" onMouseClicked="#submit">
+    <ImageView onMouseEntered="#clickSound" fx:id="submit" fitHeight="150.0" fitWidth="200.0" layoutY="500" onMouseClicked="#submit">
         <Image url="@../Images/submit.png"/>
         <cursor>
             <Cursor fx:constant="HAND"/>
         </cursor>
     </ImageView>
-    <ImageView fx:id="back" fitHeight="150.0" fitWidth="200.0" layoutY="650" onMouseClicked="#back">
+    <ImageView onMouseEntered="#clickSound" fx:id="back" fitHeight="150.0" fitWidth="200.0" layoutY="650" onMouseClicked="#back">
         <Image url="@../Images/back.png"/>
         <cursor>
             <Cursor fx:constant="HAND"/>
@@ -93,6 +93,7 @@
                 <HBox visible="false" fx:id="sloganHBox">
                     <Text text="Slogan : " id="title"/>
                     <TextField fx:id="slogan" id="textField" prefWidth="200"/>
+                    <ChoiceBox fx:id="famousSlogans" maxWidth="100" id="button"/>
                     <Button id="button" text="random" onMouseClicked="#randomSlogan"/>
                 </HBox>
             </VBox>

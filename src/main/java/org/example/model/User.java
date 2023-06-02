@@ -1,5 +1,8 @@
 package org.example.model;
 
+import org.example.Main;
+
+import java.net.URL;
 import java.util.Comparator;
 
 public class User {
@@ -16,23 +19,36 @@ public class User {
 
     private boolean inGame = false;
     private byte[] salt;
-
+    private URL avatarUrl;
 
     public User(String username, String passwordHash, String nickname, String email, String slogan, String securityQuestion, String securityAnswer, byte[] salt) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.nickname = nickname;
         this.email = email;
-        this.slogan = slogan;
+        if (!slogan.equals(""))
+            this.slogan = slogan;
+        else this.slogan = "slogan is empty";
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.salt = salt;
         this.highScore = 0;
         this.rank = Data.getUsers().size() + 1;
+        this.avatarUrl = Main.class.getResource("/Images/DefaultAvatar.jpg");
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public URL getAvatarUrl() {
+        if (avatarUrl==null)
+            avatarUrl = Main.class.getResource("/Images/DefaultAvatar.jpg");
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(URL avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getPasswordHash() {
@@ -92,7 +108,9 @@ public class User {
     }
 
     public void setSlogan(String slogan) {
-        this.slogan = slogan;
+        if (!slogan.equals(""))
+            this.slogan = slogan;
+        else this.slogan = "slogan is empty";
     }
 
     public void setSecurityQuestion(String securityQuestion) {

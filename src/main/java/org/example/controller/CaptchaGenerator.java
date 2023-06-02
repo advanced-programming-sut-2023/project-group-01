@@ -19,7 +19,8 @@ public class CaptchaGenerator {
         FileWriter myWriter = new FileWriter("src\\main\\resources\\CaptchaPictures\\main.py");
         myWriter.write(code);
         myWriter.close();
-        Process process = Runtime.getRuntime().exec("C:\\Users\\ASUS\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe C:\\Users\\ASUS\\IdeaProjects\\AP\\project-group-01-pull\\src\\main\\resources\\CaptchaPictures\\main.py");
+        Process process = Runtime.getRuntime().
+                exec("C:\\Users\\ASUS\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe C:\\Users\\ASUS\\IdeaProjects\\AP\\project-group-01-pull\\src\\main\\resources\\CaptchaPictures\\main.py");
         try {
             TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {

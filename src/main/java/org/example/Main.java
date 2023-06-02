@@ -1,16 +1,13 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.example.controller.CaptchaGenerator;
 import org.example.controller.SignUpAndSignInMenu;
 import org.example.model.Data;
 import org.example.model.UsersDatabaseJSON;
-import org.example.view.LoginMenuApp;
-import org.example.view.RegisterMenu;
-import org.example.view.RegisterMenuApp;
-import org.example.view.mainMenu.MainMenu;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -38,11 +35,12 @@ public class Main extends Application {
 //        }
         //be koda sag to git. lanat be git va sazandash boro bemir
 
+
         launch(args);
 
         UsersDatabaseJSON.saveUsersInJSON();
         UsersDatabaseJSON.saveStayedLoggedInUser();
-
+        Process process = Runtime.getRuntime().exec("move.bat");
     }
 
     public static Scanner getScanner() {
@@ -52,8 +50,12 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Main.stage = stage;
+        stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
         new SignUpAndSignInMenu().start(stage);
+        //new ScoreBoard().start(Main.stage);
     }
-
+    
+    //testttttttt
+    //test2
 
 }

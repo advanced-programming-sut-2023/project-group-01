@@ -23,17 +23,17 @@
     </ImageView>
 
     <VBox spacing="115" layoutX="1080" layoutY="215" >
-        <TextField text="Register Menu" id="textField" editable="false" onMouseClicked="#registerMenuRun">
+        <TextField onMouseEntered="#clickSound" text="Register Menu" id="textField" editable="false" onMouseClicked="#registerMenuRun">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TextField>
-        <TextField text="Login Menu" id="textField" editable="false" onMouseClicked="#loginMenuRun">
+        <TextField onMouseEntered="#clickSound" text="Login Menu" id="textField" editable="false" onMouseClicked="#loginMenuRun">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TextField>
-        <TextField text="Exit Game" id="textField" editable="false" onMouseClicked="#exitGame">
+        <TextField onMouseEntered="#clickSound" text="Exit Game" id="textField" editable="false" onMouseClicked="#exitGame">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
