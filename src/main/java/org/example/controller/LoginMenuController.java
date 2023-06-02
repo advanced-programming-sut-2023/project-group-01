@@ -12,10 +12,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.Main;
+import org.example.controller.mainMenuController.ProfileMenuController;
 import org.example.model.Data;
 import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
 import org.example.view.enums.Outputs;
+import org.example.view.graphicView.MainMenu;
+import org.example.view.graphicView.Music;
+import org.example.view.graphicView.ProfileMenu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -80,7 +84,7 @@ public class LoginMenuController {
         user.setPasswordHash(PasswordHash.getPasswordHash(password, user.getSalt()));
     }
 
-    public void submit(MouseEvent mouseEvent) throws IOException {
+    public void submit(MouseEvent mouseEvent) throws Exception {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         if (forgotPasswordCounter%2==1){
@@ -132,8 +136,8 @@ public class LoginMenuController {
                 runCaptcha();
                 alert.showAndWait();
             }else {
-                alert.setContentText("Success Login !");
-                alert.showAndWait();
+                ProfileMenuController.currentUser = user;
+                new MainMenu().start(Main.stage);
             }
         }
         
@@ -181,6 +185,7 @@ public class LoginMenuController {
     }
 
     public void runCaptcha() throws IOException {
+        captcha.setText("");
         CaptchaGenerator.captchaGenerator();
         captchaImage.setImage(new Image(new FileInputStream( CaptchaGenerator.captchaValue +".png")));
     }
@@ -191,5 +196,9 @@ public class LoginMenuController {
 
     public void back(MouseEvent mouseEvent) throws Exception {
         new Main().start(Main.stage);
+    }
+
+    public void clickSound(MouseEvent mouseEvent) {
+        Music.playClickSound();
     }
 }

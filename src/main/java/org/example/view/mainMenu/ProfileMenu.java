@@ -96,8 +96,9 @@ public class ProfileMenu {
 
     private Outputs changeUsername(Matcher matcher) {
         String newUsername = matcher.group("username");
-        ProfileMenuController profileMenuController = new ProfileMenuController(currentUser);
-        return profileMenuController.changeUsername(newUsername);
+        //ProfileMenuController profileMenuController = new ProfileMenuController(currentUser);
+        //return profileMenuController.changeUsername(newUsername);
+        return null;
     }
 
     private Outputs changeNickname(Matcher matcher) {
@@ -114,14 +115,14 @@ public class ProfileMenu {
 
     private Outputs changeEmail(Matcher matcher) {
         String newEmail = matcher.group("email");
-        ProfileMenuController profileMenuController = new ProfileMenuController(currentUser);
+        ProfileMenuController profileMenuController = null;
         return profileMenuController.changeEmail(newEmail);
     }
 
     private Outputs changePassword(Matcher matcher, Scanner scanner) {
         String oldPassword = matcher.group("oldPassword");
         String newPassword = matcher.group("newPassword");
-        ProfileMenuController profileMenuController = new ProfileMenuController(currentUser);
+        ProfileMenuController profileMenuController = null;
         Outputs output = profileMenuController.changePassword(oldPassword, newPassword);
         if (!output.equals(Outputs.PASSWORD_CHANGE_SUCCESSFUL)) return output;
         try {
@@ -163,11 +164,10 @@ public class ProfileMenu {
         }
     }
 
-    private static void setRanks() {
+    public static void setRanks() {
         Data.getUsers().sort(new User.Sort());
         for (int i = 0; i < Data.getUsers().size(); i++) {
             Data.getUsers().get(i).setRank(i + 1);
         }
-
     }
 }

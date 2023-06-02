@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.Main;
+import org.example.controller.mainMenuController.ProfileMenuController;
 import org.example.model.Data;
 import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
@@ -21,6 +22,7 @@ import org.example.view.enums.Outputs;
 import org.example.view.enums.RandomSlogans;
 import org.example.view.enums.SecurityQuestion;
 import org.example.view.enums.commands.RegisterMenuCommands;
+import org.example.view.graphicView.Music;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
@@ -56,6 +58,7 @@ public class RegisterMenuController {
     public VBox captchaVBox;
     public ImageView captchaImage;
     public TextField captcha;
+    public ChoiceBox famousSlogans;
     private boolean randomPassword;
     private static boolean isSecurityQuestion;
 
@@ -66,22 +69,9 @@ public class RegisterMenuController {
         emailStatus.setEditable(false);
         passwordStatus.setEditable(false);
         background.setImage(new Image(new FileInputStream("src/main/resources/images/RegisterMenu.png")));
+        addFamousSlogans();
 
-        username.textProperty().addListener((observable, oldText, newText) -> {
-
-            Matcher validUsernameMatcher = RegisterMenuCommands.getMatcher(newText, RegisterMenuCommands.VALID_USERNAME);
-            if (!validUsernameMatcher.find()) usernameStatus.setText(Outputs.INVALID_USERNAME.toString());
-
-            else if (Data.findUserWithUsername(newText) != null) usernameStatus.setText(Outputs.USER_EXISTS.toString());
-
-            else usernameStatus.setText(Outputs.VALID_USERNAME.toString());
-
-            if (usernameStatus.getText().equals(Outputs.VALID_USERNAME.toString()))
-            usernameStatus.setStyle("-fx-text-fill: green;");
-            else
-                usernameStatus.setStyle("-fx-text-fill: red;");
-
-        });
+        ProfileMenuController.usernameListener(username, usernameStatus);
 
         hiddenPassword.textProperty().addListener((observable, oldText, newText) -> {
             if (hiddenPassword.getText().length() != 0) {
@@ -92,13 +82,22 @@ public class RegisterMenuController {
             }
         });
 
-        email.textProperty().addListener((observable, oldText, newText) -> {
-            emailStatus.setText(checkValidEmail(newText).toString());
-
-            if (emailStatus.getText().equals(Outputs.VALID_EMAIL.toString()))
-                emailStatus.setStyle("-fx-text-fill: green;");
-            else emailStatus.setStyle("-fx-text-fill: red;");
+        famousSlogans.setOnAction((event) -> {
+            String slog = (String) famousSlogans.getSelectionModel().getSelectedItem();
+            slogan.setText(slog);
         });
+
+        ProfileMenuController.emailListener(email,emailStatus);
+
+    }
+
+    private void addFamousSlogans(){
+        famousSlogans.getItems().add(RandomSlogans.getSlogan(0));
+        famousSlogans.getItems().add(RandomSlogans.getSlogan(1));
+        famousSlogans.getItems().add(RandomSlogans.getSlogan(2));
+        famousSlogans.getItems().add(RandomSlogans.getSlogan(3));
+        famousSlogans.getItems().add(RandomSlogans.getSlogan(4));
+        famousSlogans.setValue("Famous slogans");
     }
 
     public static Outputs checkValidEmail(String mail) {
@@ -256,7 +255,7 @@ public class RegisterMenuController {
         slogan.setText(RandomSlogans.getRandomSlogan());
     }
 
-    public void submit(MouseEvent mouseEvent) throws NoSuchAlgorithmException, IOException {
+    public void submit(MouseEvent mouseEvent) throws Exception {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -305,8 +304,12 @@ public class RegisterMenuController {
                 temporaryCreatedUser.setSecurityAnswer(answer.getText());
                 Data.addUser(temporaryCreatedUser);
                 UsersDatabaseJSON.saveUsersInJSON();
-                alert.setContentText("Success");
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setContentText(temporaryCreatedUser.getUsername()+" successfully created !");
+                alert.setTitle("Success");
+                alert.setHeaderText("Successful Register");
                 alert.showAndWait();
+                new SignUpAndSignInMenu().start(Main.stage);
             }
         }
 
@@ -332,11 +335,16 @@ public class RegisterMenuController {
     }
 
     public void runCaptcha() throws IOException {
+        captcha.setText("");
         CaptchaGenerator.captchaGenerator();
         captchaImage.setImage(new Image(new FileInputStream( CaptchaGenerator.captchaValue +".png")));
     }
 
     public void back(MouseEvent mouseEvent) throws Exception {
         new Main().start(Main.stage);
+    }
+
+    public void clickSound(MouseEvent mouseEvent) {
+        Music.playClickSound();
     }
 }
