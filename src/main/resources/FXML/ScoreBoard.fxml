@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.view.graphicView.ScoreBoard"
+            prefHeight="800.0" prefWidth="1530.0">
+
+
+    <stylesheets>
+        <URL value="@../CSS/ScoreBoardStyle.css"/>
+    </stylesheets>
+
+
+
+    <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" focusTraversable="true" preserveRatio="true">
+        <Image url="@../Images/ScoreBoard.jpg"/>
+    </ImageView>
+
+    <ImageView onMouseClicked="#backToProfile" id="cursor" layoutX="650" layoutY="550" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/BackToProfileMenu.png"/>
+    </ImageView>
+
+    <VBox layoutY="167" spacing="24"  layoutX="159" fx:id="leftImagesVBox">
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image2"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image4"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image6"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image8"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image10"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+    </VBox>
+
+    <VBox layoutY="195" spacing="90"  layoutX="260" fx:id="leftUsernameVBox">
+        <Label id="label" fx:id="rank2"/>
+        <Label id="label" fx:id="rank4"/>
+        <Label id="label" fx:id="rank6"/>
+        <Label id="label" fx:id="rank8"/>
+        <Label id="label" fx:id="rank10"/>
+    </VBox>
+
+    <VBox fx:id="rightImagesVBox" layoutY="112" spacing="24"  layoutX="542" >
+
+
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image1"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image3"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image5"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image7"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+        <ImageView id="cursor"  onMouseClicked="#changeAvatarFromGallery" fx:id="image9"  fitHeight="83" fitWidth="83" pickOnBounds="true" preserveRatio="true" >
+        </ImageView>
+    </VBox>
+
+    <VBox fx:id="rightUsernameVBox" layoutY="142" spacing="90"  layoutX="355">
+        <Label id="label" fx:id="rank1" />
+        <Label id="label" fx:id="rank3"/>
+        <Label id="label" fx:id="rank5"/>
+        <Label id="label" fx:id="rank7"/>
+        <Label id="label" fx:id="rank9"/>
+    </VBox>
+
+</AnchorPane>
