@@ -33,7 +33,8 @@ public class Main extends Application {
 //            MainMenu mainMenu = new MainMenu(Data.getStayedLoggedIn());
 //            mainMenu.run(scanner);
 //        }
-
+        //be koda sag to git. lanat be git va sazandash boro bemir
+        //goh to git va sazande va estefade konnande va yak yakishon.
 
         launch(args);
 
@@ -52,8 +53,11 @@ public class Main extends Application {
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
         new SignUpAndSignInMenu().start(stage);
         //new ScoreBoard().start(Main.stage);
-        //goh to github
-        //یعنی واقعا ریدم تو گیتهاب عن تو گیتهاب
     }
+    
+    //testttttttt
+    //test2
+    //test3
+    //test4
 
 }

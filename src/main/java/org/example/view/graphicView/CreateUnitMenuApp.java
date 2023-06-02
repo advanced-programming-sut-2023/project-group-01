@@ -176,7 +176,7 @@ public class CreateUnitMenuApp extends Application {
             return;
         }
         if (empire.getGold() < militaryUnitName.getCost()) {
-            ErrorInCreatingUnit("pool nadari");
+            ErrorInCreatingUnit("preduce ool nadari");
             return;
         }
 

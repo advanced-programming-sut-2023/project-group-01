@@ -17,9 +17,9 @@ import org.example.model.Data;
 import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
 import org.example.view.enums.Outputs;
-import org.example.view.graphicView.MainMenu;
+import org.example.view.graphicView.MainMenuApp;
 import org.example.view.graphicView.Music;
-import org.example.view.graphicView.ProfileMenu;
+import org.example.view.graphicView.ProfileMenuApp;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -137,7 +137,7 @@ public class LoginMenuController {
                 alert.showAndWait();
             }else {
                 ProfileMenuController.currentUser = user;
-                new MainMenu().start(Main.stage);
+                new MainMenuApp().start(Main.stage);
             }
         }
         

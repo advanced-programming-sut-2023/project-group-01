@@ -108,9 +108,9 @@ public class ShopMenuApp extends Application {
             buy.setText("buy" + material.getMaterialType().getBuyingPrice());
             sell.setText("buy" + material.getMaterialType().getSellingPrice());
             //TODO chek
-            prevCommodity.setImage(new Image(prevMaterial.getMaterialType().getPictureAddress()));
-            commodity.setImage(new Image(currentMaterial.getMaterialType().getPictureAddress()));
-            nextCommodity.setImage(new Image(nextMaterial.getMaterialType().getPictureAddress()));
+//            prevCommodity.setImage(new Image(prevMaterial.getMaterialType().getPictureAddress()));
+//            commodity.setImage(new Image(currentMaterial.getMaterialType().getPictureAddress()));
+//            nextCommodity.setImage(new Image(nextMaterial.getMaterialType().getPictureAddress()));
         }
     }
     //TODO metalArmour
