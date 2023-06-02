@@ -9,7 +9,7 @@ import org.example.view.LoginMenu;
 
 import java.net.URL;
 
-public class ProfileMenu extends Application {
+public class ProfileMenuApp extends Application {
     public static AnchorPane profileMenuPane;
     @Override
     public void start(Stage stage) throws Exception {

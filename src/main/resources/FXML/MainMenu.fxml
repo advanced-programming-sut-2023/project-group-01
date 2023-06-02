@@ -11,7 +11,7 @@
 <?import javafx.scene.image.Image?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.view.graphicView.MainMenu"
+            fx:controller="org.example.view.graphicView.MainMenuApp"
             prefHeight="800.0" prefWidth="1530.0">
 
     <stylesheets>

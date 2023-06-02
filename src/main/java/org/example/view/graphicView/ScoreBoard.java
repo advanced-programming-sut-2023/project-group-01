@@ -158,6 +158,6 @@ public class ScoreBoard extends Application {
     }
 
     public void backToProfile(MouseEvent mouseEvent) throws Exception {
-        new ProfileMenu().start(Main.stage);
+        new ProfileMenuApp().start(Main.stage);
     }
 }

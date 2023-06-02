@@ -23,13 +23,10 @@ import org.example.model.People;
 import org.example.model.building.Tile;
 import org.example.model.unit.MilitaryUnit;
 
-import java.net.URL;
 import java.util.ArrayList;
 
-import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
-
-public class MapMenu extends Application {
+public class MapMenuApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -52,7 +49,7 @@ public class MapMenu extends Application {
         //    for (int i = 0; i < 200; i++)
         //      for (int j = 0; j < 200; j++)
         //        gridPane.add(new ImageView(new Image(getMap().getTile(i, j).getTypeOfTile().getPictureAddress())), i, j);
-        FXMLLoader fxmlLoader = new FXMLLoader(MapMenu.class.getResource("/resources/FXML/MercenaryBarrackMenu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MapMenuApp.class.getResource("/resources/FXML/MercenaryBarrackMenu.fxml"));
         TabPane tabPane = new TabPane();
 
         ScrollPane scrollPane = new ScrollPane();

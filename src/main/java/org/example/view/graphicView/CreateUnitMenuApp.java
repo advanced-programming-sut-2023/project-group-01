@@ -14,7 +14,7 @@ import java.net.URL;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
-public class CreateUnitMenu extends Application {
+public class CreateUnitMenuApp extends Application {
     private static Building currentBuilding;
     private static int x;
     private static int y;
@@ -31,17 +31,17 @@ public class CreateUnitMenu extends Application {
     }
 
     public static void setCurrentBuilding(Building currentBuilding) {
-        CreateUnitMenu.currentBuilding = currentBuilding;
+        CreateUnitMenuApp.currentBuilding = currentBuilding;
         if (currentBuilding.getBuildingName().equals(BuildingName.BARRACK)) {
-            url = CreateUnitMenu.class.getResource("/FXML/CreateUnit/BarrackMenu.fxml");
+            url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/BarrackMenu.fxml");
         } else if (currentBuilding.getBuildingName().equals(BuildingName.MERCENARY_BARRACKS)) {
-            url = CreateUnitMenu.class.getResource("/FXML/CreateUnit/MercenaryBarrackMenu.fxml");
+            url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/MercenaryBarrackMenu.fxml");
         } else if (currentBuilding.getBuildingName().equals(BuildingName.CATHEDRAL)) {
             //TODO
         } else if (currentBuilding.getBuildingName().equals(BuildingName.ENGINEER_GUILD)) {
-            url = CreateUnitMenu.class.getResource("/FXML/CreateUnit/MercenaryBarrackMenu.fxml");
+            url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/MercenaryBarrackMenu.fxml");
         } else if (currentBuilding.getBuildingName().equals(BuildingName.TUNNELER_GUILD)) {
-            url = CreateUnitMenu.class.getResource("/FXML/CreateUnit/TunnlerGuildMenu.fxml");
+            url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/TunnlerGuildMenu.fxml");
         }
         findXY();
     }
@@ -54,31 +54,31 @@ public class CreateUnitMenu extends Application {
 
         for (int i = x; i < x + buildingSize; i++)
             if (y > 1 && i < size && getMap().getTile(i, y - 1) != null) {
-                CreateUnitMenu.x = i;
-                CreateUnitMenu.y = y - 1;
+                CreateUnitMenuApp.x = i;
+                CreateUnitMenuApp.y = y - 1;
                 return;
             }
         for (int j = y; j < y + buildingSize; j++)
             if (x > 1 && j < size && getMap().getTile(x - 1, j) != null) {
-                CreateUnitMenu.x = x - 1;
-                CreateUnitMenu.y = j;
+                CreateUnitMenuApp.x = x - 1;
+                CreateUnitMenuApp.y = j;
                 return;
             }
         for (int i = x; i < x + buildingSize; i++)
             if (y + buildingSize < size && i < size && getMap().getTile(i, y + buildingSize) != null) {
-                CreateUnitMenu.x = i;
-                CreateUnitMenu.y = y + buildingSize;
+                CreateUnitMenuApp.x = i;
+                CreateUnitMenuApp.y = y + buildingSize;
                 return;
             }
         for (int j = y; j < y + buildingSize; j++)
             if (x + buildingSize < size && j < size && getMap().getTile(x, j) != null) {
-                CreateUnitMenu.x = x + buildingSize;
-                CreateUnitMenu.y = j;
+                CreateUnitMenuApp.x = x + buildingSize;
+                CreateUnitMenuApp.y = j;
                 return;
             }
 
-        CreateUnitMenu.x = x - 1;
-        CreateUnitMenu.y = y - 1;
+        CreateUnitMenuApp.x = x - 1;
+        CreateUnitMenuApp.y = y - 1;
     }
 
 

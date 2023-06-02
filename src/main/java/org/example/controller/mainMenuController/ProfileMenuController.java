@@ -22,18 +22,15 @@ import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.RegisterMenuCommands;
-import org.example.view.graphicView.MainMenu;
+import org.example.view.graphicView.MainMenuApp;
 import org.example.view.graphicView.Music;
-import org.example.view.graphicView.ProfileMenu;
+import org.example.view.graphicView.ProfileMenuApp;
 import org.example.view.graphicView.ScoreBoard;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.channels.FileChannel;
 import java.util.regex.Matcher;
 
 import static org.example.controller.RegisterMenuController.checkValidEmail;
@@ -235,7 +232,7 @@ public class ProfileMenuController {
         galleryBackground.setVisible(true);
         galleryVBox.setVisible(true);
         BoxBlur boxblur = new BoxBlur();
-        for (Node node : ProfileMenu.profileMenuPane.getChildren()){
+        for (Node node : ProfileMenuApp.profileMenuPane.getChildren()){
             node.setEffect(boxblur);
         }
         galleryBackground.setEffect(null);
@@ -244,7 +241,7 @@ public class ProfileMenuController {
 
     @FXML
     private void hideGallery(){
-        for (Node node : ProfileMenu.profileMenuPane.getChildren()){
+        for (Node node : ProfileMenuApp.profileMenuPane.getChildren()){
             node.setEffect(null);
         }
         galleryVBox.setVisible(false);
@@ -265,7 +262,7 @@ public class ProfileMenuController {
     }
 
     public void backToMainMenu(MouseEvent mouseEvent) throws Exception {
-        new MainMenu().start(Main.stage);
+        new MainMenuApp().start(Main.stage);
     }
 
     public void clickSound(MouseEvent mouseEvent) {

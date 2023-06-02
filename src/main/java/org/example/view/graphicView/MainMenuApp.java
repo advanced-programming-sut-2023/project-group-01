@@ -11,10 +11,9 @@ import org.example.controller.SignUpAndSignInMenu;
 import org.example.controller.mainMenuController.ProfileMenuController;
 import org.example.view.LoginMenu;
 
-import java.net.Socket;
 import java.net.URL;
 
-public class MainMenu extends Application {
+public class MainMenuApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
@@ -35,7 +34,7 @@ public class MainMenu extends Application {
     }
 
     public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
-        new ProfileMenu().start(Main.stage);
+        new ProfileMenuApp().start(Main.stage);
     }
 
     public void clickSound(MouseEvent mouseEvent) {

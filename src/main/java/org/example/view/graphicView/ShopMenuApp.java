@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class ShopMenuApp extends Application {
 
     public void openMenu(URL url) throws IOException {
         //TODO set amount
-        shopPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/Granary.fxml"));
+        shopPane = FXMLLoader.load(BuildingMenuApp.class.getResource("/FXML/BuildingMenu/Granary.fxml"));
         ShopMenuApp.stage = stage;
         Scene scene = new Scene(shopPane);
         stage.setScene(scene);
