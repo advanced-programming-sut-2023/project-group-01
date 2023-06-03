@@ -10,8 +10,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.model.Empire;
+import org.example.model.User;
 import org.example.model.building.Building;
+import org.example.model.building.Gatehouse;
 import org.example.model.building.Material;
+import org.example.model.building.enums.MaterialType;
+import org.example.view.enums.Outputs;
+import org.example.view.mainMenu.gameMenu.BuildingMenu;
+import org.example.view.mainMenu.gameMenu.GameMenu;
+import org.example.view.mainMenu.gameMenu.ShopMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -84,11 +92,18 @@ public class ShopMenuApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Pane shopPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/Shop/ShopMenu.fxml"));
+        ShopMenuApp.shopPane = shopPane;
         ShopMenuApp.stage = stage;
+        Scene scene = new Scene(shopPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
     public void initialize() {
+
+        GameMenu.setThisEmpire(new Empire(null, null));
         int index = 0;
         for (Material material : getThisEmpire().getMaterials().keySet()) {
             if (index == 20) return;
@@ -176,16 +191,13 @@ public class ShopMenuApp extends Application {
         stage.show();
     }
 
-    public void selling() {
-
-    }
-
-    public void buying() {
-
-    }
 
     public void goShopping(MouseEvent mouseEvent) {
         Material material = getMaterialByName(((ImageView) mouseEvent.getSource()).getId());
+        doShopping(material);
+    }
+
+    public void doShopping(Material material) {
         int size = materials.size();
         if (index < 0) index += size;
         if (index > size) index -= size;
@@ -193,14 +205,17 @@ public class ShopMenuApp extends Application {
             currentMaterial = material;
             Material prevMaterial = materials.get((index - 1 + size) % size);
             Material nextMaterial = materials.get((index + 1) % size);
+            //TODO ????????????////
             buy.setText("buy : " + material.getMaterialType().getBuyingPrice());
             sell.setText("sell : " + material.getMaterialType().getSellingPrice());
-            //TODO chek
+            //TODO check
             prevCommodity.setImage(new Image(prevMaterial.getMaterialType().getPictureAddress().toExternalForm()));
             commodity.setImage(new Image(currentMaterial.getMaterialType().getPictureAddress().toExternalForm()));
             nextCommodity.setImage(new Image(nextMaterial.getMaterialType().getPictureAddress().toExternalForm()));
+
         }
     }
+
 
     //TODO metalArmour
     public Material getMaterialByName(String name) {
@@ -216,4 +231,23 @@ public class ShopMenuApp extends Application {
     }
 
 
+    public void buying(MouseEvent mouseEvent) {
+        //TODO pop up
+        Outputs outputs = ShopMenu.buy(currentMaterial);
+
+    }
+
+    public void selling(MouseEvent mouseEvent) {
+        //TODO
+        Outputs outputs = ShopMenu.sell(currentMaterial);
+
+    }
+
+    public void goNext(MouseEvent mouseEvent) {
+        doShopping(materials.get((index + 1) % materials.size()));
+    }
+
+    public void goPrev(MouseEvent mouseEvent) {
+        doShopping(materials.get((index - 1 + materials.size()) % materials.size()));
+    }
 }

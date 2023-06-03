@@ -38,8 +38,6 @@ public class BuildingMenuApp extends Application {
         Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
         BuildingMenuApp.buildingPane = buildingPane;
         BuildingMenuApp.stage = stage;
-        ImageView imageView = new ImageView(new Image(MaterialType.WOOD.getPictureAddress().toExternalForm()));
-        buildingPane.getChildren().add(imageView);
         Scene scene = new Scene(buildingPane);
         stage.setScene(scene);
         stage.show();
