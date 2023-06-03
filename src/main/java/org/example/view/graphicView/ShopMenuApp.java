@@ -188,16 +188,17 @@ public class ShopMenuApp extends Application {
         Material material = getMaterialByName(((ImageView) mouseEvent.getSource()).getId());
         int size = materials.size();
         if (index < 0) index += size;
+        if (index > size) index -= size;
         if (material != null) {
             currentMaterial = material;
             Material prevMaterial = materials.get((index - 1 + size) % size);
             Material nextMaterial = materials.get((index + 1) % size);
-            buy.setText("buy" + material.getMaterialType().getBuyingPrice());
-            sell.setText("buy" + material.getMaterialType().getSellingPrice());
+            buy.setText("buy : " + material.getMaterialType().getBuyingPrice());
+            sell.setText("sell : " + material.getMaterialType().getSellingPrice());
             //TODO chek
-//            prevCommodity.setImage(new Image(prevMaterial.getMaterialType().getPictureAddress()));
-//            commodity.setImage(new Image(currentMaterial.getMaterialType().getPictureAddress()));
-//            nextCommodity.setImage(new Image(nextMaterial.getMaterialType().getPictureAddress()));
+            prevCommodity.setImage(new Image(prevMaterial.getMaterialType().getPictureAddress().toExternalForm()));
+            commodity.setImage(new Image(currentMaterial.getMaterialType().getPictureAddress().toExternalForm()));
+            nextCommodity.setImage(new Image(nextMaterial.getMaterialType().getPictureAddress().toExternalForm()));
         }
     }
 

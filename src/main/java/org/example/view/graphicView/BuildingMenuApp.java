@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
@@ -13,8 +14,10 @@ import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
 import org.example.model.building.castleBuilding.Tower;
 import org.example.model.building.enums.BuildingName;
+import org.example.model.building.enums.MaterialType;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -35,6 +38,8 @@ public class BuildingMenuApp extends Application {
         Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
         BuildingMenuApp.buildingPane = buildingPane;
         BuildingMenuApp.stage = stage;
+        ImageView imageView = new ImageView(new Image(MaterialType.WOOD.getPictureAddress().toExternalForm()));
+        buildingPane.getChildren().add(imageView);
         Scene scene = new Scene(buildingPane);
         stage.setScene(scene);
         stage.show();

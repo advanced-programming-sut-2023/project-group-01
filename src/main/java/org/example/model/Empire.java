@@ -321,6 +321,14 @@ public class Empire {
         }
     }
 
+    public void reduceMaterial(MaterialType materialType) {
+        for (Material material : materials.keySet()) {
+            if (material.getMaterialType().equals(materialType)) {
+                materials.replace(material,materials.get(material) - 1);
+            }
+        }
+    }
+
     public int getMaxPopulation() {
         return maxPopulation;
     }
