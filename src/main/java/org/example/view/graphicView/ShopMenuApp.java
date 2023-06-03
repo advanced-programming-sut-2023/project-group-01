@@ -39,6 +39,31 @@ public class ShopMenuApp extends Application {
     private Text buy;
     @FXML
     private Text sell;
+    @FXML
+    private Text meatText;
+    @FXML
+    private Text cheeseText;
+    @FXML
+    private Text appleText;
+    @FXML
+    private Text barleyText;
+    @FXML
+    private Text aleText;
+    @FXML
+    private Text wheatText;
+    @FXML
+    private Text floorText;
+    @FXML
+    private Text breadText;
+    @FXML
+    private Text woodText;
+    @FXML
+    private Text stoneText;
+    @FXML
+    private Text ironText;
+    @FXML
+    private Text oilText;
+
     private Material currentMaterial;
 
     @Override
@@ -56,10 +81,52 @@ public class ShopMenuApp extends Application {
             index++;
         }
         goldText.setText("" + getThisEmpire().getGold());
-
+        for (Material material : materialHashMap.keySet()) {
+            if (material.getMaterialType().getTypeOfProduct().equals("source")) {
+                setIndustryText(material, materialHashMap.get(material));
+            } else if (material.getMaterialType().getTypeOfProduct().equals("food")) {
+                setFoodText(material, materialHashMap.get(material));
+            } else if (material.getMaterialType().getTypeOfProduct().equals("warfare")) {
+                setWeaponText(material, materialHashMap.get(material));
+            }
+        }
         //TODO
     }
 
+    public void setFoodText(Material material, int value) {
+        switch (material.getMaterialType().getName()) {
+            case "meat" -> meatText.setText("" + value);
+            case "cheese" -> cheeseText.setText("" + value);
+            case "apple" -> appleText.setText("" + value);
+            case "barley" -> barleyText.setText("" + value);
+            case "ale" -> aleText.setText("" + value);
+            case "wheat" -> wheatText.setText("" + value);
+            case "floor" -> floorText.setText("" + value);
+            case "bread" -> breadText.setText("" + value);
+        }
+    }
+
+    public void setIndustryText(Material material, int value) {
+        switch (material.getMaterialType().getName()) {
+            case "wood" -> woodText.setText("" + value);
+            case "stone" -> stoneText.setText("" + value);
+            case "iron" -> ironText.setText("" + value);
+            case "oil" -> oilText.setText("" + value);
+        }
+    }
+
+    public void setWeaponText(Material material, int value) {
+        switch (material.getMaterialType().getName()) {
+            case "" -> meatText.setText("" + value);
+            case "cheese" -> cheeseText.setText("" + value);
+            case "apple" -> appleText.setText("" + value);
+            case "barley" -> barleyText.setText("" + value);
+            case "ale" -> aleText.setText("" + value);
+            case "wheat" -> wheatText.setText("" + value);
+            case "floor" -> floorText.setText("" + value);
+            case "bread" -> breadText.setText("" + value);
+        }
+    }
 
     public static void setCurrentBuilding(Building currentBuilding) {
         ShopMenuApp.currentBuilding = currentBuilding;
@@ -80,10 +147,14 @@ public class ShopMenuApp extends Application {
         openMenu(url);
     }
 
+    public void returnBack(MouseEvent mouseEvent) throws IOException {
+        URL url = ShopMenuApp.class.getResource("/FXML/BuildingMenu/Shop/ShopMenu.fxml");
+        openMenu(url);
+    }
+
     public void openMenu(URL url) throws IOException {
         //TODO set amount
-        shopPane = FXMLLoader.load(BuildingMenuApp.class.getResource("/FXML/BuildingMenu/Granary.fxml"));
-        ShopMenuApp.stage = stage;
+        shopPane = FXMLLoader.load(url);
         Scene scene = new Scene(shopPane);
         stage.setScene(scene);
         stage.show();
@@ -98,7 +169,7 @@ public class ShopMenuApp extends Application {
     }
 
     public void goShopping(MouseEvent mouseEvent) {
-        Material material = getMaterialByName(((ImageView)mouseEvent.getSource()).getId());
+        Material material = getMaterialByName(((ImageView) mouseEvent.getSource()).getId());
         int size = materials.size();
         if (index < 0) index += size;
         if (material != null) {
@@ -113,6 +184,7 @@ public class ShopMenuApp extends Application {
 //            nextCommodity.setImage(new Image(nextMaterial.getMaterialType().getPictureAddress()));
         }
     }
+
     //TODO metalArmour
     public Material getMaterialByName(String name) {
         int index = 0;

@@ -20,7 +20,7 @@ public class MercenaryBarrackMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL url = MercenaryBarrackMenu.class.getResource("/FXML/MercenaryBarrackMenu.fxml");
+        URL url = MercenaryBarrackMenu.class.getResource("/FXML/CreateUnit/MercenaryBarrackMenu.fxml");
         Pane pane = FXMLLoader.load(url);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
