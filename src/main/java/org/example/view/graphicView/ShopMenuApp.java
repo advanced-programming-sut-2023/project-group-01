@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -11,10 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
+import org.example.model.building.enums.MaterialType;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 import org.example.view.mainMenu.gameMenu.GameMenu;
@@ -327,13 +331,27 @@ public class ShopMenuApp extends Application {
     public void buying(MouseEvent mouseEvent) {
         //TODO pop up
         Outputs outputs = ShopMenu.buy(currentMaterial);
-        System.out.println(outputs.toString());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputs.toString(), ButtonType.CLOSE);
+        alert.setTitle("Buying");
+        alert.setGraphic(new ImageView(new Image(currentMaterial.getMaterialType().getPictureAddress().toExternalForm())));
+        if (outputs.equals(Outputs.SUCCESS_BUY))
+            alert.setHeaderText("Successful buy");
+        else
+            alert.setHeaderText("Failure in buying");
+        alert.showAndWait();
     }
 
     public void selling(MouseEvent mouseEvent) {
         //TODO
         Outputs outputs = ShopMenu.sell(currentMaterial.getMaterialType().getName());
-        System.out.println(outputs.toString());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputs.toString(), ButtonType.CLOSE);
+        alert.setTitle("Selling");
+        alert.setGraphic(new ImageView(new Image(currentMaterial.getMaterialType().getPictureAddress().toExternalForm())));
+        if (outputs.equals(Outputs.SUCCESS_SELL))
+            alert.setHeaderText("Successful sell");
+        else
+            alert.setHeaderText("Failure in selling");
+        alert.showAndWait();
     }
 
     public void goNext() throws IOException {
