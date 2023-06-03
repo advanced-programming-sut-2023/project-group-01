@@ -2,6 +2,7 @@ package org.example.view.graphicView;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,6 +21,7 @@ import org.example.view.LoginMenu;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 import static org.example.controller.mainMenuController.ProfileMenuController.currentUser;
 
@@ -57,6 +59,7 @@ public class ScoreBoard extends Application {
         AnchorPane anchorPane = FXMLLoader.load(url);
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
+        scene.setCursor(new ImageCursor(new Image(Objects.requireNonNull(Main.class.getResource("/Images/SwordIcon.png")).openStream())));
         stage.setTitle("Score Board");
         stage.show();
     }

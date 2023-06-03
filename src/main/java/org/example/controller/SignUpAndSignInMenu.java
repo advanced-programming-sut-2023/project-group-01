@@ -2,6 +2,7 @@ package org.example.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.ImageInput;
@@ -25,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 public class SignUpAndSignInMenu extends Application {
     public ImageView background;
@@ -35,6 +37,7 @@ public class SignUpAndSignInMenu extends Application {
         URL url = LoginMenu.class.getResource("/FXML/Main.fxml");
         AnchorPane anchorPane = FXMLLoader.load(url);
         Scene scene = new Scene(anchorPane);
+        scene.setCursor(new ImageCursor(new Image(Objects.requireNonNull(Main.class.getResource("/Images/SwordIcon.png")).openStream())));
         stage.setScene(scene);
         stage.setTitle("Sign up and Sign in menu");
         stage.show();

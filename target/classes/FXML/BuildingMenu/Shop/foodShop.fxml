@@ -14,8 +14,8 @@
     </ImageView>
 
 
-    <ImageView fx:id="meat" fitHeight="52.0" fitWidth="47.0" layoutX="105.0" layoutY="55.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="meat" fitHeight="52.0" fitWidth="47.0" layoutX="105.0" layoutY="55.0" onMouseClicked="#goShopping"
+               pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/meat.png"/>
         </image>
@@ -26,8 +26,8 @@
         </font>
     </Text>
 
-    <ImageView fx:id="cheese" fitHeight="43.0" fitWidth="54.0" layoutX="160.0" layoutY="64.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="cheese" fitHeight="43.0" fitWidth="54.0" layoutX="160.0" layoutY="64.0"
+               onMouseClicked="#goShopping" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/cheese.png"/>
         </image>
@@ -38,8 +38,8 @@
         </font>
     </Text>
 
-    <ImageView fx:id="apple" fitHeight="43.0" fitWidth="47.0" layoutX="217.0" layoutY="64.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="apple" fitHeight="43.0" fitWidth="47.0" layoutX="217.0" layoutY="64.0"
+               onMouseClicked="#goShopping" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/apple.png"/>
         </image>
@@ -50,8 +50,8 @@
         </font>
     </Text>
 
-    <ImageView fx:id="barley" fitHeight="43.0" fitWidth="47.0" layoutX="269.0" layoutY="64.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="barley" fitHeight="43.0" fitWidth="47.0" layoutX="269.0" layoutY="64.0"
+               onMouseClicked="#goShopping" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/barley.png"/>
         </image>
@@ -62,8 +62,8 @@
         </font>
     </Text>
 
-    <ImageView fx:id="ale" fitHeight="43.0" fitWidth="47.0" layoutX="327.0" layoutY="64.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="ale" fitHeight="43.0" fitWidth="47.0" layoutX="327.0" layoutY="64.0" onMouseClicked="#goShopping"
+               pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/ale.png"/>
         </image>
@@ -74,8 +74,8 @@
         </font>
     </Text>
 
-    <ImageView fx:id="wheat" fitHeight="52.0" fitWidth="47.0" layoutX="383.0" layoutY="64.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="wheat" fitHeight="52.0" fitWidth="47.0" layoutX="383.0" layoutY="64.0"
+               onMouseClicked="#goShopping" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/wheat.png"/>
         </image>
@@ -86,8 +86,8 @@
         </font>
     </Text>
 
-    <ImageView fx:id="floor" fitHeight="52.0" fitWidth="54.0" layoutX="435.0" layoutY="62.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="floor" fitHeight="52.0" fitWidth="54.0" layoutX="435.0" layoutY="62.0"
+               onMouseClicked="#goShopping" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/floor.png"/>
         </image>
@@ -98,8 +98,8 @@
         </font>
     </Text>
 
-    <ImageView fx:id="bread" fitHeight="43.0" fitWidth="64.0" layoutX="489.0" layoutY="64.0" pickOnBounds="true"
-               onMouseClicked="#goShopping">
+    <ImageView fx:id="bread" fitHeight="43.0" fitWidth="64.0" layoutX="489.0" layoutY="64.0"
+               onMouseClicked="#goShopping" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/foodShop/bread.png"/>
         </image>
@@ -110,6 +110,12 @@
         </font>
     </Text>
 
+    <ImageView fx:id="return" fitHeight="37.0" fitWidth="47.0" layoutX="29.0" layoutY="123.0"
+               onMouseClicked="#returnBack" pickOnBounds="true">
+        <image>
+            <Image url="@../../../Images/options/prev.png"/>
+        </image>
+    </ImageView>
 
 
 </AnchorPane>
