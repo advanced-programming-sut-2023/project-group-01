@@ -19,52 +19,30 @@
             <Image url="@../../../Images/ShopMenu/gold.png"/>
         </image>
     </ImageView>
-    <Text fx:id="goldText" layoutX="500.0" layoutY="61.0" text="0">
-        <font>
-            <Font name="System Bold" size="15.0"/>
-        </font>
-    </Text>
 
-    <ImageView fx:id="prevCommodity" fitHeight="30.0" fitWidth="29.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true"/>
-
-    <ImageView fx:id="prev" fitHeight="30.0" fitWidth="42.0" layoutX="62.0" layoutY="18.0" pickOnBounds="true"
-        onMouseClicked="#goPrev">
+    <ImageView fx:id="prev" fitHeight="30.0" fitWidth="42.0" layoutX="62.0" layoutY="18.0" onMouseClicked="#goPrev"
+               pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/prev.png"/>
         </image>
     </ImageView>
 
-
-
-    <ImageView fx:id="nextCommodity" fitHeight="30.0" fitWidth="29.0" layoutX="170.0" layoutY="18.0" pickOnBounds="true"/>
-
-    <ImageView fx:id="next" fitHeight="30.0" fitWidth="42.0" layoutX="114.0" layoutY="18.0" pickOnBounds="true"
-    onMouseClicked="#goNext">
+    <ImageView fx:id="next" fitHeight="30.0" fitWidth="42.0" layoutX="114.0" layoutY="18.0" onMouseClicked="#goNext"
+               pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/next.png"/>
         </image>
     </ImageView>
 
-
-
-    <ImageView fx:id="commodity" fitHeight="66.0" fitWidth="66.0" layoutX="55.0" layoutY="69.0" pickOnBounds="true"/>
-
-
-    <Button layoutX="185.0" layoutY="48.0" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #fdfd19"
-            onMouseClicked="#buying"/>
-    <Button layoutX="185.0" layoutY="102.0" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #fdfd19"
-            onMouseClicked="#selling"/>
-
-    <Text fx:id="buy" layoutX="218.0" layoutY="74.0" text="k" wrappingWidth="132.6279296875">
-        <font>
-            <Font name="System Bold" size="15.0"/>
-        </font>
-    </Text>
-
-    <Text fx:id="sell" layoutX="218.0" layoutY="128.0" text="k" wrappingWidth="132.6279296875">
-        <font>
-            <Font name="System Bold" size="15.0"/>
-        </font>
-    </Text>
+    <Button layoutX="210.0" layoutY="51.0" onMouseClicked="#buying" prefHeight="41.0" prefWidth="198.0"
+            style="-fx-background-color: #fdfd19"/>
+    <Button layoutX="210.0" layoutY="101.0" onMouseClicked="#selling" prefHeight="41.0" prefWidth="198.0"
+            style="-fx-background-color: #fdfd19"/>
+    <ImageView fx:id="return" fitHeight="42.0" fitWidth="42.0" layoutX="47.0" layoutY="118.0"
+               onMouseClicked="#returnBack" pickOnBounds="true">
+        <image>
+            <Image url="@../../../Images/options/prev.png"/>
+        </image>
+    </ImageView>
 
 </AnchorPane>
