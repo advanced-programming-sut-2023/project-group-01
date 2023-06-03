@@ -2,6 +2,7 @@
 
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.ShopMenuApp">
 
@@ -11,27 +12,54 @@
         </image>
     </ImageView>
 
+
     <ImageView fx:id="wood" fitHeight="50.0" fitWidth="59.0" layoutX="129.0" layoutY="59.0" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/industryShop/wood.png" />
         </image>
     </ImageView>
+    <Text fx:id="woodText" layoutX="160" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0" />
+        </font>
+    </Text>
 
     <ImageView fx:id="stone" fitHeight="44.0" fitWidth="59.0" layoutX="238.0" layoutY="61.0" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/industryShop/stone.png" />
         </image>
     </ImageView>
+    <Text fx:id="stoneText" layoutX="265" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0" />
+        </font>
+    </Text>
 
     <ImageView fx:id="iron" fitHeight="44.0" fitWidth="59.0" layoutX="348.0" layoutY="62.0" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/industryShop/iron.png" />
         </image>
     </ImageView>
+    <Text fx:id="ironText" layoutX="380" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0" />
+        </font>
+    </Text>
 
     <ImageView fx:id="oil" fitHeight="50.0" fitWidth="52.0" layoutX="456.0" layoutY="62.0" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/industryShop/oil.png" />
+        </image>
+    </ImageView>
+    <Text fx:id="oilText" layoutX="480" layoutY="130.0" text="0">
+        <font>
+            <Font name="System Bold" size="15.0" />
+        </font>
+    </Text>
+
+    <ImageView fx:id="return" fitHeight="44.0" fitWidth="43.0" layoutX="33.0" layoutY="113.0" onMouseClicked="#returnBack" pickOnBounds="true">
+        <image>
+            <Image url="@../../../Images/options/prev.png" />
         </image>
     </ImageView>
 

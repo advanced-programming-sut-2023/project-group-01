@@ -159,6 +159,13 @@ public class Empire {
     public LinkedHashMap<FoodType, Float> getFoods() {
         return foods;
     }
+    public void reduceMaterial(MaterialType materialType) {
+        for (Material material : materials.keySet()) {
+            if (material.getMaterialType().equals(materialType)) {
+                materials.replace(material,materials.get(material) - 1);
+            }
+        }
+    }
 
     public int getFearPopularity() {
         return fearPopularity;

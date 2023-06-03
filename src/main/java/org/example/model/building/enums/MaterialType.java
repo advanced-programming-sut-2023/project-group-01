@@ -1,5 +1,7 @@
 package org.example.model.building.enums;
 
+import org.example.Main;
+
 public enum MaterialType {
     //Sources :
     IRON("iron", 215, 115, "source"),
@@ -70,4 +72,7 @@ public enum MaterialType {
     }
 
 
+    public String getPictureAddress() {
+        return null;
+    }
 }

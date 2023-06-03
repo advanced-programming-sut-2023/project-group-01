@@ -22,7 +22,7 @@ public class CaptchaGenerator {
         Process process = Runtime.getRuntime().
                 exec("C:\\Users\\ASUS\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe C:\\Users\\ASUS\\IdeaProjects\\AP\\project-group-01-pull\\src\\main\\resources\\CaptchaPictures\\main.py");
         try {
-            TimeUnit.MILLISECONDS.sleep(500);
+            TimeUnit.MILLISECONDS.sleep(800);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

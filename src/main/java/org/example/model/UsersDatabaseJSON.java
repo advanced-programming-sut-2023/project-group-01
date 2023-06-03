@@ -42,15 +42,15 @@ public class UsersDatabaseJSON {
 
     public static void loadStayedLoggedInUser() {
         String json = null;
-        try {
-            json = new String(Files.readAllBytes(Paths.get("loggedIn.json")));
-            User user = new Gson().fromJson(json, new TypeToken<User>() {
-            }.getType());
-            if (user != null)
-                Data.setStayedLoggedIn(Data.findUserWithUsername(user.getUsername()));
-
-        } catch (IOException e) {
-
-        }
+//        try {
+//            json = new String(Files.readAllBytes(Paths.get("loggedIn.json")));
+//            User user = new Gson().fromJson(json, new TypeToken<User>() {
+//            }.getType());
+//            if (user != null)
+//                Data.setStayedLoggedIn(Data.findUserWithUsername(user.getUsername()));
+//
+//        } catch (IOException e) {
+//
+//        }
     }
 }
