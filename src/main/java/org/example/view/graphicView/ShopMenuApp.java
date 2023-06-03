@@ -63,6 +63,22 @@ public class ShopMenuApp extends Application {
     private Text ironText;
     @FXML
     private Text oilText;
+    @FXML
+    private Text spearText;
+    @FXML
+    private Text arcText;
+    @FXML
+    private Text maceText;
+    @FXML
+    private Text tannerText;
+    @FXML
+    private Text crossbowText;
+    @FXML
+    private Text pikeText;
+    @FXML
+    private Text swordText;
+    @FXML
+    private Text metalArmourText;
 
     private Material currentMaterial;
 
@@ -117,14 +133,14 @@ public class ShopMenuApp extends Application {
 
     public void setWeaponText(Material material, int value) {
         switch (material.getMaterialType().getName()) {
-            case "" -> meatText.setText("" + value);
-            case "cheese" -> cheeseText.setText("" + value);
-            case "apple" -> appleText.setText("" + value);
-            case "barley" -> barleyText.setText("" + value);
-            case "ale" -> aleText.setText("" + value);
-            case "wheat" -> wheatText.setText("" + value);
-            case "floor" -> floorText.setText("" + value);
-            case "bread" -> breadText.setText("" + value);
+            case "spear" -> spearText.setText("" + value);
+            case "arc" -> arcText.setText("" + value);
+            case "mace" -> maceText.setText("" + value);
+            case "tanner" -> tannerText.setText("" + value);
+            case "crossbow" -> crossbowText.setText("" + value);
+            case "pike" -> pikeText.setText("" + value);
+            case "sword" -> swordText.setText("" + value);
+            case "metalArmour" -> metalArmourText.setText("" + value);
         }
     }
 

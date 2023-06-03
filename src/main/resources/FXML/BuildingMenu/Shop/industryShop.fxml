@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.ShopMenuApp">
 
-    <ImageView fx:id="foodShop" fitHeight="160" fitWidth="600" pickOnBounds="true">
+    <ImageView fx:id="industryShop" fitHeight="160" fitWidth="600" pickOnBounds="true">
         <image>
             <Image url="@../../../Images/ShopMenu/industryShop/secondShopMenu.png" />
         </image>
