@@ -5,7 +5,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.controller.SignUpAndSignInMenu;
 import org.example.model.Data;
+import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
+import org.example.view.graphicView.MainMenuApp;
+import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,7 +23,7 @@ public class Main extends Application {
 
 
         UsersDatabaseJSON.initializeUsers();
-        UsersDatabaseJSON.loadStayedLoggedInUser();
+      //  UsersDatabaseJSON.loadStayedLoggedInUser();
         Data.setDefaultMap(new String(Files.readAllBytes(Paths.get("DefaultMap.txt"))));
 
 
@@ -51,7 +54,9 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Main.stage = stage;
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
-        new SignUpAndSignInMenu().start(stage);
+        Data.setStayedLoggedIn(Data.findUserWithUsername("ali"));
+        new MainMenuApp().start(Main.stage);
+        //new SignUpAndSignInMenu().start(stage);
         //new ScoreBoard().start(Main.stage);
     }
 
