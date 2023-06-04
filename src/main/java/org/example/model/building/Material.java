@@ -1,5 +1,6 @@
 package org.example.model.building;
 
+import org.example.Main;
 import org.example.model.building.enums.MaterialType;
 
 public class Material {
@@ -12,4 +13,5 @@ public class Material {
     public MaterialType getMaterialType() {
         return materialType;
     }
+
 }

@@ -1,0 +1,36 @@
+#image{
+    -fx-fit-width: 10;
+    -fx-fitWidth : 10;
+}
+
+#text{
+    -fx-font-family: "Lesson Learned";
+    -fx-font-size: 24;
+}
+
+#text2{
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 20;
+}
+#text3{
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 14;
+}
+
+#textField{
+    -fx-background-color: #C4A484;
+    -fx-background-radius: 20;
+    -fx-border-color: #5C4033;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+    -fx-prompt-text-fill: White;
+}
+
+#button {
+    -fx-font-size: 14.0;
+    -fx-background-color: #713022;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-font-family: "Library Records";
+}

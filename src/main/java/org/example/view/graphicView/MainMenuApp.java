@@ -30,7 +30,8 @@ public class MainMenuApp extends Application {
         new SignUpAndSignInMenu().start(Main.stage);
     }
 
-    public void startGame(MouseEvent mouseEvent) {
+    public void startGame(MouseEvent mouseEvent) throws Exception {
+        new GameSettingMenu().start(Main.stage);
     }
 
     public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {

@@ -78,6 +78,13 @@ public enum MaterialType {
         return null;
     }
 
+    public static MaterialType getMaterialWithImage(URL url){
+        for (MaterialType materialType : MaterialType.values())
+            if (materialType.getPictureAddress().equals(url))
+                return materialType;
+        return null;
+    }
+
     public String getName() {
         return name;
     }
