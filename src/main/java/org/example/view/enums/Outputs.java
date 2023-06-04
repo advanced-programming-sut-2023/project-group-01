@@ -127,7 +127,8 @@ public enum Outputs {
     WRONG_UNIT_TYPE("wrong unit type"),
     NOT_ENOUGH_CAPACITY("Not enough capacity"),
     NOT_ENOUGH_WOOD("Not enough wood"),
-    NOT_HAVING_SMALL_GATEHOUSE("Not have small stone gatehouse and can't change tax rate");
+    NOT_HAVING_SMALL_GATEHOUSE("Not have small stone gatehouse and can't change tax rate"),
+    USER_IN_GAME("user in game");
     private String output;
 
     Outputs(String output) {

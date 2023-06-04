@@ -64,15 +64,20 @@ public class ShopMenu {
             getThisEmpire().getFoods().put(FoodType.CHEESE, (float) getThisEmpire().getMaterials().get(material));
     }
 
-    public static Outputs sell(Material material) {
-        LinkedHashMap<Material, Integer> materials = getThisEmpire().getMaterials();
-
-        int count  = Math.min(5, materials.get(material));
+    public static Outputs sell(String name) {
+        Material gohMaterial = null;
+        for (Material material :  getThisEmpire().getMaterials().keySet()) {
+            if (material.getMaterialType().getName().equals(name)) {
+                gohMaterial = material;
+                break;
+            }
+        }
+        int count  = Math.min(5,  getThisEmpire().getMaterials().get(gohMaterial));
         if (count <= 0)
             return Outputs.NOT_ENOUGH_MATERIAL;
-        materials.put(material, materials.get(material) - count);
-        setFoods(material);
-        getThisEmpire().increaseGold(material.getMaterialType().getSellingPrice() * count);
+        getThisEmpire().getMaterials().put(gohMaterial,  getThisEmpire().getMaterials().get(gohMaterial) - count);
+        setFoods(gohMaterial);
+        getThisEmpire().increaseGold(gohMaterial.getMaterialType().getSellingPrice() * count);
         return Outputs.SUCCESS_SELL;
     }
 
