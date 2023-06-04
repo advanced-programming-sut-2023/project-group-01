@@ -37,7 +37,6 @@ public class ShopMenuApp extends Application {
     private static Pane shopPane;
     private static int index;
     private static ArrayList<Material> materials = new ArrayList<>();
-//    private static LinkedHashMap<Material, Integer> materialHashMap = new LinkedHashMap<>();
     private static ImageView prevCommodity;
     private static ImageView nextCommodity;
     private static ImageView commodity;
@@ -167,7 +166,7 @@ public class ShopMenuApp extends Application {
             if (material.getMaterialType().getTypeOfProduct().equals("source")) {
                 setIndustryText(material,  getThisEmpire().getMaterials().get(material));
             } else if (material.getMaterialType().getTypeOfProduct().equals("food")) {
-                setFoodText(material, 20);
+                setFoodText(material, getThisEmpire().getMaterials().get(material));
             } else if (material.getMaterialType().getTypeOfProduct().equals("warfare")) {
                 setWeaponText(material,  getThisEmpire().getMaterials().get(material));
             }
@@ -289,6 +288,7 @@ public class ShopMenuApp extends Application {
     //TODO قشنگ کردن منو
     public void goShopping(MouseEvent mouseEvent) throws IOException {
         Material material = getMaterialByName(((ImageView) mouseEvent.getSource()).getId());
+        callInitializers();
         URL url = ShopMenuApp.class.getResource("/FXML/BuildingMenu/Shop/goShopping.fxml");
         shopPane = FXMLLoader.load(url);
         shopPane.getChildren().addAll(prevCommodity, commodity, nextCommodity, buy, sell, goldText);

@@ -63,7 +63,7 @@ public class BuildingMenu {
     }
 
     public void repairChecker() {
-        System.out.println(buildingMenuController.repair().toString());
+//        System.out.println(buildingMenuController.repair().toString());
     }
 
     public void setBuilding(Building selectedBuilding) {
