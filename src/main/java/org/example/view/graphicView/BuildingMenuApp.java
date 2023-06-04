@@ -9,6 +9,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.example.model.Trade;
 import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
 import org.example.model.building.castleBuilding.Tower;
@@ -63,9 +64,8 @@ public class BuildingMenuApp extends Application {
         System.out.println("show info");
     }
 
-    public void openTrade(MouseEvent mouseEvent) {
-        //TODO
-        System.out.println("trade");
+    public void openTrade(MouseEvent mouseEvent) throws Exception {
+        new TradeMenuApp().start(stage);
     }
 
     public void foodProcessingMenu(MouseEvent mouseEvent) throws IOException {
@@ -191,10 +191,6 @@ public class BuildingMenuApp extends Application {
             dast.setRotate(dast.getRotate() + 72);
             getThisEmpire().setFoodRate(foodRate);
         }
-    }
-
-    public void openGateHouse() {
-
     }
 
     public void pasteBuilding() {

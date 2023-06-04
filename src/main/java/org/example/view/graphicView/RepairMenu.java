@@ -33,6 +33,7 @@ public class RepairMenu extends Application {
     private static Building currentBuilding;
     private static Button open;
     private static Button close;
+    private static ProgressBar progressBar;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -68,7 +69,7 @@ public class RepairMenu extends Application {
         AnchorPane anchorPane = commonRepair(text);
         Image openImage;
         Image closeImage;
-        if (((Gatehouse)currentBuilding).getOpen()) {
+        if (((Gatehouse) currentBuilding).getOpen()) {
             openImage = new Image(new FileInputStream("src\\main\\resources\\Images\\open2.png"));
             closeImage = new Image(new FileInputStream("src\\main\\resources\\Images\\close1.png"));
         } else {
@@ -119,7 +120,7 @@ public class RepairMenu extends Application {
     }
 
     public void close() throws FileNotFoundException {
-        ((Gatehouse)currentBuilding).setClosed();
+        ((Gatehouse) currentBuilding).setClosed();
         Image c = new Image(new FileInputStream("src\\main\\resources\\Images\\close2.png"));
         Image o = new Image(new FileInputStream("src\\main\\resources\\Images\\open1.png"));
         close.setBackground(new Background(new BackgroundImage(c, BackgroundRepeat.NO_REPEAT,
@@ -138,8 +139,7 @@ public class RepairMenu extends Application {
                     BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
             open.setBackground(new Background(new BackgroundImage(o, BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "You can not open gatehouse when enemy is near", ButtonType.CLOSE);
             alert.setTitle("Failure in opening gatehouse");
             //TODO set the picture of building
@@ -158,18 +158,17 @@ public class RepairMenu extends Application {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundimage);
         anchorPane.setBackground(background);
-        ProgressBar progressBar = new ProgressBar();
-        //TODO
-//        double hp = currentBuilding.getBuildingName().getHitPoint();
-//        double maxHp = currentBuilding.getBuildingName().getMaxHitPoint();
-        progressBar.setProgress(1);
+        RepairMenu.progressBar = new ProgressBar();
+        double hp = currentBuilding.getBuildingName().getHitPoint();
+        double maxHp = currentBuilding.getBuildingName().getMaxHitPoint();
+        progressBar.setProgress(hp / maxHp);
         progressBar.setLayoutX(520);
         progressBar.setLayoutY(15);
         progressBar.setPrefWidth(60);
         progressBar.setPrefHeight(30);
         progressBar.setStyle("-fx-accent: #3dff2d");
         //TODO set currentBuilding.getHitPoint() / currentBuilding.getMaxHitPoint()
-        Text txt = new Text("250 / 250");
+        Text txt = new Text(currentBuilding.getBuildingName().getHitPoint() + " / " + currentBuilding.getBuildingName().getMaxHitPoint());
         txt.setLayoutX(525);
         txt.setLayoutY(60);
         Button button = new Button("repair");
@@ -191,9 +190,6 @@ public class RepairMenu extends Application {
     }
 
     public static void repair() {
-        Empire empire = new Empire(null, null);
-        currentBuilding = new Building(empire, 0, 0, BuildingName.SQUARE_TOWER);
-        setThisEmpire(empire);
         Outputs outputs = BuildingMenuController.repair(currentBuilding);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, outputs.toString(), ButtonType.CLOSE);
         alert.setTitle("repair");
