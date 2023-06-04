@@ -47,7 +47,7 @@
 
     <ImageView fx:id="tanner" fitHeight="46.0" fitWidth="55.0" layoutX="268.0" layoutY="64.0" pickOnBounds="true">
         <image>
-            <Image url="@../../../Images/ShopMenu/weapon/tanner.png" />
+            <Image url="@../../../Images/ShopMenu/weapon/leatherArmour.png" />
         </image>
     </ImageView>
     <Text fx:id="tannerText" layoutX="290.0" layoutY="132.0" text="0">

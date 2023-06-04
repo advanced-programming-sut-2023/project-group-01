@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import org.example.controller.SignUpAndSignInMenu;
 import org.example.model.Data;
 import org.example.model.UsersDatabaseJSON;
+import org.example.view.graphicView.TradeMenuApp;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,7 +52,8 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Main.stage = stage;
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
-        new SignUpAndSignInMenu().start(stage);
+        //new SignUpAndSignInMenu().start(stage);
+        new TradeMenuApp().start(Main.stage);
         //new ScoreBoard().start(Main.stage);
     }
 
