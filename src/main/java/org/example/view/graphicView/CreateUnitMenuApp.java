@@ -2,23 +2,31 @@ package org.example.view.graphicView;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
+import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 
 import java.net.URL;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class CreateUnitMenuApp extends Application {
     private static Building currentBuilding;
     private static int x;
     private static int y;
     private static URL url;
+    private static Text text = new Text();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -34,16 +42,28 @@ public class CreateUnitMenuApp extends Application {
         CreateUnitMenuApp.currentBuilding = currentBuilding;
         if (currentBuilding.getBuildingName().equals(BuildingName.BARRACK)) {
             url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/BarrackMenu.fxml");
+            createText(585, 40);
         } else if (currentBuilding.getBuildingName().equals(BuildingName.MERCENARY_BARRACKS)) {
             url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/MercenaryBarrackMenu.fxml");
+            createText(540, 148);
         } else if (currentBuilding.getBuildingName().equals(BuildingName.CATHEDRAL)) {
-            //TODO
+            url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/CathedralMenu.fxml");
+            createText(550, 20);
         } else if (currentBuilding.getBuildingName().equals(BuildingName.ENGINEER_GUILD)) {
             url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/MercenaryBarrackMenu.fxml");
+            createText(540, 20);
         } else if (currentBuilding.getBuildingName().equals(BuildingName.TUNNELER_GUILD)) {
             url = CreateUnitMenuApp.class.getResource("/FXML/CreateUnit/TunnlerGuildMenu.fxml");
+            createText(540, 20);
         }
         findXY();
+    }
+
+    public static void createText(double x, double y) {
+        text.setText(getThisEmpire().getPopulation() + "");
+        text.setLayoutX(x);
+        text.setLayoutY(y);
+        text.setStroke(Color.WHITE);
     }
 
     public static void findXY() {
@@ -197,11 +217,15 @@ public class CreateUnitMenuApp extends Application {
             ErrorInCreatingUnit("pool nadari");
             return;
         }
-        //        new MilitaryUnit(getMap().getTile(x, y), NextTurn.getCurrentEmpire(), militaryUnitName, x, y);
+        //TODO check
+        new MilitaryUnit(getMap().getTile(x, y), getThisEmpire(), militaryUnitName, x, y);
         militaryUnitName.getVoice().playVoice(militaryUnitName.getVoice());
+        createText(text.getLayoutX(), text.getLayoutY());
     }
 
-    public void ErrorInCreatingUnit(String audioAddress) {
-        //TODO
+    public void ErrorInCreatingUnit(String error) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, error, ButtonType.CLOSE);
+        alert.setHeaderText("Failure in creating unit");
+        alert.showAndWait();
     }
 }
