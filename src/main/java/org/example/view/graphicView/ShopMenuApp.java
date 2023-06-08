@@ -9,16 +9,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
-import org.example.model.building.enums.MaterialType;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 import org.example.view.mainMenu.gameMenu.GameMenu;
@@ -27,7 +24,6 @@ import org.example.view.mainMenu.gameMenu.ShopMenu;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
@@ -37,7 +33,6 @@ public class ShopMenuApp extends Application {
     private static Pane shopPane;
     private static int index;
     private static ArrayList<Material> materials = new ArrayList<>();
-//    private static LinkedHashMap<Material, Integer> materialHashMap = new LinkedHashMap<>();
     private static ImageView prevCommodity;
     private static ImageView nextCommodity;
     private static ImageView commodity;
@@ -68,6 +63,7 @@ public class ShopMenuApp extends Application {
     private static HBox weaponHbox;
     private static Text metalArmourText;
     private static Material currentMaterial;
+    private static Text price;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -167,7 +163,7 @@ public class ShopMenuApp extends Application {
             if (material.getMaterialType().getTypeOfProduct().equals("source")) {
                 setIndustryText(material,  getThisEmpire().getMaterials().get(material));
             } else if (material.getMaterialType().getTypeOfProduct().equals("food")) {
-                setFoodText(material, 20);
+                setFoodText(material, getThisEmpire().getMaterials().get(material));
             } else if (material.getMaterialType().getTypeOfProduct().equals("warfare")) {
                 setWeaponText(material,  getThisEmpire().getMaterials().get(material));
             }
@@ -212,6 +208,14 @@ public class ShopMenuApp extends Application {
             nextCommodity.setFitHeight(30);
             nextCommodity.setFitWidth(30);
         }
+        //TODO set Position
+        if (price == null) {
+            price = new Text();
+            price.setLayoutX(90);
+            price.setLayoutY(60);
+        }
+        //TODO check
+        price.setText("" + getThisEmpire().getMaterials().get(currentMaterial));
     }
 
     public static void setFoodText(Material material, int value) {
@@ -289,6 +293,7 @@ public class ShopMenuApp extends Application {
     //TODO قشنگ کردن منو
     public void goShopping(MouseEvent mouseEvent) throws IOException {
         Material material = getMaterialByName(((ImageView) mouseEvent.getSource()).getId());
+        callInitializers();
         URL url = ShopMenuApp.class.getResource("/FXML/BuildingMenu/Shop/goShopping.fxml");
         shopPane = FXMLLoader.load(url);
         shopPane.getChildren().addAll(prevCommodity, commodity, nextCommodity, buy, sell, goldText);
@@ -327,6 +332,7 @@ public class ShopMenuApp extends Application {
         return null;
     }
 
+    //TODO آنشلف کردن فایل های مربوط به این منو
 
     public void buying(MouseEvent mouseEvent) {
         //TODO pop up

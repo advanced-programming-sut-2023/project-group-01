@@ -4,20 +4,18 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.example.model.Trade;
 import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
 import org.example.model.building.castleBuilding.Tower;
 import org.example.model.building.enums.BuildingName;
-import org.example.model.building.enums.MaterialType;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -66,9 +64,8 @@ public class BuildingMenuApp extends Application {
         System.out.println("show info");
     }
 
-    public void openTrade(MouseEvent mouseEvent) {
-        //TODO
-        System.out.println("trade");
+    public void openTrade(MouseEvent mouseEvent) throws Exception {
+        new TradeMenuApp().start(stage);
     }
 
     public void foodProcessingMenu(MouseEvent mouseEvent) throws IOException {
@@ -151,15 +148,15 @@ public class BuildingMenuApp extends Application {
                     currentBuilding.getBuildingName().equals(BuildingName.ENGINEER_GUILD) ||
                     currentBuilding.getBuildingName().equals(BuildingName.TUNNELER_GUILD)
             ) {
+                CreateUnitMenuApp.setCurrentBuilding(currentBuilding);
                 CreateUnitMenuApp createUnitMenu = new CreateUnitMenuApp();
-                createUnitMenu.setCurrentBuilding(currentBuilding);
                 createUnitMenu.start(stage);
             } else if (currentBuilding.getBuildingName().equals(BuildingName.GRANARY)){
                 openGranaryMenu();
-            } else if (currentBuilding instanceof Gatehouse) {
-                openGateHouse();
-            } else if (currentBuilding instanceof Tower) {
-                openTower();
+            } else if (currentBuilding instanceof Gatehouse || currentBuilding instanceof Tower) {
+                RepairMenu.setCurrentBuilding(currentBuilding);
+                RepairMenu repairMenu = new RepairMenu();
+                repairMenu.start(stage);
             } else if (currentBuilding.getBuildingName().equals(BuildingName.MARKET)) {
                 ShopMenuApp shopMenu = new ShopMenuApp();
                 ShopMenuApp.setCurrentBuilding(currentBuilding);
@@ -194,18 +191,6 @@ public class BuildingMenuApp extends Application {
             dast.setRotate(dast.getRotate() + 72);
             getThisEmpire().setFoodRate(foodRate);
         }
-    }
-
-    public void openGateHouse() {
-
-    }
-
-    public void openTower() {
-
-    }
-
-    public void copyBuilding() {
-
     }
 
     public void pasteBuilding() {
