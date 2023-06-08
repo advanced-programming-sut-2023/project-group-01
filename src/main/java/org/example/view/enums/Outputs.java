@@ -83,7 +83,7 @@ public enum Outputs {
     TRADE_NOT_ENOUGH_GOLD("Player gonde gozi karde pool nadareh"),
     INVALID_MATERIAL_TYPE("Your entered type of material is invalid"),
     INVALID_PRICE_TRADE("Your entered price is invalid please entered a price greater than -1"),
-    INVALID_RESOURCE_AMOUNT_TRADE("Your entered price is invalid please entered a price greater than 0"),
+    INVALID_RESOURCE_AMOUNT_TRADE("Your entered amount is invalid please enter an amount greater than 0"),
     NEAR_ENEMY("Enemy is near your castle"),
     SUCCESSFUL_DESTROY_BUILDING("Building destroyed"),
     FULL_POSITION("There is already exist a building"),

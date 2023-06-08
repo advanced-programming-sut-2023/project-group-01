@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1530.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.GameSettingMenu">
+    <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/OtherPhotos/3274502.jpg" />
+    </ImageView>
+    <AnchorPane layoutX="471.0" layoutY="30.0" prefHeight="306.0" prefWidth="409.0">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#26200354" height="308.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
+        <GridPane fx:id="names" hgap="30" layoutX="14.0" layoutY="14.0" prefHeight="266.0" prefWidth="267.0" vgap="10">
+        </GridPane>
+        <Button layoutX="310.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#addUser" prefHeight="34.0" prefWidth="70.0" text="add user" />
+        <AnchorPane layoutX="287.0" layoutY="60.0">
+            <Rectangle fx:id="rectanglePopUp" arcHeight="5.0" arcWidth="5.0" fill="#26200354" height="100.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="200.0" />
+            <VBox fx:id="vBoxPopUp" alignment="CENTER" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="5" left="5" right="5" top="5" />
+                </padding>
+                <TextField fx:id="username" promptText="username" />
+                <Button onMouseClicked="#CheckUser" text="add" />
+            </VBox>
+        </AnchorPane>
+    </AnchorPane>
+    <ImageView fitHeight="135.0" fitWidth="158.0" layoutY="30.0" onMouseClicked="#back">
+        <Image url="@../Images/back.png" />
+    </ImageView>
+    <AnchorPane layoutX="765.0" layoutY="364.0" prefHeight="306.0" prefWidth="409.0">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#26200354" height="308.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
+        <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+            <VBox fx:id="maps" prefHeight="196.0" prefWidth="196.0" spacing="15.0">
+                <padding>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                </padding>
+                <Text fill="#2024ff" onMouseClicked="#changeMap" strokeType="OUTSIDE" strokeWidth="0.0" text="default map 200 * 200" wrappingWidth="164.53668212890625" />
+                <Text onMouseClicked="#changeMap" strokeType="OUTSIDE" strokeWidth="0.0" text="default map 400 * 400" wrappingWidth="166.13671875" />
+            </VBox>
+        </ScrollPane>
+    </AnchorPane>
+    <AnchorPane layoutX="178.0" layoutY="364.0" prefHeight="306.0" prefWidth="409.0">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#26200354" height="308.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
+        <ImageView fitHeight="115.0" fitWidth="111.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#setSource" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../Images/IMG_6101.PNG" />
+        </ImageView>
+        <ImageView fitHeight="115.0" fitWidth="111.0" layoutX="153.0" layoutY="14.0" onMouseClicked="#setSource" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../Images/IMG_6074.PNG" />
+        </ImageView>
+        <ImageView fitHeight="115.0" fitWidth="111.0" layoutX="285.0" layoutY="14.0" onMouseClicked="#setSource" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../Images/IMG_6102.JPG" />
+        </ImageView>
+        <Text fx:id="source" fill="WHITE" layoutX="129.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="middle source" textAlignment="CENTER" wrappingWidth="158.00000000000006">
+            <font>
+                <Font name="Felix Titling" size="18.0" />
+            </font>
+        </Text>
+    </AnchorPane>
+   <ImageView onMouseClicked="#startGame" fitHeight="171.0" fitWidth="158.0" layoutX="1239.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+       <Image url="@../Images/start Game.PNG" />
+   </ImageView>
+</AnchorPane>
