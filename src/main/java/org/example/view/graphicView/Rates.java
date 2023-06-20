@@ -37,14 +37,13 @@ public class Rates extends Application {
     }
 
     public void addText(AnchorPane anchorPane) throws FileNotFoundException {
-//        Empire empire = new Empire(null, null);
-//        GameMenu.setThisEmpire(empire);
+        Empire empire = new Empire(null, null);
+        GameMenu.setThisEmpire(empire);
         int foodRate = getThisEmpire().getFoodRate();
         int taxRate = getThisEmpire().getTaxRate();
         int religionRate = getThisEmpire().getReligionPopularity();
         int fearRate = getThisEmpire().getFearRate();
         int totalRate = foodRate + taxRate + religionRate + fearRate;
-        //TODO set emoji
 
         Text foodText = new Text(getThisEmpire().getFoodRate() + " Food");
         foodText.setStyle("-fx-font: 15 arial");
@@ -98,12 +97,9 @@ public class Rates extends Application {
 
     public void setEmoji(Circle circle, int rate) throws FileNotFoundException {
         String address;
-        if (rate > 0)
-            address = "src\\main\\resources\\Images\\Emoji\\smile.jfif";
-        else if (rate == 0)
-            address = "src\\main\\resources\\Images\\Emoji\\normal.jfif";
-        else
-            address = "src\\main\\resources\\Images\\Emoji\\cry.jfif";
+        if (rate > 0) address = "src\\main\\resources\\Images\\Emoji\\smile.png";
+        else if (rate == 0) address = "src\\main\\resources\\Images\\Emoji\\normal.jfif";
+        else address = "src\\main\\resources\\Images\\Emoji\\cry.jfif";
 
         FileInputStream inputStream = new FileInputStream(address);
         Image image = new Image(inputStream);
