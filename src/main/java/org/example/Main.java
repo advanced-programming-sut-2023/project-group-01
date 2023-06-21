@@ -52,8 +52,8 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Main.stage = stage;
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
-        //new SignUpAndSignInMenu().start(stage);
-        new TradeMenuApp().start(Main.stage);
+        new SignUpAndSignInMenu().start(stage);
+        //new TradeMenuApp().start(Main.stage);
         //new ScoreBoard().start(Main.stage);
     }
 
