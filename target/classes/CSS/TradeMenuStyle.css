@@ -16,6 +16,11 @@
     -fx-font-family: "Cooper Black";
     -fx-font-size: 14;
 }
+#text4{
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+}
 
 #textField{
     -fx-background-color: #C4A484;
@@ -26,11 +31,28 @@
     -fx-prompt-text-fill: White;
 }
 
+
+.text-area .content {
+    -fx-background-color: #C4A484 ;
+    -fx-background-radius: 0;
+    -fx-border-color: #5C4033;
+    -fx-border-radius: 0;
+    -fx-border-width: 4;
+
+}
+
+
+.text-area {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+
 #button {
-    -fx-font-size: 14.0;
+    -fx-font-size: 20.0;
     -fx-background-color: #713022;
     -fx-background-radius: 10;
     -fx-text-fill: white;
-    -fx-cursor: hand;
+    -fx-prompt-text-fill: White;
     -fx-font-family: "Library Records";
 }

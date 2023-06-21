@@ -23,14 +23,42 @@
         <Image url="@../Images/TradeMenu.jpg"/>
     </ImageView>
 
+    <ImageView fx:id="tradeAcceptBackground" fitHeight="200.0" fitWidth="400.0" layoutY="100" layoutX="300" >
+        <Image url="@../Images/TradeMenu/TradeAcceptBackground.png"/>
+    </ImageView>
+
+    <VBox fx:id="newOfferVBox" spacing="10" layoutX="380" layoutY="150">
+        <HBox spacing="20" alignment="CENTER">
+            <Label id="text4" text="You have new Trade offers !"/>
+        </HBox>
+        <HBox alignment="CENTER" spacing="15">
+            <Button text="Show" id="button" onMouseClicked="#showNewOffers"/>
+            <Button text="Ignore" id="button" onMouseClicked="#ignoreNewOffers"/>
+        </HBox>
+    </VBox>
+
+    <VBox visible="false" fx:id="tradeAcceptVBox" spacing="10" layoutX="360" layoutY="140">
+        <HBox spacing="20" alignment="CENTER">
+            <Label id="text4" text="Id : "/>
+            <TextField fx:id="tradeIdField" id="textField"/>
+        </HBox>
+        <HBox  alignment="CENTER" spacing="30">
+            <Label text="Message : " id="text4"/>
+            <TextField id="textField"  fx:id="tradeAcceptMessageText"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Button text="Accept Trade" id="button" onMouseClicked="#tradeAccept"/>
+        </HBox>
+    </VBox>
+
     <VBox layoutY="300" layoutX="500">
         <ImageView fitHeight="80.0" fitWidth="200.0" onMouseClicked="#newTrade" >
             <Image url="@../Images/TradeMenu/NewTrade.png"/>
         </ImageView>
-        <ImageView fitHeight="80.0" fitWidth="200.0" >
+        <ImageView fitHeight="80.0" fitWidth="200.0" onMouseClicked="#tradeHistory" >
             <Image url="@../Images/TradeMenu/TradeHistory.png"/>
         </ImageView>
-        <ImageView fitHeight="80.0" fitWidth="200.0" >
+        <ImageView fitHeight="80.0" fitWidth="200.0" onMouseClicked="#tradeList">
             <Image url="@../Images/TradeMenu/TradeList.png"/>
         </ImageView>
     </VBox>
@@ -44,92 +72,115 @@
         <ComboBox id="button" fx:id="usersList"/>
     </HBox>
 
+    <TextArea visible="false" fx:id="tradesField" editable="false" layoutX="815" layoutY="195" minWidth="500" minHeight="400" maxWidth="500" maxHeight="400"/>
 
     <VBox fx:id="commodities" layoutX="800" layoutY="250" visible="false" spacing="15">
         <HBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image1"/>
                 <Label id="text3"  fx:id="amount1"/>
+                <Label id="text3"  fx:id="amount_1"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image2"/>
                 <Label id="text3"  fx:id="amount2"/>
+                <Label id="text3"  fx:id="amount_2"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image3"/>
                 <Label id="text3"  fx:id="amount3"/>
+                <Label id="text3"  fx:id="amount_3"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image4"/>
                 <Label id="text3"  fx:id="amount4"/>
+                <Label id="text3"  fx:id="amount_4"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image5"/>
                 <Label id="text3"  fx:id="amount5"/>
+                <Label id="text3"  fx:id="amount_5"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image6"/>
                 <Label id="text3"  fx:id="amount6"/>
+                <Label id="text3"  fx:id="amount_6"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image7"/>
                 <Label id="text3"  fx:id="amount7"/>
+                <Label id="text3"  fx:id="amount_7"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image8"/>
                 <Label id="text3"  fx:id="amount8"/>
+                <Label id="text3"  fx:id="amount_8"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image9"/>
                 <Label id="text3"  fx:id="amount9"/>
+                <Label id="text3"  fx:id="amount_9"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image10"/>
                 <Label id="text3"  fx:id="amount10"/>
+                <Label id="text3"  fx:id="amount_10"/>
             </VBox>
         </HBox>
         <HBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image11"/>
                 <Label id="text3"  fx:id="amount11"/>
+                <Label id="text3"  fx:id="amount_11"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image12"/>
                 <Label id="text3"  fx:id="amount12"/>
+                <Label id="text3"  fx:id="amount_12"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image13"/>
                 <Label id="text3"  fx:id="amount13"/>
+                <Label id="text3"  fx:id="amount_13"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image14"/>
                 <Label id="text3"  fx:id="amount14"/>
+                <Label id="text3"  fx:id="amount_14"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image15"/>
                 <Label id="text3"  fx:id="amount15"/>
+                <Label id="text3"  fx:id="amount_15"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image16"/>
                 <Label id="text3"  fx:id="amount16"/>
+                <Label id="text3"  fx:id="amount_16"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image17"/>
                 <Label id="text3"  fx:id="amount17"/>
+                <Label id="text3"  fx:id="amount_17"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image18"/>
                 <Label id="text3"  fx:id="amount18"/>
+                <Label id="text3"  fx:id="amount_18"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50" fx:id="image19"/>
                 <Label id="text3"  fx:id="amount19"/>
+                <Label id="text3"  fx:id="amount_19"/>
             </VBox>
             <VBox alignment="CENTER">
                 <ImageView onMouseClicked="#chooseMaterial" fitWidth="50" fitHeight="50"  fx:id="image20"/>
                 <Label id="text3"  fx:id="amount20"/>
+                <Label id="text3"  fx:id="amount_20"/>
             </VBox>
         </HBox>
+
+
         <HBox spacing="20" alignment="CENTER">
             <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#decreaseAmount">
                 <Image url="@../Images/TradeMenu/Down.png"/>
@@ -144,8 +195,12 @@
             <TextField fx:id="priceField" id="textField"/>
         </HBox>
         <HBox  alignment="CENTER" spacing="30">
-            <Button text="request" id="button"/>
-            <Button text="donate" id="button"/>
+            <Label text="Message : " id="text2"/>
+            <TextField id="textField" prefWidth="250" fx:id="messageText"/>
+        </HBox>
+        <HBox  alignment="CENTER" spacing="30">
+            <Button text="request" id="button" onMouseClicked="#tradeRequest"/>
+            <Button text="donate" id="button" onMouseClicked="#tradeDonate"/>
         </HBox>
 
     </VBox>

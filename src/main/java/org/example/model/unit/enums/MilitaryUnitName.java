@@ -5,6 +5,8 @@ import org.example.model.Voice;
 import org.example.model.building.enums.MaterialType;
 import org.example.model.enums.Color;
 import org.example.model.enums.HitPoint;
+import org.example.model.building.Material;
+import org.example.model.unit.MilitaryUnit;
 
 import static org.example.model.building.enums.MaterialType.*;
 
@@ -140,7 +142,6 @@ public enum MilitaryUnitName {
     public Color getColor() {
         return color;
     }
-
     public Voice getVoice() {
         return voice;
     }
@@ -152,4 +153,10 @@ public enum MilitaryUnitName {
         return null;
     }
 
+    public static MilitaryUnitName getUnitByPictureAddress(String address) {
+        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values())
+            if (militaryUnitName.getPictureAddress().equals(address))
+                return militaryUnitName;
+        return null;
+    }
 }

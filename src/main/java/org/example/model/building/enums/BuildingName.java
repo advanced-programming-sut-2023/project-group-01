@@ -1,6 +1,10 @@
 package org.example.model.building.enums;
 
 import org.example.Main;
+import org.example.model.Empire;
+import org.example.model.building.Building;
+import org.example.model.unit.MilitaryUnit;
+import org.example.model.unit.enums.MilitaryUnitName;
 
 public enum BuildingName {
     EMPIRE_CASTLE("empireBuilding", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.CASTLE_BUILDING, "EmpireBuilding", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, ""),
@@ -147,6 +151,13 @@ public enum BuildingName {
         for (int i = 0; i < BuildingName.values().length; i++)
             if (BuildingName.values()[i].name.equals(name))
                 return BuildingName.values()[i];
+        return null;
+    }
+
+    public static BuildingName getByAddress(String pictureAddress) {
+        for (BuildingName buildingName : BuildingName.values())
+            if (buildingName.getPictureAddress().equals(pictureAddress))
+                return buildingName;
         return null;
     }
 }
