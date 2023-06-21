@@ -1,6 +1,7 @@
 package org.example.model.unit;
 
 import org.example.model.Empire;
+import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.model.unit.enums.Speed;
 
 import java.util.ArrayList;
@@ -83,4 +84,14 @@ public enum CatapultName {
         this.hitPoint -= hitPoint;
     }
 
+    public String getPictureAddress() {
+        return null;
+    }
+
+    public static CatapultName getCatapultByPictureAddress(String address) {
+        for (CatapultName catapultName : CatapultName.values())
+            if (catapultName.getPictureAddress().equals(address))
+                return catapultName;
+        return null;
+    }
 }
