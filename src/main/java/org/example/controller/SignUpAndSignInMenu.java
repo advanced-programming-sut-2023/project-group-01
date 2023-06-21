@@ -46,7 +46,7 @@ public class SignUpAndSignInMenu extends Application {
 
     public void initialize(){
         background.setOnScroll((ScrollEvent event) -> {
-            // Adjust the zoom factor as per your requirement
+            // Adjust the zoom factor anchorPaneInSplitPan per your requirement
             System.out.println(event.getDeltaY());
         });
     }

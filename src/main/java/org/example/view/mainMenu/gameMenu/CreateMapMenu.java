@@ -57,6 +57,7 @@ public class CreateMapMenu {
     }
 
     public Map runDefaultMap(Scanner scanner) {
+        gameMap = new Map(200);
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine();
             Matcher matcher;

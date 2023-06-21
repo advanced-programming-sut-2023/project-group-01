@@ -3,7 +3,6 @@ package org.example.controller;
 import org.example.controller.mainMenuController.gameMenuController.BestPath;
 import org.example.model.Empire;
 import org.example.model.People;
-import org.example.model.UsersDatabaseJSON;
 import org.example.model.Worker;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
@@ -18,9 +17,10 @@ import org.example.model.unit.CatapultName;
 import org.example.model.unit.LadderMen;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
+import org.example.view.animations.MoveAnimation;
+import org.example.view.graphicView.GameMenuApp;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -29,14 +29,21 @@ import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class NextTurn {
     private ArrayList<Empire> empires;
-    private final GameMenu gameMenu;
+    public GameMenuApp gameMenu;
     private Empire currentEmpire;
     private int numberOfEmpires;
     private int turnNumber;
     private int score = 0;
 
-    public NextTurn(GameMenu gameMenu) {
+    public NextTurn(GameMenuApp gameMenu) {
         this.gameMenu = gameMenu;
+        this.turnNumber = 0;
+        this.empires = getEmpires();
+        this.numberOfEmpires = empires.size();
+    }
+
+    public NextTurn(GameMenu gameMenu) {
+        //this.gameMenu = gameMenu;
         this.turnNumber = 0;
         this.empires = getEmpires();
         this.numberOfEmpires = empires.size();
@@ -52,20 +59,19 @@ public class NextTurn {
     }
 
     public void nextTurn() {
-
-        if (turnNumber == numberOfEmpires - 1) {
-            turnNumber = 0;
-            currentEmpire = empires.get(0);
-            doRates();
-            doOnAllTiles();
-            checkEmpireExist();
-            doCatapult();
-            doForNextTurn();
-        } else {
-            turnNumber++;
-            currentEmpire = empires.get(turnNumber);
-        }
-        GameMenu.setThisEmpire(currentEmpire);
+        //if (turnNumber == numberOfEmpires - 1) {
+        turnNumber = 0;
+        currentEmpire = empires.get(0);
+        doRates();
+        doOnAllTiles();
+        checkEmpireExist();
+        doCatapult();
+        doForNextTurn();
+        //    } else {
+        //  turnNumber++;
+        //    currentEmpire = empires.get(turnNumber);
+        //  }
+//        GameMenu.setThisEmpire(currentEmpire);
     }
 
     public void doOnAllTiles() {
@@ -202,19 +208,19 @@ public class NextTurn {
     }
 
     private void checkEmpireExist() {
-        ArrayList<Empire> removingEmpires = new ArrayList<Empire>();
-        for (Empire empire : empires)
-            if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
-                removingEmpires.add(empire);
-                empire.getPlayer().setHighScore(empire.getPlayer().getHighScore() + score);
-                try {
-                    UsersDatabaseJSON.saveUsersInJSON();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                score += 200;
-            }
-        if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
+//        ArrayList<Empire> removingEmpires = new ArrayList<Empire>();
+//        for (Empire empire : empires)
+//            if (empire.getLord().getMilitaryUnitName().getHitPoint() <= 0) {
+//                removingEmpires.add(empire);
+//                empire.getPlayer().setHighScore(empire.getPlayer().getHighScore() + score);
+//                try {
+//                    UsersDatabaseJSON.saveUsersInJSON();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                score += 200;
+//            }
+//        if (removingEmpires.size() > 0) empires.removeAll(removingEmpires);
     }
 
     private void doCatapult() {
@@ -277,6 +283,7 @@ public class NextTurn {
         int xDest = -1;
         int yDest = -1;
         Building building;
+        //Empire empire = empires.get(0);
         for (Empire empire : empires) {
             for (MilitaryUnit unit : tile.findUnit(empire)) {
                 if (unit.getMilitaryUnitName() != null)
@@ -284,13 +291,16 @@ public class NextTurn {
                 if (unit.getXDestination() < getMap().getSize()) {
                     xDest = unit.getXDestination();
                     yDest = unit.getYDestination();
+                    System.out.println(unit.isMoved());
                 } else if (unit.getPatrolX1() < getMap().getSize()) {
                     xDest = unit.getPatrolX2();
                     yDest = unit.getPatrolY2();
                 }
                 if (xDest == -1 && yDest == -1) continue;
                 building = getMap().getTile(xDest, yDest).getBuilding();
-                if (building == null && !unit.isMoved()) callMoveFunctions(unit, false);
+                if (building == null && !unit.isMoved()) {
+                    callMoveFunctions(unit, false);
+                }
                 else if (building != null && !unit.isMoved() && (!(unit instanceof Catapult)) &&
                         unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
                     callMoveFunctions(unit, true);
@@ -326,6 +336,7 @@ public class NextTurn {
         boolean isAssassins = unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS);
         BestPath bestPath = new BestPath(unit.getEmpire());
         LinkedList<Integer> path;
+        if(xDest == -1 || yDest == -1) return;
         path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, isAssassins);
         if (unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
             path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, true);
@@ -340,23 +351,19 @@ public class NextTurn {
                 XY = path.remove();
         boolean havePatrol = unit.getPatrolX1() < mapSize;
         if (path == null || path.size() == 0) return;
-        int counter = 0;
-        for (Integer integer : path) {
-            if (isMoveFinished(unit, integer, counter, havePatrol, xDest, yDest)) return;
-            counter++;
-        }
-
+        System.out.println(xDest + " " + yDest);
+        MoveAnimation moveAnimation = new MoveAnimation(this, unit, havePatrol, xDest, yDest, path);
+        moveAnimation.play();
         Building building = getMap().getTile(XY / mapSize, XY % mapSize).getBuilding();
         if (unit instanceof LadderMen && unit.getXDestination() < mapSize && unit.getYDestination() < mapSize && building != null && building instanceof Wall)
             ((Wall) building).setHaveLadder(true);
         unit.setMoved();
     }
 
-    private boolean isMoveFinished(MilitaryUnit unit, int integer, int counter, boolean havePatrol, int xDest, int yDest) {
+    public boolean isMoveFinished(MilitaryUnit unit, int integer, int counter, boolean havePatrol, int xDest, int yDest) {
         int mapSize = getMap().getSize();
         unit.goToPos(integer / mapSize, integer % mapSize);
         Building building = getMap().getTile(integer / mapSize, integer % mapSize).getBuilding();
-
         if (building != null && building instanceof KillingPits) {
             if (unit.getMilitaryUnitName().getHitPoint() > ((KillingPits) building).getDamage()) {
                 unit.getMilitaryUnitName().reduceHitPoint(((KillingPits) building).getDamage());
@@ -537,18 +544,25 @@ public class NextTurn {
         ArrayList<MilitaryUnit> enemy1 = new ArrayList<>();
         ArrayList<MilitaryUnit> enemy2 = new ArrayList<>();
         boolean[] isAttack = new boolean[empires.size()];
-
         for (int i = 0; i < empires.size() - 1; i++) {
             enemy1 = tile.findUnit(empires.get(i));
             if (enemy1.size() != 0) {
                 for (int j = i + 1; j < empires.size(); j++) {
                     enemy2 = tile.findUnit(empires.get(j));
                     if (!isAttack[i] && enemy2.size() != 0) {
+                        System.out.println("attack");
                         attackUnits(enemy1, enemy2);
                     }
                 }
             }
             isAttack[i] = true;
+        }
+
+        for (MilitaryUnit militaryUnit : enemy1) {
+            System.out.println(militaryUnit.getMilitaryUnitName());
+        }
+        for (MilitaryUnit militaryUnit : enemy2) {
+            System.out.println(militaryUnit.getMilitaryUnitName());
         }
 
         if (enemy1.size() != 0)
@@ -593,6 +607,13 @@ public class NextTurn {
                 unit.getMilitaryUnitName().reduceHitPoint(damage2);
             else unit.removeUnit();
         }
+        for (MilitaryUnit militaryUnit : enemy1) {
+            System.out.println(militaryUnit.getMilitaryUnitName().getHitPoint());
+        }
+        for (MilitaryUnit militaryUnit : enemy2) {
+            System.out.println(militaryUnit.getMilitaryUnitName().getHitPoint());
+        }
+
 
     }
 
@@ -641,7 +662,7 @@ public class NextTurn {
         ArrayList<MilitaryUnit> enemy;
         if (unit.getXAttack() > getMap().getSize() && unit.getYAttack() > getMap().getSize())
             enemy = findEnemyInTheBoardOfArcher(unit);
-        else
+        else if (unit.getXAttack() == -1 || unit.getYAttack() == -1)
             enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
 
         if (enemy.size() != 0) {

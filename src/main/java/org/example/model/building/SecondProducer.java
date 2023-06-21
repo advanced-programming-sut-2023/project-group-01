@@ -18,6 +18,10 @@ public class SecondProducer extends Building {
         this.rate = rate;
     }
 
+    public int getRate() {
+        return rate;
+    }
+
     public SecondProducerType getProducerType() {
         return producerType;
     }

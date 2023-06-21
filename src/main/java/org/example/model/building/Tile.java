@@ -1,6 +1,5 @@
 package org.example.model.building;
 
-import javafx.scene.image.ImageView;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.enums.TypeOfTile;
@@ -67,7 +66,7 @@ public class Tile {
         people.clear();
     }
 
-    public void setImage(){
+    public void setImage() {
 
     }
 

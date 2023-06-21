@@ -19,16 +19,16 @@ public class Building {
     private final BuildingName buildingName;
 
     public Building(Empire empire, int x1, int y1, BuildingName buildingName) {
-        this.empire = empire;
-        this.empire.decreaseGold((buildingName.getGoldCost()));
-        this.empire.reduceMaterial("stone", buildingName.getStoneCost());
-        this.empire.reduceMaterial("wood", buildingName.getWoodCost());
+//        this.empire = empire;
+//        this.empire.decreaseGold((buildingName.getGoldCost()));
+//        this.empire.reduceMaterial("stone", buildingName.getStoneCost());
+//        this.empire.reduceMaterial("wood", buildingName.getWoodCost());
         this.beginX = x1;
         this.beginY = y1;
-        this.endX = x1 + buildingName.getSize();
-        this.endY = y1 + buildingName.getSize();
+        this.endX = x1 + buildingName.getSize() - 1;
+        this.endY = y1 + buildingName.getSize() - 1;
         this.buildingName = buildingName;
-        this.workers = empire.changePeopleToWorker(buildingName.getNumberOfWorkers(), x1, y1);
+//        this.workers = empire.changePeopleToWorker(buildingName.getNumberOfWorkers(), x1, y1);
     }
 
     public BuildingName getBuildingName() {

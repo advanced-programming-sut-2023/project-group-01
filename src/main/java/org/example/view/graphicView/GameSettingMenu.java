@@ -21,6 +21,7 @@ import org.example.controller.mainMenuController.gameMenuController.GameSettingM
 import org.example.model.Data;
 import org.example.model.User;
 import org.example.view.enums.Outputs;
+import org.example.view.mainMenu.gameMenu.GameMenu;
 import org.example.view.mainMenu.gameMenu.MapMenu;
 
 import java.net.URL;
@@ -136,7 +137,7 @@ public class GameSettingMenu extends Application implements Initializable {
             alert.setContentText("you most choose a other player or more for start game");
             alert.showAndWait();
         } else {
-            new MapMenuApp().start(Main.stage);
+        //    new GameMenuApp().start(Main.stage);
         }
     }
 }
