@@ -56,7 +56,7 @@ public class Main extends Application {
         Main.stage = stage;
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
         Data.setStayedLoggedIn(Data.findUserWithUsername("ali"));
-    //    new SignUpAndSignInMenu().start(stage);
+//        new SignUpAndSignInMenu().start(stage);
         new GameMenuApp(new CreateMapMenu(null).runDefaultMap(new Scanner(Data.getDefaultMap()))).start(Main.stage);
         //new ScoreBoard().start(Main.stage);
     }

@@ -12,9 +12,9 @@ import static org.example.model.building.enums.MaterialType.*;
 
 public enum MilitaryUnitName {
     LORD(Color.RED, GunShot.ZERO, "lord", "lord", Attack.LORD_ATTACK, HitPoint.LORD, Speed.MIDDLE, 0, null, null, false, null,
-            "pictureAddress"),
+            Main.class.getResource("/Images/GameTabs/Barrack/Picture1.png").toString()),
     ARCHER(Color.RED, GunShot.HIGH, "european", "archer", Attack.LOW, HitPoint.LOW, Speed.HIGH, 12, null, ARC, false, Voice.ARCHER,
-            Main.class.getResource("/Images/GameTabs/Barrack/armys1.tgx1.png").toString()),
+            Main.class.getResource("/Images/GameTabs/Barrack/armys1.tgx.png").toString()),
     CROSSBOW_MEN(Color.RED, GunShot.MIDDLE, "european", "crossbowmen", Attack.LOW, HitPoint.MIDDLE, Speed.LOW, 20, LEATHER_ARMOUR, CROSSBOW, false, Voice.CROSSBOW_MEN, "pictureAddress"),
     SPEAR_MEN(Color.RED, GunShot.ZERO, "european", "spearmen", Attack.MIDDLE, HitPoint.SO_LOW, Speed.MIDDLE, 8, null, SPEAR, false, Voice.SPEAR_MEN, "pictureAddress"),
     PIKE_MEN(Color.RED, GunShot.ZERO, "european", "pikemen", Attack.MIDDLE, HitPoint.HIGH, Speed.LOW, 20, METAL_ARMOUR, PIKE, false, Voice.PIKE_MEN, "pictureAddress"),

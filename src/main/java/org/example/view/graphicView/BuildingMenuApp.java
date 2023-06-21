@@ -3,10 +3,14 @@ package org.example.view.graphicView;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.example.model.Trade;
@@ -27,6 +31,8 @@ public class BuildingMenuApp extends Application {
     private static Pane buildingPane;
     private static Pane savePreviousPane;
     private static Stage stage;
+    private static double x;
+    private static double y;
     @FXML
     private ImageView dast;
 
@@ -48,15 +54,44 @@ public class BuildingMenuApp extends Application {
 
 
     public void handleDragDetected(MouseEvent mouseEvent) {
+        ImageView sourceImageView = (ImageView)mouseEvent.getSource();
+        Dragboard db = sourceImageView.startDragAndDrop(TransferMode.ANY);
+        ClipboardContent clipboardContent = new ClipboardContent();
+        clipboardContent.putImage(sourceImageView.getImage());
+        db.setContent(clipboardContent);
+        mouseEvent.consume();
 
     }
 
     public void handleDragOver(DragEvent dragEvent) {
-
+        if (dragEvent.getDragboard().hasImage()) {
+            dragEvent.acceptTransferModes(TransferMode.ANY);
+            x = dragEvent.getX();
+            y = dragEvent.getY();
+        }
     }
 
     public void handleOnDragDropped(DragEvent dragEvent) {
+        Image img = dragEvent.getDragboard().getImage();
+        for (Node child : GameMenuApp.gridPane.getChildren()) {
+            if(child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
+            child.getLayoutX() < dragEvent.getX() && dragEvent.getX() < child.getLayoutX() + 20 &&
+                    child.getLayoutY() < dragEvent.getY() && dragEvent.getY() < child.getLayoutY() + 20){
+                ((ImageView) child).setImage(img);
+                GameMenuApp.map.getTile(GridPane.getColumnIndex(child), GridPane.getRowIndex(child)).setBuilding(new Building
+                        (null, GridPane.getColumnIndex(child), GridPane.getRowIndex(child),  BuildingName.INN));
+            }
+        }
+//        targetImageView.setImage(img);
+//        targetImageView.setX(200);
+//        targetImageView.setY(200);
+//        targetImageView = new ImageView();
 
+        ImageView imageView = new ImageView(img);
+        imageView.setX(x);
+        imageView.setY(y);
+        imageView.setFitHeight(40);
+        imageView.setFitWidth(40);
     }
 
     public void showEmpiresInfo(MouseEvent mouseEvent) {
@@ -114,9 +149,23 @@ public class BuildingMenuApp extends Application {
     }
 
     public void openMenu(URL url) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(url));
-        stage.setScene(scene);
-        stage.show();
+        Node menu;
+        for (Node child : GameMenuApp.anchorPaneInSplitPan.getChildren()) {
+            if(child instanceof HBox){
+                for (Node node : ((HBox) child).getChildren()) {
+                    if(node instanceof AnchorPane) {
+                        ((HBox) child).getChildren().add(((HBox) child).getChildren().indexOf(node), FXMLLoader.load(url));
+                        ((HBox) child).getChildren().remove(node);
+                        break;
+                    }
+                }
+            }
+        }
+
+        menu = FXMLLoader.load(url);
+//        Scene scene = new Scene(FXMLLoader.load(url));
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     public void prev(MouseEvent mouseEvent) throws IOException {

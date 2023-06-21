@@ -14,10 +14,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.SwipeEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -43,18 +40,23 @@ import org.example.model.unit.CatapultName;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.animations.ZoomAnimation;
+import org.example.view.mainMenu.gameMenu.BuildingMenu;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Math.*;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
+import static org.example.view.mainMenu.gameMenu.GameMenu.setThisEmpire;
 
 public class GameMenuApp extends Application {
-    public AnchorPane anchorPaneInSplitPan;
-
+    public static AnchorPane anchorPaneInSplitPan;
     public AnchorPane anchorPaneMain;
-    public GridPane gridPane;
+    public static GridPane gridPane;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -97,6 +99,8 @@ public class GameMenuApp extends Application {
                 startMapY--;
             if (e.getCode().equals(KeyCode.DOWN) && startMapY < map.getSize() - 4)
                 startMapY++;
+            if(e.getCode().equals(KeyCode.X))
+
 //            if (e.getCode().equals(KeyCode.ENTER)) {
 //                nextTurn.nextTurn();
 //            }
@@ -111,21 +115,6 @@ public class GameMenuApp extends Application {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), actionEvent -> createPane(anchorPane)));
         timeline.setCycleCount(-1);
         timeline.play();
-        scene.setOnSwipeRight(new EventHandler<SwipeEvent>() {
-            @Override
-            public void handle(SwipeEvent event) {
-                System.out.println("Rectangle: Swipe right event");
-                event.consume();
-            }
-        });
-
-        scene.setOnSwipeLeft(new EventHandler<SwipeEvent>() {
-            @Override
-            public void handle(SwipeEvent event) {
-                System.out.println("Rectangle: Swipe left event");
-                event.consume();
-            }
-        });
         stage.setScene(scene);
         stage.show();
     }
@@ -204,23 +193,35 @@ public class GameMenuApp extends Application {
     public static Map map;
 
     public GameMenuApp(Map map) {
-        this.map = map;
+        GameMenuApp.map = map;
     }
 
     public void createPane(AnchorPane anchorPane) {
-        GridPane gridPane1 = new GridPane();
-        setGridPane(gridPane1, map);
-        gridPane1.setScaleX(0.1);
-        gridPane1.setScaleY(0.1);
-        Pane pane = new Pane(gridPane1);
+
+//        Pane pane = new Pane(gridPane1);
+        HBox hBox = new HBox();
+        try {
+            Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
+            hBox.getChildren().add(buildingPane);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         for (Node child : anchorPane.getChildren())
             if (child instanceof SplitPane) {
                 for (Node node : ((SplitPane) child).getItems())
                     if (node instanceof GridPane)
                         gridPane = (GridPane) node;
-                    else this.anchorPaneInSplitPan = (AnchorPane) node;
+                    else anchorPaneInSplitPan = (AnchorPane) node;
             }
-//        FXMLLoader fxmlLoader1 = new FXMLLoader(Main.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
+        if (anchorPaneInSplitPan.getChildren().size() == 0)
+            anchorPaneInSplitPan.getChildren().add(hBox);
+
+        setManImage(hBox);
+//        setMiniMap(hBox);
+//        hBox.getChildren().add(gridPane1);
+
+
+        //        FXMLLoader fxmlLoader1 = new FXMLLoader(Main.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
 //        try {
 //  //          AnchorPane anchorPane1 = fxmlLoader1.load();
 //    ///        anchorPane1.getChildren().add(pane);
@@ -229,6 +230,7 @@ public class GameMenuApp extends Application {
 //        gridPane1.setMaxWidth(anchorPaneInSplitPan.getWidth());
 //        gridPane1.setLayoutY(anchorPaneInSplitPan.getWidth() / 2);
 //        gridPane1.setLayoutX(anchorPaneInSplitPan.getHeight() / 2);
+//        anchorPaneInSplitPan.getChildren().add(gridPane1);
 //        pane.setLayoutX(400);
 //        pane.setLayoutY(300);
 //        } catch (IOException e) {
@@ -259,6 +261,76 @@ public class GameMenuApp extends Application {
             }
         });
         setGridPane(gridPane, map);
+    }
+
+    private void setMiniMap(HBox hBox) {
+        GridPane gridPane1 = new GridPane();
+        gridPane1.setMaxWidth(160);
+        gridPane1.setMaxHeight(160);
+        for (int i = 0; i < 80; i++)
+            for (int j = 0; j < 70; j++) {
+                ImageView imageView = new ImageView(new Image(map.getTile(i + startMapX, j + startMapY).getTypeOfTile().getPictureAddress()));
+                imageView.setFitWidth(2);
+                imageView.setFitHeight(2);
+                gridPane1.add(imageView, i, j);
+                if (map.getTile(i + startMapX, j + startMapY).getBuilding() != null) {
+                    Tile tile = map.getTile(i + startMapX, j + startMapY);
+                    Building building = tile.getBuilding();
+                    ImageView buildingImageView = new ImageView(new Image(building.getBuildingName().getPictureAddress()));
+                    buildingImageView.setFitWidth(2);
+                    buildingImageView.setFitHeight(2);
+                    WritableImage writableImage = new WritableImage(new Image(building.getBuildingName().getPictureAddress()).
+                            getPixelReader(),
+                            (int) (buildingImageView.getImage().getWidth() *
+                                    (startMapX + i - building.getBeginX()) / building.getBuildingName().getSize()),
+                            (int) (buildingImageView.getImage().getHeight() * (startMapY + j - building.getBeginY()) /
+                                    building.getBuildingName().getSize()), (int) buildingImageView.getFitWidth(),
+                            (int) buildingImageView.getFitHeight());
+                    buildingImageView.setImage(writableImage);
+                    gridPane1.add(buildingImageView, i, j);
+                }
+                for (People person : map.getTile(i + startMapX, j + startMapY).getPeople())
+                    if (person instanceof MilitaryUnit) {
+                        ImageView imageView1 = new ImageView(
+                                new Image(((MilitaryUnit) person).getMilitaryUnitName().getPictureAddress()));
+                        imageView1.setFitWidth(1.5);
+                        imageView1.setFitHeight(1.5);
+                        gridPane1.add(imageView1, i, j);
+                    }
+            }
+//        gridPane1.setScaleX(0.1);
+  //      gridPane1.setScaleY(0.1);
+        hBox.getChildren().add(gridPane1);
+    }
+
+    private void setManImage(HBox hBox) {
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPrefWidth(160);
+        anchorPane.setPrefHeight(160);
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream("src\\main\\resources\\Images\\popularityPhoto.png");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Image image = new Image(inputStream);
+        BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundimage);
+        anchorPane.setBackground(background);
+        anchorPane.setOnMouseClicked(mouseEvent -> {
+            try {//TODO check
+                new Rates().start(new Stage());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        man(anchorPane);
+        hBox.getChildren().add(anchorPane);
+    }
+
+    public HBox createHbox() {
+        return null;
     }
 
     ArrayList<ImageView> selectedImageViews = new ArrayList<>();
@@ -295,6 +367,26 @@ public class GameMenuApp extends Application {
                 ImageView imageView = new ImageView(new Image(map.getTile(i + startMapX, j + startMapY).getTypeOfTile().getPictureAddress()));
                 imageView.setFitWidth(20);
                 imageView.setFitHeight(20);
+                imageView.setOnDragDropped(dragEvent -> {
+                    Image img = dragEvent.getDragboard().getImage();
+                    for (Node child : GameMenuApp.gridPane.getChildren()) {
+                        if(child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
+                                child.getLayoutX() < dragEvent.getScreenX() && dragEvent.getScreenX() < child.getLayoutX() + 20 &&
+                                child.getLayoutY() < dragEvent.getScreenY() && dragEvent.getSceneY() < child.getLayoutY() + 20){
+                            ((ImageView) child).setImage(img);
+                            GameMenuApp.map.getTile(GridPane.getColumnIndex(child), GridPane.getRowIndex(child)).setBuilding(new Building
+                                    (null, GridPane.getColumnIndex(child), GridPane.getRowIndex(child),  BuildingName.INN));
+                            break;
+                        }
+                    }
+                });
+                imageView.setOnDragOver(new EventHandler<DragEvent>() {
+                    @Override
+                    public void handle(DragEvent dragEvent) {
+                        if (dragEvent.getDragboard().hasImage())
+                            dragEvent.acceptTransferModes(TransferMode.ANY);
+                    }
+                });
                 AtomicReference<Timeline> timeline = new AtomicReference<>(new Timeline());
                 showDetailCheck(imageView, timeline, imageView);
                 gridPane.add(imageView, i, j);
@@ -317,12 +409,43 @@ public class GameMenuApp extends Application {
                 }
                 for (People person : map.getTile(i + startMapX, j + startMapY).getPeople())
                     if (person instanceof MilitaryUnit) {
-                        ImageView imageView1 = new ImageView(new Image(((MilitaryUnit) person).getMilitaryUnitName().getPictureAddress()));
+                        ImageView imageView1 = new ImageView(
+                                new Image(((MilitaryUnit) person).getMilitaryUnitName().getPictureAddress()));
                         imageView1.setFitWidth(15);
                         imageView1.setFitHeight(15);
                         gridPane.add(imageView1, i, j);
                     }
             }
+    }
+    public void man(AnchorPane anchorPane) {
+        Empire empire = new Empire(null, null);
+        setThisEmpire(empire);
+        int popularity = getThisEmpire().getPopularity();
+        int population = getThisEmpire().getPopulation();
+        int maxPopulation = getThisEmpire().getMaxPopulation();
+        double gold = getThisEmpire().getGold();
+
+        Text popularityText = new Text("" + popularity);
+        popularityText.setStyle("-fx-font: 10 arial");
+        if (popularity > 60) popularityText.setFill(Color.GREEN);
+        else if (popularity > 30) popularityText.setFill(Color.YELLOW);
+        else popularityText.setFill(Color.RED);
+        popularityText.setLayoutX(30);
+        popularityText.setLayoutY(102);
+
+        Text goldText = new Text(gold + "");
+        goldText.setStyle("-fx-font: 10 arial");
+        goldText.setFill(Color.GREEN);
+        goldText.setLayoutX(30);
+        goldText.setLayoutY(115);
+
+        Text populationText = new Text(population + "\\" + maxPopulation);
+        populationText.setStyle("-fx-font: 10 arial");
+        populationText.setFill(Color.GREEN);
+        populationText.setLayoutX(30);
+        populationText.setLayoutY(130);
+
+        anchorPane.getChildren().addAll(popularityText, goldText, populationText);
     }
 
     private void showDetailCheck(ImageView imageView, AtomicReference<Timeline> timeline, ImageView buildingImageView) {
@@ -460,17 +583,6 @@ public class GameMenuApp extends Application {
         return units;
     }
 
-    public void showStatus() {
-
-    }
-
-    public void showAttackingUnits(Empire empire) {
-
-    }
-
-    public void focusOnATile() {
-
-    }
 
     public void moveShortcut() {
         popup.hide();

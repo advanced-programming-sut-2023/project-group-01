@@ -659,7 +659,7 @@ public class NextTurn {
     }
 
     private void doArcherAttack(MilitaryUnit unit) {
-        ArrayList<MilitaryUnit> enemy;
+        ArrayList<MilitaryUnit> enemy = new ArrayList<>();
         if (unit.getXAttack() > getMap().getSize() && unit.getYAttack() > getMap().getSize())
             enemy = findEnemyInTheBoardOfArcher(unit);
         else if (unit.getXAttack() == -1 || unit.getYAttack() == -1)
