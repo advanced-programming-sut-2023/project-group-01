@@ -508,4 +508,12 @@ public class Empire {
             if (building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE)) return true;
         return false;
     }
+
+    public ArrayList<MilitaryUnit> getUnits() {
+        ArrayList<MilitaryUnit> units = new ArrayList<>();
+        for (People people1 : people)
+            if (people1 instanceof MilitaryUnit)
+                units.add((MilitaryUnit)people1);
+        return units;
+    }
 }

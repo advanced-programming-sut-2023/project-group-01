@@ -36,7 +36,6 @@ public class Tile {
 
     public ArrayList<MilitaryUnit> findNearEnemiesMilitaryUnit(Empire empire) {
         ArrayList<MilitaryUnit> enemies = new ArrayList<MilitaryUnit>();
-
         for (People person : people) {
             if (!person.getEmpire().equals(empire) && person instanceof MilitaryUnit) {
                 enemies.add((MilitaryUnit) person);

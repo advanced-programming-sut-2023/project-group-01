@@ -7,7 +7,9 @@ import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 
 public enum BuildingName {
-    EMPIRE_CASTLE("empireBuilding", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.CASTLE_BUILDING, "EmpireBuilding", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, ""),
+    EMPIRE_CASTLE("empireBuilding", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.CASTLE_BUILDING,
+            "EmpireBuilding", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND,
+            ""),
     SMALL_STONE_GATEHOUSE("gateHouse", 1000, 1000, BuildingCategory.CASTLE_BUILDING, "SmallStoneGatehouse", 0, 10, 0, 0, 4, TypeOfTile.NORMAL_GROUND, ""),
     BIG_STONE_GATEHOUSE("gateHouse", 2000, 2000, BuildingCategory.CASTLE_BUILDING, "BigStoneGatehouse", 0, 20, 0, 0, 5, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
     DRAWBRIDGE("gateHouse", 0, 0, BuildingCategory.CASTLE_BUILDING, "Drawbridge", 0, 0, 10, 0, 3, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
@@ -26,6 +28,7 @@ public enum BuildingName {
     INN("firstProducer", 250, 250, BuildingCategory.FOOD_PROCESSING_BUILDING, "Inn", 100, 0, 20, 1, 3, TypeOfTile.NORMAL_GROUND,
             Main.class.getResource("/Images/foodProcessing/inn2.png").toString()),
     MILL("building", 270, 270, BuildingCategory.FOOD_PROCESSING_BUILDING, "Mill", 0, 0, 20, 3, 2, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
+    //TODO
     IRON_MINE("firstProducer", 320, 320, BuildingCategory.INDUSTRIAL_BUILDING, "IronMine", 0, 0, 20, 2, 3, TypeOfTile.IRON_MINE, "pictureAddress"),
     MARKET("building", 330, 330, BuildingCategory.INDUSTRIAL_BUILDING, "Market", 0, 0, 5, 1, 3, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
     OX_TETHER("building", 100, 100, BuildingCategory.INDUSTRIAL_BUILDING, "OxTether", 0, 0, 5, 1, 1, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
@@ -157,6 +160,14 @@ public enum BuildingName {
     public static BuildingName getByAddress(String pictureAddress) {
         for (BuildingName buildingName : BuildingName.values())
             if (buildingName.getPictureAddress().equals(pictureAddress))
+                return buildingName;
+        return null;
+    }
+
+    public static BuildingName getByAddres(String pictureAddress) {
+        for (BuildingName buildingName : BuildingName.values())
+            if (buildingName.getPictureAddress().replace("2", "").
+                    equals(pictureAddress.replace("2", "")))
                 return buildingName;
         return null;
     }

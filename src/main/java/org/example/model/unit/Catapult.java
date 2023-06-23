@@ -9,6 +9,7 @@ public class Catapult extends MilitaryUnit {
     public Catapult(Tile position, Empire empire, int xPos, int yPos, CatapultName catapultName) {
         super(position, empire, null, xPos, yPos);
         this.catapultName = catapultName;
+        this.hitPoint = catapultName.getHitPoint();
     }
 
 
