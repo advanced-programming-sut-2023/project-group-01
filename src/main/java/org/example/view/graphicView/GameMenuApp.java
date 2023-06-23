@@ -6,19 +6,19 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
@@ -53,31 +53,27 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Math.*;
-import static org.example.view.mainMenu.gameMenu.GameMenu.*;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
+import static org.example.view.mainMenu.gameMenu.GameMenu.setThisEmpire;
 
 public class GameMenuApp extends Application {
     public static AnchorPane anchorPaneInSplitPan;
     public AnchorPane anchorPaneMain;
     public static GridPane gridPane;
-    private static boolean isOnDestroyState = false;
-    private static Building buildingForUndo;
-    private static boolean optionOpen = false;
+
+    private String copyBuilding;
 
     @Override
     public void start(Stage stage) throws Exception {
-//        Building building = new Building(null, 5, 5, BuildingName.INN);
-//        for (int i = 5; i < 8; i++)
-//            for (int j = 5; j < 8; j++)
-//                map.getTileWhitXAndY(i, j).setBuilding(building);
         Empire empire = new Empire(EmpireBuilding.EMPIRE_1, Data.getStayedLoggedIn());
         Empire empire2 = new Empire(EmpireBuilding.EMPIRE_2, Data.findUserWithUsername("morteza"));
         GameMenu.getEmpires().add(empire);
         GameMenu.getEmpires().add(empire2);
         GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
-        new MilitaryUnit(map.getTileWhitXAndY(3, 3), GameMenu.getThisEmpire(),
-                MilitaryUnitName.ARCHER, 3, 3);
-        new MilitaryUnit(map.getTileWhitXAndY(5, 5), GameMenu.getEmpires().get(1),
-                MilitaryUnitName.ARCHER, 5, 5);
+//        new MilitaryUnit(map.getTileWhitXAndY(3, 3), GameMenu.getEmpires().get(0),
+//                MilitaryUnitName.ARCHER_BOW, 3, 3);
+//        new MilitaryUnit(map.getTileWhitXAndY(5, 5), GameMenu.getEmpires().get(1),
+//                MilitaryUnitName.ARCHER, 5, 5);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FXML/Map.fxml"));
         AnchorPane anchorPane = fxmlLoader.load();
         anchorPaneMain = anchorPane;
@@ -104,24 +100,27 @@ public class GameMenuApp extends Application {
                 startMapY--;
             if (e.getCode().equals(KeyCode.DOWN) && startMapY < map.getSize() - 4)
                 startMapY++;
-            if (e.getCode().equals(KeyCode.X))
+//            if (e.getCode().equals(KeyCode.X))
 
 //            if (e.getCode().equals(KeyCode.ENTER)) {
 //                nextTurn.nextTurn();
 //            }
-                if (!selectedImageViews.isEmpty()) {
-                    switch (e.getCode()) {
-                        case M -> moveShortcut();
-                        case A -> attackShortcut();
-//                    case P -> patrolShortcut();
-                    }
-                } else createPane(anchorPane);
+            if (!selectedImageViews.isEmpty()) {
+                switch (e.getCode()) {
+                    case M -> moveShortcut();
+                    case A -> attackShortcut();
+                    case P -> patrolShortcut();
+                }
+            } else createPane(anchorPane);
         });
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), actionEvent -> createPane(anchorPane)));
         timeline.setCycleCount(-1);
         timeline.play();
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void patrolShortcut() {
     }
 
     private void attackShortcut() {
@@ -136,6 +135,54 @@ public class GameMenuApp extends Application {
         }
         VBox vBox = new VBox();
         vBox.setSpacing(20);
+        setSpinersForUnits(tiles, vBox);
+        Spinner spinnerTargetX = new Spinner<>(0, map.getSize(), 0);
+        Spinner spinnerTargetY = new Spinner<>(0, map.getSize(), 0);
+        Button button = new Button("attack");
+        button.setOnAction(e -> {
+            for (Node child : vBox.getChildren()) {
+                MilitaryUnitName militaryUnitName = null;
+                if (child instanceof HBox && ((HBox) child).getChildren().size() != 3)
+                    outer:for (Node node : ((HBox) child).getChildren()) {
+                        if (node instanceof Text) {
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                        }
+                        if (node instanceof Spinner) {
+                            int number = 0;
+                            for (Tile tile : tiles)
+                                for (People person : tile.getPeople())
+                                    if (person instanceof MilitaryUnit &&
+                                            ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName)) {
+                                        if (number == (Integer) ((Spinner) node).getValue()) break outer;
+                                        ((MilitaryUnit) person).setXAttack((Integer) spinnerTargetX.getValue());
+                                        ((MilitaryUnit) person).setYAttack((Integer) spinnerTargetY.getValue());
+                                    }
+                        }
+                    }
+            }
+            selectUnitPopup.hide();
+            NextTurn nextTurn = new NextTurn(this);
+            nextTurn.nextTurn();
+        });
+        setPopup(rectangle, vBox, spinnerTargetX, spinnerTargetY, button);
+    }
+
+    private void setPopup(Rectangle rectangle, VBox vBox, Spinner spinnerTargetX, Spinner spinnerTargetY, Button button) {
+        HBox hBox = gethBox(spinnerTargetX, spinnerTargetY, button);
+        hBox.setSpacing(20);
+        vBox.getChildren().add(hBox);
+        StackPane stackPane = new StackPane(rectangle, vBox);
+        selectUnitPopup = new Popup();
+        selectUnitPopup.getContent().add(stackPane);
+        rectangle.setFill(Paint.valueOf("#26200354"));
+        selectUnitPopup.show(gridPane.getScene().getWindow());
+        rectangle.setHeight(selectUnitPopup.getHeight());
+        rectangle.setWidth(selectUnitPopup.getWidth());
+        selectUnitPopup.setX(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutX());
+        selectUnitPopup.setY(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutY());
+    }
+
+    private void setSpinersForUnits(ArrayList<Tile> tiles, VBox vBox) {
         for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values()) {
             int number = 0;
             for (Tile tile : tiles)
@@ -143,7 +190,7 @@ public class GameMenuApp extends Application {
             if (number != 0) {
                 Text text = new Text(militaryUnitName.getName() + " number: ");
                 text.setFill(Color.WHITE);
-                Spinner spinner = new Spinner<>(1, number, 1);
+                Spinner spinner = new Spinner<>(0, number, 1);
                 HBox hBox = new HBox(text, spinner);
                 hBox.setSpacing(20);
                 vBox.getChildren().add(hBox);
@@ -156,38 +203,17 @@ public class GameMenuApp extends Application {
             if (number != 0) {
                 Text text = new Text(catapultName.getName() + " number: ");
                 text.setFill(Color.WHITE);
-                Spinner spinner = new Spinner<>(1, number, 1);
+                Spinner spinner = new Spinner<>(0, number, 1);
                 HBox hBox = new HBox(text, spinner);
                 hBox.setSpacing(20);
                 vBox.getChildren().add(hBox);
             }
         }
-        Spinner spinnerTargetX = new Spinner<>(0, map.getSize(), 0);
-        Spinner spinnerTargetY = new Spinner<>(0, map.getSize(), 0);
-        Button button = new Button("attack");
-        button.setOnAction(e -> {
-            for (People person : tiles.get(0).getPeople()) {
-                if (person instanceof MilitaryUnit) {
-                    ((MilitaryUnit) person).setXAttack((Integer) spinnerTargetX.getValue());
-                    ((MilitaryUnit) person).setYAttack((Integer) spinnerTargetY.getValue());
-                }
-            }
-            selectUnitPopup.hide();
-            NextTurn nextTurn = new NextTurn(this);
-            nextTurn.nextTurn();
-        });
+    }
+
+    private static HBox gethBox(Spinner spinnerTargetX, Spinner spinnerTargetY, Button button) {
         HBox hBox = new HBox(spinnerTargetX, spinnerTargetY, button);
-        hBox.setSpacing(20);
-        vBox.getChildren().add(hBox);
-        StackPane stackPane = new StackPane(rectangle, vBox);
-        selectUnitPopup = new Popup();
-        selectUnitPopup.getContent().add(stackPane);
-        rectangle.setFill(Paint.valueOf("#26200354"));
-        selectUnitPopup.show(gridPane.getScene().getWindow());
-        rectangle.setHeight(selectUnitPopup.getHeight());
-        rectangle.setWidth(selectUnitPopup.getWidth());
-        selectUnitPopup.setX(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutX());
-        selectUnitPopup.setY(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutY());
+        return hBox;
     }
 
     boolean select = false;
@@ -202,8 +228,6 @@ public class GameMenuApp extends Application {
     }
 
     public void createPane(AnchorPane anchorPane) {
-
-//        Pane pane = new Pane(gridPane1);
         HBox hBox = new HBox();
         try {
             Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
@@ -222,39 +246,70 @@ public class GameMenuApp extends Application {
             anchorPaneInSplitPan.getChildren().add(hBox);
 
         setManImage(hBox);
-        //TODO set this
-        VBox vBox = createOptions();
-        hBox.getChildren().add(vBox);
-
-//        setMiniMap(hBox);
-//        hBox.getChildren().add(gridPane1);
-
-        //        FXMLLoader fxmlLoader1 = new FXMLLoader(Main.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
-//        try {
-//  //          AnchorPane anchorPane1 = fxmlLoader1.load();
-//    ///        anchorPane1.getChildren().add(pane);
-//        this.anchorPaneInSplitPan.getChildren().add(gridPane1);
-//        gridPane1.setMaxHeight(anchorPaneInSplitPan.getHeight());
-//        gridPane1.setMaxWidth(anchorPaneInSplitPan.getWidth());
-//        gridPane1.setLayoutY(anchorPaneInSplitPan.getWidth() / 2);
-//        gridPane1.setLayoutX(anchorPaneInSplitPan.getHeight() / 2);
-//        anchorPaneInSplitPan.getChildren().add(gridPane1);
-//        pane.setLayoutX(400);
-//        pane.setLayoutY(300);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        setMiniMap(hBox);
         gridPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                ArrayList<Region> regions = new ArrayList<>();
-                if (popup != null && popup.isShowing()) popup.hide();
-                for (Node child : gridPane.getChildren())
-                    if (child instanceof Region) regions.add((Region) child);
-                if (popup != null && popup.isShowing()) popup.hide();
-                gridPane.getChildren().removeAll(regions);
-                startSelectedTileX = mouseEvent.getX();
-                startSelectedTileY = mouseEvent.getY();
+                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                    Popup popup = new Popup();
+                    Button copy = new Button("copy");
+                    copy.setOnAction(e -> {
+                        for (Node child : GameMenuApp.gridPane.getChildren()) {
+                            if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
+                                    child.getLayoutX() < mouseEvent.getScreenX() && mouseEvent.getScreenX() < child.getLayoutX() + 20 &&
+                                    child.getLayoutY() < mouseEvent.getScreenY() && mouseEvent.getSceneY() < child.getLayoutY() + 20) {
+                                if (map.getTileWhitXAndY(GridPane.getColumnIndex(child) + startMapX,
+                                        GridPane.getRowIndex(child) + startMapY).getBuilding() != null &&
+                                        (BuildingName.getByAddres(((ImageView) child).getImage().getUrl()) != null ||
+                                                ((ImageView) child).getImage().getUrl() == null)) {
+                                    copyBuilding = map.getTileWhitXAndY(GridPane.getColumnIndex(child) + startMapX,
+                                                    GridPane.getRowIndex(child) + startMapY).getBuilding().
+                                            getBuildingName().getName();
+                                    Clipboard clipboard = Clipboard.getSystemClipboard();
+                                    ClipboardContent content = new ClipboardContent();
+                                    content.putImage(new Image(map.getTileWhitXAndY(GridPane.getColumnIndex(child) + startMapX,
+                                                    GridPane.getRowIndex(child) + startMapY).getBuilding().
+                                            getBuildingName().getPictureAddress()));
+                                    content.putUrl(map.getTileWhitXAndY(GridPane.getColumnIndex(child) + startMapX,
+                                                    GridPane.getRowIndex(child) + startMapY).getBuilding().
+                                            getBuildingName().getPictureAddress());
+                                    clipboard.setContent(content);
+                                    break;
+                                }
+                            }
+                        }
+                        popup.hide();
+                    });
+                    Button paste = new Button("paste");
+                    paste.setOnAction(e -> {
+                        if (BuildingName.getByAddres(Clipboard.getSystemClipboard().getUrl()) != null) {
+                            for (Node child : GameMenuApp.gridPane.getChildren()) {
+                                if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
+                                        child.getLayoutX() < mouseEvent.getScreenX() && mouseEvent.getScreenX() < child.getLayoutX() + 20 &&
+                                        child.getLayoutY() < mouseEvent.getScreenY() && mouseEvent.getSceneY() < child.getLayoutY() + 20) {
+                                    BuildingMenuController.dropBuilding(String.valueOf(GridPane.getColumnIndex(child) + startMapX),
+                                            String.valueOf(GridPane.getRowIndex(child) + startMapY),
+                                            BuildingName.getByAddres(Clipboard.getSystemClipboard().getUrl()).getName());
+                                    break;
+                                }
+                            }
+                        }
+                        popup.hide();
+                    });
+                    popup.getContent().add(new VBox(copy, paste));
+                    popup.setX(mouseEvent.getScreenX());
+                    popup.setY(mouseEvent.getScreenY());
+                    popup.show(Main.stage);
+                } else {
+                    ArrayList<Region> regions = new ArrayList<>();
+                    if (popup != null && popup.isShowing()) popup.hide();
+                    for (Node child : gridPane.getChildren())
+                        if (child instanceof Region) regions.add((Region) child);
+                    if (popup != null && popup.isShowing()) popup.hide();
+                    gridPane.getChildren().removeAll(regions);
+                    startSelectedTileX = mouseEvent.getX();
+                    startSelectedTileY = mouseEvent.getY();
+                }
             }
         });
         ZoomAnimation zoomAnimation = new ZoomAnimation();
@@ -311,156 +366,6 @@ public class GameMenuApp extends Application {
         hBox.getChildren().add(gridPane1);
     }
 
-    private VBox createOptions() {
-        int size = 15;
-        VBox vBox = new VBox();
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setSpacing(10);
-        Circle option = new Circle(size);
-        setPicture(option, "src\\main\\resources\\Images\\options\\setting.png");
-        option.setOnMouseClicked(mouseEvent -> {
-            if (!optionOpen) {
-                optionOpen = true;
-                option();
-            }
-        });
-
-        Circle briefing = new Circle(size);
-        setPicture(briefing, "src\\main\\resources\\Images\\options\\info.png");
-        briefing.setOnMouseClicked(mouseEvent -> {
-            //TODO
-            try {
-                briefing();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-//            zxfgkulkgdfhgjghjhjkhjlkjljkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-        });
-
-        Circle delete = new Circle(size);
-        setPicture(delete, "src\\main\\resources\\Images\\options\\destroy.jpg");
-        delete.setOnMouseClicked(mouseEvent -> {
-            isOnDestroyState = !isOnDestroyState;
-            //TODO change mouse cursor
-        });//TODO وقتی میزنه روش دوباره بزنه دیستروی میره
-
-        Circle undo = new Circle(size);
-        setPicture(undo, "src\\main\\resources\\Images\\options\\undo.png");
-        undo.setOnMouseClicked(mouseEvent -> {
-            //TODO check
-            if (buildingForUndo != null) {
-                Outputs outputs = BuildingMenuController.destroyBuilding(buildingForUndo);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, outputs.toString(), ButtonType.CLOSE);
-                alert.setTitle("destroying");
-                alert.setGraphic(new ImageView(new Image(buildingForUndo.getBuildingName().getPictureAddress())));
-                if (outputs.equals(Outputs.SUCCESSFUL_DESTROY_BUILDING))
-                    alert.setHeaderText("Successful destroy");
-                else
-                    alert.setHeaderText("Failure in destroying");
-                alert.showAndWait();
-            }
-            //reload map
-        });
-
-        vBox.getChildren().addAll(option, briefing, delete, undo);
-        return vBox;
-    }
-
-    private void briefing() throws FileNotFoundException {
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setPrefWidth(668);
-        anchorPane.setPrefHeight(500);
-
-        VBox vBox = new VBox();
-        vBox.setPrefHeight(400);
-        vBox.setPrefWidth(200);
-        vBox.setLayoutX(400);
-        vBox.setLayoutY(100);
-        vBox.setSpacing(20);
-
-        Image image = new Image(new FileInputStream("src\\main\\resources\\Images\\options\\mission.jpg"));
-        BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundimage);
-        anchorPane.setBackground(background);
-
-        Text txt = new Text("You should defeat this empire to win : ");
-        txt.setFill(Color.RED);
-        txt.setStyle("-fx-font: 15 arial;");
-        vBox.getChildren().add(txt);
-        int counter = 1;
-        for (Empire empire : getEmpires()) {
-            if (!empire.equals(getThisEmpire())) {
-                Text text = new Text("        " + counter + "." + empire.getPlayer().getNickname());
-                text.setFill(Color.RED);
-                text.setStyle("-fx-font: 15 arial;");
-                counter++;
-                vBox.getChildren().add(text);
-            }
-        }
-        anchorPane.getChildren().add(vBox);
-        Scene scene = new Scene(anchorPane);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-//    sghfgjhkjgfdxzfxhcgjkjljhkjgfdsasadfghjhkljjheasrytuyiuoiyuytreaa
-    private void option() {
-        //TODO close stages
-        Stage stage = new Stage();
-        VBox vBox = new VBox();
-        vBox.setPrefHeight(500);
-        vBox.setPrefWidth(500);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setSpacing(20);
-
-        Button resume = createButton("resume");
-        resume.setOnAction(actionEvent -> {
-            optionOpen = false;
-            stage.close();
-        });
-
-        Button quit = createButton("quit");
-        quit.setOnAction(actionEvent -> {
-            Main main = new Main();
-            try {
-                main.start(Main.stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            optionOpen = false;
-        });
-
-        Button exit = createButton("exit");
-        exit.setOnAction(actionEvent -> {
-            Main.stage.close();
-            stage.close();
-            optionOpen = false;
-            //TODO check
-        });
-
-        vBox.getChildren().addAll(resume, quit, exit);
-        Scene scene = new Scene(vBox);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public Button createButton(String name) {
-        Button button = new Button(name);
-        button.setPrefWidth(300);
-        return button;
-    }
-
-    private void setPicture(Circle circle, String pictureAddress) {
-        try {
-            circle.setFill(new ImagePattern(new Image(
-                    new FileInputStream(pictureAddress))));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void setManImage(HBox hBox) {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setPrefWidth(160);
@@ -497,6 +402,7 @@ public class GameMenuApp extends Application {
         gridPane.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) return;
                 Rectangle rectangle = new Rectangle(min(startSelectedTileX, mouseEvent.getX()),
                         min(startSelectedTileY, mouseEvent.getY()),
                         abs(mouseEvent.getX() - startSelectedTileX),
@@ -526,15 +432,21 @@ public class GameMenuApp extends Application {
                 imageView.setFitWidth(20);
                 imageView.setFitHeight(20);
                 imageView.setOnDragDropped(dragEvent -> {
-                    Image img = dragEvent.getDragboard().getImage();
                     for (Node child : GameMenuApp.gridPane.getChildren()) {
                         if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
                                 child.getLayoutX() < dragEvent.getScreenX() && dragEvent.getScreenX() < child.getLayoutX() + 20 &&
                                 child.getLayoutY() < dragEvent.getScreenY() && dragEvent.getSceneY() < child.getLayoutY() + 20) {
-
-                            ((ImageView) child).setImage(img);
-                            GameMenuApp.map.getTile(GridPane.getColumnIndex(child), GridPane.getRowIndex(child)).setBuilding(new Building
-                                    (null, GridPane.getColumnIndex(child), GridPane.getRowIndex(child), BuildingName.INN));
+                            Outputs outputs = BuildingMenuController.dropBuilding(String.valueOf(GridPane.getColumnIndex(child)),
+                                    String.valueOf(GridPane.getRowIndex(child)), BuildingName.getByAddres(BuildingMenuApp.
+                                            getPictureAddress()).getName());
+                            createPane(anchorPaneMain);
+                            if (!outputs.equals(Outputs.SUCCESS)) {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error");
+                                alert.setHeaderText("put building error");
+                                alert.setContentText(outputs.toString());
+                                alert.showAndWait();
+                            }
                             break;
                         }
                     }
@@ -661,9 +573,9 @@ public class GameMenuApp extends Application {
                 }
                 if (building instanceof SecondProducer) {
                     number++;
-                    sumOfRate += ((SecondProducer) building).getRate();
-                    maxRate = max(maxRate, ((SecondProducer) building).getRate());
-                    minRate = min(maxRate, ((SecondProducer) building).getRate());
+                    //sumOfRate += ((SecondProducer) building).getRate();
+                  //  maxRate = max(maxRate, ((SecondProducer) building).getRate());
+                //    minRate = min(maxRate, ((SecondProducer) building).getRate());
                 }
             }
         }
@@ -756,57 +668,38 @@ public class GameMenuApp extends Application {
         }
         VBox vBox = new VBox();
         vBox.setSpacing(20);
-        for (MilitaryUnitName militaryUnitName : MilitaryUnitName.values()) {
-            int number = 0;
-            for (Tile tile : tiles)
-                number += findNumber(tile, militaryUnitName);
-            if (number != 0) {
-                Text text = new Text(militaryUnitName.getName() + " number: ");
-                text.setFill(Color.WHITE);
-                Spinner spinner = new Spinner<>(1, number, 1);
-                HBox hBox = new HBox(text, spinner);
-                hBox.setSpacing(20);
-                vBox.getChildren().add(hBox);
-            }
-        }
-        for (CatapultName catapultName : CatapultName.values()) {
-            int number = 0;
-            for (Tile tile : tiles)
-                number += findCatapultNumber(tile, catapultName);
-            if (number != 0) {
-                Text text = new Text(catapultName.getName() + " number: ");
-                text.setFill(Color.WHITE);
-                Spinner spinner = new Spinner<>(1, number, 1);
-                HBox hBox = new HBox(text, spinner);
-                hBox.setSpacing(20);
-                vBox.getChildren().add(hBox);
-            }
-        }
+        setSpinersForUnits(tiles, vBox);
         Spinner spinnerTargetX = new Spinner<>(0, map.getSize(), 0);
         Spinner spinnerTargetY = new Spinner<>(0, map.getSize(), 0);
         Button button = new Button("move");
         button.setOnAction(e -> {
-            for (People person : tiles.get(0).getPeople()) {
-                if (person instanceof MilitaryUnit) {
-                    ((MilitaryUnit) person).setDest((Integer) spinnerTargetX.getValue(), (Integer) spinnerTargetY.getValue());
-                }
+            for (Node child : vBox.getChildren()) {
+                MilitaryUnitName militaryUnitName = null;
+                if (child instanceof HBox && ((HBox) child).getChildren().size() != 3)
+                    outer:for (Node node : ((HBox) child).getChildren()) {
+                        if (node instanceof Text) {
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                        }
+                        if (node instanceof Spinner) {
+                            int number = 0;
+                            for (Tile tile : tiles) {
+                                for (People person : tile.getPeople()) {
+                                    if (person instanceof MilitaryUnit &&
+                                            ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName)) {
+                                        if (number == (Integer) ((Spinner) node).getValue()) break outer;
+                                        ((MilitaryUnit) person).setDest((Integer) spinnerTargetX.getValue(),
+                                                (Integer) spinnerTargetY.getValue());
+                                    }
+                                }
+                            }
+                        }
+                    }
             }
             selectUnitPopup.hide();
             NextTurn nextTurn = new NextTurn(this);
             nextTurn.nextTurn();
         });
-        HBox hBox = new HBox(spinnerTargetX, spinnerTargetY, button);
-        hBox.setSpacing(20);
-        vBox.getChildren().add(hBox);
-        StackPane stackPane = new StackPane(rectangle, vBox);
-        selectUnitPopup = new Popup();
-        selectUnitPopup.getContent().add(stackPane);
-        rectangle.setFill(Paint.valueOf("#26200354"));
-        selectUnitPopup.show(gridPane.getScene().getWindow());
-        rectangle.setHeight(selectUnitPopup.getHeight());
-        rectangle.setWidth(selectUnitPopup.getWidth());
-        selectUnitPopup.setX(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutX());
-        selectUnitPopup.setY(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutY());
+        setPopup(rectangle, vBox, spinnerTargetX, spinnerTargetY, button);
     }
 
     private Popup selectUnitPopup;
