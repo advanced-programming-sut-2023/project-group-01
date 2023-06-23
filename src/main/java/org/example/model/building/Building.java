@@ -17,18 +17,22 @@ public class Building {
     protected int beginY;
     protected int endY;
     private final BuildingName buildingName;
+    protected boolean isFiring = false;
+    protected int fireNumber = 0;
+    protected int hitPoint;
 
     public Building(Empire empire, int x1, int y1, BuildingName buildingName) {
         this.empire = empire;
-        this.empire.decreaseGold((buildingName.getGoldCost()));
-        this.empire.reduceMaterial("stone", buildingName.getStoneCost());
-        this.empire.reduceMaterial("wood", buildingName.getWoodCost());
+//        this.empire.decreaseGold((buildingName.getGoldCost()));
+//        this.empire.reduceMaterial("stone", buildingName.getStoneCost());
+//        this.empire.reduceMaterial("wood", buildingName.getWoodCost());
         this.beginX = x1;
         this.beginY = y1;
-        this.endX = x1 + buildingName.getSize();
-        this.endY = y1 + buildingName.getSize();
+        this.endX = x1 + buildingName.getSize() - 1;
+        this.endY = y1 + buildingName.getSize() - 1;
         this.buildingName = buildingName;
-        this.workers = empire.changePeopleToWorker(buildingName.getNumberOfWorkers(), x1, y1);
+        this.hitPoint = buildingName.getHitPoint();
+//        this.workers = empire.changePeopleToWorker(buildingName.getNumberOfWorkers(), x1, y1);
     }
 
     public BuildingName getBuildingName() {
@@ -72,5 +76,41 @@ public class Building {
 
     public void setEmpire(Empire empire) {
         this.empire = empire;
+    }
+
+    public ArrayList<Worker> getWorkers() {
+        return workers;
+    }
+
+    public int getNumberOfWorkers() {
+        return workers.size();
+    }
+
+    public boolean isFiring() {
+        return isFiring;
+    }
+
+    public void setFiring(boolean firing) {
+        isFiring = firing;
+        fireNumber = 3;
+    }
+
+    public void reduceFireNumber() {
+        //TODO call after each two next turn and when isFiring is true
+        if (fireNumber <= 0)
+            isFiring = false;
+        fireNumber--;
+    }
+
+    public int getHitPoint() {
+        return hitPoint;
+    }
+
+    public void setHitPoint(int hitPoint) {
+        this.hitPoint = hitPoint;
+    }
+
+    public void reduceHitPoint(int hitPoint) {
+        this.hitPoint -= hitPoint;
     }
 }

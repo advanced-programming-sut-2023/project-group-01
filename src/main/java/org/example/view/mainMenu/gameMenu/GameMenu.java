@@ -116,7 +116,7 @@ public class GameMenu {
                     System.out.println("The player is " + thisEmpire.getPlayer().getUsername());
                 else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.NEXT_TURN)) != null) {
                     turnNumber++;
-                    nextTurn.nextTurn();
+                  //  nextTurn.nextTurn();
                 } else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.MILITARY_MENU)) != null) {
                     MilitaryMenu militaryMenu = new MilitaryMenu(thisEmpire, this);
                     militaryMenu.run(scanner);
@@ -135,6 +135,10 @@ public class GameMenu {
             setUsersGameFinished();
             System.out.println("Game canceled");
         }
+    }
+
+    public static void setMap(Map map) {
+        GameMenu.map = map;
     }
 
     private InitializeMaterial setLevelOfGame(Scanner scanner) {

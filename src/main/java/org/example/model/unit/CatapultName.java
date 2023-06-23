@@ -1,17 +1,24 @@
 package org.example.model.unit;
 
 import org.example.model.Empire;
+import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.model.unit.enums.Speed;
 
 import java.util.ArrayList;
 
 public enum CatapultName {
-    CARAPULT(150, "carapult", 30, 2, 400, 0, false, true, Speed.LOW.getSpeed()),
-    TREBUCHER(150, "trebucher", 50, 3, 600, 0, false, false, 0),
-    SIEGE_TOWER(300, "siegeTower", 0, 4, 0, 15, false, true, Speed.LOW.getSpeed()),
-    BATTERNING_RAM(500, "batterningRam", 0, 4, 600, 0, false, true, Speed.LOW.getSpeed()),
-    PORTABLE_SHIELD(50, "portableShield", 0, 1, 0, 0, false, true, Speed.LOW.getSpeed()),
-    FIRE_BALLISTRA(150, "fireBallistra", 30, 2, 400, 0, true, true, Speed.LOW.getSpeed());
+    CARAPULT(150, "carapult", 30, 2, 400, 0,
+            false, true, Speed.LOW.getSpeed(), ""),
+    TREBUCHER(150, "trebucher", 50, 3, 600, 0,
+            false, false, 0, ""),
+    SIEGE_TOWER(300, "siegeTower", 0, 4, 0, 15,
+            false, true, Speed.LOW.getSpeed(), ""),
+    BATTERNING_RAM(500, "batterningRam", 0, 4, 600, 0,
+            false, true, Speed.LOW.getSpeed(), ""),
+    PORTABLE_SHIELD(50, "portableShield", 0, 1, 0, 0,
+            false, true, Speed.LOW.getSpeed(), ""),
+    FIRE_BALLISTRA(150, "fireBallistra", 30, 2, 400, 0,
+            true, true, Speed.LOW.getSpeed(), "");
     private int hitPoint;
     private final int speed;
     private final String name;
@@ -22,9 +29,10 @@ public enum CatapultName {
     private final boolean canAttackUnit;
     private final boolean canMove;
     private ArrayList<Engineer> engineers = new ArrayList<Engineer>();
+    private String pictureAddress;
 
     CatapultName(int hitPoint, String name, int fireRange, int numberOfEngineers, int damage, int capacity,
-                 boolean canAttackUnit, boolean canMove, int speed) {
+                 boolean canAttackUnit, boolean canMove, int speed, String pictureAddress) {
         this.hitPoint = hitPoint;
         this.name = name;
         this.fireRange = fireRange;
@@ -34,6 +42,7 @@ public enum CatapultName {
         this.canAttackUnit = canAttackUnit;
         this.canMove = canMove;
         this.speed = speed;
+        this.pictureAddress = pictureAddress;
     }
 
     public void addEngineer(Engineer engineer) {
@@ -83,4 +92,14 @@ public enum CatapultName {
         this.hitPoint -= hitPoint;
     }
 
+    public String getPictureAddress() {
+        return pictureAddress;
+    }
+
+    public static CatapultName getCatapultByPictureAddress(String address) {
+        for (CatapultName catapultName : CatapultName.values())
+            if (catapultName.getPictureAddress().equals(address))
+                return catapultName;
+        return null;
+    }
 }

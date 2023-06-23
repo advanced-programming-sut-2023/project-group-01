@@ -4,6 +4,7 @@ import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Tile;
 import org.example.model.unit.enums.MilitaryUnitName;
+import org.example.view.graphicView.GameMenuApp;
 
 import static java.lang.Integer.MAX_VALUE;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
@@ -26,10 +27,14 @@ public class MilitaryUnit extends People {
 
     public MilitaryUnit(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
         super(position, empire);
-        empire.removePeople();
-        empire.addUnit(this);
+  //      empire.removePeople();
+//        empire.addUnit(this);
         this.xPos = xPos;
         this.yPos = yPos;
+        this.xDestination = -1;
+        this.yDestination = -1;
+        this.xAttack = -1;
+        this.yAttack = -1;
         this.militaryUnitName = militaryUnitName;
         getMap().getTile(xPos, yPos).addUnit(this);
     }
@@ -57,6 +62,7 @@ public class MilitaryUnit extends People {
         getMap().getTile(this.xPos, this.yPos).removeUnit(this);
         this.xPos = xPos;
         this.yPos = yPos;
+
         getMap().getTile(xPos, yPos).addUnit(this);
         this.isMoved = true;
         if (getMap().getTile(xPos, yPos).getBuilding() != null && getMap().getTile(xPos, yPos).

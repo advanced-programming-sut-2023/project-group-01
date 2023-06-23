@@ -1,6 +1,5 @@
 package org.example.model.building;
 
-import javafx.scene.image.ImageView;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.enums.TypeOfTile;
@@ -37,7 +36,6 @@ public class Tile {
 
     public ArrayList<MilitaryUnit> findNearEnemiesMilitaryUnit(Empire empire) {
         ArrayList<MilitaryUnit> enemies = new ArrayList<MilitaryUnit>();
-
         for (People person : people) {
             if (!person.getEmpire().equals(empire) && person instanceof MilitaryUnit) {
                 enemies.add((MilitaryUnit) person);
@@ -67,7 +65,7 @@ public class Tile {
         people.clear();
     }
 
-    public void setImage(){
+    public void setImage() {
 
     }
 

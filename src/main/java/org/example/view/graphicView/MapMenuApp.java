@@ -93,7 +93,7 @@ public class MapMenuApp extends Application {
 
     public void addMouseScrolling(Node node) {
         node.setOnScroll((ScrollEvent event) -> {
-            // Adjust the zoom factor as per your requirement
+            // Adjust the zoom factor anchorPaneInSplitPan per your requirement
             double zoomFactor = 1.05;
             double deltaY = event.getDeltaY();
             if (deltaY < 0) {

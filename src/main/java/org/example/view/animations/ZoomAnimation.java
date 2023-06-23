@@ -22,7 +22,7 @@ public class ZoomAnimation {
         double dx = (x - (bounds.getWidth() / 2 + bounds.getMinX()));
         double dy = (y - (bounds.getHeight() / 2 + bounds.getMinY()));
         timeline.getKeyFrames().clear();
-        if (node.getScaleX() < 2.5 && factor > 1 || node.getScaleX() > 1 &&factor < 1 )
+        if (node.getScaleX() < 2.5 && factor > 1 || node.getScaleX() > 1 && factor < 1)
             timeline.getKeyFrames().addAll(
                     new KeyFrame(Duration.millis(200), new KeyValue(node.translateXProperty(), node.getTranslateX() - f * dx)),
                     new KeyFrame(Duration.millis(200), new KeyValue(node.translateYProperty(), node.getTranslateY() - f * dy)),
