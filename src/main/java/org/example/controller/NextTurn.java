@@ -287,30 +287,38 @@ public class NextTurn {
         //Empire empire = empires.get(0);
         for (Empire empire : empires) {
             for (MilitaryUnit unit : tile.findUnit(empire)) {
-                if (unit.getMilitaryUnitName() != null)
-                    if (unit.getMilitaryUnitName().equals(MilitaryUnitName.LORD)) continue;
-                if (unit.getXDestination() < getMap().getSize()) {
-                    xDest = unit.getXDestination();
-                    yDest = unit.getYDestination();
-                    System.out.println(unit.isMoved());
-                } else if (unit.getPatrolX1() < getMap().getSize()) {
-                    xDest = unit.getPatrolX2();
-                    yDest = unit.getPatrolY2();
+                if (unit.getXAttack() != -1 && unit.getYAttack() != -1) {
+                    moveForAttack(unit);
+                } else {
+                    if (unit.getMilitaryUnitName() != null)
+                        if (unit.getMilitaryUnitName().equals(MilitaryUnitName.LORD)) continue;
+                    if (unit.getXDestination() < getMap().getSize()) {
+                        xDest = unit.getXDestination();
+                        yDest = unit.getYDestination();
+//                        System.out.println(unit.isMoved());
+                    } else if (unit.getPatrolX1() < getMap().getSize()) {
+                        xDest = unit.getPatrolX2();
+                        yDest = unit.getPatrolY2();
+                    }
+                    if (xDest == -1 && yDest == -1) continue;
+                    building = getMap().getTile(xDest, yDest).getBuilding();
+                    if (building == null && !unit.isMoved()) {
+                        callMoveFunctions(unit, false);
+                    } else if (building != null && !unit.isMoved() && (!(unit instanceof Catapult)) &&
+                            unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
+                        callMoveFunctions(unit, true);
+                    else if (!unit.isMoved() && unit instanceof Catapult)
+                        callMoveFunctions(unit, false);
                 }
-                if (xDest == -1 && yDest == -1) continue;
-                building = getMap().getTile(xDest, yDest).getBuilding();
-                if (building == null && !unit.isMoved()) {
-                    callMoveFunctions(unit, false);
-                } else if (building != null && !unit.isMoved() && (!(unit instanceof Catapult)) &&
-                        unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
-                    callMoveFunctions(unit, true);
-                else if (!unit.isMoved() && unit instanceof Catapult)
-                    callMoveFunctions(unit, false);
             }
         }
     }
 
     private void callMoveFunctions(MilitaryUnit unit, boolean bool) {
+        if (unit.getXAttack() != -1 && unit.getYAttack() != -1) {
+            moveForAttack(unit);
+            return;
+        }
         if (unit instanceof Catapult) {
             MoveToXYForCatapult((Catapult) unit, bool);
             return;
@@ -331,7 +339,7 @@ public class NextTurn {
 
     }
 
-    private void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {
+    public void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {
         int xPos = unit.getXPos(), yPos = unit.getYPos();
         boolean isAssassins = unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS);
         BestPath bestPath = new BestPath(unit.getEmpire());
@@ -344,13 +352,14 @@ public class NextTurn {
         int XY = 0;
         int size = path.size();
         int mapSize = getMap().getSize();
-
         if (!isAssassins && haveBuilding)
             for (int i = size - 1; i > 0; i--)
                 if (getMap().getTile(path.get(i) / mapSize, path.get(i) % mapSize).getBuilding() != null
-                        && !getMap().getTile(path.get(i) / mapSize, path.get(i) % mapSize).getBuilding().equals(BuildingName.EMPIRE_CASTLE))
+                        && !getMap().getTile(path.get(i) / mapSize, path.get(i) % mapSize)
+                        .getBuilding().equals(BuildingName.EMPIRE_CASTLE))
                     XY = path.remove();
         boolean havePatrol = unit.getPatrolX1() < mapSize;
+
         if (path == null || path.size() == 0) return;
         MoveAnimation moveAnimation = new MoveAnimation(this, unit, havePatrol, xDest, yDest, path);
         moveAnimation.play();
@@ -776,25 +785,28 @@ public class NextTurn {
     }
 
 
-    public void moveForAttack(ArrayList<Empire> empires) {
+    public void moveForAttack(MilitaryUnit unit) {
         //TODO
-        for (Empire empire : empires) {
-            for (MilitaryUnit unit : empire.getUnits()) {
-                if (unit instanceof Catapult) {
-                    Building building = getMap().getTile(unit.getXAttack(), unit.getYAttack()).getBuilding();
-                    if (building != null && building.getEmpire().equals(unit.getEmpire()))
-                        moveForAttackWithRangeForEnemyBuilding(unit, ((Catapult) unit).getCatapultName().getFireRange());
-                    else if (building == null)
-                        moveForAttackWithRangeForEnemyUnit(unit, ((Catapult) unit).getCatapultName().getFireRange());
-                } else {
-                    Building building = getMap().getTile(unit.getXAttack(), unit.getYAttack()).getBuilding();
-                    if (building != null && building.getEmpire().equals(unit.getEmpire()))
-                        moveForAttackWithRangeForEnemyBuilding(unit, (unit.getMilitaryUnitName().getGunshot()));
-                    else if (building == null)
-                        moveForAttackWithRangeForEnemyUnit(unit, unit.getMilitaryUnitName().getGunshot());
-                }
-            }
+        //ArrayList<Empire> empires
+//        for (Empire empire : empires) {
+//            for (MilitaryUnit unit : empire.getUnits()) {
+        if (unit instanceof Catapult) {
+            Building building = getMap().getTile(unit.getXAttack(), unit.getYAttack()).getBuilding();
+            if (building != null && building.getEmpire().equals(unit.getEmpire()))
+                moveForAttackWithRangeForEnemyBuilding(unit, ((Catapult) unit).getCatapultName().getFireRange());
+            else if (building == null)
+                moveForAttackWithRangeForEnemyUnit(unit, ((Catapult) unit).getCatapultName().getFireRange());
+        } else {
+            Building building = getMap().getTile(unit.getXAttack(), unit.getYAttack()).getBuilding();
+            if (building != null && building.getEmpire().equals(unit.getEmpire()))
+                moveForAttackWithRangeForEnemyBuilding(unit, (unit.getMilitaryUnitName().getGunshot()));
+            else if (building == null)
+                moveForAttackWithRangeForEnemyUnit(unit, unit.getMilitaryUnitName().getGunshot());
+
+
         }
+//            }
+//        }
     }
 
     public void moveForAttackWithRangeForEnemyUnit(MilitaryUnit unit, int range) {
