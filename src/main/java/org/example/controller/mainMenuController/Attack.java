@@ -1,15 +1,18 @@
 package org.example.controller.mainMenuController;
 
+import org.example.model.Disease;
 import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Building;
 import org.example.model.building.castleBuilding.Wall;
+import org.example.model.building.enums.BuildingName;
 import org.example.model.unit.Catapult;
 import org.example.model.unit.CatapultName;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.*;
 
@@ -274,7 +277,7 @@ public class Attack {
     }
 
     public static void moveForAttackWithRangeForEnemyUnit(MilitaryUnit unit, int range) {
-        //TODO like normal move
+
     }
 
     public static void moveForAttackWithRangeForEnemyBuilding(MilitaryUnit unit, int range) {
@@ -306,5 +309,54 @@ public class Attack {
                     ((MilitaryUnit) people).setHaveFire(true);
             }
         }
+    }
+
+    public static void diseaseLogic(ArrayList<Empire> empires) {
+        Random random = new Random();
+        int diseasedEmpire = random.nextInt(empires.size() + 1);
+        int diseasedBuilding = random.nextInt(empires.get(diseasedEmpire).getBuildings().size() + 1);
+        Building building = empires.get(diseasedEmpire).getBuildings().get(diseasedBuilding);
+        int mapSize = getMap().getSize();
+        int xStart = Math.max(building.getBeginX() - 5, 0);
+        int yStart = Math.max(building.getBeginY() - 5, 0);
+        int xEnd = Math.min(building.getEndX() + 5, mapSize);
+        int yEnd = Math.min(building.getEndY() + 5, mapSize);
+        Disease disease = new Disease(xStart, yStart, xEnd, yEnd);
+        Empire badBakht = empires.get(diseasedEmpire);
+        badBakht.getDiseases().add(disease);
+        badBakht.setPopularity();
+        boolean haveApothecary = false;
+        outer:
+        for (Building building1 : badBakht.getBuildings()) {
+            if (building1.getBuildingName().equals(BuildingName.APOTHECARY)) {
+                haveApothecary = true;
+                break outer;
+            }
+        }
+        //TODO update man
+
+        if (haveApothecary) {
+            badBakht.getDiseases().remove(disease);
+            badBakht.setPopularity();
+        }
+    }
+
+    public static void diseaseLogicForEachTurn(Empire empire) {
+        //TODO call this after each next turn for thisEmpire
+        empire.setPopularity();
+    }
+
+    public static void fireLogicAfterEachLogic(Empire empire) {
+        //TODO call after each next turn for thisEmpire
+        ArrayList<Building> destroyedBuildingByFire = new ArrayList<>();
+        for (Building building : empire.getBuildings()) {
+            if (building.isFiring()) {
+                building.reduceFireNumber();
+                building.reduceHitPoint(100);
+            }
+            if (building.getHitPoint() <= 0)
+                destroyedBuildingByFire.add(building);
+        }
+        empire.getBuildings().removeAll(destroyedBuildingByFire);
     }
 }
