@@ -352,7 +352,6 @@ public class Attack {
         for (Building building : empire.getBuildings()) {
             if (building.isFiring()) {
                 building.reduceFireNumber();
-                building.reduceHitPoint(100);
             }
             if (building.getHitPoint() <= 0)
                 destroyedBuildingByFire.add(building);

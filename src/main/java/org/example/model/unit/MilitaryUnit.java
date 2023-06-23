@@ -24,11 +24,13 @@ public class MilitaryUnit extends People {
     protected int patrolY2 = MAX_VALUE;
     protected boolean isMoved;
     protected boolean isAttacked;
+    protected boolean haveFire = false;
+    protected int hitPoint;
 
     public MilitaryUnit(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
         super(position, empire);
-  //      empire.removePeople();
-//        empire.addUnit(this);
+//        empire.removePeople();
+        empire.addUnit(this);
         this.xPos = xPos;
         this.yPos = yPos;
         this.xDestination = -1;
@@ -36,6 +38,8 @@ public class MilitaryUnit extends People {
         this.xAttack = -1;
         this.yAttack = -1;
         this.militaryUnitName = militaryUnitName;
+        if (!(this instanceof Catapult))
+            this.hitPoint = militaryUnitName.getHitPoint();
         getMap().getTile(xPos, yPos).addUnit(this);
     }
 
@@ -144,6 +148,10 @@ public class MilitaryUnit extends People {
         return patrolY1;
     }
 
+    public boolean isHaveFire() {
+        return haveFire;
+    }
+
     public void setMoved() {
         isMoved = true;
     }
@@ -160,8 +168,24 @@ public class MilitaryUnit extends People {
         return militaryUnitName;
     }
 
+    public void setHaveFire(boolean haveFire) {
+        this.haveFire = haveFire;
+    }
+
     public void removeUnit() {
         this.getEmpire().removePeople(this);
         getMap().getTile(xPos, yPos).removeUnit(this);
+    }
+
+    public int getHitPoint() {
+        return hitPoint;
+    }
+
+    public void setHitPoint(int hitPoint) {
+        this.hitPoint = hitPoint;
+    }
+
+    public void reduceHitPoint(int hitPoint) {
+        this.hitPoint -= hitPoint;
     }
 }

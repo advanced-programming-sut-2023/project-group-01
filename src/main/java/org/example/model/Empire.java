@@ -33,6 +33,7 @@ public class Empire {
     private int maxPopulation;
     private float gold;
     private Color color;
+    private ArrayList<Disease> diseases = new ArrayList<>();
 
     private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
     private LinkedHashMap<FoodType, Float> foods = new LinkedHashMap<>(4);
@@ -184,7 +185,10 @@ public class Empire {
     }
 
     public void setPopularity() {
-        popularity = (fearPopularity + foodPopularity + taxPopularity + religionPopularity);
+        int diseaseRate = 0;
+        for (Disease disease : diseases)
+            diseaseRate += disease.getReducePopularityAmount();
+        popularity = (fearPopularity + foodPopularity + taxPopularity + religionPopularity - diseaseRate);
     }
 
     public void setFearPopularity() {
@@ -516,4 +520,9 @@ public class Empire {
                 units.add((MilitaryUnit)people1);
         return units;
     }
+
+    public ArrayList<Disease> getDiseases() {
+        return diseases;
+    }
+
 }

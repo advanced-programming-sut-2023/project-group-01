@@ -11,6 +11,7 @@ public class Tile {
     private ArrayList<People> people = new ArrayList<>();
     private Building building;
     private TypeOfTile typeOfTile = TypeOfTile.NORMAL_GROUND;
+    private boolean haveDisease;
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
@@ -69,5 +70,12 @@ public class Tile {
 
     }
 
+    public void setHaveDisease(boolean haveDisease) {
+        this.haveDisease = haveDisease;
+    }
+
+    public boolean isHaveDisease() {
+        return haveDisease;
+    }
 }
 
