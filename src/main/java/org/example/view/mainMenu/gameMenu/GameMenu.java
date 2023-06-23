@@ -33,6 +33,9 @@ public class GameMenu {
         this.player = player;
     }
 
+    public static void setEmpires(ArrayList<Empire> empires) {
+        GameMenu.empires = empires;
+    }
 
     public void setThisUser(Empire thisEmpire) {
         this.thisEmpire = thisEmpire;

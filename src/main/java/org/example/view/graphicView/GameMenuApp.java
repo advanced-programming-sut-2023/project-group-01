@@ -6,18 +6,19 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
@@ -25,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.Main;
 import org.example.controller.NextTurn;
+import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
 import org.example.model.Data;
 import org.example.model.Empire;
 import org.example.model.Map;
@@ -40,6 +42,7 @@ import org.example.model.unit.CatapultName;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.animations.ZoomAnimation;
+import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 
@@ -50,13 +53,15 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Math.*;
-import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
-import static org.example.view.mainMenu.gameMenu.GameMenu.setThisEmpire;
+import static org.example.view.mainMenu.gameMenu.GameMenu.*;
 
 public class GameMenuApp extends Application {
     public static AnchorPane anchorPaneInSplitPan;
     public AnchorPane anchorPaneMain;
     public static GridPane gridPane;
+    private static boolean isOnDestroyState = false;
+    private static Building buildingForUndo;
+    private static boolean optionOpen = false;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -99,18 +104,18 @@ public class GameMenuApp extends Application {
                 startMapY--;
             if (e.getCode().equals(KeyCode.DOWN) && startMapY < map.getSize() - 4)
                 startMapY++;
-            if(e.getCode().equals(KeyCode.X))
+            if (e.getCode().equals(KeyCode.X))
 
 //            if (e.getCode().equals(KeyCode.ENTER)) {
 //                nextTurn.nextTurn();
 //            }
-            if (!selectedImageViews.isEmpty()) {
-                switch (e.getCode()) {
-                    case M -> moveShortcut();
-                    case A -> attackShortcut();
+                if (!selectedImageViews.isEmpty()) {
+                    switch (e.getCode()) {
+                        case M -> moveShortcut();
+                        case A -> attackShortcut();
 //                    case P -> patrolShortcut();
-                }
-            } else createPane(anchorPane);
+                    }
+                } else createPane(anchorPane);
         });
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), actionEvent -> createPane(anchorPane)));
         timeline.setCycleCount(-1);
@@ -217,9 +222,12 @@ public class GameMenuApp extends Application {
             anchorPaneInSplitPan.getChildren().add(hBox);
 
         setManImage(hBox);
+        //TODO set this
+        VBox vBox = createOptions();
+        hBox.getChildren().add(vBox);
+
 //        setMiniMap(hBox);
 //        hBox.getChildren().add(gridPane1);
-
 
         //        FXMLLoader fxmlLoader1 = new FXMLLoader(Main.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
 //        try {
@@ -299,8 +307,158 @@ public class GameMenuApp extends Application {
                     }
             }
 //        gridPane1.setScaleX(0.1);
-  //      gridPane1.setScaleY(0.1);
+        //      gridPane1.setScaleY(0.1);
         hBox.getChildren().add(gridPane1);
+    }
+
+    private VBox createOptions() {
+        int size = 15;
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(10);
+        Circle option = new Circle(size);
+        setPicture(option, "src\\main\\resources\\Images\\options\\setting.png");
+        option.setOnMouseClicked(mouseEvent -> {
+            if (!optionOpen) {
+                optionOpen = true;
+                option();
+            }
+        });
+
+        Circle briefing = new Circle(size);
+        setPicture(briefing, "src\\main\\resources\\Images\\options\\info.png");
+        briefing.setOnMouseClicked(mouseEvent -> {
+            //TODO
+            try {
+                briefing();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+//            zxfgkulkgdfhgjghjhjkhjlkjljkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+        });
+
+        Circle delete = new Circle(size);
+        setPicture(delete, "src\\main\\resources\\Images\\options\\destroy.jpg");
+        delete.setOnMouseClicked(mouseEvent -> {
+            isOnDestroyState = !isOnDestroyState;
+            //TODO change mouse cursor
+        });//TODO وقتی میزنه روش دوباره بزنه دیستروی میره
+
+        Circle undo = new Circle(size);
+        setPicture(undo, "src\\main\\resources\\Images\\options\\undo.png");
+        undo.setOnMouseClicked(mouseEvent -> {
+            //TODO check
+            if (buildingForUndo != null) {
+                Outputs outputs = BuildingMenuController.destroyBuilding(buildingForUndo);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, outputs.toString(), ButtonType.CLOSE);
+                alert.setTitle("destroying");
+                alert.setGraphic(new ImageView(new Image(buildingForUndo.getBuildingName().getPictureAddress())));
+                if (outputs.equals(Outputs.SUCCESSFUL_DESTROY_BUILDING))
+                    alert.setHeaderText("Successful destroy");
+                else
+                    alert.setHeaderText("Failure in destroying");
+                alert.showAndWait();
+            }
+            //reload map
+        });
+
+        vBox.getChildren().addAll(option, briefing, delete, undo);
+        return vBox;
+    }
+
+    private void briefing() throws FileNotFoundException {
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPrefWidth(668);
+        anchorPane.setPrefHeight(500);
+
+        VBox vBox = new VBox();
+        vBox.setPrefHeight(400);
+        vBox.setPrefWidth(200);
+        vBox.setLayoutX(400);
+        vBox.setLayoutY(100);
+        vBox.setSpacing(20);
+
+        Image image = new Image(new FileInputStream("src\\main\\resources\\Images\\options\\mission.jpg"));
+        BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundimage);
+        anchorPane.setBackground(background);
+
+        Text txt = new Text("You should defeat this empire to win : ");
+        txt.setFill(Color.RED);
+        txt.setStyle("-fx-font: 15 arial;");
+        vBox.getChildren().add(txt);
+        int counter = 1;
+        for (Empire empire : getEmpires()) {
+            if (!empire.equals(getThisEmpire())) {
+                Text text = new Text("        " + counter + "." + empire.getPlayer().getNickname());
+                text.setFill(Color.RED);
+                text.setStyle("-fx-font: 15 arial;");
+                counter++;
+                vBox.getChildren().add(text);
+            }
+        }
+        anchorPane.getChildren().add(vBox);
+        Scene scene = new Scene(anchorPane);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+//    sghfgjhkjgfdxzfxhcgjkjljhkjgfdsasadfghjhkljjheasrytuyiuoiyuytreaa
+    private void option() {
+        //TODO close stages
+        Stage stage = new Stage();
+        VBox vBox = new VBox();
+        vBox.setPrefHeight(500);
+        vBox.setPrefWidth(500);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(20);
+
+        Button resume = createButton("resume");
+        resume.setOnAction(actionEvent -> {
+            optionOpen = false;
+            stage.close();
+        });
+
+        Button quit = createButton("quit");
+        quit.setOnAction(actionEvent -> {
+            Main main = new Main();
+            try {
+                main.start(Main.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            optionOpen = false;
+        });
+
+        Button exit = createButton("exit");
+        exit.setOnAction(actionEvent -> {
+            Main.stage.close();
+            stage.close();
+            optionOpen = false;
+            //TODO check
+        });
+
+        vBox.getChildren().addAll(resume, quit, exit);
+        Scene scene = new Scene(vBox);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public Button createButton(String name) {
+        Button button = new Button(name);
+        button.setPrefWidth(300);
+        return button;
+    }
+
+    private void setPicture(Circle circle, String pictureAddress) {
+        try {
+            circle.setFill(new ImagePattern(new Image(
+                    new FileInputStream(pictureAddress))));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setManImage(HBox hBox) {
@@ -370,12 +528,13 @@ public class GameMenuApp extends Application {
                 imageView.setOnDragDropped(dragEvent -> {
                     Image img = dragEvent.getDragboard().getImage();
                     for (Node child : GameMenuApp.gridPane.getChildren()) {
-                        if(child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
+                        if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
                                 child.getLayoutX() < dragEvent.getScreenX() && dragEvent.getScreenX() < child.getLayoutX() + 20 &&
-                                child.getLayoutY() < dragEvent.getScreenY() && dragEvent.getSceneY() < child.getLayoutY() + 20){
+                                child.getLayoutY() < dragEvent.getScreenY() && dragEvent.getSceneY() < child.getLayoutY() + 20) {
+
                             ((ImageView) child).setImage(img);
                             GameMenuApp.map.getTile(GridPane.getColumnIndex(child), GridPane.getRowIndex(child)).setBuilding(new Building
-                                    (null, GridPane.getColumnIndex(child), GridPane.getRowIndex(child),  BuildingName.INN));
+                                    (null, GridPane.getColumnIndex(child), GridPane.getRowIndex(child), BuildingName.INN));
                             break;
                         }
                     }
@@ -417,6 +576,7 @@ public class GameMenuApp extends Application {
                     }
             }
     }
+
     public void man(AnchorPane anchorPane) {
         Empire empire = new Empire(null, null);
         setThisEmpire(empire);

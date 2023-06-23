@@ -7,7 +7,6 @@ import org.example.model.building.enums.SecondProducerType;
 public class SecondProducer extends Building {
     private SecondProducerType producerType;
     private int rate = 5;
-
     public SecondProducer(Empire empire, int x1, int y1, BuildingName buildingName) {
         super(empire, x1, y1, buildingName);
         for (SecondProducerType secondProducerType : SecondProducerType.values())
@@ -34,4 +33,5 @@ public class SecondProducer extends Building {
                 empire.addMaterial(producerType.getSecondProduct().getName(), rate);
         }
     }
+
 }

@@ -8,10 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
@@ -19,6 +18,8 @@ import org.example.model.building.castleBuilding.Tower;
 import org.example.model.building.enums.BuildingName;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -32,10 +33,9 @@ public class BuildingMenuApp extends Application {
     private static Stage stage;
     private static double x;
     private static double y;
-    private static String pictureAddress;
-
     @FXML
     private ImageView dast;
+    private static String pictureAddress;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -53,9 +53,6 @@ public class BuildingMenuApp extends Application {
 
     }
 
-    public static String getPictureAddress() {
-        return pictureAddress;
-    }
 
     public void handleDragDetected(MouseEvent mouseEvent) {
         ImageView sourceImageView = (ImageView) mouseEvent.getSource();
@@ -63,9 +60,11 @@ public class BuildingMenuApp extends Application {
         ClipboardContent clipboardContent = new ClipboardContent();
         clipboardContent.putImage(sourceImageView.getImage());
         db.setContent(clipboardContent);
-        pictureAddress = sourceImageView.getImage().getUrl();
+        pictureAddress = ((ImageView) mouseEvent.getSource()).getImage().getUrl();
+        pictureAddress = pictureAddress.replace("2", "");
+        System.out.println(pictureAddress);
+        System.out.println(BuildingName.INN.getPictureAddress().replace("2", ""));
         mouseEvent.consume();
-
     }
 
     public void handleDragOver(DragEvent dragEvent) {
@@ -215,8 +214,40 @@ public class BuildingMenuApp extends Application {
                 ShopMenuApp shopMenu = new ShopMenuApp();
                 ShopMenuApp.setCurrentBuilding(currentBuilding);
                 shopMenu.start(stage);
+            } else if (currentBuilding.getNumberOfWorkers() > 0) {
+                createProducerMenu();
             }
         }
+    }
+
+    public void createProducerMenu() throws FileNotFoundException {
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPrefHeight(160);
+        anchorPane.setPrefWidth(600);
+        Image image = new Image(new FileInputStream("src\\main\\resources\\Images\\towerRepair.png"));
+        BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundimage);
+        anchorPane.setBackground(background);
+        String info = "number of workers : " + currentBuilding.getNumberOfWorkers() +
+                "\nmax number of workers : " + currentBuilding.getBuildingName().getNumberOfWorkers() +
+                "\nnumber of workers left : " + (currentBuilding.getBuildingName().getNumberOfWorkers() -
+                currentBuilding.getNumberOfWorkers());
+        if (currentBuilding.getNumberOfWorkers() < currentBuilding.getBuildingName().getNumberOfWorkers())
+            info += "\nbuilding : " + currentBuilding.getBuildingName().getName() + " is not working";
+        else
+            info += "\nbuilding : " + currentBuilding.getBuildingName().getName() + " is working";
+        Text text = new Text(info);
+        if (currentBuilding.getNumberOfWorkers() == currentBuilding.getBuildingName().getNumberOfWorkers())
+            text.setFill(Color.GREEN);
+        else
+            text.setFill(Color.RED);
+        text.setLayoutX(200);
+        text.setLayoutY(75);
+        anchorPane.getChildren().add(text);
+        Scene scene = new Scene(anchorPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void openGranaryMenu() throws IOException {
@@ -247,12 +278,8 @@ public class BuildingMenuApp extends Application {
         }
     }
 
-    public void pasteBuilding() {
-
-    }
-
-    public void showBuildingDetail() {
-
+    public static String getPictureAddress() {
+        return pictureAddress;
     }
 
 }

@@ -20,6 +20,13 @@ import java.util.Scanner;
 
 public class Main extends Application {
     public static Stage stage;
+    public static int user = 0;
+    public static String[] commands = {"C:\\Users\\ASUS\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe" +
+            " C:\\Users\\ASUS\\IdeaProjects\\AP\\project-group-01-pull\\src\\main\\resources\\CaptchaPictures\\main.py",
+
+            "C:\\Users\\torab\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe" +
+                    " C:\\Users\\torab\\OneDrive\\Documents\\codes\\ap\\proje\\project-group-01\\src\\main\\resources\\CaptchaPictures\\main.py"};
+
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
 
@@ -53,11 +60,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         Main.stage = stage;
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
         Data.setStayedLoggedIn(Data.findUserWithUsername("ali"));
-//        new SignUpAndSignInMenu().start(stage);
-        new GameMenuApp(new CreateMapMenu(null).runDefaultMap(new Scanner(Data.getDefaultMap()))).start(Main.stage);
+        new SignUpAndSignInMenu().start(stage);
+//        new GameMenuApp(new CreateMapMenu(null).runDefaultMap(new Scanner(Data.getDefaultMap()))).start(Main.stage);
         //new ScoreBoard().start(Main.stage);
     }
 
