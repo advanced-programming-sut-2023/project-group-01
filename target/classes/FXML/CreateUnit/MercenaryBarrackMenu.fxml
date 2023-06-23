@@ -66,6 +66,4 @@
         </image>
     </ImageView>
 
-    <Text fx:id="number" layoutX="540" layoutY="148" stroke="white"/>
-
 </AnchorPane>

@@ -70,7 +70,4 @@
         </image>
     </ImageView>
 
-
-    <Text fx:id="number" layoutX="585.0" layoutY="40.0" stroke="white" wrappingWidth="20.888671875"/>
-
 </AnchorPane>
