@@ -13,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.example.model.Trade;
 import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
 import org.example.model.building.castleBuilding.Tower;
@@ -33,6 +32,8 @@ public class BuildingMenuApp extends Application {
     private static Stage stage;
     private static double x;
     private static double y;
+    private static String pictureAddress;
+
     @FXML
     private ImageView dast;
 
@@ -52,13 +53,17 @@ public class BuildingMenuApp extends Application {
 
     }
 
+    public static String getPictureAddress() {
+        return pictureAddress;
+    }
 
     public void handleDragDetected(MouseEvent mouseEvent) {
-        ImageView sourceImageView = (ImageView)mouseEvent.getSource();
+        ImageView sourceImageView = (ImageView) mouseEvent.getSource();
         Dragboard db = sourceImageView.startDragAndDrop(TransferMode.ANY);
         ClipboardContent clipboardContent = new ClipboardContent();
         clipboardContent.putImage(sourceImageView.getImage());
         db.setContent(clipboardContent);
+        pictureAddress = sourceImageView.getImage().getUrl();
         mouseEvent.consume();
 
     }
@@ -74,12 +79,12 @@ public class BuildingMenuApp extends Application {
     public void handleOnDragDropped(DragEvent dragEvent) {
         Image img = dragEvent.getDragboard().getImage();
         for (Node child : GameMenuApp.gridPane.getChildren()) {
-            if(child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
-            child.getLayoutX() < dragEvent.getX() && dragEvent.getX() < child.getLayoutX() + 20 &&
-                    child.getLayoutY() < dragEvent.getY() && dragEvent.getY() < child.getLayoutY() + 20){
+            if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
+                    child.getLayoutX() < dragEvent.getX() && dragEvent.getX() < child.getLayoutX() + 20 &&
+                    child.getLayoutY() < dragEvent.getY() && dragEvent.getY() < child.getLayoutY() + 20) {
                 ((ImageView) child).setImage(img);
                 GameMenuApp.map.getTile(GridPane.getColumnIndex(child), GridPane.getRowIndex(child)).setBuilding(new Building
-                        (null, GridPane.getColumnIndex(child), GridPane.getRowIndex(child),  BuildingName.INN));
+                        (null, GridPane.getColumnIndex(child), GridPane.getRowIndex(child), BuildingName.INN));
             }
         }
 //        targetImageView.setImage(img);
@@ -151,9 +156,9 @@ public class BuildingMenuApp extends Application {
     public void openMenu(URL url) throws IOException {
         Node menu;
         for (Node child : GameMenuApp.anchorPaneInSplitPan.getChildren()) {
-            if(child instanceof HBox){
+            if (child instanceof HBox) {
                 for (Node node : ((HBox) child).getChildren()) {
-                    if(node instanceof AnchorPane) {
+                    if (node instanceof AnchorPane) {
                         ((HBox) child).getChildren().add(((HBox) child).getChildren().indexOf(node), FXMLLoader.load(url));
                         ((HBox) child).getChildren().remove(node);
                         break;
@@ -200,7 +205,7 @@ public class BuildingMenuApp extends Application {
                 CreateUnitMenuApp.setCurrentBuilding(currentBuilding);
                 CreateUnitMenuApp createUnitMenu = new CreateUnitMenuApp();
                 createUnitMenu.start(stage);
-            } else if (currentBuilding.getBuildingName().equals(BuildingName.GRANARY)){
+            } else if (currentBuilding.getBuildingName().equals(BuildingName.GRANARY)) {
                 openGranaryMenu();
             } else if (currentBuilding instanceof Gatehouse || currentBuilding instanceof Tower) {
                 RepairMenu.setCurrentBuilding(currentBuilding);

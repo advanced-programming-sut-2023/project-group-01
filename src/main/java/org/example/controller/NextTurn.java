@@ -662,11 +662,10 @@ public class NextTurn {
         ArrayList<MilitaryUnit> enemy = new ArrayList<>();
         if (unit.getXAttack() > getMap().getSize() && unit.getYAttack() > getMap().getSize())
             enemy = findEnemyInTheBoardOfArcher(unit);
-        else if (unit.getXAttack() == -1 || unit.getYAttack() == -1)
+        else
             enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
 
         if (enemy.size() != 0) {
-
             Building building1 = getMap().getTile(enemy.get(0).getXPos(), enemy.get(0).getYPos()).getBuilding();
             int damage = unit.getMilitaryUnitName().getAttack();
             if (building1 != null && building1.getBuildingName().getType().equals("tower"))

@@ -50,24 +50,20 @@ public class BuildingMenuController {
         }
     }
 
-    public Outputs dropBuilding(String x, String y, String type) {
-        if (x == null) return Outputs.EMPTY_X;
-        else if (y == null) return Outputs.EMPTY_Y;
-        else if (!x.matches("\\d+")) return Outputs.INVALID_X;
-        else if (!y.matches("\\d+")) return Outputs.INVALID_Y;
+    public static Outputs dropBuilding(String x, String y, String type) {
 
         BuildingName buildingName = findBuildingNameByName(type);
-        if (buildingName == null) return Outputs.INVALID_BUILDING_TYPE;
         int x0 = Integer.parseInt(x);
         int y0 = Integer.parseInt(y);
         int buildingSize = buildingName.getSize();
         int mapSize = getMap().getSize();
+        putBuilding(buildingName, x0, y0, getThisEmpire());
 
         if (x0 > mapSize || y0 > mapSize || x0 + buildingSize > mapSize || y0 + buildingSize > mapSize)
             return Outputs.OUT_OF_RANGE;
         else if (isPositionFull(buildingName, x0, y0)) return Outputs.FULL_POSITION;
         else if (isGroundSuitable(buildingName, x0, y0)) return Outputs.NOT_SUITABLE_GROUND;
-        else if (empire.getNormalPopulation() < buildingName.getNumberOfWorkers()) return Outputs.NOT_ENOUGH_POPULATION;
+        else if (getThisEmpire().getNormalPopulation() < buildingName.getNumberOfWorkers()) return Outputs.NOT_ENOUGH_POPULATION;
         else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY)) {
             if (dropNearBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
@@ -80,14 +76,14 @@ public class BuildingMenuController {
                     equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
         }
-        if (!empire.havingMaterial(MaterialType.WOOD, buildingName.getWoodCost())) return Outputs.NOT_ENOUGH_WOOD;
-        if (!empire.havingMaterial(MaterialType.STONE, buildingName.getStoneCost())) return Outputs.NOT_ENOUGH_STONE;
-        putBuilding(buildingName, x0, y0, empire);
-        if (buildingName.equals(BuildingName.STABLE)) empire.addMaterial("horse", 4);
+        if (!getThisEmpire().havingMaterial(MaterialType.WOOD, buildingName.getWoodCost())) return Outputs.NOT_ENOUGH_WOOD;
+        if (!getThisEmpire().havingMaterial(MaterialType.STONE, buildingName.getStoneCost())) return Outputs.NOT_ENOUGH_STONE;
+//        putBuilding(buildingName, x0, y0, getThisEmpire());
+        if (buildingName.equals(BuildingName.STABLE)) getThisEmpire().addMaterial("horse", 4);
         return SUCCESSFUL_DROP_BUILDING;
     }
 
-    public Outputs dropNearBuilding(int x, int y, BuildingName buildingName) {
+    public static Outputs dropNearBuilding(int x, int y, BuildingName buildingName) {
         if (!haveStorage(buildingName)) return SUCCESSFUL_DROP_BUILDING;
 
         for (int i = x - 1; i <= x + buildingName.getSize(); i++)
@@ -97,13 +93,13 @@ public class BuildingMenuController {
         return Outputs.NOT_NEAR_BUILDING;
     }
 
-    public boolean haveStorage(BuildingName buildingName) {
-        for (Building building : empire.getBuildings())
+    public static boolean haveStorage(BuildingName buildingName) {
+        for (Building building : getThisEmpire().getBuildings())
             if (building.getBuildingName().equals(buildingName)) return true;
         return false;
     }
 
-    public BuildingName findBuildingNameByName(String name) {
+    public static BuildingName findBuildingNameByName(String name) {
         for (BuildingName buildingName : BuildingName.values()) {
             if (buildingName.getName().equals(name) &&
                     !buildingName.getBuildingCategory().equals(BuildingCategory.TREES)) {
