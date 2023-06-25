@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 
 public class CreateMapMenu {
 
-    public static Map gameMap;
+    public static Map gameMap = new Map(400);
     private final User player;
 
     public CreateMapMenu(User player) {
@@ -57,7 +57,7 @@ public class CreateMapMenu {
     }
 
     public Map runDefaultMap(Scanner scanner) {
-        gameMap = new Map(200);
+        gameMap = new Map(400);
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine();
             Matcher matcher;

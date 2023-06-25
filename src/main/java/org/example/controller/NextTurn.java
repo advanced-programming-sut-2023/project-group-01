@@ -330,7 +330,7 @@ public class NextTurn {
 
     }
 
-    private void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {
+    public void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {
         int xPos = unit.getXPos(), yPos = unit.getYPos();
         boolean isAssassins = unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS);
         BestPath bestPath = new BestPath(unit.getEmpire());

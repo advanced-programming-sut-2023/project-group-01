@@ -27,10 +27,7 @@ import javafx.util.Duration;
 import org.example.Main;
 import org.example.controller.NextTurn;
 import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
-import org.example.model.Data;
-import org.example.model.Empire;
-import org.example.model.Map;
-import org.example.model.People;
+import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.building.FirstProducer;
 import org.example.model.building.SecondProducer;
@@ -41,6 +38,7 @@ import org.example.model.unit.Catapult;
 import org.example.model.unit.CatapultName;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
+import org.example.model.unit.enums.MilitaryUnitState;
 import org.example.view.animations.ZoomAnimation;
 import org.example.view.enums.Outputs;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
@@ -102,25 +100,186 @@ public class GameMenuApp extends Application {
                 startMapY++;
 //            if (e.getCode().equals(KeyCode.X))
 
-//            if (e.getCode().equals(KeyCode.ENTER)) {
-//                nextTurn.nextTurn();
-//            }
+            if (e.getCode().equals(KeyCode.ENTER))
+                nextTurn.nextTurn();
             if (!selectedImageViews.isEmpty()) {
                 switch (e.getCode()) {
                     case M -> moveShortcut();
                     case A -> attackShortcut();
                     case P -> patrolShortcut();
+                    case D -> defendShortcut();
+                    case O -> offenciveShortcut();
                 }
             } else createPane(anchorPane);
         });
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), actionEvent -> createPane(anchorPane)));
-        timeline.setCycleCount(-1);
-        timeline.play();
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> createPane(anchorPane)));
+//        timeline.setCycleCount(-1);
+//        timeline.play();
         stage.setScene(scene);
         stage.show();
     }
 
+    private void offenciveShortcut() {
+        popup.hide();
+        Rectangle rectangle = new Rectangle();
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (ImageView imageView : selectedImageViews) {
+            int row = GridPane.getRowIndex(imageView);
+            int column = GridPane.getColumnIndex(imageView);
+            Tile tile = map.getTileWhitXAndY(column + startMapX, row + startMapY);
+            tiles.add(tile);
+        }
+        VBox vBox = new VBox();
+        vBox.setSpacing(20);
+        setSpinersForUnits(tiles, vBox);
+        Button button = new Button("set state offencive");
+        button.setOnAction(e -> {
+            for (Node child : vBox.getChildren()) {
+                MilitaryUnitName militaryUnitName = null;
+                if (child instanceof HBox && ((HBox) child).getChildren().size() == 2)
+                    outer:for (Node node : ((HBox) child).getChildren()) {
+                        if (node instanceof Text) {
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                        }
+                        if (node instanceof Spinner) {
+                            int number = 0;
+                            for (Tile tile : tiles)
+                                for (People person : tile.getPeople())
+                                    if (person instanceof MilitaryUnit &&
+                                            ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName)) {
+                                        if (number == (Integer) ((Spinner) node).getValue()) break outer;
+                                        ((MilitaryUnit) person).getMilitaryUnitName().setState(MilitaryUnitState.OFFENSIVE);
+                                        number++;
+                                    }
+                        }
+                    }
+            }
+            selectUnitPopup.hide();
+            NextTurn nextTurn = new NextTurn(this);
+            nextTurn.nextTurn();
+        });
+        vBox.getChildren().add(button);
+        StackPane stackPane = new StackPane(rectangle, vBox);
+        selectUnitPopup = new Popup();
+        selectUnitPopup.getContent().add(stackPane);
+        rectangle.setFill(Paint.valueOf("#26200354"));
+        selectUnitPopup.show(gridPane.getScene().getWindow());
+        rectangle.setHeight(selectUnitPopup.getHeight());
+        rectangle.setWidth(selectUnitPopup.getWidth());
+        selectUnitPopup.setX(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutX());
+        selectUnitPopup.setY(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutY());
+    }
+
+    private void defendShortcut() {
+        popup.hide();
+        Rectangle rectangle = new Rectangle();
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (ImageView imageView : selectedImageViews) {
+            int row = GridPane.getRowIndex(imageView);
+            int column = GridPane.getColumnIndex(imageView);
+            Tile tile = map.getTileWhitXAndY(column + startMapX, row + startMapY);
+            tiles.add(tile);
+        }
+        VBox vBox = new VBox();
+        vBox.setSpacing(20);
+        setSpinersForUnits(tiles, vBox);
+        Button button = new Button("set state defend");
+        button.setOnAction(e -> {
+            for (Node child : vBox.getChildren()) {
+                MilitaryUnitName militaryUnitName = null;
+                if (child instanceof HBox && ((HBox) child).getChildren().size() == 2)
+                    outer:for (Node node : ((HBox) child).getChildren()) {
+                        if (node instanceof Text) {
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                        }
+                        if (node instanceof Spinner) {
+                            int number = 0;
+                            for (Tile tile : tiles)
+                                for (People person : tile.getPeople())
+                                    if (person instanceof MilitaryUnit &&
+                                            ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName)) {
+                                        if (number == (Integer) ((Spinner) node).getValue()) break outer;
+                                        ((MilitaryUnit) person).getMilitaryUnitName().setState(MilitaryUnitState.DEFENSIVE);
+                                        number++;
+                                    }
+                        }
+                    }
+            }
+            selectUnitPopup.hide();
+            NextTurn nextTurn = new NextTurn(this);
+            nextTurn.nextTurn();
+        });
+        vBox.getChildren().add(button);
+        StackPane stackPane = new StackPane(rectangle, vBox);
+        selectUnitPopup = new Popup();
+        selectUnitPopup.getContent().add(stackPane);
+        rectangle.setFill(Paint.valueOf("#26200354"));
+        selectUnitPopup.show(gridPane.getScene().getWindow());
+        rectangle.setHeight(selectUnitPopup.getHeight());
+        rectangle.setWidth(selectUnitPopup.getWidth());
+        selectUnitPopup.setX(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutX());
+        selectUnitPopup.setY(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutY());
+//        selectUnitPopup.show();
+    }
+
     private void patrolShortcut() {
+        popup.hide();
+        Rectangle rectangle = new Rectangle();
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (ImageView imageView : selectedImageViews) {
+            int row = GridPane.getRowIndex(imageView);
+            int column = GridPane.getColumnIndex(imageView);
+            Tile tile = map.getTileWhitXAndY(column + startMapX, row + startMapY);
+            tiles.add(tile);
+        }
+        VBox vBox = new VBox();
+        vBox.setSpacing(20);
+        setSpinersForUnits(tiles, vBox);
+        Spinner spinnerTargetX1 = new Spinner<>(0, map.getSize(), 0);
+        Spinner spinnerTargetY1 = new Spinner<>(0, map.getSize(), 0);
+        Spinner spinnerTargetX2 = new Spinner<>(0, map.getSize(), 0);
+        Spinner spinnerTargetY2 = new Spinner<>(0, map.getSize(), 0);
+        Button button = new Button("patrol");
+        button.setOnAction(e -> {
+            for (Node child : vBox.getChildren()) {
+                MilitaryUnitName militaryUnitName = null;
+                if (child instanceof HBox && ((HBox) child).getChildren().size() != 3)
+                    outer:for (Node node : ((HBox) child).getChildren()) {
+                        if (node instanceof Text) {
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                        }
+                        if (node instanceof Spinner) {
+                            int number = 0;
+                            for (Tile tile : tiles)
+                                for (People person : tile.getPeople())
+                                    if (person instanceof MilitaryUnit &&
+                                            ((MilitaryUnit) person).getMilitaryUnitName().equals(militaryUnitName)) {
+                                        if (number == (Integer) ((Spinner) node).getValue()) break outer;
+                                        ((MilitaryUnit) person).setPatrolXY((Integer) spinnerTargetX1.getValue(),
+                                                (Integer) spinnerTargetY1.getValue(), (Integer) spinnerTargetX2.getValue(),
+                                                (Integer) spinnerTargetY2.getValue());
+                                        number++;
+                                    }
+                        }
+                    }
+            }
+            selectUnitPopup.hide();
+            NextTurn nextTurn = new NextTurn(this);
+            nextTurn.nextTurn();
+        });
+        HBox hBox = new HBox(spinnerTargetX1, spinnerTargetY1, spinnerTargetX2, spinnerTargetY2, button);
+        hBox.setSpacing(20);
+        vBox.getChildren().add(hBox);
+        StackPane stackPane = new StackPane(rectangle, vBox);
+        selectUnitPopup = new Popup();
+        selectUnitPopup.getContent().add(stackPane);
+        rectangle.setFill(Paint.valueOf("#26200354"));
+        selectUnitPopup.show(gridPane.getScene().getWindow());
+        rectangle.setHeight(selectUnitPopup.getHeight());
+        rectangle.setWidth(selectUnitPopup.getWidth());
+        selectUnitPopup.setX(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutX());
+        selectUnitPopup.setY(selectedImageViews.get(selectedImageViews.size() / 2).getLayoutY());
+//        selectUnitPopup.show();
     }
 
     private void attackShortcut() {
@@ -156,6 +315,7 @@ public class GameMenuApp extends Application {
                                         if (number == (Integer) ((Spinner) node).getValue()) break outer;
                                         ((MilitaryUnit) person).setXAttack((Integer) spinnerTargetX.getValue());
                                         ((MilitaryUnit) person).setYAttack((Integer) spinnerTargetY.getValue());
+                                        number++;
                                     }
                         }
                     }
@@ -222,10 +382,33 @@ public class GameMenuApp extends Application {
     double startSelectedTileX = 0;
     double startSelectedTileY = 0;
     public static Map map;
+    public static ArrayList<Empire> empires;
 
-    public GameMenuApp(Map map) {
+    private NextTurn nextTurn;
+    public GameMenuApp(Map map, ArrayList<User> players, InitializeMaterial initializeMaterial) {
         GameMenuApp.map = map;
+        for(int i =0 ; i < players.size(); i++)
+            empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + (i + 1)), players.get(i)));
+        nextTurn = new NextTurn(this);
+        addEmpireBuildingsToMap();
+        setMaterialForEmpires(initializeMaterial);
     }
+
+    private void addEmpireBuildingsToMap() {
+        for (int i = 1; i <= empires.size(); i++) {
+            Building building = new Building(empires.get(i - 1), EmpireBuilding.valueOf("EMPIRE_" + i).getX(), EmpireBuilding.valueOf("EMPIRE_" + i).getY(), BuildingName.EMPIRE_CASTLE);
+            GameMenuApp.map.getTile(EmpireBuilding.valueOf("EMPIRE_" + i).getX(), EmpireBuilding.valueOf("EMPIRE_" + i).getY()).setBuilding(building);
+            empires.get(i - 1).addToBuildings(building);
+            BuildingMenuController.putBuilding(BuildingName.STOCKPILE, EmpireBuilding.valueOf("EMPIRE_" + i).getX() + 1, EmpireBuilding.valueOf("EMPIRE_" + i).getY(), empires.get(i - 1));
+        }
+    }
+
+    private void setMaterialForEmpires(InitializeMaterial initializeMaterial) {
+        for (int i = 0; i < empires.size(); i++)
+            InitializeMaterial.setSources(empires.get(i), initializeMaterial);
+    }
+
+    private final int size = 60;
 
     public void createPane(AnchorPane anchorPane) {
         HBox hBox = new HBox();
@@ -255,9 +438,9 @@ public class GameMenuApp extends Application {
                     Button copy = new Button("copy");
                     copy.setOnAction(e -> {
                         for (Node child : GameMenuApp.gridPane.getChildren()) {
-                            if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
-                                    child.getLayoutX() < mouseEvent.getScreenX() && mouseEvent.getScreenX() < child.getLayoutX() + 20 &&
-                                    child.getLayoutY() < mouseEvent.getScreenY() && mouseEvent.getSceneY() < child.getLayoutY() + 20) {
+                            if (child instanceof ImageView && ((ImageView) child).getFitHeight() == size &&
+                                    child.getLayoutX() < mouseEvent.getScreenX() && mouseEvent.getScreenX() < child.getLayoutX() + size &&
+                                    child.getLayoutY() < mouseEvent.getScreenY() && mouseEvent.getSceneY() < child.getLayoutY() + size) {
                                 if (map.getTileWhitXAndY(GridPane.getColumnIndex(child) + startMapX,
                                         GridPane.getRowIndex(child) + startMapY).getBuilding() != null &&
                                         (BuildingName.getByAddres(((ImageView) child).getImage().getUrl()) != null ||
@@ -284,9 +467,9 @@ public class GameMenuApp extends Application {
                     paste.setOnAction(e -> {
                         if (BuildingName.getByAddres(Clipboard.getSystemClipboard().getUrl()) != null) {
                             for (Node child : GameMenuApp.gridPane.getChildren()) {
-                                if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
-                                        child.getLayoutX() < mouseEvent.getScreenX() && mouseEvent.getScreenX() < child.getLayoutX() + 20 &&
-                                        child.getLayoutY() < mouseEvent.getScreenY() && mouseEvent.getSceneY() < child.getLayoutY() + 20) {
+                                if (child instanceof ImageView && ((ImageView) child).getFitHeight() == size &&
+                                        child.getLayoutX() < mouseEvent.getScreenX() && mouseEvent.getScreenX() < child.getLayoutX() + size &&
+                                        child.getLayoutY() < mouseEvent.getScreenY() && mouseEvent.getSceneY() < child.getLayoutY() + size) {
                                     BuildingMenuController.dropBuilding(String.valueOf(GridPane.getColumnIndex(child) + startMapX),
                                             String.valueOf(GridPane.getRowIndex(child) + startMapY),
                                             BuildingName.getByAddres(Clipboard.getSystemClipboard().getUrl()).getName());
@@ -300,7 +483,7 @@ public class GameMenuApp extends Application {
                     popup.setX(mouseEvent.getScreenX());
                     popup.setY(mouseEvent.getScreenY());
                     popup.show(Main.stage);
-                } else {
+                } else if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     ArrayList<Region> regions = new ArrayList<>();
                     if (popup != null && popup.isShowing()) popup.hide();
                     for (Node child : gridPane.getChildren())
@@ -330,11 +513,13 @@ public class GameMenuApp extends Application {
         GridPane gridPane1 = new GridPane();
         gridPane1.setMaxWidth(160);
         gridPane1.setMaxHeight(160);
-        for (int i = 0; i < 80; i++)
-            for (int j = 0; j < 70; j++) {
+        gridPane1.setHgap(0);
+        gridPane1.setVgap(0);
+        for (int i = 0; i < 40; i++)
+            for (int j = 0; j < 35; j++) {
                 ImageView imageView = new ImageView(new Image(map.getTile(i + startMapX, j + startMapY).getTypeOfTile().getPictureAddress()));
-                imageView.setFitWidth(2);
-                imageView.setFitHeight(2);
+                imageView.setFitWidth(4);
+                imageView.setFitHeight(4);
                 gridPane1.add(imageView, i, j);
                 if (map.getTile(i + startMapX, j + startMapY).getBuilding() != null) {
                     Tile tile = map.getTile(i + startMapX, j + startMapY);
@@ -426,16 +611,16 @@ public class GameMenuApp extends Application {
             }
         });
         gridPane.getChildren().clear();
-        for (int i = 0; i < 75; i++)
-            for (int j = 0; j < 30; j++) {
+        for (int i = 0; i < 25; i++)
+            for (int j = 0; j < 10; j++) {
                 ImageView imageView = new ImageView(new Image(map.getTile(i + startMapX, j + startMapY).getTypeOfTile().getPictureAddress()));
-                imageView.setFitWidth(20);
-                imageView.setFitHeight(20);
+                imageView.setFitWidth(size);
+                imageView.setFitHeight(size);
                 imageView.setOnDragDropped(dragEvent -> {
                     for (Node child : GameMenuApp.gridPane.getChildren()) {
-                        if (child instanceof ImageView && ((ImageView) child).getFitHeight() == 20 &&
-                                child.getLayoutX() < dragEvent.getScreenX() && dragEvent.getScreenX() < child.getLayoutX() + 20 &&
-                                child.getLayoutY() < dragEvent.getScreenY() && dragEvent.getSceneY() < child.getLayoutY() + 20) {
+                        if (child instanceof ImageView && ((ImageView) child).getFitHeight() == size &&
+                                child.getLayoutX() < dragEvent.getScreenX() && dragEvent.getScreenX() < child.getLayoutX() + size &&
+                                child.getLayoutY() < dragEvent.getScreenY() && dragEvent.getSceneY() < child.getLayoutY() + size) {
                             Outputs outputs = BuildingMenuController.dropBuilding(String.valueOf(GridPane.getColumnIndex(child)),
                                     String.valueOf(GridPane.getRowIndex(child)), BuildingName.getByAddres(BuildingMenuApp.
                                             getPictureAddress()).getName());
@@ -466,8 +651,8 @@ public class GameMenuApp extends Application {
                     Building building = tile.getBuilding();
                     ImageView buildingImageView = new ImageView(new Image(building.getBuildingName().getPictureAddress()));
                     showDetailCheck(buildingImageView, timeline, buildingImageView);
-                    buildingImageView.setFitWidth(20);
-                    buildingImageView.setFitHeight(20);
+                    buildingImageView.setFitWidth(size);
+                    buildingImageView.setFitHeight(size);
                     WritableImage writableImage = new WritableImage(new Image(building.getBuildingName().getPictureAddress()).
                             getPixelReader(),
                             (int) (buildingImageView.getImage().getWidth() *
@@ -499,7 +684,7 @@ public class GameMenuApp extends Application {
 
         Text popularityText = new Text("" + popularity);
         popularityText.setStyle("-fx-font: 10 arial");
-        if (popularity > 60) popularityText.setFill(Color.GREEN);
+        if (popularity > size) popularityText.setFill(Color.GREEN);
         else if (popularity > 30) popularityText.setFill(Color.YELLOW);
         else popularityText.setFill(Color.RED);
         popularityText.setLayoutX(30);
@@ -573,9 +758,9 @@ public class GameMenuApp extends Application {
                 }
                 if (building instanceof SecondProducer) {
                     number++;
-                    //sumOfRate += ((SecondProducer) building).getRate();
-                  //  maxRate = max(maxRate, ((SecondProducer) building).getRate());
-                //    minRate = min(maxRate, ((SecondProducer) building).getRate());
+                    sumOfRate += ((SecondProducer) building).getRate();
+                    maxRate = max(maxRate, ((SecondProducer) building).getRate());
+                    minRate = min(maxRate, ((SecondProducer) building).getRate());
                 }
             }
         }
@@ -583,7 +768,6 @@ public class GameMenuApp extends Application {
         vBox.getChildren().add(new Text("The min rate in tiles is " + minRate));
         vBox.getChildren().add(new Text("The max rate in tiles is " + maxRate));
         vBox.getChildren().add(new Text("The average of rate in tiles is " + sumOfRate / number));
-
     }
 
     private Popup popup;
@@ -696,8 +880,6 @@ public class GameMenuApp extends Application {
                     }
             }
             selectUnitPopup.hide();
-            NextTurn nextTurn = new NextTurn(this);
-            nextTurn.nextTurn();
         });
         setPopup(rectangle, vBox, spinnerTargetX, spinnerTargetY, button);
     }

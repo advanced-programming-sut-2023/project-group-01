@@ -1,5 +1,7 @@
 package org.example.view.graphicView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,12 +21,15 @@ import javafx.stage.Stage;
 import org.example.Main;
 import org.example.controller.mainMenuController.gameMenuController.GameSettingMenuController;
 import org.example.model.Data;
+import org.example.model.InitializeMaterial;
+import org.example.model.Map;
 import org.example.model.User;
 import org.example.view.enums.Outputs;
-import org.example.view.mainMenu.gameMenu.GameMenu;
-import org.example.view.mainMenu.gameMenu.MapMenu;
 
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -42,7 +47,7 @@ public class GameSettingMenu extends Application implements Initializable {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/Fxml/GameSettingMenu.fxml"));
-//        Data.getStayedLoggedIn().setInGame(true);
+        Data.getStayedLoggedIn().setInGame(false);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();
@@ -85,7 +90,7 @@ public class GameSettingMenu extends Application implements Initializable {
             Text text = new Text(username.getText());
             text.setFill(Color.WHITE);
             names.add(text, 0, players.size());
-            Data.findUserWithUsername(username.getText()).setInGame(true);
+            Data.findUserWithUsername(username.getText()).setInGame(false);
             ImageView imageView = new ImageView(new Image(Main.class.getResource
                     ("/Images/photo5070330372.jpg").toExternalForm()));
             imageView.setFitHeight(25);
@@ -137,7 +142,41 @@ public class GameSettingMenu extends Application implements Initializable {
             alert.setContentText("you most choose a other player or more for start game");
             alert.showAndWait();
         } else {
-        //    new GameMenuApp().start(Main.stage);
+            new GameMenuApp(setGameMap(), players, setMaterials()).start(Main.stage);
         }
+    }
+
+    private InitializeMaterial setMaterials() {
+        return switch (source.getText()) {
+            case "High Source Game" -> InitializeMaterial.HIGH_SOURCE;
+            case "Normal Game" -> InitializeMaterial.MIDDLE_SOURCE;
+            default -> InitializeMaterial.LOW_SOURCE;
+        };
+    }
+
+    private Map setGameMap() {
+        String json = "";
+        for (Node child : maps.getChildren()) {
+            if (child instanceof Text && ((Text) child).getFill().equals(Color.web("#2024ff")))
+                switch (((Text) child).getText()) {
+                    case "default map 200 * 200" -> {
+                        try {
+                            json = new String(Files.readAllBytes(Paths.get("default map 200.json")));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    case "default map 400 * 400" -> {
+                        try {
+                            json = new String(Files.readAllBytes(Paths.get("default map 400.json")));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+
+        }
+        return new Gson().fromJson(json, new TypeToken<Map>() {
+        }.getType());
     }
 }
