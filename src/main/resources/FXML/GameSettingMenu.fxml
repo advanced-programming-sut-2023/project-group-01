@@ -13,15 +13,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import java.net.URL?>
 <AnchorPane prefHeight="800.0" prefWidth="1530.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.graphicView.GameSettingMenu">
+
+
+    <stylesheets>
+        <URL value="@../CSS/RegisterMenuStyle.css"/>
+    </stylesheets>
+
     <ImageView fx:id="background" fitHeight="800.0" fitWidth="1530.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../Images/OtherPhotos/3274502.jpg" />
+        <Image url="@../Images/OtherPhotos/32745022.jpg" />
     </ImageView>
     <AnchorPane layoutX="471.0" layoutY="30.0" prefHeight="306.0" prefWidth="409.0">
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#26200354" height="308.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
         <GridPane fx:id="names" hgap="30" layoutX="14.0" layoutY="14.0" prefHeight="266.0" prefWidth="267.0" vgap="10">
         </GridPane>
-        <Button layoutX="310.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#addUser" prefHeight="34.0" prefWidth="70.0" text="add user" />
+        <Button id="button" layoutX="250.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#addUser" prefHeight="34.0" prefWidth="150.0" text="add user" />
         <AnchorPane layoutX="287.0" layoutY="60.0">
             <Rectangle fx:id="rectanglePopUp" arcHeight="5.0" arcWidth="5.0" fill="#26200354" height="100.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="200.0" />
             <VBox fx:id="vBoxPopUp" alignment="CENTER" spacing="20" visible="false">

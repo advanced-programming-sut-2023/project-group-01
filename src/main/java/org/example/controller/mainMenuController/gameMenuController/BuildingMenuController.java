@@ -13,6 +13,7 @@ import org.example.model.unit.LadderMen;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 import org.example.view.enums.Outputs;
+import org.example.view.graphicView.GameMenuApp;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
 import static org.example.view.enums.Outputs.SUCCESSFUL_DROP_BUILDING;
@@ -158,10 +159,9 @@ public class BuildingMenuController {
     public static void putBuilding(BuildingName buildingName, int x, int y, Empire empire) {
         int size = buildingName.getSize();
         Building building = getBuilding(buildingName, empire, x, y);
-
         for (int i = x; i < x + size; i++)
             for (int j = y; j < y + size; j++)
-                getMap().getTile(i, j).setBuilding(building);
+                GameMenuApp.map.getTile(i, j).setBuilding(building);
         empire.addToBuildings(building);
     }
 
