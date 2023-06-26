@@ -16,17 +16,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
-import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.Gatehouse;
-import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.MaterialType;
 import org.example.view.enums.Outputs;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-import static org.example.view.mainMenu.gameMenu.GameMenu.setThisEmpire;
 
 public class RepairMenu extends Application {
 
@@ -37,14 +33,13 @@ public class RepairMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        repairTowers(stage);
     }
 
     public static void setCurrentBuilding(Building currentBuilding) {
         RepairMenu.currentBuilding = currentBuilding;
     }
 
-    public void repairTowers(Stage stage) throws FileNotFoundException {
+    public void repairTowers(Pane buildingPane) throws FileNotFoundException {
         Text text = new Text(currentBuilding.getBuildingName().getName());
         text.setStyle("-fx-font: 20 arial;");
         text.setLayoutX(250);
@@ -55,10 +50,8 @@ public class RepairMenu extends Application {
         imageView.setLayoutX(20);
         imageView.setLayoutY(15);
         anchorPane.getChildren().add(imageView);
-
-        Scene scene = new Scene(anchorPane);
-        stage.setScene(scene);
-        stage.show();
+        buildingPane.getChildren().clear();
+        buildingPane.getChildren().addAll(anchorPane.getChildren());
     }
 
     public void repairGateHouse(Stage stage) throws FileNotFoundException {
