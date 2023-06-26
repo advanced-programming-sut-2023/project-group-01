@@ -40,8 +40,6 @@ public class Man extends Application {
     }
 
     public void man(AnchorPane anchorPane) {
-        Empire empire = new Empire(null, null);
-        setThisEmpire(empire);
         int popularity = getThisEmpire().getPopularity();
         int population = getThisEmpire().getPopulation();
         int maxPopulation = getThisEmpire().getMaxPopulation();

@@ -62,7 +62,7 @@ public class Empire {
         foods.put(FoodType.APPLE, (float) 0);
         foods.put(FoodType.MEET, (float) 0);
         foods.put(FoodType.CHEESE, (float) 0);
-//        initializeMaterials();
+        initializeMaterials();
 //        initializePeople();
     }
 

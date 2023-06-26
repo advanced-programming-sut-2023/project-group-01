@@ -290,7 +290,6 @@ public class NextTurn {
                 if (unit.getXDestination() < getMap().getSize()) {
                     xDest = unit.getXDestination();
                     yDest = unit.getYDestination();
-                    System.out.println(unit.isMoved());
                 } else if (unit.getPatrolX1() < getMap().getSize()) {
                     xDest = unit.getPatrolX2();
                     yDest = unit.getPatrolY2();
@@ -331,6 +330,7 @@ public class NextTurn {
     }
 
     public void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {
+        System.out.println("hello");
         int xPos = unit.getXPos(), yPos = unit.getYPos();
         boolean isAssassins = unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS);
         BestPath bestPath = new BestPath(unit.getEmpire());
@@ -540,6 +540,7 @@ public class NextTurn {
     }
 
     private void attack(Tile tile, int x, int y) {
+        if(x == -1 && y == -1) return;
         ArrayList<MilitaryUnit> enemy1 = new ArrayList<>();
         ArrayList<MilitaryUnit> enemy2 = new ArrayList<>();
         boolean[] isAttack = new boolean[empires.size()];
@@ -659,11 +660,9 @@ public class NextTurn {
 
     private void doArcherAttack(MilitaryUnit unit) {
         ArrayList<MilitaryUnit> enemy = new ArrayList<>();
-        if (unit.getXAttack() > getMap().getSize() && unit.getYAttack() > getMap().getSize())
+        if (unit.getXAttack() < getMap().getSize() && unit.getYAttack() < getMap().getSize() &&
+                (unit.getXAttack() == -1 || unit.getYAttack() == -1))
             enemy = findEnemyInTheBoardOfArcher(unit);
-        else if (unit.getXAttack() == -1 || unit.getYAttack() == -1)
-            enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
-
         if (enemy.size() != 0) {
 
             Building building1 = getMap().getTile(enemy.get(0).getXPos(), enemy.get(0).getYPos()).getBuilding();

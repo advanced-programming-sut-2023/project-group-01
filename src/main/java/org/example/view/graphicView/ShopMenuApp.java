@@ -66,7 +66,6 @@ public class ShopMenuApp {
     }
 
     public void initialize() {
-        GameMenu.setThisEmpire(new Empire(null, null));
         int index = 0;
         for (Material material : getThisEmpire().getMaterials().keySet()) {
             if (index == 20) return;
@@ -274,7 +273,7 @@ public class ShopMenuApp {
     }
 
     public static void openMenu() throws IOException {
-        Pane pane = (Pane) GameMenuApp.anchorPaneInSplitPan.getChildren().get(0);
+        HBox pane = (HBox) GameMenuApp.anchorPaneInSplitPan.getChildren().get(0);
         pane.getChildren().remove(0);
         pane.getChildren().add(0, shopPane);
     }
