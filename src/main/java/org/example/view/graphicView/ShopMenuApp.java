@@ -1,9 +1,6 @@
 package org.example.view.graphicView;
 
-import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -17,7 +14,6 @@ import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.Material;
 import org.example.view.enums.Outputs;
-import org.example.view.mainMenu.gameMenu.BuildingMenu;
 import org.example.view.mainMenu.gameMenu.GameMenu;
 import org.example.view.mainMenu.gameMenu.ShopMenu;
 
@@ -365,5 +361,42 @@ public class ShopMenuApp {
 
     public static void setCurrentBuilding(Building currentBuilding) {
         ShopMenuApp.currentBuilding = currentBuilding;
+    }
+
+    public static void restart() {
+        Building currentBuilding;
+        index = 0;
+        materials = new ArrayList<>();
+        ImageView prevCommodity = null;
+        ImageView nextCommodity = null;
+        ImageView commodity;
+        goldText = null;
+        buy = null;
+        sell = null;
+        meatText = null;
+        cheeseText = null;
+        appleText = null;
+        barleyText = null;
+        aleText = null;
+        wheatText = null;
+        floorText = null;
+        breadText = null;
+        foodHbox = null;
+        woodText = null;
+        stoneText = null;
+        ironText = null;
+        oilText = null;
+        sourceHbox = null;
+        spearText = null;
+        arcText = null;
+        maceText = null;
+        tannerText = null;
+        crossbowText = null;
+        pikeText = null;
+        swordText = null;
+        weaponHbox = null;
+        metalArmourText = null;
+        currentMaterial = null;
+        price = null;
     }
 }

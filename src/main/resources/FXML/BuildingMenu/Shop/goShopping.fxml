@@ -20,7 +20,7 @@
         </image>
     </ImageView>
 
-    <ImageView fx:id="prevCommodity" fitHeight="30.0" fitWidth="29.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true"/>
+    <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true"/>
 
     <ImageView fx:id="prev" fitHeight="30.0" fitWidth="42.0" layoutX="62.0" layoutY="18.0" pickOnBounds="true"
                onMouseClicked="#goPrev">
@@ -29,7 +29,7 @@
         </image>
     </ImageView>
 
-    <ImageView fx:id="nextCommodity" fitHeight="30.0" fitWidth="29.0" layoutX="170.0" layoutY="18.0" pickOnBounds="true"/>
+    <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="170.0" layoutY="18.0" pickOnBounds="true"/>
 
     <ImageView fx:id="next" fitHeight="30.0" fitWidth="42.0" layoutX="114.0" layoutY="18.0" pickOnBounds="true"
                onMouseClicked="#goNext">
@@ -38,20 +38,20 @@
         </image>
     </ImageView>
 
-    <ImageView fx:id="commodity" fitHeight="66.0" fitWidth="66.0" layoutX="55.0" layoutY="69.0" pickOnBounds="true"/>
+    <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="55.0" layoutY="69.0" pickOnBounds="true"/>
 
     <Button layoutX="185.0" layoutY="48.0" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #fdfd19"
             onMouseClicked="#buying"/>
     <Button layoutX="185.0" layoutY="102.0" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #fdfd19"
             onMouseClicked="#selling"/>
 
-    <Text fx:id="buy" layoutX="218.0" layoutY="74.0" text="k" wrappingWidth="132.6279296875">
+    <Text layoutX="218.0" layoutY="74.0" text="k" wrappingWidth="132.6279296875">
         <font>
             <Font name="System Bold" size="15.0"/>
         </font>
     </Text>
 
-    <Text fx:id="sell" layoutX="218.0" layoutY="128.0" text="k" wrappingWidth="132.6279296875">
+    <Text layoutX="218.0" layoutY="128.0" text="k" wrappingWidth="132.6279296875">
         <font>
             <Font name="System Bold" size="15.0"/>
         </font>
