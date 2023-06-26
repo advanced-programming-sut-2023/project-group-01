@@ -8,7 +8,7 @@ import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 
 public enum BuildingName {
-    EMPIRE_CASTLE("empireBuilding", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.CASTLE_BUILDING, "EmpireBuilding", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, ""),
+    EMPIRE_CASTLE("empireBuilding", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.CASTLE_BUILDING, "EmpireBuilding", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, Main.class.getResource("/Images/tower/castle2.png").toString()),
     SMALL_STONE_GATEHOUSE("gateHouse", 1000, 1000, BuildingCategory.CASTLE_BUILDING, "SmallStoneGatehouse", 0, 10, 0, 0, 4, TypeOfTile.NORMAL_GROUND,  Main.class.getResource("/Images/carehouse/smallgatehouse2.png").toString()),
     BIG_STONE_GATEHOUSE("gateHouse", 2000, 2000, BuildingCategory.CASTLE_BUILDING, "BigStoneGatehouse", 0, 20, 0, 0, 5, TypeOfTile.NORMAL_GROUND,  Main.class.getResource("/Images/carehouse/biggatehouse2.png").toString()),
     DRAWBRIDGE("gateHouse", 0, 0, BuildingCategory.CASTLE_BUILDING, "Drawbridge", 0, 0, 10, 0, 3, TypeOfTile.NORMAL_GROUND,  Main.class.getResource("/Images/carehouse/drawbridge2.png").toString()),

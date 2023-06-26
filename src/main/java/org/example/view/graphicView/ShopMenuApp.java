@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
-public class ShopMenuApp extends Application {
+public class ShopMenuApp {
     private static Building currentBuilding;
     private static Stage stage;
     private static Pane shopPane;
@@ -65,17 +65,10 @@ public class ShopMenuApp extends Application {
     private static Material currentMaterial;
     private static Text price;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Pane shopPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/Shop/ShopMenu.fxml"));
-        ShopMenuApp.shopPane = shopPane;
-        ShopMenuApp.stage = stage;
-        Scene scene = new Scene(shopPane);
-        stage.setScene(scene);
-        stage.show();
+    public ShopMenuApp() {
+        initialize();
     }
 
-    @FXML
     public void initialize() {
         GameMenu.setThisEmpire(new Empire(null, null));
         int index = 0;
@@ -159,13 +152,13 @@ public class ShopMenuApp extends Application {
     }
 
     public static void initializeAmounts() {
-        for (Material material :  getThisEmpire().getMaterials().keySet()) {
+        for (Material material : getThisEmpire().getMaterials().keySet()) {
             if (material.getMaterialType().getTypeOfProduct().equals("source")) {
-                setIndustryText(material,  getThisEmpire().getMaterials().get(material));
+                setIndustryText(material, getThisEmpire().getMaterials().get(material));
             } else if (material.getMaterialType().getTypeOfProduct().equals("food")) {
                 setFoodText(material, getThisEmpire().getMaterials().get(material));
             } else if (material.getMaterialType().getTypeOfProduct().equals("warfare")) {
-                setWeaponText(material,  getThisEmpire().getMaterials().get(material));
+                setWeaponText(material, getThisEmpire().getMaterials().get(material));
             }
         }
     }
@@ -285,9 +278,9 @@ public class ShopMenuApp extends Application {
     }
 
     public static void openMenu() throws IOException {
-        Scene scene = new Scene(shopPane);
-        stage.setScene(scene);
-        stage.show();
+        Pane pane = (Pane) GameMenuApp.anchorPaneInSplitPan.getChildren().get(0);
+        pane.getChildren().remove(0);
+        pane.getChildren().add(0, shopPane);
     }
 
     //TODO قشنگ کردن منو
@@ -322,7 +315,7 @@ public class ShopMenuApp extends Application {
     //TODO metalArmour
     public Material getMaterialByName(String name) {
         int index = 0;
-        for (Material material :  getThisEmpire().getMaterials().keySet()) {
+        for (Material material : getThisEmpire().getMaterials().keySet()) {
             if (material.getMaterialType().getName().equalsIgnoreCase(name)) {
                 ShopMenuApp.index = index;
                 return material;

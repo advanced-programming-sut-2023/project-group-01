@@ -57,7 +57,7 @@ public class Empire {
         this.fearPopularity = 0;
         this.religionPopularity = 0;
         this.maxPopulation = 20;
-//        this.lord = new Lord(getMap().getTile(empireBuilding.getX(), empireBuilding.getY()), this, MilitaryUnitName.LORD, empireBuilding.getY(), empireBuilding.getY());
+        //this.lord = new Lord(getMap().getTile(empireBuilding.getX(), empireBuilding.getY()), this, MilitaryUnitName.LORD, empireBuilding.getY(), empireBuilding.getY());
         foods.put(FoodType.BREED, (float) 0);
         foods.put(FoodType.APPLE, (float) 0);
         foods.put(FoodType.MEET, (float) 0);
