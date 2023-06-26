@@ -39,7 +39,7 @@
 
     <ImageView fx:id="return" fitHeight="44.0" fitWidth="43.0" layoutX="33.0" layoutY="113.0" onMouseClicked="#returnBack" pickOnBounds="true">
         <image>
-            <Image url="@../../../Images/options/prev." />
+            <Image url="@../../../Images/options/prev.png" />
         </image>
     </ImageView>
 
