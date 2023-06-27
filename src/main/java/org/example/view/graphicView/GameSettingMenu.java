@@ -3,6 +3,7 @@ package org.example.view.graphicView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -47,7 +48,7 @@ public class GameSettingMenu extends Application implements Initializable {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/Fxml/GameSettingMenu.fxml"));
-        Data.getStayedLoggedIn().setInGame(false);
+        Data.getStayedLoggedIn().setInGame(true);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();
@@ -57,6 +58,11 @@ public class GameSettingMenu extends Application implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         players.add(Data.getStayedLoggedIn());
         Text text = new Text(Data.getStayedLoggedIn().getUsername());
+        for (Map map : Data.getStayedLoggedIn().getMaps()) {
+            Text textMap = new Text("map " + Data.getStayedLoggedIn().getMaps().indexOf(map));
+            textMap.setOnMouseClicked(this::changeMap);
+            maps.getChildren().add(text);
+        }
         text.setFill(Color.WHITE);
         names.add(text, 0, 0);
     }
@@ -90,7 +96,7 @@ public class GameSettingMenu extends Application implements Initializable {
             Text text = new Text(username.getText());
             text.setFill(Color.WHITE);
             names.add(text, 0, players.size());
-            Data.findUserWithUsername(username.getText()).setInGame(false);
+            Data.findUserWithUsername(username.getText()).setInGame(true);
             ImageView imageView = new ImageView(new Image(Main.class.getResource
                     ("/Images/photo5070330372.jpg").toExternalForm()));
             imageView.setFitHeight(25);
@@ -178,5 +184,9 @@ public class GameSettingMenu extends Application implements Initializable {
         }
         return new Gson().fromJson(json, new TypeToken<Map>() {
         }.getType());
+    }
+
+    public void CreateMap(ActionEvent actionEvent) throws Exception {
+        new SetTexture().start(Main.stage);
     }
 }

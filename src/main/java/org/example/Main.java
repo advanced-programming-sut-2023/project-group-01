@@ -6,10 +6,7 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.controller.SignUpAndSignInMenu;
-import org.example.model.Data;
-import org.example.model.InitializeMaterial;
-import org.example.model.Map;
-import org.example.model.UsersDatabaseJSON;
+import org.example.model.*;
 import org.example.view.graphicView.GameMenuApp;
 import org.example.view.graphicView.GameSettingMenu;
 import org.example.view.graphicView.TradeMenuApp;
@@ -39,22 +36,11 @@ public class Main extends Application {
         UsersDatabaseJSON.initializeUsers();
         UsersDatabaseJSON.loadStayedLoggedInUser();
         Data.setDefaultMap(new String(Files.readAllBytes(Paths.get("my map.txt"))));
-
-
         Scanner scanner = new Scanner(System.in);
-
-//        if (Data.getStayedLoggedIn() == null) {
-//            RegisterMenu registerMenu = new RegisterMenu();
-//            registerMenu.run(scanner);
-//        } else {
-//            MainMenu mainMenu = new MainMenu(Data.getStayedLoggedIn());
-//            mainMenu.run(scanner);
-//        }
-        //be koda sag to git. lanat be git va sazandash boro bemir
-        //goh to git va sazande va estefade konnande va yak yakishon.
-
         launch(args);
-
+        for (User user1 : Data.getUsers()) {
+            user1.setInGame(false);
+        }
         UsersDatabaseJSON.saveUsersInJSON();
         UsersDatabaseJSON.saveStayedLoggedInUser();
         Process process = Runtime.getRuntime().exec("move.bat");
@@ -69,12 +55,6 @@ public class Main extends Application {
         Main.stage = stage;
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
         Data.setStayedLoggedIn(Data.findUserWithUsername("ali"));
-        //new SignUpAndSignInMenu().start(stage);
-       // new GameMenuApp(new CreateMapMenu(null).runDefaultMap(new Scanner(Data.getDefaultMap())), new ArrayList<>(), InitializeMaterial.HIGH_SOURCE).start(Main.stage);
-//        FileWriter fileWriter = new FileWriter("default map 400.json");
-//        fileWriter.write(new Gson().toJson( new CreateMapMenu(null).runDefaultMap(new Scanner(Data.getDefaultMap()))));
-//        fileWriter.close();
-//        System.exit(1);
         new GameSettingMenu().start(Main.stage);
         //new ScoreBoard().start(Main.stage);
     }

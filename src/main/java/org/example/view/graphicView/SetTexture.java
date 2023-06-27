@@ -1,18 +1,32 @@
 package org.example.view.graphicView;
 
 import javafx.application.Application;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import org.example.Main;
+import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
+import org.example.model.Data;
+import org.example.model.Map;
+import org.example.model.People;
+import org.example.model.building.Building;
+import org.example.model.building.Tile;
 import org.example.model.building.enums.BuildingName;
 import org.example.model.building.enums.TypeOfTile;
+import org.example.model.unit.Catapult;
 import org.example.model.unit.CatapultName;
+import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
 
 import java.io.FileInputStream;
@@ -25,11 +39,17 @@ public class SetTexture extends Application {
     private static BuildingName buildingName;
     private static MilitaryUnitName militaryUnitName;
     private static CatapultName catapultName;
+    private int startMapX = 0;
+    private int startMapY = 0;
+    private Map map = new Map(200);
+    private int size = 60;
     private static boolean isClearState = false;
 
     @Override
     public void start(Stage stage) throws Exception {
         AnchorPane anchorPane = new AnchorPane();
+        GridPane gridPane = new GridPane();
+        setGridPane(gridPane);
         anchorPane.setPrefWidth(600);
         anchorPane.setPrefHeight(160);
         FileInputStream inputStream = new FileInputStream("src\\main\\resources\\Images\\towerRepair.png");
@@ -39,12 +59,101 @@ public class SetTexture extends Application {
         Background background = new Background(backgroundimage);
         anchorPane.setBackground(background);
         addCommon(anchorPane);
-        Scene scene = new Scene(anchorPane);
+        Button button = new Button("save");
+        HBox hBox = new HBox(anchorPane, button);
+        button.setOnAction(actionEvent -> {
+            try {
+                Data.getStayedLoggedIn().addMap(map);
+                new GameSettingMenu().start(Main.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        hBox.setSpacing(20);
+        hBox.setAlignment(Pos.CENTER);
+        SplitPane splitPane = new SplitPane(gridPane, hBox);
+        Scene scene = new Scene(splitPane);
+        gridPane.setOnMouseMoved(e -> {
+            if (e.getSceneX() < 25 && startMapX > 0)
+                startMapX--;
+            if (e.getSceneX() > scene.getWidth() - 25 && startMapX < map.getSize() - 12)
+                startMapX++;
+            if (e.getSceneY() < 25 && startMapY > 0)
+                startMapY--;
+            if (e.getSceneY() > gridPane.getHeight() - 25 && startMapY < map.getSize() - 4)
+                startMapY++;
+            setGridPane(gridPane);
+        });
         stage.setScene(scene);
+        splitPane.setOrientation(Orientation.VERTICAL);
         stage.show();
     }
 
+    private void setGridPane(GridPane gridPane) {
+        for (int i = 0; i < 25; i++)
+            for (int j = 0; j < 10; j++) {
+                ImageView imageView = new ImageView(new Image(map.getTile(i + startMapX, j + startMapY).getTypeOfTile().getPictureAddress()));
+                imageView.setFitWidth(size);
+                imageView.setFitHeight(size);
+                imageView.setOnMouseClicked(mouseEvent -> {
+                    for (Node child : gridPane.getChildren()) {
+                        if (child instanceof ImageView && ((ImageView) child).getFitHeight() == size &&
+                                child.getLayoutX() < mouseEvent.getScreenX() && mouseEvent.getScreenX() < child.getLayoutX() + size &&
+                                child.getLayoutY() < mouseEvent.getScreenY() && mouseEvent.getSceneY() < child.getLayoutY() + size) {
+                            Tile tile = map.getTile(GridPane.getColumnIndex(child) + startMapX,
+                                    GridPane.getRowIndex(child) + startMapY);
+                            if (tile.getBuilding() == null) {
+                                if (typeOfTile != null)
+                                    tile.setTypeOfTile(typeOfTile);
+                                if (buildingName != null)
+                                    BuildingMenuController.putBuilding(buildingName, GridPane.getColumnIndex(child) + startMapX,
+                                            GridPane.getRowIndex(child) + startMapY, null);
+                                if (militaryUnitName != null)
+                                    new MilitaryUnit(tile, null, militaryUnitName, GridPane.getColumnIndex(child) + startMapX,
+                                            GridPane.getRowIndex(child) + startMapY);
+                                if (catapultName != null)
+                                    new Catapult(tile, null, GridPane.getColumnIndex(child) + startMapX,
+                                            GridPane.getRowIndex(child) + startMapY, catapultName);
+                            }
+                        }
+                    }
+                    setGridPane(gridPane);
+                });
+                gridPane.add(imageView, i, j);
+                if (map.getTile(i + startMapX, j + startMapY).getBuilding() != null) {
+                    Tile tile = map.getTile(i + startMapX, j + startMapY);
+                    Building building = tile.getBuilding();
+                    ImageView buildingImageView = new ImageView(new Image(building.getBuildingName().getPictureAddress()));
+                    buildingImageView.setFitWidth(size);
+                    buildingImageView.setFitHeight(size);
+                    WritableImage writableImage = new WritableImage(new Image(building.getBuildingName().getPictureAddress()).
+                            getPixelReader(),
+                            (int) (buildingImageView.getImage().getWidth() *
+                                    (startMapX + i - building.getBeginX()) / building.getBuildingName().getSize()),
+                            (int) (buildingImageView.getImage().getHeight() * (startMapY + j - building.getBeginY()) /
+                                    building.getBuildingName().getSize()), (int) buildingImageView.getFitWidth(),
+                            (int) buildingImageView.getFitHeight());
+                    buildingImageView.setImage(writableImage);
+                    gridPane.add(buildingImageView, i, j);
+                }
+                for (People person : map.getTile(i + startMapX, j + startMapY).getPeople())
+                    if (person instanceof MilitaryUnit) {
+                        ImageView imageView1 = new ImageView(
+                                new Image(((MilitaryUnit) person).getMilitaryUnitName().getPictureAddress()));
+                        imageView1.setFitWidth(30);
+                        imageView1.setFitHeight(30);
+                        gridPane.add(imageView1, i, j);
+                    }
+            }
+    }
+
     //TODO set address for texture قشنگ کردن دکمه ها
+    public void resetAllNull() {
+        buildingName = null;
+        militaryUnitName = null;
+        catapultName = null;
+        typeOfTile = null;
+    }
 
     public void addCommon(AnchorPane anchorPane) throws FileNotFoundException {
         Button groundButton = createButton("ground", 20, 20);
@@ -119,64 +228,64 @@ public class SetTexture extends Application {
     public void setGround(AnchorPane anchorPane) throws FileNotFoundException {
         removeAdditional(anchorPane);
 
-        Rectangle normalGround = createRectangleForGround(
-                new FileInputStream(TypeOfTile.NORMAL_GROUND.getPictureAddress()), 100, 30);
+        Rectangle normalGround = createRectangleForGround(TypeOfTile.NORMAL_GROUND.getPictureAddress(), 100, 30);
         normalGround.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.NORMAL_GROUND;
         });
 
-        Rectangle gravelGround = createRectangleForGround(
-                new FileInputStream(TypeOfTile.GRAVEL_GROUND.getPictureAddress()), 200, 30);
+        Rectangle gravelGround = createRectangleForGround(TypeOfTile.GRAVEL_GROUND.getPictureAddress(), 200, 30);
         gravelGround.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.GRAVEL_GROUND;
         });
 
-        Rectangle stoneMine = createRectangleForGround(
-                new FileInputStream(TypeOfTile.STONE_MINE.getPictureAddress()), 300, 30);
+        Rectangle stoneMine = createRectangleForGround(TypeOfTile.STONE_MINE.getPictureAddress(), 300, 30);
         stoneMine.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.STONE_MINE;
         });
 
-        Rectangle ironMine = createRectangleForGround(
-                new FileInputStream(TypeOfTile.IRON_MINE.getPictureAddress()), 400, 30);
+        Rectangle ironMine = createRectangleForGround(TypeOfTile.IRON_MINE.getPictureAddress(), 400, 30);
         ironMine.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.IRON_MINE;
         });
 
-        Rectangle grassLand = createRectangleForGround(
-                new FileInputStream(TypeOfTile.GRASSLAND.getPictureAddress()), 500, 30);
+        Rectangle grassLand = createRectangleForGround(TypeOfTile.GRASSLAND.getPictureAddress(), 500, 30);
         grassLand.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.GRASSLAND;
         });
 
-        Rectangle meadow = createRectangleForGround(
-                new FileInputStream(TypeOfTile.MEADOW.getPictureAddress()), 150, 90);
+        Rectangle meadow = createRectangleForGround(TypeOfTile.MEADOW.getPictureAddress(), 150, 90);
         meadow.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.MEADOW;
         });
 
-        Rectangle fullMeadow = createRectangleForGround(
-                new FileInputStream(TypeOfTile.FULL_MEADOW.getPictureAddress()), 250, 90);
+        Rectangle fullMeadow = createRectangleForGround(TypeOfTile.FULL_MEADOW.getPictureAddress(), 250, 90);
         fullMeadow.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.FULL_MEADOW;
         });
 
-        Rectangle oilGround = createRectangleForGround(
-                new FileInputStream(TypeOfTile.OIL_GROUND.getPictureAddress()), 350, 90);
+        Rectangle oilGround = createRectangleForGround(TypeOfTile.OIL_GROUND.getPictureAddress(), 350, 90);
         oilGround.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.OIL_GROUND;
         });
 
-        Rectangle plain = createRectangleForGround(
-                new FileInputStream(TypeOfTile.PLAIN.getPictureAddress()), 450, 90);
+        Rectangle plain = createRectangleForGround(TypeOfTile.PLAIN.getPictureAddress(), 450, 90);
         plain.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.PLAIN;
         });
 
         anchorPane.getChildren().addAll(normalGround, gravelGround, stoneMine, ironMine, grassLand, meadow, fullMeadow, oilGround, plain);
     }
 
-    public Rectangle createRectangleForGround(FileInputStream inputStream, int x, int y) {
+    public Rectangle createRectangleForGround(String inputStream, int x, int y) {
         Rectangle rectangle = new Rectangle();
         rectangle.setHeight(50);
         rectangle.setWidth(50);
@@ -188,30 +297,31 @@ public class SetTexture extends Application {
 
     public void dropRock(AnchorPane anchorPane) throws FileNotFoundException {
         removeAdditional(anchorPane);
-        Rectangle wRockRectangle = createRectangleForRock(new FileInputStream(TypeOfTile.W_ROCK.getPictureAddress()), 150, 50);
+        Rectangle wRockRectangle = createRectangleForRock(TypeOfTile.W_ROCK.getPictureAddress(), 150, 50);
         wRockRectangle.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.W_ROCK;
         });
-
-        Rectangle eRockRectangle = createRectangleForRock(new FileInputStream(TypeOfTile.E_ROCK.getPictureAddress()), 250, 50);
+        Rectangle eRockRectangle = createRectangleForRock(TypeOfTile.E_ROCK.getPictureAddress(), 250, 50);
         eRockRectangle.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.E_ROCK;
         });
-
-        Rectangle nRockRectangle = createRectangleForRock(new FileInputStream(TypeOfTile.N_ROCK.getPictureAddress()), 350, 50);
+        Rectangle nRockRectangle = createRectangleForRock(TypeOfTile.N_ROCK.getPictureAddress(), 350, 50);
         nRockRectangle.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.N_ROCK;
         });
-
-        Rectangle sRockRectangle = createRectangleForRock(new FileInputStream(TypeOfTile.S_ROCK.getPictureAddress()), 450, 50);
+        Rectangle sRockRectangle = createRectangleForRock(TypeOfTile.S_ROCK.getPictureAddress(), 450, 50);
         sRockRectangle.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.S_ROCK;
         });
 
         anchorPane.getChildren().addAll(wRockRectangle, eRockRectangle, nRockRectangle, sRockRectangle);
     }
 
-    public Rectangle createRectangleForRock(FileInputStream inputStream, int x, int y) {
+    public Rectangle createRectangleForRock(String inputStream, int x, int y) {
         Rectangle rectangle = new Rectangle();
         rectangle.setHeight(60);
         rectangle.setWidth(60);
@@ -223,33 +333,33 @@ public class SetTexture extends Application {
 
     public void dropTree(AnchorPane anchorPane) throws FileNotFoundException {
         removeAdditional(anchorPane);
-        Rectangle desertShrub = createRectangleForGround(
-                new FileInputStream(BuildingName.desertShrub.getPictureAddress()), 50, 50);
+        Rectangle desertShrub = createRectangleForGround(BuildingName.desertShrub.getPictureAddress(), 50, 50);
         desertShrub.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             buildingName = BuildingName.desertShrub;
         });
 
-        Rectangle cherryPalm = createRectangleForGround(
-                new FileInputStream(BuildingName.cherryPalm.getPictureAddress()), 150, 50);
+        Rectangle cherryPalm = createRectangleForGround(BuildingName.cherryPalm.getPictureAddress(), 150, 50);
         cherryPalm.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             buildingName = BuildingName.cherryPalm;
         });
 
-        Rectangle oliveTree = createRectangleForGround(
-                new FileInputStream(BuildingName.oliveTree.getPictureAddress()), 250, 50);
+        Rectangle oliveTree = createRectangleForGround(BuildingName.oliveTree.getPictureAddress(), 250, 50);
         oliveTree.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             buildingName = BuildingName.oliveTree;
         });
 
-        Rectangle coconutPalm = createRectangleForGround(
-                new FileInputStream(BuildingName.coconutPalm.getPictureAddress()), 350, 50);
+        Rectangle coconutPalm = createRectangleForGround(BuildingName.coconutPalm.getPictureAddress(), 350, 50);
         coconutPalm.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             buildingName = BuildingName.coconutPalm;
         });
 
-        Rectangle palmTree = createRectangleForGround(
-                new FileInputStream(BuildingName.palmTree.getPictureAddress()), 450, 50);
+        Rectangle palmTree = createRectangleForGround(BuildingName.palmTree.getPictureAddress(), 450, 50);
         palmTree.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             buildingName = BuildingName.palmTree;
         });
 
@@ -258,43 +368,42 @@ public class SetTexture extends Application {
 
     public void setWater(AnchorPane anchorPane) throws FileNotFoundException {
         removeAdditional(anchorPane);
-        Rectangle shallowWater = createRectangleForGround(
-                new FileInputStream(TypeOfTile.SHALLOW_WATER.getPictureAddress()), 50, 50);
+        Rectangle shallowWater = createRectangleForGround(TypeOfTile.SHALLOW_WATER.getPictureAddress(), 50, 50);
         shallowWater.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.SHALLOW_WATER;
         });
 
-        Rectangle river = createRectangleForGround(
-                new FileInputStream(TypeOfTile.RIVER.getPictureAddress()), 130, 50);
+        Rectangle river = createRectangleForGround(TypeOfTile.RIVER.getPictureAddress(), 130, 50);
         river.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.RIVER;
         });
 
-        Rectangle smallPond = createRectangleForGround(
-                new FileInputStream(TypeOfTile.SMALL_POND.getPictureAddress()), 210, 50);
+        Rectangle smallPond = createRectangleForGround(TypeOfTile.SMALL_POND.getPictureAddress(), 210, 50);
         smallPond.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.SMALL_POND;
         });
 
-        Rectangle bigPond = createRectangleForGround(
-                new FileInputStream(TypeOfTile.BIG_POND.getPictureAddress()), 290, 50);
+        Rectangle bigPond = createRectangleForGround(TypeOfTile.BIG_POND.getPictureAddress(), 290, 50);
         bigPond.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.BIG_POND;
         });
 
-        Rectangle beach = createRectangleForGround(
-                new FileInputStream(TypeOfTile.BEACH.getPictureAddress()), 370, 50);
+        Rectangle beach = createRectangleForGround(TypeOfTile.BEACH.getPictureAddress(), 370, 50);
         beach.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.BEACH;
         });
 
-        Rectangle sea = createRectangleForGround(
-                new FileInputStream(TypeOfTile.SEA.getPictureAddress()), 450, 50);
+        Rectangle sea = createRectangleForGround(TypeOfTile.SEA.getPictureAddress(), 450, 50);
         sea.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             typeOfTile = TypeOfTile.SEA;
         });
-
-
+        anchorPane.getChildren().addAll(shallowWater, river, smallPond, bigPond, beach, sea);
     }
 
     public void removeAdditional(AnchorPane anchorPane) {
@@ -324,21 +433,23 @@ public class SetTexture extends Application {
 
     }
 
-    public void createCircle(AnchorPane anchorPane,int x, int y, String pictureAddress) throws FileNotFoundException {
+    public void createCircle(AnchorPane anchorPane, int x, int y, String pictureAddress) throws FileNotFoundException {
         Circle circle = new Circle(x, y, 50);
         circle.setStyle("-fx-background-color: #1ea1ff");
-        circle.setFill(new ImagePattern(new Image(new FileInputStream(pictureAddress))));
+        circle.setFill(new ImagePattern(new Image(pictureAddress)));
         circle.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             militaryUnitName = MilitaryUnitName.getUnitByPictureAddress(pictureAddress);
         });
         anchorPane.getChildren().add(circle);
     }
 
-    public void createCircleForCatapult(AnchorPane anchorPane,int x, int y, String pictureAddress) throws FileNotFoundException {
+    public void createCircleForCatapult(AnchorPane anchorPane, int x, int y, String pictureAddress) throws FileNotFoundException {
         Circle circle = new Circle(x, y, 50);
         circle.setStyle("-fx-background-color: #1ea1ff");
-        circle.setFill(new ImagePattern(new Image(new FileInputStream(pictureAddress))));
+        circle.setFill(new ImagePattern(new Image(pictureAddress)));
         circle.setOnMouseClicked(mouseEvent -> {
+            resetAllNull();
             catapultName = CatapultName.getCatapultByPictureAddress(pictureAddress);
         });
         anchorPane.getChildren().add(circle);
@@ -356,9 +467,10 @@ public class SetTexture extends Application {
     public void createCircleForBuilding(AnchorPane anchorPane, int x, int y, String pictureAddress) throws FileNotFoundException {
         Circle circle = new Circle(x, y, 50);
         circle.setStyle("-fx-background-color: #1ea1ff");
-        circle.setFill(new ImagePattern(new Image(new FileInputStream(pictureAddress))));
+        circle.setFill(new ImagePattern(new Image(pictureAddress)));
         circle.setOnMouseClicked(mouseEvent -> {
-           buildingName = BuildingName.getByAddress(pictureAddress);
+            resetAllNull();
+            buildingName = BuildingName.getByAddress(pictureAddress);
         });
         anchorPane.getChildren().add(circle);
     }

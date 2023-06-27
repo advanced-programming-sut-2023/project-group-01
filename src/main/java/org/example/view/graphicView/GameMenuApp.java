@@ -58,8 +58,6 @@ public class GameMenuApp extends Application {
     public static AnchorPane anchorPaneInSplitPan;
     public AnchorPane anchorPaneMain;
     public static GridPane gridPane;
-
-    private String copyBuilding;
     private static boolean isInMenu = false;
 
     public static void setIsInMenu(boolean isInMenu) {
@@ -741,9 +739,6 @@ public class GameMenuApp extends Application {
                                         GridPane.getRowIndex(child) + startMapY).getBuilding() != null &&
                                         (BuildingName.getByAddres(((ImageView) child).getImage().getUrl()) != null ||
                                                 ((ImageView) child).getImage().getUrl() == null)) {
-                                    copyBuilding = map.getTileWhitXAndY(GridPane.getColumnIndex(child) + startMapX,
-                                                    GridPane.getRowIndex(child) + startMapY).getBuilding().
-                                            getBuildingName().getName();
                                     Clipboard clipboard = Clipboard.getSystemClipboard();
                                     ClipboardContent content = new ClipboardContent();
                                     content.putImage(new Image(map.getTileWhitXAndY(GridPane.getColumnIndex(child) + startMapX,
@@ -914,6 +909,19 @@ public class GameMenuApp extends Application {
                 ImageView imageView = new ImageView(new Image(map.getTile(i + startMapX, j + startMapY).getTypeOfTile().getPictureAddress()));
                 imageView.setFitWidth(size);
                 imageView.setFitHeight(size);
+                if(map.getTile(i + startMapX, j + startMapY).isHaveDisease()) {
+                    Region region = new Region();
+                    region.setBackground(new Background(new BackgroundFill(Color.GREEN, new CornerRadii(0), new Insets(0))));
+                    region.setOpacity(0.2);
+                    gridPane.add(region, i, j);
+                }
+                if(map.getTile(i + startMapX, j + startMapY).getBuilding() != null &&
+                        map.getTile(i + startMapX, j + startMapY).getBuilding().isFiring()) {
+                    Region region = new Region();
+                    region.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(0), new Insets(0))));
+                    region.setOpacity(0.2);
+                    gridPane.add(region, i, j);
+                }
                 imageView.setOnDragDropped(dragEvent -> {
                     for (Node child : GameMenuApp.gridPane.getChildren()) {
                         if (child instanceof ImageView && ((ImageView) child).getFitHeight() == size &&
