@@ -1,14 +1,15 @@
 package org.example.view.graphicView;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.example.controller.NextTurn;
 import org.example.model.Empire;
 import org.example.model.building.Building;
 import org.example.model.building.enums.BuildingName;
@@ -28,13 +29,14 @@ public class CreateUnitMenuApp extends Application {
     private static URL url;
     private static Text text = new Text();
 
-    @Override
-    public void start(Stage stage) throws Exception {
-
+    public void start(Pane buildingPane) throws Exception {
+        AnchorPane anchorPane = FXMLLoader.load(url);
+        buildingPane.getChildren().clear();
+        buildingPane.getChildren().addAll(anchorPane.getChildren());
     }
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void start(Stage stage) throws Exception {
 
     }
 

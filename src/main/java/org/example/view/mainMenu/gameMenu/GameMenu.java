@@ -9,6 +9,7 @@ import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 import org.example.model.building.enums.BuildingName;
 import org.example.view.enums.Outputs;
 import org.example.view.enums.commands.GameMenuCommands.GameMenuCommands;
+import org.example.view.graphicView.GameMenuApp;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,8 +99,9 @@ public class GameMenu {
     }
 
     public static Map getMap() {
-        if (map != null) return map;
-        else return CreateMapMenu.gameMap;
+        if(GameMenuApp.map != null)
+       return GameMenuApp.map;
+        else return new Map(200);
     }
 
     public void run(Scanner scanner) {

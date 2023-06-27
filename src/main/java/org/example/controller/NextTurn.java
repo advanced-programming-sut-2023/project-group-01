@@ -24,7 +24,8 @@ import org.example.view.mainMenu.gameMenu.GameMenu;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static org.example.view.mainMenu.gameMenu.GameMenu.*;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getEmpires;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 
 public class NextTurn {
     private ArrayList<Empire> empires;
@@ -58,19 +59,19 @@ public class NextTurn {
     }
 
     public void nextTurn() {
-        //if (turnNumber == numberOfEmpires - 1) {
-        turnNumber = 0;
-        currentEmpire = empires.get(0);
-        doRates();
-        doOnAllTiles();
-        checkEmpireExist();
-        doCatapult();
-        doForNextTurn();
-        //    } else {
-        //  turnNumber++;
-        //    currentEmpire = empires.get(turnNumber);
-        //  }
-//        GameMenu.setThisEmpire(currentEmpire);
+        if (turnNumber == numberOfEmpires) {
+            turnNumber = 0;
+            currentEmpire = empires.get(0);
+            doRates();
+            doOnAllTiles();
+            checkEmpireExist();
+            doCatapult();
+            doForNextTurn();
+        } else {
+            turnNumber++;
+            currentEmpire = empires.get(turnNumber);
+        }
+        GameMenu.setThisEmpire(currentEmpire);
     }
 
     public void doOnAllTiles() {
@@ -290,7 +291,6 @@ public class NextTurn {
                 if (unit.getXDestination() < getMap().getSize()) {
                     xDest = unit.getXDestination();
                     yDest = unit.getYDestination();
-                    System.out.println(unit.isMoved());
                 } else if (unit.getPatrolX1() < getMap().getSize()) {
                     xDest = unit.getPatrolX2();
                     yDest = unit.getPatrolY2();
@@ -299,8 +299,7 @@ public class NextTurn {
                 building = getMap().getTile(xDest, yDest).getBuilding();
                 if (building == null && !unit.isMoved()) {
                     callMoveFunctions(unit, false);
-                }
-                else if (building != null && !unit.isMoved() && (!(unit instanceof Catapult)) &&
+                } else if (building != null && !unit.isMoved() && (!(unit instanceof Catapult)) &&
                         unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
                     callMoveFunctions(unit, true);
                 else if (!unit.isMoved() && unit instanceof Catapult)
@@ -331,11 +330,12 @@ public class NextTurn {
     }
 
     public void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {
+        System.out.println("hello");
         int xPos = unit.getXPos(), yPos = unit.getYPos();
         boolean isAssassins = unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS);
         BestPath bestPath = new BestPath(unit.getEmpire());
         LinkedList<Integer> path;
-        if(xDest == -1 || yDest == -1) return;
+        if (xDest == -1 || yDest == -1) return;
         path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, isAssassins);
         if (unit.getMilitaryUnitName().equals(MilitaryUnitName.ASSASSINS))
             path = bestPath.input(getMap().getMap(), xPos, yPos, xDest, yDest, false, true);
@@ -540,6 +540,7 @@ public class NextTurn {
     }
 
     private void attack(Tile tile, int x, int y) {
+        if (x == -1 && y == -1) return;
         ArrayList<MilitaryUnit> enemy1 = new ArrayList<>();
         ArrayList<MilitaryUnit> enemy2 = new ArrayList<>();
         boolean[] isAttack = new boolean[empires.size()];
@@ -659,11 +660,9 @@ public class NextTurn {
 
     private void doArcherAttack(MilitaryUnit unit) {
         ArrayList<MilitaryUnit> enemy = new ArrayList<>();
-        if (unit.getXAttack() > getMap().getSize() && unit.getYAttack() > getMap().getSize())
+        if (unit.getXAttack() < getMap().getSize() && unit.getYAttack() < getMap().getSize() &&
+                (unit.getXAttack() == -1 || unit.getYAttack() == -1))
             enemy = findEnemyInTheBoardOfArcher(unit);
-        else if (unit.getXAttack() == -1 || unit.getYAttack() == -1)
-            enemy = getMap().getTile(unit.getXAttack(), unit.getYAttack()).findNearEnemiesMilitaryUnit(unit.getEmpire());
-
         if (enemy.size() != 0) {
 
             Building building1 = getMap().getTile(enemy.get(0).getXPos(), enemy.get(0).getYPos()).getBuilding();
@@ -706,6 +705,7 @@ public class NextTurn {
         int y = unit.getYAttack();
         int distance = Math.abs((x + y) - (xPos + yPos));
         int damage = unit.getMilitaryUnitName().getAttack();
+        if (x == -1 || y == -1) return;
         Building building = getMap().getTile(x, y).getBuilding();
         if (distance == 1 && building != null) {
             if (building.getBuildingName().getHitPoint() > damage) building.getBuildingName().reduceHitPoint(damage);

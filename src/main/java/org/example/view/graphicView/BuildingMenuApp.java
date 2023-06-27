@@ -26,7 +26,7 @@ import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class BuildingMenuApp extends Application {
 
-    private Building currentBuilding;
+    private static Building currentBuilding;
     private static Pane buildingPane;
     private static Pane savePreviousPane;
     private static Stage stage;
@@ -51,6 +51,10 @@ public class BuildingMenuApp extends Application {
     @FXML
     public void initialize() {
 
+    }
+
+    public static void setBuildingPane(Pane buildingPane) {
+        BuildingMenuApp.buildingPane = buildingPane;
     }
 
     public static String getPictureAddress() {
@@ -194,6 +198,7 @@ public class BuildingMenuApp extends Application {
     }
 
     public void enterSelectedBuildingMenu() throws Exception {
+        //GameMenuApp.setIsInMenu(true);
         if (currentBuilding != null) {
             savePreviousPane = buildingPane;
             if (currentBuilding.getBuildingName().equals(BuildingName.BARRACK) ||
@@ -204,27 +209,27 @@ public class BuildingMenuApp extends Application {
             ) {
                 CreateUnitMenuApp.setCurrentBuilding(currentBuilding);
                 CreateUnitMenuApp createUnitMenu = new CreateUnitMenuApp();
-                createUnitMenu.start(stage);
+                createUnitMenu.start(buildingPane);
             } else if (currentBuilding.getBuildingName().equals(BuildingName.GRANARY)) {
                 openGranaryMenu();
             } else if (currentBuilding instanceof Gatehouse || currentBuilding instanceof Tower) {
                 RepairMenu.setCurrentBuilding(currentBuilding);
                 RepairMenu repairMenu = new RepairMenu();
-                repairMenu.start(stage);
+                repairMenu.repairTowers(buildingPane);
             } else if (currentBuilding.getBuildingName().equals(BuildingName.MARKET)) {
                 ShopMenuApp shopMenu = new ShopMenuApp();
                 ShopMenuApp.setCurrentBuilding(currentBuilding);
-                shopMenu.start(stage);
+                Pane pane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/Shop/ShopMenu.fxml"));
+                buildingPane.getChildren().clear();
+                buildingPane.getChildren().addAll(pane.getChildren());
             }
         }
     }
 
     public void openGranaryMenu() throws IOException {
         Pane buildingPane = FXMLLoader.load(BuildingMenuApp.class.getResource("/FXML/BuildingMenu/Granary.fxml"));
-        BuildingMenuApp.buildingPane = buildingPane;
-        Scene scene = new Scene(buildingPane);
-        stage.setScene(scene);
-        stage.show();
+        BuildingMenuApp.buildingPane.getChildren().clear();
+        BuildingMenuApp.buildingPane.getChildren().addAll(buildingPane.getChildren());
     }
 
     public void changeFoodRate(MouseEvent mouseEvent) {

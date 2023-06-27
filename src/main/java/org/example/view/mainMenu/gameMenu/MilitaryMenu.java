@@ -103,7 +103,7 @@ public class MilitaryMenu {
     public void digTunnelChecker(Matcher matcher) {
         String x = matcher.group("x");
         String y = matcher.group("y");
-        System.out.println(militaryMenuController.digTunnel(x, y).toString());
+//       System.out.println(militaryMenuController.digTunnel(x, y).toString());
     }
 
     public void buildChecker(Matcher matcher) {

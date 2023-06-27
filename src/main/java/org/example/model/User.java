@@ -3,6 +3,7 @@ package org.example.model;
 import org.example.Main;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class User {
@@ -16,7 +17,7 @@ public class User {
     private String securityAnswer;
     private int highScore;
     private int rank;
-
+    private ArrayList<Map> maps = new ArrayList<>();
     private boolean inGame = false;
     private byte[] salt;
     private URL avatarUrl;
@@ -91,6 +92,11 @@ public class User {
         return inGame;
     }
 
+    public ArrayList<Map> getMaps() {
+        if(maps == null) maps = new ArrayList<>();
+        return maps;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -139,6 +145,8 @@ public class User {
         }
     }
 
-
+    public void addMap(Map map){
+        maps.add(map);
+    }
 }
 

@@ -4,10 +4,10 @@ import org.example.Main;
 
 public enum TypeOfTile {
 
-    W_ROCK("wRock",false,false, ""),
-    E_ROCK("eRock",false,false, ""),
-    N_ROCK("nRock",false,false, ""),
-    S_ROCK("sRock",false,false, ""),
+    W_ROCK("wRock",false,false, Main.class.getResource("/Images/tiles/w sakhreh.png").toString()),
+    E_ROCK("eRock",false,false,  Main.class.getResource("/Images/tiles/e sakhreh.png").toString()),
+    N_ROCK("nRock",false,false,  Main.class.getResource("/Images/tiles/n sakhreh.png").toString()),
+    S_ROCK("sRock",false,false,  Main.class.getResource("/Images/tiles/s sakhreh.png").toString()),
     NORMAL_GROUND("normal", true, false, Main.class.getResource("/Images/tiles/normalGround2.png").toString()),
     GRAVEL_GROUND("gravel", true, false, Main.class.getResource("/Images/tiles/zaminbasangrize.png").toString()),
     STONE_MINE("stoneMine",true, false, Main.class.getResource("/Images/tiles/madansang2.png").toString()),
