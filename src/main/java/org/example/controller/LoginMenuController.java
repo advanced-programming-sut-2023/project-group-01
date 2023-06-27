@@ -137,6 +137,7 @@ public class LoginMenuController {
                 alert.showAndWait();
             }else {
                 ProfileMenuController.currentUser = user;
+                Data.setStayedLoggedIn(user);
                 new MainMenuApp().start(Main.stage);
             }
         }

@@ -64,7 +64,7 @@
             <Image url="@../Images/IMG_6074.PNG" />
         </ImageView>
         <ImageView fitHeight="115.0" fitWidth="111.0" layoutX="285.0" layoutY="14.0" onMouseClicked="#setSource" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../Images/IMG_6102.JPG" />
+            <Image url="@../Images/IMG_6102.png" />
         </ImageView>
         <Text fx:id="source" fill="WHITE" layoutX="129.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="middle source" textAlignment="CENTER" wrappingWidth="158.00000000000006">
             <font>

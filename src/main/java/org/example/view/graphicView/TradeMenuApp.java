@@ -121,7 +121,8 @@ public class TradeMenuApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         amountValue = 0;
-        stage = Main.stage;
+        //stage = Main.stage;
+        stage = new Stage() ;
         URL url = LoginMenu.class.getResource("/FXML/TradeMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(url);
         Scene scene = new Scene(anchorPane);
@@ -134,9 +135,8 @@ public class TradeMenuApp extends Application {
     public void initialize() {
 
         ArrayList<String> users = new ArrayList<>();
-        users.add("ssss");
         for (Empire empire : GameMenu.getEmpires())
-            if (!empire.equals(getThisEmpire()))
+            if (!empire.getPlayer().getUsername().equals(getThisEmpire().getPlayer().getUsername()))
                 users.add(empire.getPlayer().getUsername());
 
         usersList.setItems(FXCollections.observableArrayList(users));
@@ -286,48 +286,49 @@ public class TradeMenuApp extends Application {
     }
 
     private void setReceiverAmounts() {
-        for (Material material : toEmpire.getMaterials().keySet()) {
-            if (material.getMaterialType().getName().equals(MaterialType.WOOD.getName()))
-                amount_1.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.BARLEY.getName()))
-                amount_2.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.STONE.getName()))
-                amount_3.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.IRON.getName()))
-                amount_4.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.OIL.getName()))
-                amount_5.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.WHEAT.getName()))
-                amount_6.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.BREAD.getName()))
-                amount_7.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.CHEESE.getName()))
-                amount_8.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.MEAT.getName()))
-                amount_9.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.APPLE.getName()))
-                amount_10.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.ALE.getName()))
-                amount_11.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.FLOUR.getName()))
-                amount_12.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.ARC.getName()))
-                amount_13.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.CROSSBOW.getName()))
-                amount_14.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.SPEAR.getName()))
-                amount_15.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.PIKE.getName()))
-                amount_16.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.MACE.getName()))
-                amount_17.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.SWORD.getName()))
-                amount_18.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.LEATHER_ARMOUR.getName()))
-                amount_19.setText(toEmpire.getMaterials().get(material).toString());
-            else if (material.getMaterialType().getName().equals(MaterialType.METAL_ARMOUR.getName()))
-                amount_20.setText(toEmpire.getMaterials().get(material).toString());
-        }
+        if (toEmpire != null)
+            for (Material material : toEmpire.getMaterials().keySet()) {
+                if (material.getMaterialType().getName().equals(MaterialType.WOOD.getName()))
+                    amount_1.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.BARLEY.getName()))
+                    amount_2.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.STONE.getName()))
+                    amount_3.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.IRON.getName()))
+                    amount_4.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.OIL.getName()))
+                    amount_5.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.WHEAT.getName()))
+                    amount_6.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.BREAD.getName()))
+                    amount_7.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.CHEESE.getName()))
+                    amount_8.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.MEAT.getName()))
+                    amount_9.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.APPLE.getName()))
+                    amount_10.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.ALE.getName()))
+                    amount_11.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.FLOUR.getName()))
+                    amount_12.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.ARC.getName()))
+                    amount_13.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.CROSSBOW.getName()))
+                    amount_14.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.SPEAR.getName()))
+                    amount_15.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.PIKE.getName()))
+                    amount_16.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.MACE.getName()))
+                    amount_17.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.SWORD.getName()))
+                    amount_18.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.LEATHER_ARMOUR.getName()))
+                    amount_19.setText(toEmpire.getMaterials().get(material).toString());
+                else if (material.getMaterialType().getName().equals(MaterialType.METAL_ARMOUR.getName()))
+                    amount_20.setText(toEmpire.getMaterials().get(material).toString());
+            }
     }
 
     public void decreaseAmount() {
@@ -360,6 +361,8 @@ public class TradeMenuApp extends Application {
         paper.setVisible(true);
         usersListHBox.setVisible(true);
         tradesField.setVisible(false);
+        tradeAcceptVBox.setVisible(false);
+        tradeAcceptBackground.setVisible(false);
     }
 
 
@@ -399,7 +402,8 @@ public class TradeMenuApp extends Application {
         usersList.setValue(null);
         commodities.setVisible(false);
         usersListHBox.setVisible(false);
-
+        tradeAcceptVBox.setVisible(false);
+        tradeAcceptBackground.setVisible(false);
 
         String output = "";
         ArrayList<Trade> trades = getThisEmpire().getTradeHistory();

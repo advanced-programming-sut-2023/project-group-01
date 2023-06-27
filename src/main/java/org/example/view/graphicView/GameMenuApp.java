@@ -63,11 +63,11 @@ public class GameMenuApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Empire empire = new Empire(EmpireBuilding.EMPIRE_1, Data.getStayedLoggedIn());
-        Empire empire2 = new Empire(EmpireBuilding.EMPIRE_2, Data.findUserWithUsername("morteza"));
-        GameMenu.getEmpires().add(empire);
-        GameMenu.getEmpires().add(empire2);
-        GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
+//        Empire empire = new Empire(EmpireBuilding.EMPIRE_1, Data.getStayedLoggedIn());
+//        Empire empire2 = new Empire(EmpireBuilding.EMPIRE_2, Data.findUserWithUsername("morteza"));
+//        GameMenu.getEmpires().add(empire);
+//        GameMenu.getEmpires().add(empire2);
+//        GameMenu.setThisEmpire(GameMenu.getEmpires().get(0));
 //        new MilitaryUnit(map.getTileWhitXAndY(3, 3), GameMenu.getEmpires().get(0),
 //                MilitaryUnitName.ARCHER_BOW, 3, 3);
 //        new MilitaryUnit(map.getTileWhitXAndY(5, 5), GameMenu.getEmpires().get(1),
@@ -387,10 +387,13 @@ public class GameMenuApp extends Application {
     private NextTurn nextTurn;
     public GameMenuApp(Map map, ArrayList<User> players, InitializeMaterial initializeMaterial) {
         GameMenuApp.map = map;
+        empires = new ArrayList<>();
         for(int i =0 ; i < players.size(); i++)
             empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + (i + 1)), players.get(i)));
         nextTurn = new NextTurn(this);
-        addEmpireBuildingsToMap();
+        GameMenu.setEmpires(empires);
+        GameMenu.setThisEmpire(empires.get(0));
+        //addEmpireBuildingsToMap();
         setMaterialForEmpires(initializeMaterial);
     }
 
@@ -675,8 +678,8 @@ public class GameMenuApp extends Application {
     }
 
     public void man(AnchorPane anchorPane) {
-        Empire empire = new Empire(null, null);
-        setThisEmpire(empire);
+//        Empire empire = new Empire(null, null);
+//        setThisEmpire(empire);
         int popularity = getThisEmpire().getPopularity();
         int population = getThisEmpire().getPopulation();
         int maxPopulation = getThisEmpire().getMaxPopulation();

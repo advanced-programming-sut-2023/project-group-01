@@ -92,7 +92,7 @@ public class GameSettingMenu extends Application implements Initializable {
             names.add(text, 0, players.size());
             Data.findUserWithUsername(username.getText()).setInGame(false);
             ImageView imageView = new ImageView(new Image(Main.class.getResource
-                    ("/Images/photo5070330372.jpg").toExternalForm()));
+                    ("/Images/photo5070330372.png").toExternalForm()));
             imageView.setFitHeight(25);
             imageView.setFitWidth(25);
             imageView.setOnMouseClicked(this::removeUser);

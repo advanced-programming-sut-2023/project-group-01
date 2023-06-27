@@ -77,7 +77,7 @@ public class ShopMenuApp extends Application {
 
     @FXML
     public void initialize() {
-        GameMenu.setThisEmpire(new Empire(null, null));
+//        GameMenu.setThisEmpire(new Empire(null, null));
         int index = 0;
         for (Material material : getThisEmpire().getMaterials().keySet()) {
             if (index == 20) return;

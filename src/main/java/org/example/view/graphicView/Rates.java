@@ -37,8 +37,8 @@ public class Rates extends Application {
     }
 
     public void addText(AnchorPane anchorPane) throws FileNotFoundException {
-        Empire empire = new Empire(null, null);
-        GameMenu.setThisEmpire(empire);
+//        Empire empire = new Empire(null, null);
+//        GameMenu.setThisEmpire(empire);
         int foodRate = getThisEmpire().getFoodRate();
         int taxRate = getThisEmpire().getTaxRate();
         int religionRate = getThisEmpire().getReligionPopularity();

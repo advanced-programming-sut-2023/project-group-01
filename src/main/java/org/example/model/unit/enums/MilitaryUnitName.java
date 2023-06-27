@@ -54,13 +54,16 @@ public enum MilitaryUnitName {
             Main.class.getResource("/Images/GameTabs/MercenaryBarrack/armys21.tgx.png").toString()),
     ASSASSINS(Color.RED, GunShot.ZERO, "bow", "assassins", Attack.MIDDLE,
             HitPoint.MIDDLE, Speed.MIDDLE, 60, null, null, false, Voice.ASSASSINS,
-            Main.class.getResource("/Images/GameTabs/MercenaryBarrack/assassins.png").toString()),
+            //Main.class.getResource("/Images/GameTabs/MercenaryBarrack/assassins.png").toString()),
+            ""),
     HORSE_ARCHER(Color.RED, GunShot.HIGH, "bow", "horseArchers", Attack.LOW, HitPoint.MIDDLE,
             Speed.SO_HIGH, 80, null, null, true, Voice.HORSE_ARCHER,
             Main.class.getResource("/Images/GameTabs/MercenaryBarrack/armys23.tgx.png").toString()),
     ARABIAN_SWORSMEN(Color.RED, GunShot.ZERO, "bow", "arabianSwordsmen", Attack.HIGH, HitPoint.HIGH,
             Speed.SO_HIGH, 80, null, null, false, Voice.ARABIAN_SWORSMEN,
-            Main.class.getResource("/Images/GameTabs/MercenaryBarrack/swordsman.png").toString()),
+            //Main.class.getResource("/Images/GameTabs/MercenaryBarrack/swordsman.png").toString()),
+            ""),
+
     FIRE_THROWERS(Color.RED, GunShot.LOW, "bow", "fireThrowers", Attack.HIGH, HitPoint.LOW,
             Speed.SO_HIGH, 100, null, null, false, Voice.FIRE_THROWERS,
             Main.class.getResource("/Images/GameTabs/MercenaryBarrack/armys25.tgx.png").toString());
