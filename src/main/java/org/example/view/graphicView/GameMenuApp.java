@@ -1138,7 +1138,8 @@ public class GameMenuApp extends Application {
             for (Tile tile : tiles)
                 number += findNumber(tile, militaryUnitName);
             if (number != 0)
-                vBox.getChildren().add(new Text(militaryUnitName.getName() + ": " + number));
+                vBox.getChildren().add(new Text(militaryUnitName.getName() + ": " + number + "    health" +
+                        militaryUnitName.getHitPoint() + "    power" + militaryUnitName.getAttack()));
         }
         for (CatapultName catapultName : CatapultName.values()) {
             int number = 0;
