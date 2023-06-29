@@ -507,7 +507,6 @@ public class Empire {
         else return true;
     }
 
-
     public boolean havingSmallGate() {
         for (Building building : buildings)
             if (building.getBuildingName().equals(BuildingName.SMALL_STONE_GATEHOUSE)) return true;

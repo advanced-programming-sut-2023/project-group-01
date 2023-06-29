@@ -1,5 +1,6 @@
 package org.example.controller.mainMenuController.gameMenuController;
 
+import org.example.model.Data;
 import org.example.model.Worker;
 import org.example.model.building.Building;
 import org.example.model.building.Tile;
@@ -13,11 +14,27 @@ import org.example.view.mainMenu.gameMenu.GameMenu;
 
 import java.util.Random;
 
+import static org.example.view.enums.Outputs.NOT_EXISTING_USERNAME;
+import static org.example.view.enums.Outputs.SUCCESS;
 import static org.example.view.mainMenu.gameMenu.CreateMapMenu.gameMap;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class CreateMapMenuController {
+
+    public static Outputs checkSaveMap(String nameOfMap){
+        if(Data.getStayedLoggedIn().getMapWithName(nameOfMap) != null)
+            return Outputs.MAP_NAME_EXIST;
+        if(nameOfMap.length() == 0)
+            return Outputs.EMPTY_FILED;
+        return SUCCESS;
+    }
+
+    public static Outputs checkSendMap(String nameOfUser){
+        if (Data.findUserWithUsername(nameOfUser) == null)
+            return NOT_EXISTING_USERNAME;
+        return SUCCESS;
+    }
 
     public Outputs setTextureForATile(int x, int y, String type) {
 

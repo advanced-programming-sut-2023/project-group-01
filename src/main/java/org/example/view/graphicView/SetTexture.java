@@ -5,8 +5,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -14,9 +13,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.example.Main;
 import org.example.controller.mainMenuController.gameMenuController.BuildingMenuController;
+import org.example.controller.mainMenuController.gameMenuController.CreateMapMenuController;
 import org.example.model.Data;
 import org.example.model.Map;
 import org.example.model.People;
@@ -28,6 +29,7 @@ import org.example.model.unit.Catapult;
 import org.example.model.unit.CatapultName;
 import org.example.model.unit.MilitaryUnit;
 import org.example.model.unit.enums.MilitaryUnitName;
+import org.example.view.enums.Outputs;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,6 +49,7 @@ public class SetTexture extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        GameMenuApp.map = map;
         AnchorPane anchorPane = new AnchorPane();
         GridPane gridPane = new GridPane();
         setGridPane(gridPane);
@@ -55,24 +58,63 @@ public class SetTexture extends Application {
         FileInputStream inputStream = new FileInputStream("src\\main\\resources\\Images\\towerRepair.png");
         Image image = new Image(inputStream);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundimage);
         anchorPane.setBackground(background);
-        addCommon(anchorPane);
+        AnchorPane anchorPane2 = new AnchorPane();
+        anchorPane2.setPrefWidth(600);
+        anchorPane2.setPrefHeight(160);
+        anchorPane2.setBackground(background);
+        addCommon(anchorPane, anchorPane2);
         Button button = new Button("save");
-        HBox hBox = new HBox(anchorPane, button);
-        button.setOnAction(actionEvent -> {
+        Button buttonExit = new Button("exit");
+        buttonExit.setOnAction(actionEvent -> {
             try {
-                Data.getStayedLoggedIn().addMap(map);
                 new GameSettingMenu().start(Main.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
+        button.setOnAction(actionEvent -> {
+            Popup popup = new Popup();
+            TextField textField = new TextField();
+            textField.setPromptText("map name");
+            Button button1 = new Button("cancel");
+            button1.setOnAction(actionEvent1 -> popup.hide());
+            Button button2 = new Button("save");
+            button2.setOnAction(actionEvent1 -> {
+                Outputs output = CreateMapMenuController.checkSaveMap(textField.getText());
+                if (output.equals(Outputs.SUCCESS)) {
+                    try {
+                        Data.getStayedLoggedIn().addMap(textField.getText(), map);
+                        new GameSettingMenu().start(Main.stage);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("save map error");
+                    alert.setContentText(output.toString());
+                    alert.showAndWait();
+                }
+            });
+            HBox hBox = new HBox(button1, button2);
+            hBox.setSpacing(20);
+            VBox vBox = new VBox(textField, hBox);
+            vBox.setSpacing(20);
+            popup.getContent().add(vBox);
+            popup.show(Main.stage);
+            popup.setY(Main.stage.getHeight() / 2);
+            popup.setX(Main.stage.getWidth() / 2);
+        });
+        VBox vBox = new VBox(button, buttonExit);
+        vBox.setSpacing(20);
+        HBox hBox = new HBox(anchorPane, new ScrollPane(anchorPane2), vBox);
         hBox.setSpacing(20);
         hBox.setAlignment(Pos.CENTER);
         SplitPane splitPane = new SplitPane(gridPane, hBox);
-        Scene scene = new Scene(splitPane);
+        Scene scene = new Scene(splitPane, 1530, 800);
         gridPane.setOnMouseMoved(e -> {
             if (e.getSceneX() < 25 && startMapX > 0)
                 startMapX--;
@@ -114,6 +156,12 @@ public class SetTexture extends Application {
                                 if (catapultName != null)
                                     new Catapult(tile, null, GridPane.getColumnIndex(child) + startMapX,
                                             GridPane.getRowIndex(child) + startMapY, catapultName);
+                            } else if (isClearState) {
+                                Building building = tile.getBuilding();
+                                for (int x = building.getBeginX(); x <= building.getEndX(); x++)
+                                    for (int y = building.getBeginY(); y <= building.getEndY(); y++) {
+                                        map.getTileWhitXAndY(x, y).setBuilding(null);
+                                    }
                             }
                         }
                     }
@@ -134,6 +182,13 @@ public class SetTexture extends Application {
                                     building.getBuildingName().getSize()), (int) buildingImageView.getFitWidth(),
                             (int) buildingImageView.getFitHeight());
                     buildingImageView.setImage(writableImage);
+                    buildingImageView.setOnMouseClicked(mouseEvent -> {
+                        for (int x = building.getBeginX(); x <= building.getEndX(); x++)
+                            for (int y = building.getBeginY(); y <= building.getEndY(); y++) {
+                                map.getTileWhitXAndY(x, y).setBuilding(null);
+                            }
+                        setGridPane(gridPane);
+                    });
                     gridPane.add(buildingImageView, i, j);
                 }
                 for (People person : map.getTile(i + startMapX, j + startMapY).getPeople())
@@ -155,11 +210,11 @@ public class SetTexture extends Application {
         typeOfTile = null;
     }
 
-    public void addCommon(AnchorPane anchorPane) throws FileNotFoundException {
+    public void addCommon(AnchorPane anchorPane, AnchorPane anchorPane2) throws FileNotFoundException {
         Button groundButton = createButton("ground", 20, 20);
         groundButton.setOnAction(actionEvent -> {
             try {
-                setGround(anchorPane);
+                setGround(anchorPane2);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -167,7 +222,7 @@ public class SetTexture extends Application {
         Button waterButton = createButton("water", 80, 20);
         waterButton.setOnAction(actionEvent -> {
             try {
-                setWater(anchorPane);
+                setWater(anchorPane2);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -176,7 +231,7 @@ public class SetTexture extends Application {
         Button treeButton = createButton("tree", 20, 60);
         treeButton.setOnAction(actionEvent -> {
             try {
-                dropTree(anchorPane);
+                dropTree(anchorPane2);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -185,7 +240,7 @@ public class SetTexture extends Application {
         Button rockButton = createButton("rock", 80, 60);
         rockButton.setOnAction(actionEvent -> {
             try {
-                dropRock(anchorPane);
+                dropRock(anchorPane2);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -194,7 +249,7 @@ public class SetTexture extends Application {
         Button unitButton = createButton("unit", 20, 100);
         unitButton.setOnAction(actionEvent -> {
             try {
-                openUnitMenu();
+                openUnitMenu(anchorPane2);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -203,7 +258,7 @@ public class SetTexture extends Application {
         Button buildingButton = createButton("building", 80, 100);
         buildingButton.setOnAction(actionEvent -> {
             try {
-                openBuildingMenu();
+                openBuildingMenu(anchorPane2);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -407,29 +462,20 @@ public class SetTexture extends Application {
     }
 
     public void removeAdditional(AnchorPane anchorPane) {
-        ArrayList<Node> nodes = new ArrayList<>();
-        int i = 7;
-        while (i < anchorPane.getChildren().size()) {
-            nodes.add(anchorPane.getChildren().get(i));
-            i++;
-        }
-        anchorPane.getChildren().removeAll(nodes);
+        anchorPane.getChildren().clear();
     }
 
-    public void openUnitMenu() throws FileNotFoundException {
+    public void openUnitMenu(AnchorPane anchorPane) throws FileNotFoundException {
+        anchorPane.getChildren().clear();
         ArrayList<MilitaryUnitName> militaryUnitNames = new ArrayList<>(Arrays.asList(MilitaryUnitName.values()));
         militaryUnitNames.remove(0);
         ArrayList<CatapultName> catapultNames = new ArrayList<>(Arrays.asList(CatapultName.values()));
-
-        AnchorPane anchorPane = createAnchorPane();
-        //TODO set pictures
-        //TODO shop menu has some bugs احتمالا مال اف ایکس ام ال هست
         for (int i = 0; i < 6; i++)
             for (int j = 0; j < 3; j++)
-                createCircle(anchorPane, i * 100 + 150, j * 100 + 150, militaryUnitNames.get(i * 6 + j).getPictureAddress());
+                createCircle(anchorPane, i * 100 + 50, j * 100 + 50, militaryUnitNames.get(i * 3 + j).getPictureAddress());
 
         for (int i = 0; i < 6; i++)
-            createCircleForCatapult(anchorPane, i * 100 + 150, 450, catapultNames.get(i).getPictureAddress());
+            createCircleForCatapult(anchorPane, i * 100 + 50, 350, catapultNames.get(i).getPictureAddress());
 
     }
 
@@ -455,13 +501,13 @@ public class SetTexture extends Application {
         anchorPane.getChildren().add(circle);
     }
 
-    public void openBuildingMenu() throws FileNotFoundException {
+    public void openBuildingMenu(AnchorPane anchorPane) throws FileNotFoundException {
+        anchorPane.getChildren().clear();
         ArrayList<BuildingName> buildingNames = new ArrayList<>(Arrays.asList(BuildingName.values()));
-        AnchorPane anchorPane = createAnchorPane();
         for (int i = 0; i < 9; i++)
             for (int j = 0; j < 5; j++)
                 createCircleForBuilding(anchorPane, i * 80 + 40, j * 80 + 40,
-                        buildingNames.get(i * 9 + j).getPictureAddress());
+                        buildingNames.get(i * 5 + j).getPictureAddress());
     }
 
     public void createCircleForBuilding(AnchorPane anchorPane, int x, int y, String pictureAddress) throws FileNotFoundException {
@@ -473,19 +519,6 @@ public class SetTexture extends Application {
             buildingName = BuildingName.getByAddress(pictureAddress);
         });
         anchorPane.getChildren().add(circle);
-    }
-
-    public AnchorPane createAnchorPane() throws FileNotFoundException {
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setPrefHeight(600);
-        anchorPane.setPrefWidth(800);
-        FileInputStream inputStream = new FileInputStream("src\\main\\resources\\Images\\mb.png");
-        Image image = new Image(inputStream);
-        BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundimage);
-        anchorPane.setBackground(background);
-        return anchorPane;
     }
 
     public void clear() {

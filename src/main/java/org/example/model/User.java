@@ -3,8 +3,8 @@ package org.example.model;
 import org.example.Main;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class User {
 
@@ -17,7 +17,8 @@ public class User {
     private String securityAnswer;
     private int highScore;
     private int rank;
-    private ArrayList<Map> maps = new ArrayList<>();
+    private HashMap<String, Map> maps = new HashMap<>();
+    private HashMap<String, Map> receivedMap = new HashMap<>();
     private boolean inGame = false;
     private byte[] salt;
     private URL avatarUrl;
@@ -43,7 +44,7 @@ public class User {
     }
 
     public URL getAvatarUrl() {
-        if (avatarUrl==null)
+        if (avatarUrl == null)
             avatarUrl = Main.class.getResource("/Images/DefaultAvatar.jpg");
         return avatarUrl;
     }
@@ -92,9 +93,14 @@ public class User {
         return inGame;
     }
 
-    public ArrayList<Map> getMaps() {
-        if(maps == null) maps = new ArrayList<>();
+    public HashMap<String, Map> getMaps() {
+        if(maps == null) maps = new HashMap<>();
         return maps;
+    }
+
+    public HashMap<String, Map> getReceivedMap() {
+        if(receivedMap == null) receivedMap = new HashMap<>();
+        return receivedMap;
     }
 
     public void setUsername(String username) {
@@ -145,8 +151,24 @@ public class User {
         }
     }
 
-    public void addMap(Map map){
-        maps.add(map);
+    public void addMap(String name, Map map) {
+        if(maps == null) maps = new HashMap<>();
+        maps.put(name, map);
+    }
+
+    public Map getMapWithName(String name) {
+        if(maps == null) maps = new HashMap<>();
+        return maps.getOrDefault(name, null);
+    }
+
+    public void addReceivedMap(String name, Map map) {
+        if(receivedMap == null) receivedMap = new HashMap<>();
+        receivedMap.put(name, map);
+    }
+
+    public Map getReceivedMapWithName(String name) {
+        if(receivedMap == null) receivedMap = new HashMap<>();
+        return receivedMap.getOrDefault(name, null);
     }
 }
 

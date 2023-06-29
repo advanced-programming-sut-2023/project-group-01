@@ -128,7 +128,10 @@ public enum Outputs {
     NOT_ENOUGH_CAPACITY("Not enough capacity"),
     NOT_ENOUGH_WOOD("Not enough wood"),
     NOT_HAVING_SMALL_GATEHOUSE("Not have small stone gatehouse and can't change tax rate"),
-    USER_IN_GAME("user in game");
+    USER_IN_GAME("user in game"),
+    MAP_NAME_EXIST("map with name already exist"),
+    MAP_EXIST("map already exist"),
+    EMPTY_FILED("your field is empty");
     private String output;
 
     Outputs(String output) {

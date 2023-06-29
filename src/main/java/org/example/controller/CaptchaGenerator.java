@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CaptchaGenerator {
-    public static int captchaValue = 0;
+    public static int captchaValue = 1;
     public static void captchaGenerator() throws IOException {
         Random random = new Random();
         captchaValue = random.nextInt(90000) + 10000;

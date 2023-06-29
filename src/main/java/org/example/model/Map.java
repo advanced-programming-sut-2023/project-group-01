@@ -5,7 +5,7 @@ import org.example.model.building.castleBuilding.enums.EmpireBuilding;
 
 import java.util.ArrayList;
 
-public class Map {
+public class Map implements Cloneable {
     private Tile[][] map;
 
     private ArrayList<EmpireBuilding> empireBuildings = new ArrayList<>();
@@ -49,5 +49,10 @@ public class Map {
 
     public Tile getTile(int x, int y) {
         return getTileWhitXAndY(x, y);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

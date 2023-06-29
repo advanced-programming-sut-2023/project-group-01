@@ -29,7 +29,7 @@ public class CreateUnitMenuApp extends Application {
     private static URL url;
     private static Text text = new Text();
 
-    public void start(Pane buildingPane) throws Exception {
+    public void createPane(Pane buildingPane) throws Exception {
         AnchorPane anchorPane = FXMLLoader.load(url);
         buildingPane.getChildren().clear();
         buildingPane.getChildren().addAll(anchorPane.getChildren());

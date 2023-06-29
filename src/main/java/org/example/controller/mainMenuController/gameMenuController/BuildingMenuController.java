@@ -16,8 +16,7 @@ import org.example.view.enums.Outputs;
 import org.example.view.graphicView.GameMenuApp;
 import org.example.view.mainMenu.gameMenu.BuildingMenu;
 
-import static org.example.view.enums.Outputs.SUCCESSFUL_DROP_BUILDING;
-import static org.example.view.enums.Outputs.WRONG_UNIT_TYPE;
+import static org.example.view.enums.Outputs.*;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
@@ -64,7 +63,8 @@ public class BuildingMenuController {
             return Outputs.OUT_OF_RANGE;
         else if (isPositionFull(buildingName, x0, y0)) return Outputs.FULL_POSITION;
         else if (isGroundSuitable(buildingName, x0, y0)) return Outputs.NOT_SUITABLE_GROUND;
-        else if (getThisEmpire().getNormalPopulation() < buildingName.getNumberOfWorkers()) return Outputs.NOT_ENOUGH_POPULATION;
+        else if (getThisEmpire().getNormalPopulation() < buildingName.getNumberOfWorkers())
+            return Outputs.NOT_ENOUGH_POPULATION;
         else if (buildingName.equals(BuildingName.STOCKPILE) || buildingName.equals(BuildingName.GRANARY)) {
             if (dropNearBuilding(Integer.parseInt(x), Integer.parseInt(y), buildingName).equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
@@ -77,8 +77,10 @@ public class BuildingMenuController {
                     equals(Outputs.NOT_NEAR_BUILDING))
                 return Outputs.NOT_NEAR_BUILDING;
         }
-        if (!getThisEmpire().havingMaterial(MaterialType.WOOD, buildingName.getWoodCost())) return Outputs.NOT_ENOUGH_WOOD;
-        if (!getThisEmpire().havingMaterial(MaterialType.STONE, buildingName.getStoneCost())) return Outputs.NOT_ENOUGH_STONE;
+        if (!getThisEmpire().havingMaterial(MaterialType.WOOD, buildingName.getWoodCost()))
+            return Outputs.NOT_ENOUGH_WOOD;
+        if (!getThisEmpire().havingMaterial(MaterialType.STONE, buildingName.getStoneCost()))
+            return Outputs.NOT_ENOUGH_STONE;
 //        putBuilding(buildingName, x0, y0, getThisEmpire());
         if (buildingName.equals(BuildingName.STABLE)) getThisEmpire().addMaterial("horse", 4);
         return SUCCESSFUL_DROP_BUILDING;
@@ -162,7 +164,8 @@ public class BuildingMenuController {
         for (int i = x; i < x + size; i++)
             for (int j = y; j < y + size; j++)
                 GameMenuApp.map.getTile(i, j).setBuilding(building);
-        empire.addToBuildings(building);
+        if (empire != null)
+            empire.addToBuildings(building);
     }
 
     public static Building getBuilding(BuildingName buildingName, Empire empire, int x, int y) {

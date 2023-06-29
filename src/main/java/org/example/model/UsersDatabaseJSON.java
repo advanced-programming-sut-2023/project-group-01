@@ -2,7 +2,6 @@ package org.example.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.example.view.RegisterMenu;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,9 +13,11 @@ public class UsersDatabaseJSON {
 
     public static void saveUsersInJSON() throws IOException {
 
-        FileWriter fileWriter = new FileWriter("data.json");
-        fileWriter.write(new Gson().toJson(Data.getUsers()));
-        fileWriter.close();
+        if (new Gson().toJson(Data.getUsers()).length() != 0) {
+            FileWriter fileWriter = new FileWriter("data.json");
+            fileWriter.write(new Gson().toJson(Data.getUsers()));
+            fileWriter.close();
+        }
         System.out.println("Users data saved to file successfully !");
     }
 

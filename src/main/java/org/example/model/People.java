@@ -19,4 +19,7 @@ public class People {
         return empire;
     }
 
+    public void setEmpire(Empire empire) {
+        this.empire = empire;
+    }
 }

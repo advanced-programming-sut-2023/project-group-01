@@ -3,28 +3,31 @@ package org.example.view.graphicView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.example.Main;
+import org.example.controller.mainMenuController.gameMenuController.CreateMapMenuController;
 import org.example.controller.mainMenuController.gameMenuController.GameSettingMenuController;
-import org.example.model.Data;
-import org.example.model.InitializeMaterial;
-import org.example.model.Map;
-import org.example.model.User;
+import org.example.model.*;
 import org.example.view.enums.Outputs;
 
 import java.io.IOException;
@@ -32,6 +35,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class GameSettingMenu extends Application implements Initializable {
@@ -58,10 +62,11 @@ public class GameSettingMenu extends Application implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         players.add(Data.getStayedLoggedIn());
         Text text = new Text(Data.getStayedLoggedIn().getUsername());
-        for (Map map : Data.getStayedLoggedIn().getMaps()) {
-            Text textMap = new Text("map " + Data.getStayedLoggedIn().getMaps().indexOf(map));
+        for (String mapName : Data.getStayedLoggedIn().getMaps().keySet()) {
+            Text textMap = new Text(mapName);
             textMap.setOnMouseClicked(this::changeMap);
-            maps.getChildren().add(text);
+            maps.getChildren().add(textMap);
+            textMap.setFill(Color.RED);
         }
         text.setFill(Color.WHITE);
         names.add(text, 0, 0);
@@ -134,8 +139,12 @@ public class GameSettingMenu extends Application implements Initializable {
 
     public void changeMap(MouseEvent mouseEvent) {
         for (Node child : maps.getChildren())
-            if (child instanceof Text)
-                ((Text) child).setFill(Color.BLACK);
+            if (child instanceof Text) {
+                if (((Text) child).getText().equals("default map 200 * 200") ||
+                        ((Text) child).getText().equals("default map 400 * 400"))
+                    ((Text) child).setFill(Color.BLACK);
+                else ((Text) child).setFill(Color.RED);
+            }
         Text text = (Text) mouseEvent.getSource();
         text.setFill(Color.web("#2024ff"));
     }
@@ -162,6 +171,12 @@ public class GameSettingMenu extends Application implements Initializable {
 
     private Map setGameMap() {
         String json = "";
+        try {
+            UsersDatabaseJSON.saveUsersInJSON();
+            UsersDatabaseJSON.saveStayedLoggedInUser();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         for (Node child : maps.getChildren()) {
             if (child instanceof Text && ((Text) child).getFill().equals(Color.web("#2024ff")))
                 switch (((Text) child).getText()) {
@@ -179,6 +194,13 @@ public class GameSettingMenu extends Application implements Initializable {
                             throw new RuntimeException(e);
                         }
                     }
+                    default -> {
+                        try {
+                            return (Map) Data.getStayedLoggedIn().getMapWithName(((Text) child).getText()).clone();
+                        } catch (CloneNotSupportedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
 
         }
@@ -188,5 +210,96 @@ public class GameSettingMenu extends Application implements Initializable {
 
     public void CreateMap(ActionEvent actionEvent) throws Exception {
         new SetTexture().start(Main.stage);
+    }
+
+    public void showReceivedMaps(ActionEvent actionEvent) {
+        VBox vBox = new VBox();
+        vBox.setSpacing(20);
+        for (String key : Data.getStayedLoggedIn().getReceivedMap().keySet()) {
+            ImageView accept = new ImageView(new Image(Main.class.getResource
+                    ("/Images/start Game.PNG").toExternalForm()));
+            accept.setFitHeight(30);
+            accept.setFitWidth(30);
+            ImageView reject = new ImageView(new Image(Main.class.getResource
+                    ("/Images/photo5070330372.png").toExternalForm()));
+            reject.setFitHeight(30);
+            reject.setFitWidth(30);
+            HBox hBox = new HBox(new Text(key), accept, reject);
+            hBox.setBackground(new Background(new BackgroundFill(Color.SILVER,CornerRadii.EMPTY, Insets.EMPTY )));
+            hBox.setSpacing(20);
+            accept.setOnMouseClicked(mouseEvent -> {
+                TextField textField = new TextField("map name");
+                Button cancel = new Button("cancel");
+                Button save = new Button("save");
+                HBox hBox1 = new HBox(cancel, save);
+                hBox1.setSpacing(20);
+                VBox vBox1 = new VBox(textField, hBox1);
+                Popup popup = new Popup();
+                cancel.setOnAction(actionEvent1 -> popup.hide());
+                save.setOnAction(actionEvent1 -> {
+                    Outputs outputs = CreateMapMenuController.checkSaveMap(textField.getText());
+                    if (outputs.equals(Outputs.SUCCESS)) {
+                        Data.getStayedLoggedIn().getMaps().put(textField.getText(), Data.getStayedLoggedIn().
+                                getReceivedMap().get(key));
+                        vBox.getChildren().remove(hBox);
+                        Data.getStayedLoggedIn().getReceivedMap().remove(key);
+                        popup.hide();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("save map error");
+                        alert.setContentText(outputs.toString());
+                        alert.showAndWait();
+                    }
+                });
+                popup.getContent().add(vBox1);
+                popup.setY(Main.stage.getHeight() / 2);
+                popup.setX(Main.stage.getWidth() / 2);
+                popup.show(Main.stage);
+            });
+            reject.setOnMouseClicked(mouseEvent -> {
+                vBox.getChildren().remove(hBox);
+                Data.getStayedLoggedIn().getReceivedMap().remove(key);
+            });
+            vBox.getChildren().add(hBox);
+        }
+        Button button = new Button("exit");
+        vBox.getChildren().add(button);
+        setPopUp(vBox, button);
+    }
+
+    private void setPopUp(VBox vBox, Button button) {
+        Popup popup = new Popup();
+        button.setOnAction(actionEvent -> popup.hide());
+        popup.getContent().add(vBox);
+        popup.setY(Main.stage.getHeight() / 2);
+        popup.setX(Main.stage.getWidth() / 2);
+        popup.show(Main.stage);
+    }
+
+    public void sendMap(ActionEvent actionEvent) {
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        for (String name : Data.getStayedLoggedIn().getMaps().keySet())
+            choiceBox.getItems().add(name);
+        TextField textField = new TextField("username");
+        Button send = new Button("send");
+        Button exit = new Button("exit");
+        VBox vBox = new VBox(textField, choiceBox, send, exit);
+        vBox.setSpacing(20);
+        send.setOnAction(actionEvent1 -> {
+            Outputs outputs = CreateMapMenuController.checkSendMap(textField.getText());
+            if (outputs.equals(Outputs.SUCCESS)) {
+                User user = Data.findUserWithUsername(textField.getText());
+                user.addReceivedMap(choiceBox.getValue() + " from user: " + Data.getStayedLoggedIn().getUsername(),
+                        Data.getStayedLoggedIn().getMapWithName(choiceBox.getValue()));
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("send map error");
+                alert.setContentText(outputs.toString());
+                alert.showAndWait();
+            }
+        });
+        setPopUp(vBox, exit);
     }
 }

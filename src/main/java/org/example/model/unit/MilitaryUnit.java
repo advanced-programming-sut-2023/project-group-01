@@ -4,7 +4,6 @@ import org.example.model.Empire;
 import org.example.model.People;
 import org.example.model.building.Tile;
 import org.example.model.unit.enums.MilitaryUnitName;
-import org.example.view.graphicView.GameMenuApp;
 
 import static java.lang.Integer.MAX_VALUE;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
@@ -29,8 +28,10 @@ public class MilitaryUnit extends People {
 
     public MilitaryUnit(Tile position, Empire empire, MilitaryUnitName militaryUnitName, int xPos, int yPos) {
         super(position, empire);
-//        empire.removePeople();
-        empire.addUnit(this);
+        if (empire != null) {
+            empire.removePeople();
+            empire.addUnit(this);
+        }
         this.xPos = xPos;
         this.yPos = yPos;
         this.xDestination = -1;

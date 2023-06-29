@@ -209,7 +209,7 @@ public class BuildingMenuApp extends Application {
             ) {
                 CreateUnitMenuApp.setCurrentBuilding(currentBuilding);
                 CreateUnitMenuApp createUnitMenu = new CreateUnitMenuApp();
-                createUnitMenu.start(buildingPane);
+                createUnitMenu.createPane(buildingPane);
             } else if (currentBuilding.getBuildingName().equals(BuildingName.GRANARY)) {
                 openGranaryMenu();
             } else if (currentBuilding instanceof Gatehouse || currentBuilding instanceof Tower) {

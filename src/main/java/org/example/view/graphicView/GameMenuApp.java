@@ -52,7 +52,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Math.*;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
-import static org.example.view.mainMenu.gameMenu.GameMenu.setThisEmpire;
 
 public class GameMenuApp extends Application {
     public static AnchorPane anchorPaneInSplitPan;
@@ -66,10 +65,6 @@ public class GameMenuApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        new MilitaryUnit(map.getTileWhitXAndY(3, 3), GameMenu.getEmpires().get(0),
-                MilitaryUnitName.ARCHER_BOW, 3, 3);
-//        new MilitaryUnit(map.getTileWhitXAndY(5, 5), GameMenu.getEmpires().get(1),
-//                MilitaryUnitName.ARCHER, 5, 5);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FXML/Map.fxml"));
         AnchorPane anchorPane = fxmlLoader.load();
         anchorPaneMain = anchorPane;
@@ -96,8 +91,6 @@ public class GameMenuApp extends Application {
                 startMapY--;
             if (e.getCode().equals(KeyCode.DOWN) && startMapY < map.getSize() - 4)
                 startMapY++;
-//            if (e.getCode().equals(KeyCode.X))
-
             if (e.getCode().equals(KeyCode.ENTER))
                 nextTurn.nextTurn();
             if (!selectedImageViews.isEmpty()) {
@@ -116,9 +109,6 @@ public class GameMenuApp extends Application {
                 }
             } else createPane(anchorPane);
         });
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> createPane(anchorPane)));
-//        timeline.setCycleCount(-1);
-//        timeline.play();
         stage.setScene(scene);
         stage.show();
     }
@@ -680,6 +670,19 @@ public class GameMenuApp extends Application {
             empires.add(new Empire(EmpireBuilding.valueOf("EMPIRE_" + (i + 1)), players.get(i)));
         GameMenu.setEmpires(empires);
         GameMenu.setThisEmpire(empires.get(0));
+        for (int i = 0; i < map.getSize(); i++)
+            for (int j = 0; j < map.getSize(); j++) {
+                if (map.getTile(i, j).getBuilding() != null && map.getTile(i, j).getBuilding().getEmpire() == null) {
+                    map.getTile(i, j).getBuilding().setEmpire(GameMenu.getThisEmpire());
+                    GameMenu.getThisEmpire().addToBuildings(map.getTile(i, j).getBuilding());
+                }
+                if (map.getTile(i, j).getPeople().size() != 0)
+                    for (People person : map.getTile(i, j).getPeople())
+                        if (person.getEmpire() == null) {
+                            person.setEmpire(getThisEmpire());
+                            getThisEmpire().addPeople(person);
+                        }
+            }
         nextTurn = new NextTurn(this);
         addEmpireBuildingsToMap();
         setMaterialForEmpires(initializeMaterial);
@@ -837,9 +840,20 @@ public class GameMenuApp extends Application {
                         gridPane1.add(imageView1, i, j);
                     }
             }
-        if (hBox.getChildren().size() == 3)
+        if (hBox.getChildren().size() == 4)
             hBox.getChildren().remove(2);
         hBox.getChildren().add(2, gridPane1);
+        if (hBox.getChildren().size() == 4)
+            hBox.getChildren().remove(3);
+        Text text = new Text("");
+        for (People person : getThisEmpire().getPeople()) {
+            if(person instanceof MilitaryUnit && ((MilitaryUnit) person).getMilitaryUnitName().getState()
+                    .equals(MilitaryUnitState.OFFENSIVE)) {
+                text = new Text("attack");
+                text.setFill(Color.RED);
+            }
+        }
+        hBox.getChildren().add(text);
     }
 
     private void setManImage(HBox hBox) {
@@ -865,7 +879,7 @@ public class GameMenuApp extends Application {
             }
         });
         man(anchorPane);
-        if (hBox.getChildren().size() == 3)
+        if (hBox.getChildren().size() == 4)
             hBox.getChildren().remove(1);
         hBox.getChildren().add(1, anchorPane);
     }
@@ -909,13 +923,13 @@ public class GameMenuApp extends Application {
                 ImageView imageView = new ImageView(new Image(map.getTile(i + startMapX, j + startMapY).getTypeOfTile().getPictureAddress()));
                 imageView.setFitWidth(size);
                 imageView.setFitHeight(size);
-                if(map.getTile(i + startMapX, j + startMapY).isHaveDisease()) {
+                if (map.getTile(i + startMapX, j + startMapY).isHaveDisease()) {
                     Region region = new Region();
                     region.setBackground(new Background(new BackgroundFill(Color.GREEN, new CornerRadii(0), new Insets(0))));
                     region.setOpacity(0.2);
                     gridPane.add(region, i, j);
                 }
-                if(map.getTile(i + startMapX, j + startMapY).getBuilding() != null &&
+                if (map.getTile(i + startMapX, j + startMapY).getBuilding() != null &&
                         map.getTile(i + startMapX, j + startMapY).getBuilding().isFiring()) {
                     Region region = new Region();
                     region.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(0), new Insets(0))));
@@ -1029,7 +1043,8 @@ public class GameMenuApp extends Application {
         anchorPane.getChildren().addAll(popularityText, goldText, populationText);
     }
 
-    private void showDetailCheck(ImageView imageView, AtomicReference<Timeline> timeline, ImageView buildingImageView) {
+    private void showDetailCheck(ImageView imageView, AtomicReference<Timeline> timeline, ImageView
+            buildingImageView) {
         buildingImageView.hoverProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 timeline.set(new Timeline(new KeyFrame(Duration.seconds(3), actionEvent ->
@@ -1209,12 +1224,4 @@ public class GameMenuApp extends Application {
     }
 
     private Popup selectUnitPopup;
-
-    public void selectUnitsInATile() {
-
-    }
-
-    public void selectAGroupOfTiles() {
-
-    }
 }

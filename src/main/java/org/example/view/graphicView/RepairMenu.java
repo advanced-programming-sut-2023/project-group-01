@@ -24,16 +24,12 @@ import org.example.view.enums.Outputs;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class RepairMenu extends Application {
+public class RepairMenu {
 
     private static Building currentBuilding;
     private static Button open;
     private static Button close;
     private static ProgressBar progressBar;
-
-    @Override
-    public void start(Stage stage) throws Exception {
-    }
 
     public static void setCurrentBuilding(Building currentBuilding) {
         RepairMenu.currentBuilding = currentBuilding;
