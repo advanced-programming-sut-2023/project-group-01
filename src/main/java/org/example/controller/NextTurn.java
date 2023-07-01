@@ -59,7 +59,7 @@ public class NextTurn {
     }
 
     public void nextTurn() {
-        if (turnNumber == numberOfEmpires) {
+        if (turnNumber == numberOfEmpires - 1) {
             turnNumber = 0;
             currentEmpire = empires.get(0);
             doRates();
@@ -326,7 +326,6 @@ public class NextTurn {
             return;
         }
         MoveToXY(unit, false, xDest, yDest);
-
     }
 
     public void MoveToXY(MilitaryUnit unit, boolean haveBuilding, int xDest, int yDest) {

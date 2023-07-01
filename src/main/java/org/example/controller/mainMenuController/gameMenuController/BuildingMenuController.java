@@ -57,7 +57,6 @@ public class BuildingMenuController {
         int y0 = Integer.parseInt(y);
         int buildingSize = buildingName.getSize();
         int mapSize = getMap().getSize();
-        putBuilding(buildingName, x0, y0, getThisEmpire());
 
         if (x0 > mapSize || y0 > mapSize || x0 + buildingSize > mapSize || y0 + buildingSize > mapSize)
             return Outputs.OUT_OF_RANGE;
@@ -81,7 +80,7 @@ public class BuildingMenuController {
             return Outputs.NOT_ENOUGH_WOOD;
         if (!getThisEmpire().havingMaterial(MaterialType.STONE, buildingName.getStoneCost()))
             return Outputs.NOT_ENOUGH_STONE;
-//        putBuilding(buildingName, x0, y0, getThisEmpire());
+        putBuilding(buildingName, x0, y0, getThisEmpire());
         if (buildingName.equals(BuildingName.STABLE)) getThisEmpire().addMaterial("horse", 4);
         return SUCCESSFUL_DROP_BUILDING;
     }

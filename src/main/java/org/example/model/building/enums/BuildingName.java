@@ -105,11 +105,16 @@ public enum BuildingName {
             Main.class.getResource("/Images/foodProcessing/brewery2.png").toString()),
     GRANARY("storage", 330, 330, BuildingCategory.FOOD_PROCESSING_BUILDING, "FoodStockpile",
             0, 0, 5, 0, 2, TypeOfTile.NORMAL_GROUND,  Main.class.getResource("/Images/foodProcessing/granary2.png").toString()),
-    desertShrub("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "desertShrub", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
-    cherryPalm("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "CherryPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
-    oliveTree("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "oliveTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
-    coconutPalm("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "coconutPalm", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
-    palmTree("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "palmTree", 0, 0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, "pictureAddress"),
+    desertShrub("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "desertShrub", 0,
+            0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, Main.class.getResource("/Images/tiles/desertShorbpng.png").toString()),
+    cherryPalm("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "CherryPalm", 0,
+            0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, Main.class.getResource("/Images/tiles/cherryPalm.png").toString()),
+    oliveTree("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "oliveTree", 0,
+            0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, Main.class.getResource("/Images/tiles/oliveTreepng.png").toString()),
+    coconutPalm("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "coconutPalm", 0,
+            0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, Main.class.getResource("/Images/tiles/coconutPalmpng.png").toString()),
+    palmTree("", Integer.MAX_VALUE, Integer.MAX_VALUE, BuildingCategory.TREES, "palmTree", 0,
+            0, 0, 0, 1, TypeOfTile.NORMAL_GROUND, Main.class.getResource("/Images/tiles/datePalmpng.png").toString()),
     ;
 
     private final String type;

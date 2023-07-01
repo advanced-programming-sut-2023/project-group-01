@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Math.*;
+import static org.example.view.mainMenu.gameMenu.GameMenu.getMap;
 import static org.example.view.mainMenu.gameMenu.GameMenu.getThisEmpire;
 
 public class GameMenuApp extends Application {
@@ -141,6 +142,7 @@ public class GameMenuApp extends Application {
         strings.add("carapult");
         strings.add("trebucher");
         strings.add("siegeTower");
+        strings.add("siegeTower");
         strings.add("batterningRam");
         choiceBox.setValue("portableShield");
         choiceBox.setItems((ObservableList<String>) strings);
@@ -200,7 +202,7 @@ public class GameMenuApp extends Application {
                 if (child instanceof HBox && ((HBox) child).getChildren().size() == 2)
                     outer:for (Node node : ((HBox) child).getChildren()) {
                         if (node instanceof Text) {
-                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText().replace(" number: ", ""));
                         }
                         if (node instanceof Spinner) {
                             int number = 0;
@@ -259,7 +261,7 @@ public class GameMenuApp extends Application {
                 if (child instanceof HBox && ((HBox) child).getChildren().size() != 3)
                     outer:for (Node node : ((HBox) child).getChildren()) {
                         if (node instanceof Text) {
-                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText().replace(" number: ", ""));
                         }
                         if (node instanceof Spinner) {
                             int number = 0;
@@ -426,7 +428,7 @@ public class GameMenuApp extends Application {
                 if (child instanceof HBox && ((HBox) child).getChildren().size() == 2)
                     outer:for (Node node : ((HBox) child).getChildren()) {
                         if (node instanceof Text) {
-                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText().replace(" number: ", ""));
                         }
                         if (node instanceof Spinner) {
                             int number = 0;
@@ -475,7 +477,7 @@ public class GameMenuApp extends Application {
                 if (child instanceof HBox && ((HBox) child).getChildren().size() == 2)
                     outer:for (Node node : ((HBox) child).getChildren()) {
                         if (node instanceof Text) {
-                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText().replace(" number: ", ""));
                         }
                         if (node instanceof Spinner) {
                             int number = 0;
@@ -528,7 +530,7 @@ public class GameMenuApp extends Application {
                 if (child instanceof HBox && ((HBox) child).getChildren().size() != 3)
                     outer:for (Node node : ((HBox) child).getChildren()) {
                         if (node instanceof Text) {
-                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText().replace(" number: ", ""));
                         }
                         if (node instanceof Spinner) {
                             int number = 0;
@@ -584,7 +586,7 @@ public class GameMenuApp extends Application {
                 if (child instanceof HBox && ((HBox) child).getChildren().size() != 3)
                     outer:for (Node node : ((HBox) child).getChildren()) {
                         if (node instanceof Text) {
-                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText());
+                            militaryUnitName = MilitaryUnitName.getMilitaryUnitWhitName(((Text) node).getText().replace(" number: ", ""));
                         }
                         if (node instanceof Spinner) {
                             int number = 0;
@@ -706,6 +708,8 @@ public class GameMenuApp extends Application {
     private final int size = 60;
 
     public void createPane(AnchorPane anchorPane) {
+        System.gc();
+        Runtime.getRuntime().gc();
         HBox hBox = new HBox();
         try {
             Pane buildingPane = FXMLLoader.load(BuildingMenu.class.getResource("/FXML/BuildingMenu/weaponBuilding.fxml"));
@@ -847,8 +851,9 @@ public class GameMenuApp extends Application {
             hBox.getChildren().remove(3);
         Text text = new Text("");
         for (People person : getThisEmpire().getPeople()) {
-            if(person instanceof MilitaryUnit && ((MilitaryUnit) person).getMilitaryUnitName().getState()
+            if (person instanceof MilitaryUnit && ((MilitaryUnit) person).getMilitaryUnitName().getState()
                     .equals(MilitaryUnitState.OFFENSIVE)) {
+                System.out.println("attack");
                 text = new Text("attack");
                 text.setFill(Color.RED);
             }
@@ -941,8 +946,8 @@ public class GameMenuApp extends Application {
                         if (child instanceof ImageView && ((ImageView) child).getFitHeight() == size &&
                                 child.getLayoutX() < dragEvent.getScreenX() && dragEvent.getScreenX() < child.getLayoutX() + size &&
                                 child.getLayoutY() < dragEvent.getScreenY() && dragEvent.getSceneY() < child.getLayoutY() + size) {
-                            Outputs outputs = BuildingMenuController.dropBuilding(String.valueOf(GridPane.getColumnIndex(child)),
-                                    String.valueOf(GridPane.getRowIndex(child)), BuildingName.getByAddres(BuildingMenuApp.
+                            Outputs outputs = BuildingMenuController.dropBuilding(String.valueOf(GridPane.getColumnIndex(child) + startMapX),
+                                    String.valueOf(GridPane.getRowIndex(child) + startMapY), BuildingName.getByAddres(BuildingMenuApp.
                                             getPictureAddress()).getName());
                             createPane(anchorPaneMain);
                             if (!outputs.equals(Outputs.SUCCESS)) {

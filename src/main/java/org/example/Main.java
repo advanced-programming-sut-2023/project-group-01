@@ -4,8 +4,14 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.model.Data;
+import org.example.model.InitializeMaterial;
+import org.example.model.User;
 import org.example.model.UsersDatabaseJSON;
+import org.example.view.RegisterMenu;
+import org.example.view.RegisterMenuApp;
+import org.example.view.graphicView.GameMenuApp;
 import org.example.view.graphicView.GameSettingMenu;
+import org.example.view.mainMenu.gameMenu.CreateMapMenu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main extends Application {
@@ -63,8 +70,13 @@ public class Main extends Application {
         stage.getIcons().add(new Image(new FileInputStream("src/main/resources/Images/logo.png")));
         Data.setStayedLoggedIn(Data.findUserWithUsername("morteza"));
         //new SignUpAndSignInMenu().start(stage);
-        new GameSettingMenu().start(Main.stage);
-//        new GameMenuApp(new CreateMapMenu(null).runDefaultMap(new Scanner(Data.getDefaultMap()))).start(Main.stage);
+ //       new RegisterMenuApp().start(Main.stage);
+ //       new GameSettingMenu().start(Main.stage);
+        ArrayList <User> users = new ArrayList<>();
+        users.add(Data.getStayedLoggedIn());
+        users.add(Data.findUserWithUsername("ali"));
+        new GameMenuApp(new CreateMapMenu(null).runDefaultMap(new Scanner(Data.getDefaultMap())), users, InitializeMaterial.HIGH_SOURCE).start(Main.stage);
+    //    new GameSettingMenu().start(stage);
         //new ScoreBoard().start(Main.stage);
     }
 
